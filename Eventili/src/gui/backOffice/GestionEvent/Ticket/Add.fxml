@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="470.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.backOffice.GestionEvent.Ticket.AddController">
+   <children>
+      <Label layoutX="26.0" layoutY="197.0" text="Nom événement :" textFill="#758bfd">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+      <Label layoutX="26.0" layoutY="255.0" text="Status :" textFill="#758bfd">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+      <Button fx:id="btnajouter" layoutX="189.0" layoutY="444.0" mnemonicParsing="false" onAction="#creerTicket" style="-fx-background-color: ff8600; -fx-background-radius: 20; -fx-border-color: 7187E;" stylesheets="@../../../../../../../../Eventili/src/gui/backOffice/Tickets/ticket.css" text="Ajouter" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
+      <Label layoutX="20.0" layoutY="317.0" text="Nombre de ticket :" textFill="#758bfd">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+      <TextField fx:id="nbrticket" layoutX="184.0" layoutY="317.0" prefHeight="26.0" prefWidth="274.0" style="-fx-background-radius: 20;" />
+      <TextField fx:id="prixticket" layoutX="184.0" layoutY="381.0" prefHeight="26.0" prefWidth="274.0" style="-fx-background-radius: 20;" />
+      <Label layoutX="26.0" layoutY="379.0" text="Prix ticke :" textFill="#758bfd">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+      <ChoiceBox fx:id="nomevent" layoutX="181.0" layoutY="200.0" prefHeight="26.0" prefWidth="274.0" style="-fx-background-radius: 20;" />
+      <ChoiceBox fx:id="status" layoutX="181.0" layoutY="254.0" prefHeight="26.0" prefWidth="274.0" style="-fx-background-radius: 20;" />
+      <Label fx:id="m1" layoutX="156.0" layoutY="290.0" prefHeight="26.0" prefWidth="274.0" style="-fx-background-radius: 20;" />
+      <Label fx:id="m2" layoutX="156.0" layoutY="348.0" prefHeight="26.0" prefWidth="274.0" style="-fx-background-radius: 20;" />
+      <Label fx:id="m3" layoutX="156.0" layoutY="395.0" prefHeight="26.0" prefWidth="274.0" />
+      <Text fx:id="text1" fill="#758bfd" layoutX="55.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ajout d'une Ticket pour un événement" textAlignment="CENTER" wrappingWidth="372.8429870605469">
+         <font>
+            <Font size="34.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="90.0" prefWidth="874.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.backOffice.GestionEvent.Ticket.ItemSController">
+   <children>
+      <Pane prefHeight="90.0" prefWidth="874.0" style="-fx-background-color: white; -fx-background-radius: 40;">
+         <children>
+            <Text fx:id="nomeve" fill="#330086" layoutX="18.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="nom evenement" textAlignment="CENTER" wrappingWidth="226.798828125">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Separator layoutX="697.0" layoutY="15.0" orientation="VERTICAL" prefHeight="59.0" prefWidth="7.0" />
+            <Button fx:id="supp" layoutX="748.0" layoutY="25.0" mnemonicParsing="false" onAction="#Supprimer" prefHeight="43.0" prefWidth="44.0" styleClass="add" stylesheets="@../../Service/ListerService/itemservice.css">
+               <graphic>
+                  <HBox fx:id="hboxsupp" alignment="CENTER" prefHeight="21.0" prefWidth="32.0" styleClass="glyph-icon" stylesheets="@../../Service/ListerService/itemservice.css" />
+               </graphic>
+            </Button>
+            <Button fx:id="modif" layoutX="810.0" layoutY="25.0" mnemonicParsing="false" onAction="#Modifier" prefHeight="43.0" prefWidth="44.0" styleClass="add" stylesheets="@../../Service/ListerService/itemservice.css">
+               <graphic>
+                  <HBox fx:id="hboxmodif" alignment="CENTER" prefHeight="21.0" prefWidth="32.0" styleClass="glyph-icon" stylesheets="@../../Service/ListerService/itemservice.css" />
+               </graphic>
+            </Button>
+            <Separator layoutX="247.0" layoutY="16.0" orientation="VERTICAL" prefHeight="59.0" prefWidth="7.0" />
+            <Text fx:id="nbT" fill="#330086" layoutX="258.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NB ticket" textAlignment="CENTER" wrappingWidth="119.16015625">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Separator layoutX="382.0" layoutY="16.0" orientation="VERTICAL" prefHeight="59.0" prefWidth="7.0" />
+            <Separator layoutX="549.0" layoutY="15.0" orientation="VERTICAL" prefHeight="59.0" prefWidth="7.0" />
+            <Text fx:id="prixt" fill="#330086" layoutX="395.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prix_transaction" textAlignment="CENTER" wrappingWidth="143.798828125">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text fx:id="stat" fill="#330086" layoutX="556.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status" textAlignment="CENTER" wrappingWidth="137.16015625">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

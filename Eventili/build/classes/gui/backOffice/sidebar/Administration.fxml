@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="950.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.backOffice.sidebar.AdministrationController">
+    <stylesheets>
+        <URL value="@administration.css" />
+    </stylesheets>
+   <children>
+      <BorderPane fx:id="BorderPane" layoutX="-34.0" prefHeight="900.0" prefWidth="1800.0" style="-fx-background-color: WHITE;">
+         <left>
+            <VBox prefHeight="802.0" prefWidth="214.0" style="-fx-background-color: #3a3289;" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="btnUsers" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#btnUsersF" prefHeight="70.0" prefWidth="258.0" styleClass="button1" stylesheets="@administration.css" text="Utilisateurs" textFill="WHITE">
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="USERS" size="16" text="" />
+                     </graphic>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnEvent" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#btnEventsF" prefHeight="70.0" prefWidth="258.0" styleClass="button1" stylesheets="@administration.css" text="Evenements" textFill="WHITE">
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="CALENDAR" text="" />
+                     </graphic>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnServices" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#btnServicesF" prefHeight="70.0" prefWidth="258.0" styleClass="button1" stylesheets="@administration.css" text="Services" textFill="WHITE">
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="SETTINGS" text="" />
+                     </graphic>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnRec" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#btnRecF" prefHeight="70.0" prefWidth="258.0" styleClass="button1" stylesheets="@administration.css" text="Réclamations" textFill="WHITE">
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="FILE" />
+                     </graphic>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnTran" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#btnTranF" prefHeight="70.0" prefWidth="258.0" styleClass="button1" stylesheets="@administration.css" text="Transaction" textFill="WHITE">
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="MONEY" text="" />
+                     </graphic>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+         </left>
+         <top>
+            <HBox prefHeight="98.0" prefWidth="1800.0" style="-fx-background-color: #3a3289;" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fitHeight="75.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets left="850.0" top="8.0" />
+                     </HBox.margin>
+                     <image>
+                        <Image url="@../../../images/logo(blanc).png" />
+                     </image>
+                  </ImageView>
+                  <Pane prefHeight="90.0" prefWidth="213.0">
+                     <HBox.margin>
+                        <Insets left="320.0" />
+                     </HBox.margin>
+                     <children>
+                        <Button graphicTextGap="10.0" layoutX="-20.0" layoutY="29.0" mnemonicParsing="false" style="-fx-background-color: #3a3289;" styleClass="mainFxmlClass" text="Notifications" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="WHITE" glyphName="BELL" size="16" text="" />
+                           </graphic>
+                        </Button>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="98.0" prefWidth="270.0">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <children>
+                        <Button graphicTextGap="15.0" layoutY="19.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="82.0" style="-fx-background-color: #3a3289;" styleClass="mainFxmlClass" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                           <graphic>
+                              <Circle fx:id="ProfileCircle" fill="DODGERBLUE" onMouseClicked="#modifierprofil" radius="21.0" stroke="BLACK" strokeType="INSIDE" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btndeconnexion" layoutX="81.0" layoutY="30.0" mnemonicParsing="false" onMouseClicked="#deconnexion" style="-fx-background-color: transparent;" text="Déconnexion" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Narrow Bold" size="20.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </Pane>
+               </children></HBox>
+         </top>
+      </BorderPane>
+   </children>
+</AnchorPane>

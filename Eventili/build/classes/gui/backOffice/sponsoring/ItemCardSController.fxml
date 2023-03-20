@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="70.0" prefWidth="1470.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.backOffice.sponsoring.ItemCardSControllerController">
+    <stylesheets>
+        <URL value="@itemcardscontroller.css" />
+    </stylesheets>
+   <children>
+      <Pane fx:id="pane1" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="90.0" prefWidth="1500.0" stylesheets="@../users/style.css">
+         <children>
+            <Text fx:id="nbimpreession" fill="#330086" layoutX="1190.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="nombre impression" textAlignment="CENTER" wrappingWidth="188.54688954353333">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text fx:id="datedebut" fill="#330086" layoutX="361.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="date debut" textAlignment="CENTER" wrappingWidth="188.54688954353333">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text fx:id="nomevent" fill="#330086" layoutX="73.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom event" textAlignment="CENTER" wrappingWidth="121.876953125">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Separator layoutX="266.0" layoutY="15.0" orientation="VERTICAL" prefHeight="59.0" prefWidth="7.0" />
+            <Text fx:id="datefin" fill="#330086" layoutX="693.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="date_fin" textAlignment="CENTER" wrappingWidth="299.5468895435333">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Separator layoutX="653.0" layoutY="15.0" orientation="VERTICAL" prefHeight="59.0" prefWidth="7.0" />
+            <Separator layoutX="1050.0" layoutY="15.0" orientation="VERTICAL" prefHeight="59.0" prefWidth="7.0" />
+         </children>
+         <styleClass>
+            <String fx:value="shadow" />
+            <String fx:value="pane" />
+         </styleClass>
+      </Pane>
+   </children>
+</AnchorPane>

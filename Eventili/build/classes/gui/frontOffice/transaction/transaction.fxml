@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="754.0" prefWidth="1052.0" style="-fx-background-color: aeb8f0;" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.frontOffice.transaction.TransactionController">
+    <stylesheets>
+        <URL value="@transaction.css" />
+    </stylesheets>
+   <children>
+      <ImageView fitHeight="464.0" fitWidth="249.0" layoutX="619.0" layoutY="119.0">
+         <image>
+            <Image url="@hehdiheya.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="165.0" layoutY="82.0" prefHeight="30.0" prefWidth="192.0" text="Eventili" textFill="#ffffffb0">
+         <font>
+            <Font name="Cambria Bold" size="30.0" />
+         </font>
+      </Label>
+      <Label layoutX="180.0" layoutY="710.0" text="Confirmation: Vous allez recevoir une notification par sms" textFill="WHITE">
+         <font>
+            <Font name="Cambria Bold" size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="125.0" layoutY="274.0" text="CVV numero  :" textFill="#1e0568">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="124.0" layoutY="154.0" text="Card Number :" textFill="#1e0568">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="annulerbtn" layoutX="918.0" layoutY="704.0" mnemonicParsing="false" onAction="#annuler" prefHeight="39.0" prefWidth="103.0" style="-fx-background-color: #d1914d;" stylesheets="@../organisationev/creerevenement/creationev.css" text="Annuler" textFill="#803e3e" />
+      <Button fx:id="payer" layoutX="118.0" layoutY="520.0" mnemonicParsing="false" onAction="#payer" prefHeight="56.0" prefWidth="484.0" styleClass="button3" stylesheets="@../organisationev/creerevenement/creationev.css" text="Payer maintenant">
+         <font>
+            <Font size="26.0" />
+         </font></Button>
+      <Label layoutX="127.0" layoutY="350.0" text="Date d'expiration  :" textFill="#1e0568">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="125.0" layoutY="433.0" text="Mot de passe :" textFill="#1e0568">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="124.0" layoutY="465.0" text="entrer votre mot de pass dynamic  :" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="datec" layoutX="121.0" layoutY="383.0" text="entrer la date d expiration de la carte  :" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="cvvc" layoutX="122.0" layoutY="309.0" text="Entrer les 3 ou 4 chiffre numero de la carte" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <TextField fx:id="cvv" layoutX="379.0" layoutY="282.0" prefHeight="39.0" prefWidth="220.0" promptText="                          123" styleClass="input" stylesheets="@../organisationev/creerevenement/creationev.css" />
+      <TextField fx:id="month" layoutX="379.0" layoutY="356.0" prefHeight="39.0" prefWidth="103.0" promptText="         MM" styleClass="input" stylesheets="@../organisationev/creerevenement/creationev.css" />
+      <TextField fx:id="mdpc" layoutX="379.0" layoutY="446.0" prefHeight="39.0" prefWidth="220.0" promptText="         **************************" styleClass="input" stylesheets="@../organisationev/creerevenement/creationev.css" />
+      <Label fx:id="enter" layoutX="121.0" layoutY="187.0" text="entrer  les 16 chiffre du numreo de la carte" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <TextField fx:id="numcard" alignment="CENTER" layoutX="123.0" layoutY="217.0" prefHeight="39.0" prefWidth="474.0" promptText="                             2412     -      7512     -    3412     -    3456" styleClass="input" stylesheets="@../organisationev/creerevenement/creationev.css">
+         <font>
+            <Font size="14.0" />
+         </font></TextField>
+      <ImageView fitHeight="17.0" fitWidth="33.0" layoutX="125.0" layoutY="229.0">
+         <image>
+            <Image url="@../../../../../../../Mastercard-Logo.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="year" layoutX="499.0" layoutY="356.0" prefHeight="39.0" prefWidth="103.0" promptText="          YY" styleClass="input" stylesheets="@../organisationev/creerevenement/creationev.css" />
+      <Label layoutX="485.0" layoutY="359.0" text="/" textFill="#1e0568">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="558.0" layoutY="124.0" text=":" textFill="#1e0568">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="minr" layoutX="592.0" layoutY="119.0" prefHeight="39.0" prefWidth="21.0" style="-fx-background-color: ; -fx-border-color: ;" styleClass="input" stylesheets="@../organisationev/creerevenement/creationev.css">
+         <font>
+            <Font size="10.0" />
+         </font></TextField>
+      <Label layoutX="274.0" layoutY="82.0" prefHeight="30.0" prefWidth="192.0" text="Pay" textFill="#1e0568">
+         <font>
+            <Font name="Cambria Bold" size="30.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="32.0" fitWidth="33.0" layoutX="561.0" layoutY="285.0">
+         <image>
+            <Image url="@../../../../../../../894798-200.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="33.0" layoutX="561.0" layoutY="450.0">
+         <image>
+            <Image url="@../../../../../../../894798-200.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="56.0" fitWidth="55.0" layoutX="114.0" layoutY="75.0">
+         <image>
+            <Image url="@../../../../../../../pidev/badge/icon1.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="hourl" layoutX="510.0" layoutY="119.0" prefHeight="39.0" prefWidth="21.0" style="-fx-background-color: white; -fx-border-color: white;" styleClass="input" stylesheets="@../organisationev/creerevenement/creationev.css">
+         <font>
+            <Font size="10.0" />
+         </font></TextField>
+      <TextField fx:id="minl" layoutX="567.0" layoutY="119.0" prefHeight="39.0" prefWidth="21.0" style="-fx-background-color: ; -fx-border-color: ;" styleClass="input" stylesheets="@../organisationev/creerevenement/creationev.css">
+         <font>
+            <Font size="10.0" />
+         </font></TextField>
+      <TextField fx:id="hourr" layoutX="533.0" layoutY="119.0" prefHeight="39.0" prefWidth="21.0" style="-fx-background-color: ; -fx-border-color: ;" styleClass="input" stylesheets="@../organisationev/creerevenement/creationev.css">
+         <font>
+            <Font size="10.0" />
+         </font></TextField>
+      <ChoiceBox fx:id="devise" layoutX="723.0" layoutY="548.0" prefHeight="25.0" prefWidth="41.0" stylesheets="@transaction.css" />
+      <ChoiceBox fx:id="mode" layoutX="322.0" layoutY="625.0" prefHeight="25.0" prefWidth="55.0" style="visibility: false;" />
+      <ImageView fx:id="card" fitHeight="56.0" fitWidth="55.0" layoutX="111.0" layoutY="73.0">
+         <image>
+            <Image url="@icon1.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="33.0" layoutX="561.0" layoutY="286.0">
+         <image>
+            <Image url="@894798-200.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="33.0" layoutX="561.0" layoutY="450.0">
+         <image>
+            <Image url="@894798-200.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="numordre" layoutX="731.0" layoutY="418.0" prefHeight="39.0" prefWidth="103.0" style="-fx-background-color: transaparent; -fx-border-color: transaparent;" stylesheets="@../organisationev/creerevenement/creationev.css" text="aze">
+         <font>
+            <Font size="21.0" />
+         </font></TextField>
+      <TextField fx:id="totale121" layoutX="162.0" layoutY="21.0" prefHeight="39.0" prefWidth="139.0" style="-fx-background-color: transaparent; -fx-background-insets: 0; -fx-border-color: 0;" styleClass="input" stylesheets="@../organisationev/creerevenement/creationev.css" text=" " />
+      <TextField fx:id="totale" layoutX="672.0" layoutY="540.0" prefHeight="39.0" prefWidth="55.0" style="-fx-background-color: transaparent; -fx-background-insets: 0; -fx-border-color: transaparent;" styleClass="input" stylesheets="@../organisationev/creerevenement/creationev.css" text="aze" />
+      <ImageView fitHeight="294.0" fitWidth="192.0" layoutX="648.0" layoutY="49.0">
+         <image>
+            <Image url="@carte.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="nompre" layoutX="761.0" layoutY="254.0" prefHeight="39.0" prefWidth="124.0" rotate="-90.0" style="-fx-background-color: transaparent; -fx-background-insets: 0; -fx-border-color: transaparent;" styleClass="input" stylesheets="@../organisationev/creerevenement/creationev.css" text=" " />
+      <TextField fx:id="cvvcp" layoutX="786.0" layoutY="299.0" prefHeight="39.0" prefWidth="33.0" rotate="-83.7" style="-fx-background-color: transaparent; -fx-background-insets: 0; -fx-border-color: transaparent;" styleClass="input" stylesheets="@../organisationev/creerevenement/creationev.css" text=" ">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="cvvcp1" layoutX="787.0" layoutY="283.0" prefHeight="39.0" prefWidth="33.0" rotate="-83.7" style="-fx-background-color: transaparent; -fx-background-insets: 0; -fx-border-color: transaparent;" styleClass="input" stylesheets="@../organisationev/creerevenement/creationev.css" text=" ">
+         <font>
+            <Font size="10.0" />
+         </font>
+         </TextField>
+      <TextField fx:id="numcardcopy" layoutX="640.0" layoutY="192.0" prefHeight="39.0" prefWidth="262.0" rotate="-90.0" style="-fx-background-color: transaparent; -fx-background-insets: 0; -fx-border-color: transaparent;" styleClass="input" stylesheets="@../organisationev/creerevenement/creationev.css">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </TextField>
+   </children>
+</AnchorPane>

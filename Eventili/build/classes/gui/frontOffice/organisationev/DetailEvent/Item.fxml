@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="86.0" prefWidth="312.0" styleClass="pane" stylesheets="@item.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.frontOffice.organisationev.DetailEvent.ItemController">
+   <children>
+      <HBox prefHeight="88.0" prefWidth="312.0">
+         <children>
+            <ImageView fx:id="img" fitHeight="85.0" fitWidth="92.0" pickOnBounds="true" styleClass="img">
+               <image>
+                  <Image url="@../../../images/event.jpg" />
+               </image>
+            </ImageView>
+            <Label fx:id="NomSousService" prefHeight="67.0" prefWidth="224.0" styleClass="NomSousService" stylesheets="@item.css" text="Festival des couleurs" textAlignment="CENTER" textFill="#3d006f">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <HBox.margin>
+                  <Insets top="20.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+   </children>
+</Pane>

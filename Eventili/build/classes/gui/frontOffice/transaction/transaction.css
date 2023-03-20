@@ -1,0 +1,31 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+}
+#devisee .text {
+  -fx-font-family: 'Arial Rounded MT Bold';
+  -fx-text-fill: rgb(59, 58, 58);
+  -fx-line-spacing: 1.473em;
+}
+#devise {
+    -fx-background-color: transparent;
+}
+#devise .arrow-button {
+  -fx-background-color: transparent;
+}
+
+#devise .arrow-button:hover {
+  -fx-background-color: transparent;
+}
+
+#devise .arrow {
+  -fx-background-color: transparent;
+  -fx-background-insets: 0;
+}
+
+#devise .arrow:hover {
+  -fx-background-color: transparent;
+}

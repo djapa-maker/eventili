@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" fx:id="screen5" prefHeight="754.0" prefWidth="998.0" style="-fx-background-color: white;" styleClass="mainFxmlClass" stylesheets="@creersousservice.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.backOffice.Service.creerSousService.CreerSousServiceController">
+   <children>
+      <Text fx:id="text1" fill="#798fff" layoutX="176.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="input" text="Creation d'un sous service" textAlignment="CENTER" wrappingWidth="646.71875">
+         <font>
+            <Font name="System Bold" size="44.0" />
+         </font>
+      </Text>
+      <Text fx:id="text2" fill="#ff8600" layoutX="80.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="input" text="Choisissez un service :">
+         <font>
+            <Font size="24.0" />
+         </font></Text>
+      <Text fx:id="text3" fill="#ff8600" layoutX="80.0" layoutY="356.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="input" text="Description :">
+         <font>
+            <Font size="24.0" />
+         </font></Text>
+      <TextArea fx:id="description" layoutX="80.0" layoutY="384.0" prefHeight="151.0" prefWidth="310.0" stylesheets="@creersousservice.css">
+         <styleClass>
+            <String fx:value="description" />
+            <String fx:value="input" />
+         </styleClass></TextArea>
+      <Button fx:id="annuler" layoutX="771.0" layoutY="684.0" mnemonicParsing="false" onAction="#close" prefHeight="49.0" prefWidth="111.0" style="-fx-background-color: white;" styleClass="input" text="Annuler" textFill="#c3c3c3">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="suivant" layoutX="891.0" layoutY="684.0" mnemonicParsing="false" onAction="#addSousService" prefHeight="49.0" prefWidth="89.0" style="-fx-background-color: FF8600;" styleClass="input" text="Suivant" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Text fx:id="txtprice" fill="#ff8600" layoutX="80.0" layoutY="598.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="input" text="Prix  :">
+         <font>
+            <Font size="24.0" />
+         </font></Text>
+      <TextField fx:id="price" layoutX="145.0" layoutY="576.0" prefHeight="32.0" prefWidth="203.0" styleClass="input" />
+      <ComboBox fx:id="mychoicebox" layoutX="80.0" layoutY="152.0" prefHeight="39.0" prefWidth="225.0" style="-fx-background-color: #e9effd;">
+         <styleClass>
+            <String fx:value="mainFxmlClass" />
+            <String fx:value="input" />
+         </styleClass></ComboBox>
+      <Text fx:id="txtprice1" layoutX="355.0" layoutY="601.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="input" text="DT" wrappingWidth="29.603034496307373">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text fx:id="txtprice2" fill="#ff8600" layoutX="80.0" layoutY="236.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="input" text="Nom du sous service :">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <TextField fx:id="nomSousService" layoutX="80.0" layoutY="260.0" prefHeight="49.0" prefWidth="310.0" styleClass="input" />
+      <Text fx:id="text31" fill="#ff8600" layoutX="547.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="input" text="Choisissez une catégorie d'événement :" wrappingWidth="415.5">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Button fx:id="importer" layoutX="517.0" layoutY="435.0" mnemonicParsing="false" onAction="#importIcone" prefHeight="49.0" prefWidth="447.0" style="-fx-background-color: #e9effd;" styleClass="input" text="Importer des images" textFill="#260279">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+      <ListView fx:id="list" layoutX="517.0" layoutY="504.0" prefHeight="159.0" prefWidth="447.0" styleClass="input" stylesheets="@creersousservice.css" />
+      <Separator layoutX="473.0" layoutY="110.0" orientation="VERTICAL" prefHeight="551.0" prefWidth="2.0" />
+      <ScrollPane layoutX="547.0" layoutY="161.0" prefHeight="270.0" prefWidth="416.0" style="-fx-background-color: white;" styleClass="viewport" stylesheets="@creersousservice.css">
+         <content>
+            <GridPane fx:id="grid" prefHeight="48.0" prefWidth="183.0" style="-fx-background-color: white;">
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </GridPane>
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

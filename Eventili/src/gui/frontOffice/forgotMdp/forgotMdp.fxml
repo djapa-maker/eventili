@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="499.0" prefWidth="650.0" style="-fx-background-color: #aeb8fe;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.frontOffice.forgotMdp.ForgotMdpController">
+   <children>
+      <TextField fx:id="txt_usr" layoutX="143.0" layoutY="218.0" prefHeight="36.0" prefWidth="344.0" />
+      <TextField fx:id="txt_email" layoutX="143.0" layoutY="316.0" prefHeight="36.0" prefWidth="344.0" />
+      <Label layoutX="277.0" layoutY="172.0" prefHeight="32.0" prefWidth="117.0" text="Email:" textFill="#758bfd">
+         <font>
+            <Font name="Berlin Sans FB" size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="280.0" layoutY="272.0" prefHeight="32.0" prefWidth="71.0" text="Code:" textFill="#758bfd">
+         <font>
+            <Font name="Berlin Sans FB" size="22.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelemail" alignment="CENTER" layoutX="68.0" layoutY="370.0" prefHeight="30.0" prefWidth="495.0" textAlignment="CENTER" textFill="#110000">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Button layoutX="31.0" layoutY="414.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#sendcode" prefHeight="48.0" prefWidth="203.0" style="-fx-background-color: #ff8600; -fx-border-color: white; -fx-border-radius: 5px;" text="Envoyer un e-mail" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="Reset" layoutX="438.0" layoutY="414.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#Reset_onclick" prefHeight="48.0" prefWidth="167.0" style="-fx-background-color: #ff8600; -fx-border-color: white; -fx-border-radius: 5px;" text="Vérifier code" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="20.0" />
+         </font>
+      </Button>
+      <Label alignment="CENTER" layoutX="101.0" layoutY="122.0" prefHeight="32.0" prefWidth="429.0" text="Un code sera envoyé dans votre boite email" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB" size="22.0" />
+         </font>
+      </Label>
+      <Text fill="#fcb069" layoutX="149.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mot de passe oublié">
+         <font>
+            <Font name="Gill Sans MT Bold" size="36.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

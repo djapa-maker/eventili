@@ -1,0 +1,16 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+}
+.button1{
+    -fx-background-color:#3a3289;
+}
+.button1:hover{
+    -fx-background-color:#382cb3;
+}
+.button1:pressed{
+    -fx-background-color:#6457db;
+}

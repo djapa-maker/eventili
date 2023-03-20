@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="701.0" prefWidth="1600.0" styleClass="dark-background" stylesheets="@listerservice.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.backOffice.Service.ListerService.ListerServiceController">
+    <top>
+        <HBox prefHeight="120.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                   
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER" prefHeight="120.0" prefWidth="900.0">
+               <children>
+                         <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="52.0" prefWidth="522.0" styleClass="search-container" stylesheets="@listerservice.css">
+                           <children>
+                              <TextField fx:id="search" prefHeight="52.0" prefWidth="470.0" promptText="Recherche" style="-fx-background-color: transparent;">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </TextField>
+                        <Button fx:id="serachButton" mnemonicParsing="false" prefHeight="31.0" prefWidth="32.0" styleClass="category" stylesheets="@listerservice.css">
+                           <graphic>
+                              <HBox fx:id="hboxicon" prefHeight="21.0" prefWidth="32.0" styleClass="glyph-icon" stylesheets="@listerservice.css" />
+                           </graphic>
+                        </Button>
+                           </children>
+                        </HBox>
+               </children></HBox>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" />
+            </children>
+        </HBox>
+    </top>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="3.0" prefWidth="1300.0">
+               <children>
+                  <VBox prefHeight="100.0" prefWidth="389.0" />
+                  <VBox prefHeight="100.0" prefWidth="389.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="31.0" prefWidth="1335.0">
+               <children>
+                  <VBox prefHeight="31.0" prefWidth="234.0">
+                     <children>
+                        <HBox prefHeight="21.0" prefWidth="277.0">
+                           <children>
+                              <Label prefHeight="27.0" prefWidth="87.0" text="Services :" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="nbServ" prefHeight="27.0" prefWidth="40.0" text="nbr" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="50.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <HBox prefHeight="31.0" prefWidth="238.0">
+                     <HBox.margin>
+                        <Insets left="250.0" right="400.0" />
+                     </HBox.margin></HBox>
+                  <HBox prefHeight="100.0" prefWidth="154.0">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin></HBox>
+                  <HBox prefHeight="40.0" prefWidth="95.0">
+                     <children>
+                        <Button fx:id="add" mnemonicParsing="false" onAction="#ajouterService" style="-fx-background-color: white;" styleClass="categ-container" stylesheets="@listerservice.css" text="Ajouter" textFill="#ffb25c">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </HBox>
+               </children>
+            </HBox>
+            <ScrollPane fx:id="scrollbar2" prefHeight="638.0" prefWidth="1470.0" styleClass="dark-background" stylesheets="@listerservice.css" VBox.vgrow="ALWAYS">
+               <content>
+                  <GridPane fx:id="Grid" styleClass="dark-background" stylesheets="@listerservice.css">
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </GridPane>
+               </content>
+            </ScrollPane>
+         </children>
+      </VBox>
+   </center>
+   <right>
+      <VBox prefHeight="681.0" prefWidth="52.0" styleClass="dark-background" stylesheets="@listerservice.css" BorderPane.alignment="CENTER" />
+   </right>
+   <left>
+      <Pane prefHeight="681.0" prefWidth="40.0" BorderPane.alignment="CENTER" />
+   </left>
+</BorderPane>

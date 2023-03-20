@@ -1,0 +1,19 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+}
+.button1{
+    -fx-background-color:white;
+    -fx-background-radius:100px;
+}
+.button1:selected{
+    -fx-background-color:blue;
+}
+.button1:hover{
+    -fx-background-color:#eff1ff;
+}
+
+

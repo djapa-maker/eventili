@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="70.0" prefWidth="1470.0" style="-fx-background-radius: 50px; -fx-border-radius: 50px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.backOffice.transactions.ItemCardTController">
+   <children>
+      <Pane layoutX="2.0" layoutY="-2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="90.0" prefWidth="1500.0" style="-fx-background-radius: 50px;" stylesheets="@../users/style.css">
+         <children>
+            <Pane fx:id="pane1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="90.0" prefWidth="1500.0" stylesheets="@../users/style.css">
+               <children>
+                  <ImageView fx:id="icon" fitHeight="36.0" fitWidth="37.0" layoutX="13.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" style="-fx-border-radius: 50;" />
+                  <Text fx:id="mode_trans" fill="#330086" layoutX="893.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="mode_trans" textAlignment="CENTER" wrappingWidth="161.521484375">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="devis" fill="#330086" layoutX="232.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="devis" textAlignment="CENTER" wrappingWidth="188.54688954353333">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="nom" fill="#330086" layoutX="67.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom " textAlignment="CENTER" wrappingWidth="90.876953125">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Separator layoutX="60.0" layoutY="15.0" orientation="VERTICAL" prefHeight="59.0" prefWidth="7.0" />
+                  <Separator layoutX="203.0" layoutY="15.0" orientation="VERTICAL" prefHeight="59.0" prefWidth="7.0" />
+                  <Separator layoutX="1087.0" layoutY="15.0" orientation="VERTICAL" prefHeight="59.0" prefWidth="7.0" />
+                  <Text fx:id="date_trans" fill="#330086" layoutX="539.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="date_trans" textAlignment="CENTER" wrappingWidth="299.5468895435333">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Separator layoutX="473.0" layoutY="15.0" orientation="VERTICAL" prefHeight="59.0" prefWidth="7.0" />
+                  <Separator layoutX="854.0" layoutY="15.0" orientation="VERTICAL" prefHeight="59.0" prefWidth="7.0" />
+                  <Text fx:id="montant_tot" fill="#330086" layoutX="1142.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="montant_tot" textAlignment="CENTER" wrappingWidth="249.54688954353333">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+               <styleClass>
+                  <String fx:value="shadow" />
+                  <String fx:value="pane" />
+               </styleClass>
+            </Pane>
+         </children>
+         <styleClass>
+            <String fx:value="shadow" />
+            <String fx:value="pane" />
+         </styleClass>
+      </Pane>
+   </children>
+</AnchorPane>

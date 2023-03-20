@@ -1,0 +1,165 @@
+.dark-background{
+
+    -fx-background-color: #D2D9FC;
+
+}
+
+.primary_color{
+    -fx-background-color: #181818;
+}
+
+.secondary-color{
+    -fx-background-color: #121212;
+}
+
+.selected{
+    -fx-border-color: #1ED760;
+    -fx-border-width: 0 0 0 5
+}
+
+.top-border{
+    -fx-border-color: #A1A1A1;
+    -fx-border-width: 1 0 0 0;
+}
+
+.search-container{
+    -fx-background-color: #fff;
+    -fx-background-radius: 100;
+}
+
+.categ-container{
+    -fx-background-color: #2E2256;
+    -fx-background-radius: 100;
+}
+.categ-tab-container{
+    -fx-background-color: #B1A2D4;
+    -fx-background-radius: 100;
+}
+.timerb{
+    -fx-background-color: #382A67;
+    -fx-background-radius: 50;
+}
+.filterb{
+    -fx-background-color: #4d258a;
+    -fx-background-radius: 100;
+}
+
+.category{
+    -fx-background-color: #fff;
+    -fx-background-radius: 100;
+}
+.upgrade-button{
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-border-color: #fff;
+    -fx-border-radius: 50;
+}
+
+.scroll-pane > .viewport{
+    -fx-background-color: #181818;
+}
+
+.gradient{
+    -fx-background-color: linear-gradient(to top, #676767 ,transparent);
+}
+
+.shadow{
+    -fx-effect: dropshadow(three-pass-box,rgba(0,0,0,0.2),10,0,0,10);
+
+}
+.pane{
+    -fx-background-radius: 30;
+
+    -fx-border-width:5;
+    -fx-background-color:white;
+}
+
+#seekslider
+{
+    -fx-opacity: 0.1;
+}
+#seekslider:hover
+{
+    -fx-opacity: 1;
+}
+
+#menuBar {
+    -fx-opacity: 0.1;
+}
+
+#menuBar:hover {
+    -fx-opacity: 1.0;
+    -fx-resize: none;
+
+}
+
+#openfile
+{
+    -fx-background-image: url("../img/folder.png");
+    -fx-background-size: 20 20 ;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+}
+
+#playbutton
+{
+    -fx-background-image: url("../img/play.png");
+    -fx-background-size: 20 20 ;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+}
+
+#pausebutton
+{
+    -fx-background-image: url("../img/pause.png");
+    -fx-background-size: 20 20 ;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+}
+
+#stopbutton
+{
+    -fx-background-image: url("../img/stop.png");
+    -fx-background-size: 20 20 ;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+}
+
+.box-light
+{
+    -fx-background-color : derive( -light-gray, 50%);
+}
+.glyph-icon {
+    -fx-fill: #D3CFD6;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.add{
+    -fx-background-color: #758BFD;
+    -fx-background-radius: 500;
+}
+
+.glyph-icon{
+    -fx-fill:#eeeee4;
+}
+/*.glyph-icon2{
+    -fx-fill:#FFB25C;
+}*/
+
+.serachButton > .glyph-icon{
+    -fx-fill:#FFB25C;
+}
+.scroll-bar{
+    -fx-background-color: transparent;
+    -fx-background: transparent; 
+    -fx-border-color: transparent;
+    -fx-color:transparent;
+}
+
+

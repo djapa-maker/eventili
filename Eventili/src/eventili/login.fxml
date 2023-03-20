@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="680.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eventili.LoginController">
+   <children>
+      <VBox fx:id="vbox" prefHeight="680.0" prefWidth="465.0" style="-fx-background-color: #aeb8fd;">
+         <children>
+            <ImageView fitHeight="293.0" fitWidth="408.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/wedding_planner_2%20(1)%201.png" />
+               </image>
+               <VBox.margin>
+                  <Insets left="30.0" top="200.0" />
+               </VBox.margin>
+            </ImageView>
+         </children>
+      </VBox>
+      <Text fill="#556bf8" layoutX="541.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Connexion">
+         <font>
+            <Font name="Gill Sans MT" size="41.0" />
+         </font>
+      </Text>
+      <TextField fx:id="txtEmail" layoutX="567.0" layoutY="274.0" prefHeight="27.0" prefWidth="374.0" style="-fx-background-color: trasparent; -fx-border-color: #cdcaca; -fx-border-radius: 5px;" />
+      <Text layoutX="567.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E-mail">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="15.0" />
+         </font>
+      </Text>
+      <PasswordField fx:id="txtMdp" layoutX="567.0" layoutY="350.0" prefHeight="27.0" prefWidth="374.0" style="-fx-background-color: transparent; -fx-border-color: #cdcaca; -fx-border-radius: 5px;" />
+      <Text layoutX="569.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mot de passe">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="15.0" />
+         </font>
+      </Text>
+      <Button fx:id="btnconnecter" layoutX="567.0" layoutY="496.0" mnemonicParsing="false" onMouseClicked="#connecter" prefHeight="27.0" prefWidth="374.0" style="-fx-background-color: #556bf8;" text="Se connecter" textFill="WHITE">
+         <font>
+            <Font name="Gill Sans MT Bold" size="18.0" />
+         </font>
+      </Button>
+      <Text layoutX="633.0" layoutY="574.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vous n'avez pas de compte?">
+         <font>
+            <Font name="Gill Sans MT" size="14.0" />
+         </font>
+      </Text>
+      <Text fx:id="gotologn" fill="#556bf8" layoutX="795.0" layoutY="575.0" onMouseClicked="#afficherlogin" strokeType="OUTSIDE" strokeWidth="0.0" text="S'inscrire" />
+      <Label fx:id="Lmsg" layoutX="572.0" layoutY="417.0" prefHeight="17.0" prefWidth="365.0" />
+      <TextField fx:id="txtMdpS" layoutX="568.0" layoutY="350.0" prefHeight="27.0" prefWidth="374.0" style="-fx-background-color: trasparent; -fx-border-color: #cdcaca; -fx-border-radius: 5px;" />
+      <FontAwesomeIconView fx:id="eye" fill="#758bfd" glyphName="EYE" layoutX="917.0" layoutY="368.0" onMouseClicked="#show" size="15" />
+      <FontAwesomeIconView fx:id="eyeS" fill="#758bfd" glyphName="EYE_SLASH" layoutX="918.0" layoutY="368.0" onMouseClicked="#hide" size="15" />
+      <Text fx:id="forgotMdp" fill="#556bf8" layoutX="572.0" layoutY="404.0" onMouseClicked="#forgot" strokeType="OUTSIDE" strokeWidth="0.0" text="Mot de passe oublié">
+         <font>
+            <Font name="Gill Sans MT Bold" size="13.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

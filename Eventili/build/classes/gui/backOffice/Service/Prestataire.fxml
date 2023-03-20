@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="prestataire" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="801.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.backOffice.Service.PrestataireController">
+   <top>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER_RIGHT">
+         <children>
+            <Button fx:id="servicebtn" mnemonicParsing="false" onAction="#ListerService" prefHeight="100.0" prefWidth="800.0" styleClass="service" stylesheets="@prestataire.css" text="Les services" textFill="#7276ff">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <font>
+                  <Font size="44.0" />
+               </font>
+            </Button>
+            <Button fx:id="ssbtn" mnemonicParsing="false" onAction="#ListerSousService" prefHeight="100.0" prefWidth="800.0" styleClass="ss" stylesheets="@prestataire.css" text="Les sous services" textFill="#7276ff">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <font>
+                  <Font size="44.0" />
+               </font></Button>
+            <Button fx:id="avisbtn" mnemonicParsing="false" onAction="#ListerAvis" prefHeight="100.0" prefWidth="800.0" styleClass="service" stylesheets="@prestataire.css" text="Les Avis" textFill="#7276ff">
+               <font>
+                  <Font size="44.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+   </top>
+</BorderPane>

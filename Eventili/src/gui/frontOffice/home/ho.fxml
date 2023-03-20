@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.frontOffice.home.HoController">
+   <children>
+      <HBox layoutX="65.0" layoutY="143.0" prefHeight="36.0" prefWidth="261.0">
+         <children>
+            <Text fx:id="nbrevent" fill="#3a3289" strokeType="OUTSIDE" strokeWidth="0.0" text="nbr" wrappingWidth="180.4921875">
+               <font>
+                  <Font name="Calibri Bold Italic" size="24.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+            </Text>
+         </children>
+      </HBox>
+      <HBox layoutX="542.0" layoutY="33.0" prefHeight="57.0" prefWidth="352.0">
+         <children>
+            <TextField fx:id="searchbar" prefHeight="40.0" prefWidth="338.0" promptText="Rechercher .....">
+               <HBox.margin>
+                  <Insets top="10.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+      </HBox>
+      <VBox alignment="TOP_CENTER" layoutX="1249.0" layoutY="19.0" prefHeight="806.0" prefWidth="520.0" styleClass="right-bar" stylesheets="@../../../../../../../islem/Eventili/src/gui/frontOffice/home/mesevenements.css">
+         <children>
+            <HBox alignment="CENTER" prefHeight="86.0" prefWidth="507.0">
+               <children>
+                  <Button fx:id="createbtn" graphicTextGap="20.0" mnemonicParsing="false" onAction="#add" styleClass="button1" stylesheets="@../../../../../../../islem/Eventili/src/gui/frontOffice/home/mesevenements.css" text="Participer à un événement" textFill="#758bfd">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="30.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </HBox>
+            <VBox fx:id="eventCard" alignment="TOP_CENTER" prefHeight="415.0" prefWidth="350.0" stylesheets="@../../../../../../../islem/Eventili/src/gui/frontOffice/home/mesevenements.css">
+               <VBox.margin>
+                  <Insets left="50.0" right="50.0" top="20.0" />
+               </VBox.margin>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Vous voulez participer à un événement à et vous ne savez pas par où chercher? " textAlignment="CENTER" wrappingWidth="401.35797119140625">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Eventili vous offre une opportunité!" textAlignment="CENTER" wrappingWidth="401.35797119140625">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </Text>
+               </children>
+               <styleClass>
+                  <String fx:value="event-card" />
+                  <String fx:value="shadow" />
+               </styleClass>
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+            </VBox>
+         </children>
+      </VBox>
+      <ScrollPane fx:id="scroll" layoutX="73.0" layoutY="185.0" prefHeight="614.0" prefWidth="1134.0" styleClass="backgrounds" stylesheets="@../../../../../../../islem/Eventili/src/gui/frontOffice/home/mesevenements.css">
+         <content>
+            <GridPane fx:id="grid" prefHeight="0.0" prefWidth="0.0">
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

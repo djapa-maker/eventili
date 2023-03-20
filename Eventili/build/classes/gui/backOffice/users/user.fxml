@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="701.0" prefWidth="1600.0" styleClass="dark-background" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.backOffice.users.UserController">
+   <children>
+      <HBox alignment="CENTER" layoutX="460.0" layoutY="34.0" maxHeight="-Infinity" prefHeight="52.0" prefWidth="522.0" styleClass="search-container" stylesheets="@../../../../../../../main/pidev/Eventili/src/gui/backOffice/services/Style.css">
+         <children>
+            <TextField fx:id="search" prefHeight="52.0" prefWidth="470.0" promptText="Recherche" style="-fx-background-color: transparent;">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </TextField>
+            <Button fx:id="serachButton" mnemonicParsing="false" prefHeight="31.0" prefWidth="32.0" styleClass="category">
+               <graphic>
+                  <HBox fx:id="hboxicon" prefHeight="21.0" prefWidth="32.0" styleClass="glyph-icon" stylesheets="@../../../../../../../main/pidev/Eventili/src/gui/backOffice/services/Style.css">
+                     <children>
+                        <HBox fx:id="hboxicon" prefHeight="21.0" prefWidth="32.0" styleClass="glyph-icon" stylesheets="@../../../../../../../main/pidev/Eventili/src/gui/backOffice/services/Style.css" />
+                     </children></HBox>
+               </graphic>
+            </Button>
+         </children>
+      </HBox>
+      <Button fx:id="add" layoutX="1382.0" layoutY="129.0" mnemonicParsing="false" onAction="#addf" prefHeight="31.0" prefWidth="108.0" style="-fx-background-color: white;" styleClass="categ-container" text="Ajouter" textFill="#ffb25c">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+      <ScrollPane layoutX="22.0" layoutY="191.0" prefHeight="461.0" prefWidth="1564.0" style="-fx-background-color: transparent;">
+         <content>
+            <GridPane fx:id="Grid">
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

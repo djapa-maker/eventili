@@ -1,0 +1,102 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+}
+.nom_serv{
+     
+}
+
+.btnN{
+     -fx-background-radius:30px;
+      -fx-background-color: #eeeee4;
+}
+
+.btnSS{
+     -fx-background-radius:80px;
+      -fx-background-color: #eeeee4;
+}
+.vbox{
+    -fx-background-radius:80px;
+      -fx-background-color: #758BFD;
+}
+.space{
+     -fx-background-radius:80px;
+     -fx-background-color: white;
+}
+.search-box{
+    -fx-background-color:  #fafafa ;
+    -fx-background-radius: 20;
+    -fx-border-color: #d9dadd;
+    -fx-border-radius: 20;
+    
+}
+.trasparent{
+    -fx-background-color: rgba(0,0,0,0);
+}
+
+.search-button{
+    -fx-background-color: #3a3289;
+    -fx-background-radius: 1 20 20 1;
+}
+.shadow{
+    -fx-effect: dropshadow(three-pass-box,rgba(0,0,0,0.1),10.0,0.0,0.0,10.0);
+}
+.right-bar{
+    -fx-background-color: #ffffff;
+}
+.event-card{
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-color:#d7dcff;
+    -fx-background-color: #ffffff ;
+    -fx-border-width: 2;
+}
+.button1{
+    -fx-background-color: #3a3289;
+    -fx-background-radius: 20px;
+}
+
+.scroll-pane > .viewport {
+   -fx-background-color: transparent;
+}
+.backgrounds{
+    -fx-background-color: white;
+}
+
+
+.my-button:hover {
+    -fx-font-size: 16px;
+    -fx-background-color:#758BFD;
+}
+
+
+.button1 {
+    -fx-background-color: #ff8600;
+    -fx-background-radius: 10px;
+}
+
+.button1:hover {
+    -fx-background-color: #ff7f00;
+}
+
+.button1:pressed {
+    -fx-background-color: #ff6f00;
+}
+
+.button1 .text {
+    -fx-fill: white;
+}
+
+.scroll-bar{
+    -fx-background-color: transparent;
+    -fx-background: transparent; 
+    -fx-border-color: transparent;
+    -fx-color:transparent;
+}
+.scroll-pane .scroll-bar{
+    -fx-opacity: 0;
+    -fx-background-color: transparent;
+}

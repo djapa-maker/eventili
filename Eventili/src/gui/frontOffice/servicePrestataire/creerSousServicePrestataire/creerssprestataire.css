@@ -1,0 +1,21 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+}
+.scroll-pane > .viewport {
+   -fx-background-color: transparent;
+}
+.my-checkbox .box {
+    -fx-background-color: #758BFD;
+}
+.input{
+    -fx-background-color:  #ffffff ;
+    -fx-effect: dropshadow(three-pass-box,rgba(0,0,0,0.1),10.0,0.0,0.0,10.0);
+    -fx-background-radius: 10;
+    -fx-border-color: #d9dadd;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}

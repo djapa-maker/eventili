@@ -1,0 +1,1 @@
+org.mindrot.jbcrypt.BCrypt

@@ -1,0 +1,24 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+}
+.service{
+   -fx-background-color:white;
+   -fx-affect:dropshadow(one-pass-box , black , 8,0.0,2,0);
+       
+}
+.service:hover{
+   -fx-background-color:whitesmoke;
+   -fx-affect:dropshadow(one-pass-box , black , 8,0.0,2,0);
+       
+}
+.ss{
+     -fx-background-color:white;
+}
+.ss:hover{
+      -fx-background-color:whitesmoke;
+   -fx-affect:dropshadow(one-pass-box , black , 8,0.0,2,0); 
+}
