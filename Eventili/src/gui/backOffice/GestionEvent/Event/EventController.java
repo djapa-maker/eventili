@@ -9,6 +9,7 @@ import de.jensd.fx.glyphs.GlyphsDude;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import entities.Event;
 import gui.backOffice.GestionEvent.Event.Item.ItemevController;
+import gui.backOffice.GestionEvent.Event.creerEvent.CreerEventController;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -28,6 +29,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import services.EventService;
 
 /**
@@ -59,7 +61,7 @@ public class EventController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-         try {
+        try {
             hboxicon.getChildren().addAll(GlyphsDude.createIcon(FontAwesomeIcon.SEARCH, "20px"));
 
             listEv = (ArrayList<Event>) es.getAll();
@@ -71,8 +73,9 @@ public class EventController implements Initializable {
         }
 
         SearchDynamic();
-    }    
-        public void LoadData() throws IOException, SQLException {
+    }
+
+    public void LoadData() throws IOException, SQLException {
         nbEvent.setText("" + listEv.size());
         column = 0;
         row = 1;
@@ -96,28 +99,38 @@ public class EventController implements Initializable {
     @FXML
     private void search(ActionEvent event) {
     }
-    
+
+    public void Refresh() throws IOException, SQLException {
+        Grid.getChildren().clear();
+        listEv = (ArrayList<Event>) es.getAll();
+        LoadData();
+    }
+
     private void SearchDynamic() {
-    search.textProperty().addListener((observable, oldValue, newValue) -> {
-        try {
-             listEv= (ArrayList<Event>) es.findEventByName(newValue);
-            Grid.getChildren().clear();
-            LoadData();
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        } catch (IOException ex) {
-            System.out.println(ex);
-        }
-    });
-}
+        search.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                listEv = (ArrayList<Event>) es.findEventByName(newValue);
+                Grid.getChildren().clear();
+                LoadData();
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            } catch (IOException ex) {
+                System.out.println(ex);
+            }
+        });
+    }
 
     @FXML
     private void ajouterEvent(ActionEvent event) throws IOException {
         FXMLLoader addLoader = new FXMLLoader(getClass().getResource("/gui/backOffice/GestionEvent/Event/creerEvent/creerEvent.fxml"));
         Parent Root = addLoader.load();
+        CreerEventController addController = addLoader.getController();
+        addController.getController(this);
         Stage Stage = new Stage();
+        Stage.initStyle(StageStyle.UNDECORATED);
         Stage.setScene(new Scene(Root));
         Stage.show();
+        
     }
-    
+
 }

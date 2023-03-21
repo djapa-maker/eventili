@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1700.0" style="-fx-background-color: white;" stylesheets="@listeravisclient.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.frontOffice.AvisClient.ListerAvisClientController">
+<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1700.0" style="-fx-background-color: white;" stylesheets="@listeravisclient.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.frontOffice.AvisClient.ListerAvisClientController">
    <children>
       <HBox alignment="CENTER" layoutX="381.0" layoutY="20.0" prefHeight="55.0" prefWidth="593.0">
          <styleClass>
@@ -27,7 +27,7 @@
             </Label>
          </children>
       </HBox>
-      <VBox alignment="TOP_CENTER" layoutX="1349.0" layoutY="-1.0" prefHeight="806.0" prefWidth="400.0" style="-fx-background-color: white;" styleClass="right-bar" stylesheets="@listeravisclient.css">
+      <VBox alignment="TOP_CENTER" layoutX="1349.0" layoutY="-1.0" prefHeight="806.0" prefWidth="352.0" style="-fx-background-color: white;" styleClass="right-bar" stylesheets="@listeravisclient.css">
          <children>
             <HBox alignment="CENTER" prefHeight="86.0" prefWidth="507.0">
                <VBox.margin>

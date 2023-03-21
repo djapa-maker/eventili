@@ -90,7 +90,7 @@ public class TicketController implements Initializable {
         idEvt = evtId;
         e = es.findEventById(idEvt);
 
-        String Image = e.getImage();
+        String Image = es.findFirstImageByEvent(e).getImg();
         FileInputStream inputstream = new FileInputStream("C:\\xampp\\htdocs\\img\\" + Image);
         Image image = new Image(inputstream);
         imgE.setStroke(javafx.scene.paint.Color.ORANGE);

@@ -20,8 +20,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Base64;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,6 +33,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
+import services.EventService;
 
 /**
  * FXML Controller class
@@ -53,8 +52,9 @@ public class TicketScanController implements Initializable {
     private TextField titres;
     @FXML
     private ImageView qrview;
- Event e= data.getE();
-       Ticket T=data.getT();
+    Event e= data.getE();
+    EventService es = new EventService();
+    Ticket T=data.getT();
     @FXML
     private Rectangle imgE;
     /**
@@ -78,7 +78,7 @@ public class TicketScanController implements Initializable {
 
      private void GetImg() throws FileNotFoundException {
         
-         String Image=e.getImage();
+        String Image=es.findFirstImageByEvent(e).getImg();
         FileInputStream inputstream = new FileInputStream("C:\\xampp\\htdocs\\img\\"+Image); 
         Image image = new Image(inputstream); 
         imgE.setStroke(javafx.scene.paint.Color.ORANGE);

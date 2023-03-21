@@ -19,7 +19,7 @@
 <AnchorPane id="AnchorPane" prefHeight="754.0" prefWidth="998.0" styleClass="mainFxmlClass" stylesheets="@creerevent.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.backOffice.GestionEvent.Event.creerEvent.CreerEventController">
    <children>
       <ChoiceBox fx:id="typeevbox" layoutX="262.0" layoutY="94.0" prefHeight="39.0" prefWidth="178.0" stylesheets="@creerevent.css" />
-      <DatePicker fx:id="datepicker" layoutX="47.0" layoutY="162.0" onAction="#checkdate" prefHeight="42.0" prefWidth="264.0" promptText="Entrer une date" />
+      <DatePicker fx:id="datepicker" editable="false" layoutX="47.0" layoutY="162.0" onAction="#checkdate" prefHeight="42.0" prefWidth="264.0" promptText="Entrer une date" />
       <HBox layoutX="396.0" layoutY="167.0" prefHeight="28.0" prefWidth="178.0">
          <children>
             <ChoiceBox fx:id="heuredeb" prefHeight="26.0" prefWidth="40.0" />

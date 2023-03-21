@@ -76,12 +76,12 @@ EventService es = new EventService();
              {
                  btparticiper.setDisable(true);
              }
-        String Image=e.getImage();
+        String Image=es.findFirstImageByEvent(e).getImg();
         FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/"+Image); 
         Image image = new Image(inputstream); 
         
         
-         img.setImage(image);
+        img.setImage(image);
         e1 = e;
         idev=e.getId_ev();
         Rectangle clip = new Rectangle(img.getFitWidth(), img.getFitHeight());

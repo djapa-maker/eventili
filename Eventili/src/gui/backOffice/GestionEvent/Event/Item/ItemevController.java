@@ -14,6 +14,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -26,16 +27,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import services.EventService;
 
 /**
@@ -84,8 +84,8 @@ public class ItemevController implements Initializable {
     public void setData(Event e) throws FileNotFoundException {
         String D = "";
 //        Image image1 = new Image(getClass().getResourceAsStream(e.getImage())); 
-         FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/"+e.getImage()); 
-        Image img1 = new Image(inputstream); 
+        FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/" + es.findFirstImageByEvent(e).getImg());
+        Image img1 = new Image(inputstream);
         icon.setImage(img1);
         e1 = e;
         idev = e.getId_ev();
@@ -125,7 +125,7 @@ public class ItemevController implements Initializable {
     }
 
     @FXML
-    private void supprimer(ActionEvent event) {
+    private void supprimer(ActionEvent event) throws IOException, SQLException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Supprimer événement");
         alert.setHeaderText(null);
@@ -136,6 +136,7 @@ public class ItemevController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == okButton) {
             es.supprimer(e1);
+            ec.Refresh();
         } else {
             alert.close();
         }
@@ -147,9 +148,12 @@ public class ItemevController implements Initializable {
         Parent Root = addLoader.load();
         ModifierEventController modifC = addLoader.getController();
         modifC.modifierData(e1, idev);
+        modifC.getController(ec);
         Stage Stage = new Stage();
+        Stage.initStyle(StageStyle.UNDECORATED);
         Stage.setScene(new Scene(Root));
         Stage.showAndWait();
+        
     }
 
 }

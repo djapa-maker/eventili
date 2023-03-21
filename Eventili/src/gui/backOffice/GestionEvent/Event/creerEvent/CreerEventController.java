@@ -9,7 +9,8 @@ import entities.Event;
 import entities.EventCateg;
 import entities.Personne;
 import entities.SousServices;
-import gui.frontOffice.client.ListerServiceController;
+import entities.imageEv;
+import gui.backOffice.GestionEvent.Event.EventController;
 import gui.sigleton.singleton;
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,10 +25,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -55,8 +53,8 @@ import services.ServiceReservationService;
  */
 public class CreerEventController implements Initializable {
 
-    singleton data= singleton.getInstance();
-    Personne p1=data.getUser();
+    singleton data = singleton.getInstance();
+    Personne p1 = data.getUser();
     @FXML
     private ChoiceBox<String> typeevbox;
     private String[] type = {"Gratuit", "Payant"};
@@ -108,9 +106,11 @@ public class CreerEventController implements Initializable {
     private Button annulerbtn;
     String url = "placeholder.png";
     Event e = new Event();
+    imageEv imgE = new imageEv();
     Event e1 = new Event();
     ArrayList<SousServices> sousS = new ArrayList<>();
     ArrayList<Integer> sousId = new ArrayList<>();
+    EventController ec = new EventController();
     //ServiceReservation sr=new ServiceReservation(e, false, sousS);
 
     /**
@@ -230,8 +230,9 @@ public class CreerEventController implements Initializable {
         fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image files", "*.jpg", "*.png"));
         File selectedFile = fc.showOpenDialog(null);
         if (selectedFile != null) {
+
             //System.out.println(selectedFile.getName());
-            FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/"+selectedFile.getName());
+            FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/" + selectedFile.getName());
             Image img = new Image(inputstream);
             image.setImage(img);
             url = selectedFile.getName();
@@ -258,6 +259,10 @@ public class CreerEventController implements Initializable {
                 alert.close();
             }
         });
+    }
+
+    public void getController(EventController c) {
+        ec = c;
     }
 
     @FXML
@@ -325,17 +330,15 @@ public class CreerEventController implements Initializable {
             int minf = Integer.parseInt(minfin.getValue());
             EventCateg c = ecs.findByName(categorie.getValue());
             EventService es = new EventService();
-
-            e = new Event(LP, p, title, desc, url, typ, "Privé", LocalDateTime.of(year, Month, Day, heured, mind), LocalDateTime.of(year, Month, Day, heuref, minf), c, p1);
-            //System.out.println(e);
+            e = new Event(LP, p, title, desc, typ, "Privé", LocalDateTime.of(year, Month, Day, heured, mind), LocalDateTime.of(year, Month, Day, heuref, minf), c, p1);
+            System.out.println(e);
             es.ajouter(e);
             List<Event> e2 = es.getAll();
-            //System.out.println(e2);
+            System.out.println(e2);
             e1 = e2.get(e2.size() - 1);
-            
-            
-
-            //System.out.println("crea"+e1);
+            imgE = new imageEv(url, e1);
+            es.ajouterI(imgE);
+            ec.Refresh();
             Stage stage = (Stage) btnenr.getScene().getWindow();
             stage.close();
             Alert alert = new Alert(AlertType.INFORMATION);
@@ -345,11 +348,8 @@ public class CreerEventController implements Initializable {
             alert.showAndWait();
 
 //            Stage Stage = new Stage();
-          
             //stage.showAndWait();
-
         }
     }
-
 
 }

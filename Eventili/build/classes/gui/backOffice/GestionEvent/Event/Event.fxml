@@ -58,7 +58,7 @@
                      <children>
                         <HBox prefHeight="21.0" prefWidth="277.0">
                            <children>
-                              <Label prefHeight="27.0" prefWidth="120.0" text="Services :" textFill="WHITE">
+                              <Label prefHeight="27.0" prefWidth="120.0" text="Événements :" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>

@@ -8,11 +8,15 @@ package gui.frontOffice.organisationev.modifierevenement;
 import entities.Event;
 import entities.EventCateg;
 import entities.Personne;
+import entities.imageEv;
+import gui.frontOffice.organisationev.MesEvenementsController;
 import gui.sigleton.singleton;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -101,6 +105,8 @@ singleton data= singleton.getInstance();
     int idev;
     @FXML
     private Button insertimg;
+    EventService es = new EventService();
+     MesEvenementsController ec = new MesEvenementsController();
 
     /**
      * Initializes the controller class.
@@ -214,9 +220,9 @@ singleton data= singleton.getInstance();
     @FXML
     private void Annulercreation(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Annuler la création");
+        alert.setTitle("Annuler la Modification");
         alert.setHeaderText("les données que vous avez entrer seront perdues");
-        alert.setContentText("Cliquer sur OK pour continuer ou bien Revenir pour continuer la création");
+        alert.setContentText("Cliquer sur OK pour continuer ou bien Revenir pour continuer la modification");
 
         ButtonType okButton = new ButtonType("OK");
         ButtonType revenirButton = new ButtonType("Revenir");
@@ -282,15 +288,19 @@ singleton data= singleton.getInstance();
         }
 
         categorie.setValue(e.getC().getType());
-        url = e.getImage();
+        url = es.findFirstImageByEvent(e).getImg();
         FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/"+url); 
         Image img = new Image(inputstream); 
         image.setImage(img);
 
     }
+            public void getController(MesEvenementsController e) {
+        ec = e;
+    }
+
 
     @FXML
-    private void update(ActionEvent event) {
+    private void update(ActionEvent event) throws IOException, SQLException {
         LocalDate myDate = datepicker.getValue();
         titre.setStyle("");
         description.setStyle("");
@@ -350,8 +360,11 @@ singleton data= singleton.getInstance();
             System.out.println(heuref);
             EventCateg c = ecs.findByName(categorie.getValue());
             EventService es = new EventService();
-            Event e = new Event(LP, p, title, desc, url, typ, "Privé", LocalDateTime.of(year, Month, Day, heuref, mind), LocalDateTime.of(year, Month, Day, heured, minf), c, p1);
+            Event e = new Event(LP, p, title, desc,typ, "Privé", LocalDateTime.of(year, Month, Day, heuref, mind), LocalDateTime.of(year, Month, Day, heured, minf), c, p1);
             es.modifier(idev, e);
+            imageEv i = new imageEv(url, es.findEventById(idev));
+            es.modifierI(i);
+            ec.Refresh();
             Stage stage = (Stage) btnenr.getScene().getWindow();
             stage.close();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

@@ -8,11 +8,15 @@ package gui.backOffice.GestionEvent.Event.modifierEvent;
 import entities.Event;
 import entities.EventCateg;
 import entities.Personne;
+import entities.imageEv;
+import gui.backOffice.GestionEvent.Event.EventController;
 import gui.sigleton.singleton;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -45,8 +49,8 @@ import services.EventService;
  */
 public class ModifierEventController implements Initializable {
 
-    singleton data= singleton.getInstance();
-       Personne p1=data.getUser();
+    singleton data = singleton.getInstance();
+    Personne p1 = data.getUser();
     @FXML
     private ChoiceBox<String> typeevbox;
     private String[] type = {"Gratuit", "Payant"};
@@ -78,7 +82,7 @@ public class ModifierEventController implements Initializable {
     private TextField prix;
     @FXML
     private ImageView image;
-
+    EventService es = new EventService();
     EventCategService ecs = new EventCategService();
     private ArrayList<EventCateg> categories;
     ArrayList<String> nc = new ArrayList();
@@ -102,6 +106,7 @@ public class ModifierEventController implements Initializable {
     int idev;
     @FXML
     private Button insertimg;
+    EventController ec = new EventController();
 
     /**
      * Initializes the controller class.
@@ -203,8 +208,8 @@ public class ModifierEventController implements Initializable {
         fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image files", "*.jpg", "*.png"));
         File selectedFile = fc.showOpenDialog(null);
         if (selectedFile != null) {
-        FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/"+selectedFile.getName()); 
-        Image img = new Image(inputstream); 
+            FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/" + selectedFile.getName());
+            Image img = new Image(inputstream);
             image.setImage(img);
             url = selectedFile.getName();
         } else {
@@ -234,7 +239,7 @@ public class ModifierEventController implements Initializable {
     }
 
     public void modifierData(Event e, int id) throws FileNotFoundException {
-        idev=id;
+        idev = id;
         int hd = e.getDate_debut().getHour();
         int hf = e.getDate_fin().getHour();
         titre.setText(e.getTitle());
@@ -283,15 +288,19 @@ public class ModifierEventController implements Initializable {
         }
 
         categorie.setValue(e.getC().getType());
-        url = e.getImage();
-        FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/"+url); 
-        Image img = new Image(inputstream); 
+        url = es.findFirstImageByEvent(e).getImg();
+        FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/" + url);
+        Image img = new Image(inputstream);
         image.setImage(img);
 
     }
+    
+            public void getController (EventController c){
+        ec=c;
+    }
 
     @FXML
-    private void update(ActionEvent event) {
+    private void update(ActionEvent event) throws IOException, SQLException {
         LocalDate myDate = datepicker.getValue();
         titre.setStyle("");
         description.setStyle("");
@@ -350,9 +359,12 @@ public class ModifierEventController implements Initializable {
             System.out.println(desc);
             System.out.println(heuref);
             EventCateg c = ecs.findByName(categorie.getValue());
-            EventService es = new EventService();
-            Event e = new Event(LP, p, title, desc, url, typ, "Privé", LocalDateTime.of(year, Month, Day, heuref, mind), LocalDateTime.of(year, Month, Day, heured, minf), c, p1);
+            //EventService es = new EventService();
+            Event e = new Event(LP, p, title, desc, typ, "Privé", LocalDateTime.of(year, Month, Day, heured, mind), LocalDateTime.of(year, Month, Day, heuref, minf), c, p1);
             es.modifier(idev, e);
+            imageEv i = new imageEv(url, es.findEventById(idev));
+            es.modifierI(i);
+            ec.Refresh();
             Stage stage = (Stage) btnenr.getScene().getWindow();
             stage.close();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

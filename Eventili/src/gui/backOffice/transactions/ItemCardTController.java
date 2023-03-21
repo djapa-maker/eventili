@@ -56,7 +56,7 @@ public class ItemCardTController implements Initializable {
     }    
 public void SetData(Transactions s) throws SQLException, FileNotFoundException {
         //affichage des services
-        System.out.println(s.getP().getImage());
+       System.out.println(s.getP().getImage());
        FileInputStream inputstream = new FileInputStream("C:\\Users\\sel3a\\Desktop\\New folder (2)\\pidev\\Eventili\\src\\images\\"+s.getP().getImage()); 
         Image image = new Image(inputstream); 
          icon.setImage(image);

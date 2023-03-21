@@ -7,6 +7,7 @@ package gui.frontOffice.organisationev;
 
 import entities.Event;
 import entities.Personne;
+import gui.frontOffice.organisationev.creerevenement.CreationevController;
 import gui.sigleton.singleton;
 import java.io.IOException;
 import java.net.URL;
@@ -32,6 +33,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import services.EventService;
 
 /**
@@ -40,8 +42,9 @@ import services.EventService;
  * @author chaim
  */
 public class MesEvenementsController implements Initializable {
-singleton data= singleton.getInstance();
-       Personne p1=data.getUser();
+
+    singleton data = singleton.getInstance();
+    Personne p1 = data.getUser();
     @FXML
     private ScrollPane scroll;
     @FXML
@@ -50,7 +53,7 @@ singleton data= singleton.getInstance();
     private Text nbrevent;
     DateTimeFormatter datedebF = DateTimeFormatter.ofPattern("EEE de HH:mm");
     DateTimeFormatter datefinF = DateTimeFormatter.ofPattern("à HH:mm");
-    
+
     EventService es = new EventService();
     private ArrayList<Event> events;
     int column = 0;
@@ -73,78 +76,82 @@ singleton data= singleton.getInstance();
         try {
             events = (ArrayList<Event>) es.getAll();
             LoadData();
-            
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
 
+        SearchDynamic();
+
     }
 
-
     public void LoadData() throws SQLException, IOException {
-        
+        ArrayList<Event> ev = new ArrayList<>();
         column = 0;
         row = 1;
         for (Event e : events) {
-            System.out.println("before");
-            System.out.println("p1"+p1.getId_pers());
-            if(e.getPers().getId_pers()==p1.getId_pers())
-            {
-                nbrevent.setVisible(true);
-                nbrevent.setText("(" + Integer.toString(events.size()) + ")");
-                 //System.out.println("mte3i"+e.getPers().getId_pers());
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("EventsList.fxml"));
+            //System.out.println("before");
+            System.out.println("p1" + p1.getId_pers());
+            if (e.getPers().getId_pers() == p1.getId_pers()) {
+                ev.add(e);
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("EventsList.fxml"));
                 System.out.println("after");
-            Pane pane = loader.load();
-            EventsListController eventsListController = loader.getController();
-            eventsListController.setData(e);
-            pane.setOnMouseClicked(eventsListController::handlePaneClick);
+                Pane pane = loader.load();
+                EventsListController eventsListController = loader.getController();
+                eventsListController.setData(e);
+                eventsListController.getController(this);
+                pane.setOnMouseClicked(eventsListController::handlePaneClick);
 
-            if (column == 3) {
-                column = 0;
-                ++row;
+                if (column == 3) {
+                    column = 0;
+                    ++row;
+                }
+
+                grid.add(pane, column++, row);
+                GridPane.setMargin(pane, new Insets(20));
             }
 
-            grid.add(pane, column++, row);
-            GridPane.setMargin(pane, new Insets(20));
         }
-            else{
-             nbrevent.setVisible(false);
-        }
-        }
+        nbrevent.setText("(" + Integer.toString(ev.size()) + ")");
     }
-    
-    
+
     @FXML
     public void add(ActionEvent event) throws IOException {
         FXMLLoader addLoader = new FXMLLoader(getClass().getResource("creerevenement/creationev.fxml"));
         Parent Root = addLoader.load();
+        CreationevController addController = addLoader.getController();
+        addController.getController(this);
         Stage Stage = new Stage();
+        Stage.initStyle(StageStyle.UNDECORATED);
         Stage.setScene(new Scene(Root));
         Stage.showAndWait();
     }
 
-    @FXML
-    private void Search() {
-        searchbtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                String s = searchbar.getText();
-                try {
-                    events = (ArrayList<Event>) es.findEventByName(s);
-                    grid.getChildren().clear();
-                    LoadData();
-                } catch (SQLException ex) {
-                    System.out.println(ex);
-                } catch (IOException ex) {
-                    System.out.println(ex);
-                }
-                
+    public void Refresh() throws IOException, SQLException {
+        grid.getChildren().clear();
+        events = (ArrayList<Event>) es.getAll();
+        LoadData();
+    }
+
+    private void SearchDynamic() {
+        searchbar.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                events = (ArrayList<Event>) es.findEventByName(newValue);
+                grid.getChildren().clear();
+                LoadData();
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            } catch (IOException ex) {
+                System.out.println(ex);
             }
         });
+    }
+
+    @FXML
+    private void Search() {
 
     }
 

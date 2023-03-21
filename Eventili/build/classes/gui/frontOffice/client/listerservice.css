@@ -10,12 +10,12 @@
 }
 
 .btnN{
-     -fx-background-radius:30px;
+     -fx-background-radius:10px;
       -fx-background-color: #eeeee4;
 }
 
 .btnSS{
-     -fx-background-radius:80px;
+     -fx-background-radius:10px;
       -fx-background-color: #eeeee4;
 }
 .vbox{

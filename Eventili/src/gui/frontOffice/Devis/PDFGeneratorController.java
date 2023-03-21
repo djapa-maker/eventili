@@ -5,6 +5,8 @@
  */
 package gui.frontOffice.Devis;
 
+import entities.Event;
+import entities.ServiceReservation;
 import gui.frontOffice.transaction.TransactionController;
 import java.io.File;
 import java.io.IOException;
@@ -16,12 +18,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import services.EventService;
+import services.ServiceReservationService;
 
 /**
  * FXML Controller class
@@ -38,6 +45,11 @@ public class PDFGeneratorController implements Initializable {
     private Button Payer;
     private PDDocument pdDocument;
     private int idev;
+    private Button Annuler;
+    @FXML
+    private Button annulerbtn;
+    EventService es = new EventService();
+    ServiceReservationService srs = new ServiceReservationService();
 
     public ImageView getPdfImageView() {
         return img;
@@ -86,5 +98,32 @@ public class PDFGeneratorController implements Initializable {
         Stage stage = (Stage) Payer.getScene().getWindow();
         stage.setScene(new Scene(Root));
     }
+
+    @FXML
+    private void Annuler(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Annuler la création");
+        alert.setHeaderText("les données que vous avez entrer seront perdues");
+        alert.setContentText("Cliquer sur OK pour continuer ou bien Revenir pour continuer la création");
+
+        ButtonType okButton = new ButtonType("OK");
+        ButtonType revenirButton = new ButtonType("Revenir");
+        alert.getButtonTypes().setAll(okButton, revenirButton);
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == okButton) {
+                Stage stage = (Stage) annulerbtn.getScene().getWindow();
+                stage.close();
+                Event t = es.findEventById(idev);
+                es.supprimer(t);
+                ServiceReservation rs = srs.findByIdEvent(idev);
+                srs.supprimer(rs);
+            } else if (response == revenirButton) {
+                alert.close();
+            }
+        });
+    }
+
+
 
 }

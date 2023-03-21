@@ -8,7 +8,7 @@ public class Event {
 
     private int id_ev, participantLimit;
     private float price;
-    private String title, description, image,type,visibilite;
+    private String title, description,type,visibilite;
     private LocalDateTime date_debut, date_fin;
     private EventCateg c;
     private Personne pers;
@@ -17,12 +17,11 @@ public class Event {
     public Event() {
     }
 
-    public Event(int participantLimit, float price, String title, String description, String image, String type, String visibilite, LocalDateTime date_debut, LocalDateTime date_fin, EventCateg c, Personne pers) {
+    public Event(int participantLimit, float price, String title, String description, String type, String visibilite, LocalDateTime date_debut, LocalDateTime date_fin, EventCateg c, Personne pers) {
         this.participantLimit = participantLimit;
         this.price = price;
         this.title = title;
         this.description = description;
-        this.image = image;
         this.type = type;
         this.visibilite = visibilite;
         this.date_debut = date_debut;
@@ -32,13 +31,12 @@ public class Event {
     }
 
     
-    public Event(int id_ev, int participantLimit, float price, String title, String description, String image, String type, String visibilite, LocalDateTime date_debut, LocalDateTime date_fin, EventCateg c , Personne pers) {
+    public Event(int id_ev, int participantLimit, float price, String title, String description, String type, String visibilite, LocalDateTime date_debut, LocalDateTime date_fin, EventCateg c , Personne pers) {
         this.id_ev = id_ev;
         this.participantLimit = participantLimit;
         this.price = price;
         this.title = title;
         this.description = description;
-        this.image = image;
         this.type = type;
         this.visibilite = visibilite;
         this.date_debut = date_debut;
@@ -82,15 +80,6 @@ public class Event {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public LocalDateTime getDate_debut() {
         return date_debut;
     }
@@ -134,7 +123,7 @@ public class Event {
 
     @Override
     public String toString() {
-        return "Event{" + "id_ev=" + id_ev + ", participantLimit=" + participantLimit + ", price=" + price + ", title=" + title + ", description=" + description + ", image=" + image + ", type=" + type + ", visibilite=" + visibilite + ", date_debut=" + date_debut.format(formatter) + ", date_fin=" + date_fin.format(formatter) + ", c=" + c.getType() + ", per=" +pers.getId_pers()+'}';
+        return "Event{" + "id_ev=" + id_ev + ", participantLimit=" + participantLimit + ", price=" + price + ", title=" + title + ", description=" + description + ", type=" + type + ", visibilite=" + visibilite + ", date_debut=" + date_debut.format(formatter) + ", date_fin=" + date_fin.format(formatter) + ", c=" + c.getType() + ", per=" +pers.getId_pers()+'}';
     }
     
     

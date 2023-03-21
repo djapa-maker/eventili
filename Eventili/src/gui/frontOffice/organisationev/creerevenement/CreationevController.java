@@ -5,7 +5,9 @@ import entities.EventCateg;
 import entities.Personne;
 import entities.ServiceReservation;
 import entities.SousServices;
+import entities.imageEv;
 import gui.frontOffice.client.ListerServiceController;
+import gui.frontOffice.organisationev.MesEvenementsController;
 import gui.sigleton.singleton;
 import java.io.File;
 import java.io.FileInputStream;
@@ -105,6 +107,7 @@ public class CreationevController implements Initializable {
     Event e1 = new Event();
     ArrayList<SousServices> sousS = new ArrayList<>();
     ArrayList<Integer> sousId = new ArrayList<>();
+    MesEvenementsController ec = new MesEvenementsController();
     //ServiceReservation sr=new ServiceReservation(e, false, sousS);
 
     /**
@@ -253,6 +256,11 @@ public class CreationevController implements Initializable {
             }
         });
     }
+    
+            public void getController(MesEvenementsController e) {
+        ec = e;
+    }
+
 
     @FXML
     private void create(ActionEvent event) throws IOException, SQLException {
@@ -320,12 +328,15 @@ public class CreationevController implements Initializable {
             EventCateg c = ecs.findByName(categorie.getValue());
             EventService es = new EventService();
 
-            e = new Event(LP, p, title, desc, url, typ, "Privé", LocalDateTime.of(year, Month, Day, heured, mind), LocalDateTime.of(year, Month, Day, heuref, minf), c, p1);
+            e = new Event(LP, p, title, desc, typ, "Privé", LocalDateTime.of(year, Month, Day, heured, mind), LocalDateTime.of(year, Month, Day, heuref, minf), c, p1);
             //System.out.println(e);
             es.ajouter(e);
             List<Event> e2 = es.getAll();
             //System.out.println(e2);
             e1 = e2.get(e2.size() - 1);
+            imageEv i = new imageEv(url, e1);
+            es.ajouterI(i);
+            //ec.Refresh();
             FXMLLoader addLoader = new FXMLLoader(getClass().getResource("../../client/listerService.fxml"));
             Parent Root = addLoader.load();
             ListerServiceController list = addLoader.getController();

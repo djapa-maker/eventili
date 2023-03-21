@@ -25,7 +25,9 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -42,6 +44,7 @@ import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.xobject.PDJpeg;
 import org.apache.pdfbox.pdmodel.graphics.xobject.PDXObjectImage;
+import services.EventService;
 import services.ServiceReservationService;
 import services.ServiceService;
 import services.SousServiceService;
@@ -74,13 +77,16 @@ public class ListerServiceController implements Initializable {
     ArrayList<Service> listD = new ArrayList<>();
     SousServiceService v = new SousServiceService();
     private int id = ss.getAll().get(0).getId_service();
-    ;
+    EventService es = new EventService();
     private String nomSS;
     private Event e;
     private int id1;
+    ServiceReservationService srs = new ServiceReservationService();
     @FXML
     private Button btn;
 //------------------------------------------------------------------------------
+    @FXML
+    private Button annulerbtn;
 
     public void Data(Event ev) throws SQLException, IOException {
         this.e = ev;
@@ -402,10 +408,9 @@ public class ListerServiceController implements Initializable {
         Parent root = loader.load();
         PDFGeneratorController PDFController = loader.getController();
         PDFController.setIdEvent(e.getId_ev());
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
+        Stage stage = (Stage) btn.getScene().getWindow();
+        stage.setScene(new Scene(root));
         stage.setTitle("Devis");
-        stage.setScene(scene);
         stage.show();
         //document = PDDocument.load(new File("C:\\PDF\\mypdf.pdf"));
         BufferedImage image = firstPage.convertToImage(BufferedImage.TYPE_INT_RGB, 300);
@@ -424,7 +429,44 @@ public class ListerServiceController implements Initializable {
 
     @FXML
     private void Devis(ActionEvent event) throws IOException, COSVisitorException {
-        generate();
+        ServiceReservation rs = srs.findByIdEvent(e.getId_ev());
+        if (rs.getId_res() == 0) {
+            Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+                alert1.setTitle("Attention");
+                alert1.setHeaderText(null);
+                alert1.setContentText("Vous devez séléctionner au moins un service");
+                alert1.showAndWait();
+        } else {
+            generate();
+        }
 
+    }
+
+    @FXML
+    private void Annuler(ActionEvent event) {
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Annuler la création");
+        alert.setHeaderText("les données que vous avez entrer seront perdues");
+        alert.setContentText("Cliquer sur OK pour continuer ou bien Revenir pour continuer la création");
+
+        ButtonType okButton = new ButtonType("OK");
+        ButtonType revenirButton = new ButtonType("Revenir");
+        alert.getButtonTypes().setAll(okButton, revenirButton);
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == okButton) {
+                Stage stage = (Stage) annulerbtn.getScene().getWindow();
+                stage.close();
+                es.supprimer(e);
+                ServiceReservation rs = srs.findByIdEvent(e.getId_ev());
+                if (rs.getId_res() != 0) {
+                    srs.supprimer(rs);
+                }
+
+            } else if (response == revenirButton) {
+                alert.close();
+            }
+        });
     }
 }

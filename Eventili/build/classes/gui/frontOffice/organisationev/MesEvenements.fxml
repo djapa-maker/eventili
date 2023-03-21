@@ -17,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1700.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.frontOffice.organisationev.MesEvenementsController">
+<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1700.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.frontOffice.organisationev.MesEvenementsController">
     <stylesheets>
         <URL value="@mesevenements.css" />
     </stylesheets>
@@ -52,7 +52,7 @@
             <String fx:value="shadow" />
          </styleClass>
       </HBox>
-      <VBox alignment="TOP_CENTER" layoutX="1229.0" layoutY="-1.0" prefHeight="806.0" prefWidth="520.0" styleClass="right-bar" stylesheets="@mesevenements.css">
+      <VBox alignment="TOP_CENTER" layoutX="1229.0" layoutY="-1.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="806.0" prefWidth="462.0" styleClass="right-bar" stylesheets="@mesevenements.css">
          <children>
             <HBox alignment="CENTER" prefHeight="86.0" prefWidth="507.0">
                <children>
@@ -128,7 +128,7 @@
                   <Font name="Calibri Bold Italic" size="24.0" />
                </font>
             </Text>
-            <Text fx:id="nbrevent" fill="#3a3289" strokeType="OUTSIDE" strokeWidth="0.0" text="nbr" wrappingWidth="180.4921875">
+            <Text fx:id="nbrevent" fill="#3a3289" strokeType="OUTSIDE" strokeWidth="0.0" text="(0)" wrappingWidth="180.4921875">
                <font>
                   <Font name="Calibri Bold Italic" size="24.0" />
                </font>

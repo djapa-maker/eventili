@@ -28,6 +28,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import services.EventCategService;
 
 /**
@@ -76,9 +77,9 @@ public class ItemController implements Initializable {
         categ.setText(n);
         cat = ecs.findById(id_c);
     }
-    
-        public void getController (CategController c){
-        cc=c;
+
+    public void getController(CategController c) {
+        cc = c;
     }
 
     @FXML
@@ -102,8 +103,10 @@ public class ItemController implements Initializable {
         categController.modifierData(cat, id_c);
         categController.getController(cc);
         Stage Stage = new Stage();
+        Stage.initStyle(StageStyle.UNDECORATED);
         Stage.setScene(new Scene(loader));
         Stage.showAndWait();
+        
     }
 
 }

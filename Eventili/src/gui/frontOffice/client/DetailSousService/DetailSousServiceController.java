@@ -208,8 +208,12 @@ public class DetailSousServiceController implements Initializable {
                     in = LIds.indexOf(i);
                 }
             }
+            if (LIds.size() == 1) {
+                rs.supprimer(SR);
+            } else {
             LIds.remove(in);
             rs.modifierReservationService(SR.getId_res(), SR, LIds);
+            }
             resbtn.setText("Réserver");
         }
         // Resize the button to fit the new label text
@@ -229,8 +233,8 @@ public class DetailSousServiceController implements Initializable {
         descss.setText(s.getDescription_serv());
         imaage = (ArrayList<imageSS>) im.findImageByIdSS(s.getId_sousServ());
         i = imaage.get(0).getImg();
-       // FileInputStream inputstream = new FileInputStream("C:/xamp2/htdocs/img/" + i);
-          Image img1 = new Image("http://localhost/img/"+i);
+        // FileInputStream inputstream = new FileInputStream("C:/xamp2/htdocs/img/" + i);
+        Image img1 = new Image("http://localhost/img/" + i);
         imagess.setImage(img1);
         price.setText(s.getPrix_serv() + " DT");
         Rectangle clip = new Rectangle(imagess.getFitWidth(), imagess.getFitHeight());
@@ -275,14 +279,14 @@ public class DetailSousServiceController implements Initializable {
             next = next - 1;
             i = imaage.get(next).getImg();
             //FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/" + i);
-               Image img1 = new Image("http://localhost/img/"+i);
+            Image img1 = new Image("http://localhost/img/" + i);
             imagess.setImage(img1);
         } else {
             if (next == 0) {
                 next = imaage.size() - 1;
                 i = imaage.get(next).getImg();
-               // FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/" + i);
-                 Image img1 = new Image("http://localhost/img/"+i);
+                // FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/" + i);
+                Image img1 = new Image("http://localhost/img/" + i);
                 imagess.setImage(img1);
             }
         }
@@ -294,13 +298,13 @@ public class DetailSousServiceController implements Initializable {
         next++;
         if (next < imaage.size()) {
             i = imaage.get(next).getImg();
-              Image img1 = new Image("http://localhost/img/"+i);
+            Image img1 = new Image("http://localhost/img/" + i);
             imagess.setImage(img1);
         } else {
             if (next == imaage.size()) {
                 next = 0;
                 i = imaage.get(next).getImg();
-                   Image img1 = new Image("http://localhost/img/"+i);
+                Image img1 = new Image("http://localhost/img/" + i);
                 imagess.setImage(img1);
             }
         }

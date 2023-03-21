@@ -29,6 +29,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import services.EventCategService;
 
 /**
@@ -81,8 +82,10 @@ public class CategController implements Initializable {
         CreerEventCategController addController = addLoader.getController();
         addController.getController(this);
         Stage Stage = new Stage();
+        Stage.initStyle(StageStyle.UNDECORATED);
         Stage.setScene(new Scene(Root));
         Stage.show();
+
     }
 
     public void LoadData() throws IOException, SQLException {

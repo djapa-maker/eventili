@@ -13,7 +13,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
 /**
@@ -38,8 +37,9 @@ public class CallingPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         MainPage();
-    }   
-        private void MainPage() {
+    }
+
+    private void MainPage() {
         try {
             BorderPane view = FXMLLoader.load(getClass().getResource("EventCateg/Categ.fxml"));
             CallingPage.setCenter(view);
@@ -62,7 +62,7 @@ public class CallingPageController implements Initializable {
     @FXML
     private void ListerEvents(ActionEvent event) {
         try {
-           
+
             BorderPane view = FXMLLoader.load(getClass().getResource("Event/Event.fxml"));
             CallingPage.setCenter(view);
         } catch (IOException ex) {
@@ -81,5 +81,5 @@ public class CallingPageController implements Initializable {
 
         }
     }
-    
+
 }

@@ -236,7 +236,7 @@ public class ModifierSSPrestataireController implements Initializable {
     @FXML
     private void importIcone(ActionEvent event) throws FileNotFoundException {
         FileChooser fc = new FileChooser();
-        fc.setInitialDirectory(new File("C:/xamp2/htdocs/img"));
+        fc.setInitialDirectory(new File("C:/xampp/htdocs/img"));
         fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image files", "*.jpg", "*.png"));
         selectedFile = fc.showOpenMultipleDialog(null);
         if (selectedFile != null) {

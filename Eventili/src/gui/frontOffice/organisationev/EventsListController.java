@@ -6,6 +6,7 @@
 package gui.frontOffice.organisationev;
 
 import entities.Event;
+import entities.imageEv;
 import gui.frontOffice.organisationev.DetailEvent.EventDetailsController;
 import gui.frontOffice.organisationev.modifierevenement.ModificationController;
 import gui.frontOffice.sponsor.SponsorController;
@@ -78,11 +79,12 @@ public class EventsListController implements Initializable {
     DateTimeFormatter timeF = DateTimeFormatter.ofPattern("HH:mm");
     @FXML
     private Label EventSt;
+    MesEvenementsController ec = new MesEvenementsController();
 
     public void setData(Event e) throws FileNotFoundException {
 //        Image image1 = new Image(getClass().getResourceAsStream(e.getImage()));
 //        img.setImage(image1);
-        FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/" + e.getImage());
+        FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/" + es.findFirstImageByEvent(e).getImg());
         Image img1 = new Image(inputstream);
         img.setImage(img1);
         e1 = e;
@@ -132,13 +134,17 @@ public class EventsListController implements Initializable {
 
     }
 
+    public void getController(MesEvenementsController e) {
+        ec = e;
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
 
     @FXML
-    private void supprimer(ActionEvent event) {
+    private void supprimer(ActionEvent event) throws IOException, SQLException {
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Supprimer événement");
         alert.setHeaderText(null);
@@ -149,6 +155,7 @@ public class EventsListController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == okButton) {
             es.supprimer(e1);
+            ec.Refresh();
         } else {
             alert.close();
         }
@@ -160,7 +167,9 @@ public class EventsListController implements Initializable {
         Parent Root = addLoader.load();
         ModificationController modifC = addLoader.getController();
         modifC.modifierData(e1, idev);
+        modifC.getController(ec);
         Stage Stage = new Stage();
+        Stage.initStyle(StageStyle.UNDECORATED);
         Stage.setScene(new Scene(Root));
         Stage.showAndWait();
 
@@ -188,7 +197,7 @@ public class EventsListController implements Initializable {
     private void PublierSponsoriser(ActionEvent event) throws IOException {
 
         if (btnPS.getText().equals("Publier")) {
-            Event e2 = new Event(e1.getParticipantLimit(), e1.getPrice(), e1.getTitle(), e1.getDescription(), e1.getImage(), e1.getType(), "Public", e1.getDate_debut(), e1.getDate_fin(), e1.getC(), e1.getPers());
+            Event e2 = new Event(e1.getParticipantLimit(), e1.getPrice(), e1.getTitle(), e1.getDescription(), e1.getType(), "Public", e1.getDate_debut(), e1.getDate_fin(), e1.getC(), e1.getPers());
             Alert alert = new Alert(AlertType.CONFIRMATION);
             alert.setTitle("Publier événement");
             alert.setHeaderText(null);
@@ -199,6 +208,11 @@ public class EventsListController implements Initializable {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == okButton) {
                 es.modifier(idev, e2);
+                Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+                alert1.setTitle("Succès");
+                alert1.setHeaderText(null);
+                alert1.setContentText("Evénement publié !");
+                alert1.showAndWait();
                 btnPS.setText("Sponsoriser");
             } else {
                 alert.close();

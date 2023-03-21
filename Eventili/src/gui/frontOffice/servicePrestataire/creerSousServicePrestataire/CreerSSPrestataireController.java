@@ -268,7 +268,7 @@ public class CreerSSPrestataireController implements Initializable {
                 try {
                     Path sourcePath = Paths.get(selectedFile.get(i).getAbsolutePath());
                    
-                    Path targetPath = Paths.get("C:/xamp2/htdocs/img/" + selectedFile.get(i).getName());
+                    Path targetPath = Paths.get("C:/xampp/htdocs/img/" + selectedFile.get(i).getName());
                     Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
                 } catch (IOException ex) {
                     System.out.println(ex);

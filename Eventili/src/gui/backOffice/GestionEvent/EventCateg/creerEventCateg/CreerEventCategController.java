@@ -10,6 +10,7 @@ import gui.backOffice.GestionEvent.EventCateg.CategController;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -42,9 +43,10 @@ public class CreerEventCategController implements Initializable {
     @FXML
     private Button enregistrer;
 
-    private EventCateg cat ;
+    private EventCateg cat;
     EventCategService ecs = new EventCategService();
     CategController cc = new CategController();
+    private ArrayList<EventCateg> listCateg;
 
     /**
      * Initializes the controller class.
@@ -60,22 +62,36 @@ public class CreerEventCategController implements Initializable {
         stage.close();
     }
 
-    public void getController (CategController c){
-        cc=c;
+    public void getController(CategController c) {
+        cc = c;
     }
-    
+
     @FXML
     private void creerEvent(ActionEvent event) throws IOException, SQLException {
+        boolean nameExists = false;
         String n;
-
         if (!nom.getText().isEmpty()) {
             n = nom.getText();
-            cat = new EventCateg(n);
-            ecs.ajouter(cat);
-            cc.Refresh();
-            Stage stage = (Stage) enregistrer.getScene().getWindow();
-            stage.close();
+            listCateg = (ArrayList<EventCateg>) ecs.getAll();
+            for (EventCateg v : listCateg) {
+                if (v.getType().equals(n)) {
+                    nameExists = true;
+                }
+            }
+            if (!nameExists) {
+                cat = new EventCateg(n);
+                ecs.ajouter(cat);
+                cc.Refresh();
+                Stage stage = (Stage) enregistrer.getScene().getWindow();
+                stage.close();
             } else {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setTitle("Erreur");
+                a.setContentText("Cette catégorie existe déja!");
+                a.setHeaderText("Attention !");
+                a.showAndWait();
+            }
+        } else {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setTitle("Erreur");
             a.setContentText("Veuillez saisir le nom de la catégorie");

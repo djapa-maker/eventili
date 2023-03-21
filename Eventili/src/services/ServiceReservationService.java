@@ -101,7 +101,7 @@ public class ServiceReservationService implements InterfaceService<ServiceReserv
 
     @Override
     public void supprimer(ServiceReservation p) {
-        String sql = "delete from reservation where id=?";
+        String sql = "delete from reservation where id_res=?";
         try {
             ste = cnx.prepareStatement(sql);
             ste.setInt(1, p.getId_res());

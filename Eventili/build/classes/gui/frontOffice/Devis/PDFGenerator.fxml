@@ -6,17 +6,22 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="900.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.frontOffice.Devis.PDFGeneratorController">
+<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1054.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.frontOffice.Devis.PDFGeneratorController">
     <stylesheets>
         <URL value="@pdfgenerator.css" />
     </stylesheets>
    <children>
-      <ImageView fx:id="img" fitHeight="688.0" fitWidth="536.0" layoutX="182.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="telech" layoutX="310.0" layoutY="745.0" mnemonicParsing="false" onAction="#download" prefHeight="34.0" prefWidth="101.0" text="Télécharger">
+      <ImageView fx:id="img" fitHeight="734.0" fitWidth="595.0" layoutX="230.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="telech" layoutX="360.0" layoutY="756.0" mnemonicParsing="false" onAction="#download" prefHeight="34.0" prefWidth="101.0" styleClass="button1" text="Télécharger">
          <font>
             <Font size="14.0" />
          </font></Button>
-      <Button fx:id="Payer" layoutX="488.0" layoutY="745.0" mnemonicParsing="false" onAction="#Payer" prefHeight="34.0" prefWidth="101.0" text="Payer">
+      <Button fx:id="Payer" layoutX="484.0" layoutY="756.0" mnemonicParsing="false" onAction="#Payer" prefHeight="34.0" prefWidth="101.0" styleClass="button3" text="Payer">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="annulerbtn" layoutX="605.0" layoutY="756.0" mnemonicParsing="false" onAction="#Annuler" prefHeight="34.0" prefWidth="101.0" styleClass="button2" text="Annuler">
          <font>
             <Font size="14.0" />
          </font>

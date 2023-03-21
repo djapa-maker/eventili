@@ -53,8 +53,10 @@ import com.stripe.model.Token;
 import com.stripe.param.ChargeCreateParams;
 import com.stripe.param.TokenCreateParams;
 import com.stripe.param.TokenCreateParams.Card;
+import entities.ServiceReservation;
 import javafx.scene.Node;
 import javafx.scene.control.Alert.AlertType;
+import services.ServiceReservationService;
 
 /**
  * *
@@ -137,7 +139,9 @@ public class TransactionController implements Initializable {
     private int type = 0;
     private String mountinit = "100";
     String ammount = "100"; //integration caluclue ammount
-    private int idev=219;
+    private int idev;
+    ServiceReservationService srs = new ServiceReservationService();
+
 
     public void setIdEvent(int id) {
         idev = id;
@@ -396,7 +400,7 @@ public class TransactionController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Annuler la création");
         alert.setHeaderText("les données que vous avez entrer seront perdues");
-        alert.setContentText("Cliquer sur OK pour continuer le payement");
+        alert.setContentText("Cliquer sur OK pour continuer le paiement");
 
         ButtonType okButton = new ButtonType("OK");
         ButtonType revenirButton = new ButtonType("Revenir");
@@ -406,6 +410,10 @@ public class TransactionController implements Initializable {
             if (response == okButton) {
                 Stage stage = (Stage) annulerbtn.getScene().getWindow();
                 stage.close();
+                Event t = es.findEventById(idev);
+                es.supprimer(t);
+                ServiceReservation rs = srs.findByIdEvent(idev);
+                srs.supprimer(rs);
             } else if (response == revenirButton) {
                 alert.close();
             }
