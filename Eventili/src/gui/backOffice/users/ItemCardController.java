@@ -8,11 +8,13 @@ package gui.backOffice.users;
 import de.jensd.fx.glyphs.GlyphsDude;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import entities.Personne;
+import entities.imagepers;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -62,11 +64,13 @@ UserController us=new UserController();
     private HBox hboxmodif;
     @FXML
     private Text email;
+   private ArrayList<imagepers> listI;
     @FXML
     private Text rib;
     @FXML
     private Text role;
     Personne sev = new Personne();
+    imagepers i=new imagepers();
     PersonneService e = new PersonneService();
     private int no;
     private String pnom,pprenom,pnum,pemail,padresse,pimage,prib,prole;
@@ -77,6 +81,7 @@ UserController us=new UserController();
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+          listI = (ArrayList<imagepers>) e.getAllI();
 hboxsupp.getChildren()
                 .addAll(GlyphsDude.createIcon(FontAwesomeIcon.TRASH,
                                 "25px"));
@@ -89,7 +94,7 @@ hboxsupp.getChildren()
     public void getController(UserController u){
         us=u;
     }
-public void SetData(Personne s) throws SQLException, FileNotFoundException {
+public void SetData(Personne s,imagepers i) throws SQLException, FileNotFoundException {
         //affichage des services
         id_pers = s.getId_pers();
         pnom=s.getNom_pers();
@@ -97,7 +102,13 @@ public void SetData(Personne s) throws SQLException, FileNotFoundException {
         pnum=s.getNum_tel();
         pemail=s.getEmail();
         padresse=s.getAdresse();
-        pimage=s.getImage();
+          pimage=i.getLast();
+       
+         
+         
+         
+         
+      
         prib=s.getRib();
         prole=s.getRole();
         
@@ -137,7 +148,8 @@ public void SetData(Personne s) throws SQLException, FileNotFoundException {
          FXMLLoader addLoader = new FXMLLoader(getClass().getResource("modifier.fxml"));
         Parent loader = addLoader.load();
         ModifierController modifController = addLoader.getController();
-       modifController.modifierData(sev, id_pers);
+        i=e.findByIdI(id_pers);
+       modifController.modifierData(sev, id_pers,i);
        modifController.getController(us);
         Stage Stage = new Stage();
         Stage.setScene(new Scene(loader));

@@ -6,8 +6,8 @@
 
 }
 .button {
-    //-fx-background-color: #ff8600;
-    //-fx-background-radius: 10px;
+    /*-fx-background-color: #ff8600;
+    -fx-background-radius: 10px;*/
 }
 
 /*.button:hover {
@@ -26,7 +26,6 @@
 }
 .scroll-bar{
     -fx-background-color: transparent;
-    //-fx-background: transparent; 
     -fx-border-color: transparent;
     -fx-color:transparent;
 }

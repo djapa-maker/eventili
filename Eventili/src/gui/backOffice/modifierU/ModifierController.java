@@ -7,6 +7,7 @@ package gui.backOffice.modifierU;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import entities.Personne;
+import entities.imagepers;
 import gui.sigleton.singleton;
 import java.io.File;
 import java.io.FileInputStream;
@@ -103,7 +104,7 @@ public class ModifierController implements Initializable {
         txtImage.setVisible(false);
         txtMdp.setVisible(false);
         try {
-            setUsername(data.getUser());
+            setUsername(data.getUser(),data.getImage());
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ModifierController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -124,7 +125,7 @@ public class ModifierController implements Initializable {
         }
         return change;
     });
- public void setUsername(Personne user) throws FileNotFoundException{
+ public void setUsername(Personne user,imagepers i) throws FileNotFoundException{
      if(data.getUser().getRole().compareTo("admin")!=0){
          txtB.setText("Bonjour et bienvenue sur notre plateforme ! Nous sommes ravis que vous ayez choisi de rejoindre notre communauté. Nous espérons que vous apprécierez votre expérience parmi nous et que vous pourrez y trouver toutes les informations et ressources dont vous avez besoin.");
        //txtB.setTextColor(Color.parseColor("#300751"));
@@ -137,7 +138,7 @@ public class ModifierController implements Initializable {
                this.txtRib.setText(user.getRib());
                 this.txtRole.setText(user.getRole());
              this.txtMdp.setText(user.getMdp());
-             String Image=user.getImage();
+             String Image=i.getLast();
              this.txtImage.setText(Image);
         FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/"+Image); 
         Image image = new Image(inputstream); 
@@ -146,7 +147,7 @@ public class ModifierController implements Initializable {
         
              
  }
- public void refresh(Personne user) throws FileNotFoundException{
+ public void refresh(Personne user,imagepers i) throws FileNotFoundException{
         this.txtNom.setText(user.getNom_pers());
          this.txtPrenom.setText(user.getPrenom_pers());
           this.txtNum.setText(user.getNum_tel());
@@ -155,7 +156,7 @@ public class ModifierController implements Initializable {
                this.txtRib.setText(user.getRib());
                 this.txtRole.setText(user.getRole());
              
-             String Image=user.getImage();
+             String Image=i.getImageP();
              this.txtImage.setText(Image);
         FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/"+Image); 
         Image image = new Image(inputstream); 
@@ -178,21 +179,26 @@ public class ModifierController implements Initializable {
     String rib=txtRib.getText();
    String role=txtRole.getText();
          int intValue= data.getUser().getId_pers();
-        Personne p=new Personne(intValue,nom, prenom, num, email,mdp,adresse,image,rib,role);
+        Personne p=new Personne(intValue,nom, prenom, num, email,mdp,adresse,rib,role);
         if(test(nom, prenom, num, email,adresse,rib)){
         ps.modifier(intValue, p);
+        imagepers im=new imagepers(image,image, intValue);
+        ps.ajouterI(im);
+        ps.modifierI(intValue,image);
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setTitle("Ajout");
-        a.setContentText("Personne ajoutée avec succès");
-        a.setHeaderText("Ajout réussie");
+        a.setContentText("Personne modifié avec succès");
+        a.setHeaderText("modification réussie");
         Optional<ButtonType> action = a.showAndWait();
         if (action.get() == ButtonType.OK) {
            a.setOnCloseRequest(events -> {
     Stage stage1 = (Stage) a.getDialogPane().getScene().getWindow();
     stage1.close();
 });
-    
+     System.out.println("im: "+im.getImageP()+"last: "+im.getLast());
         data.setUser(p);
+        data.setImage(im);
+            System.out.println(data.getImage().getLast()); 
         if(data.getUser().getRole().compareTo("admin")!=0){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../frontOffice/sidebar/SideBar.fxml"));
             Parent root = (Parent) fxmlLoader.load();

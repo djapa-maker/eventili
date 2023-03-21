@@ -7,6 +7,7 @@ package eventili;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import entities.Personne;
+import entities.imagepers;
 import gui.frontOffice.forgotMdp.ForgotMdpController;
 import gui.sigleton.singleton;
 import java.io.IOException;
@@ -91,10 +92,11 @@ public class LoginController implements Initializable {
             if (BCrypt.checkpw(md,bcryptHashString)){
                 int id_p=user.getId_pers();
                 Personne p=us.findById(id_p);
+                imagepers image = us.findByIdI(id_p);
                 if(p!=null)
                 {
              data.setUser(p);
-             
+              data.setImage(image);
                 if (data.getUser().getRole().compareTo("admin")!=0) {
                     
                     Parent root = FXMLLoader.load(getClass().getResource("../gui/frontOffice/sidebar/SideBar.fxml"));

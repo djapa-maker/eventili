@@ -6,6 +6,7 @@
 package gui.sigleton;
 
 import entities.Personne;
+import entities.imagepers;
 
 /**
  *
@@ -14,8 +15,17 @@ import entities.Personne;
 public class singleton {
     private static final singleton instance=new singleton();
     private Personne user;
+    private imagepers image;
     private singleton(){
         
+    }
+
+    public imagepers getImage() {
+        return image;
+    }
+
+    public void setImage(imagepers image) {
+        this.image = image;
     }
     public static singleton getInstance(){
         return instance;

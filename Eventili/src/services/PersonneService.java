@@ -6,6 +6,7 @@
 package services;
 
 import entities.Personne;
+import entities.imagepers;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -30,14 +31,16 @@ public class PersonneService implements InterfaceService<Personne>{
     public PersonneService() {
          cnx = MyConnection.getInstance().getCnx();
     }
+    /*saye*/
    public Personne findById(int id) {
         Personne p = new Personne();
+        imagepers i=new imagepers();
         try {
             //String sql = "SELECT * FROM personne WHERE id_pers = ?";
 String sql = "SELECT * FROM personne WHERE id_pers ="+ id + "";
             Statement ste = cnx.prepareStatement(sql);
-            
             ResultSet resultSet = ste.executeQuery(sql);
+            
             if (resultSet.next()) {
                 //int personneId = resultSet.getInt("id_pers");
                 String nom = resultSet.getString("nom_pers");
@@ -46,10 +49,10 @@ String sql = "SELECT * FROM personne WHERE id_pers ="+ id + "";
                 String email = resultSet.getString("email");
                 String mdp = resultSet.getString("mdp");
                 String adresse = resultSet.getString("adresse");
-                String image = resultSet.getString("image");
                 String rib = resultSet.getString("rib"); 
                 String role = resultSet.getString("role");
-                p = new Personne(id, nom, prenom, num, email,mdp, adresse, image, rib,role);
+                p = new Personne(id, nom, prenom, num, email,mdp, adresse, rib,role);
+               
             } else {
                 p=null;
                 System.out.println("Aucune personne ne possède l'id : " + id);
@@ -60,6 +63,39 @@ String sql = "SELECT * FROM personne WHERE id_pers ="+ id + "";
         }
         return p;
     }
+   
+   
+   
+   
+   
+   
+   public imagepers findByIdI(int id) {
+        imagepers i=new imagepers();
+        try {
+            //String sql = "SELECT * FROM personne WHERE id_pers = ?";
+String sql = "SELECT * FROM imagepers WHERE id_pers ="+ id + "";
+            Statement ste = cnx.prepareStatement(sql);
+            ResultSet resultSet = ste.executeQuery(sql);
+            
+            if (resultSet.next()) {
+                //int personneId = resultSet.getInt("id_pers");
+                String im = resultSet.getString("imageP");
+                String la = resultSet.getString("last");
+                i = new imagepers(im,la,id);
+               
+            } else {
+                i=null;
+                System.out.println("Aucune image ne possède l'id : " + id);
+            }
+        } catch (SQLException e) {
+            i=null;
+            System.out.println(e.getMessage());
+        }
+        return i;
+    }
+   
+   
+   
    public int findByEmailMdp(String email,String mdp) {
         Personne p = new Personne();
         try {
@@ -94,10 +130,9 @@ String sql = "SELECT * FROM personne WHERE email = '" + email + "' AND mdp = '" 
                 String email = res.getString("email");
                 String mdp = res.getString("mdp");
                 String adresse = res.getString("adresse");
-                String image = res.getString("image");
                 String rib = res.getString("rib"); 
                 String role = res.getString("role");
-                Personne s1 = new Personne(id, pnom, prenom, num, email,mdp, adresse, image, rib,role);
+                Personne s1 = new Personne(id, pnom, prenom, num, email,mdp, adresse, rib,role);
                 
                 s.add(s1);
             }
@@ -106,49 +141,43 @@ String sql = "SELECT * FROM personne WHERE email = '" + email + "' AND mdp = '" 
         }
         return s;
     }
-    @Override
-    public void ajouter(Personne t) {
-        /*try {
-            String sql = "insert into personne(nom_pers,prenom_pers,num_tel,email,mdp,adresse,image,rib,role)"
-                    + "values (?,?,?,?,?,?,?,?,?)";
-            PreparedStatement ste = cnx.prepareStatement(sql);
-            ste.setString(1, t.getNom_pers());
-            ste.setString(2, t.getPrenom_pers());
-            ste.setString(3, t.getNum_tel());
-            ste.setString(4, t.getEmail());
-             ste.setString(5, t.getMdp());
-            ste.setString(6, t.getAdresse());
-            ste.setString(7, t.getImage());
-            ste.setString(8, t.getRib());
-            ste.setString(9, t.getRole());
+
+
+  public void ajouterI(imagepers im ){
+      String sql = "insert into imagepers(imageP,last,id_pers)"
+                    + "values (?,?,?)";
+      
+      try 
+        {
+            PreparedStatement ste = cnx.prepareStatement(sql);           
+            ste.setString(1, im.getImageP());
+             ste.setString(2, im.getLast());
+             ste.setInt(3, im.getId_pers());
             ste.executeUpdate();
-            System.out.println("Personne ajoutée");
         } catch (SQLException ex) {
-            if(t.getRole()!="organisateur" ||t.getRole()!="partenaire"  || t.getRole()!="admin" )
-            {
-                System.out.println("role inexistant");
-            }else
             System.out.println(ex.getMessage());
         }
-        */
+ }
+    @Override
+    public void ajouter(Personne t) {
+       
         
         
+         String sql = "insert into personne(nom_pers,prenom_pers,num_tel,email,mdp,adresse,rib,role,token)"
+                    + "values (?,?,?,?,?,?,?,?,?)";
         
-         String sql = "insert into personne(nom_pers,prenom_pers,num_tel,email,mdp,adresse,image,rib,role,token)"
-                    + "values (?,?,?,?,?,?,?,?,?,?)";
          try 
         {
-            PreparedStatement ste = cnx.prepareStatement(sql);
+            PreparedStatement ste = cnx.prepareStatement(sql);           
             ste.setString(1, t.getNom_pers());
              ste.setString(2, t.getPrenom_pers());
               ste.setString(3, t.getNum_tel());
                ste.setString(4, t.getEmail());
                ste.setString(5, t.getMdp());
                 ste.setString(6, t.getAdresse());
-                 ste.setString(7, t.getImage());
-                  ste.setString(8, t.getRib());
-                   ste.setString(9, t.getRole());
-                   ste.setString(10, "");
+                  ste.setString(7, t.getRib());
+                   ste.setString(8, t.getRole());
+                   ste.setString(9, "");
             ste.executeUpdate();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -163,7 +192,7 @@ String sql = "SELECT * FROM personne WHERE email = '" + email + "' AND mdp = '" 
             Statement ste = cnx.createStatement();
             ResultSet s = ste.executeQuery(sql);
             while (s.next()) {
-                Personne p = new Personne(s.getInt(1), s.getString(2),s.getString(3),s.getString(4), s.getString(5), s.getString(6), s.getString(7), s.getString(8), s.getString(9), s.getString(10));
+                Personne p = new Personne(s.getInt(1), s.getString(2),s.getString(3),s.getString(4), s.getString(5), s.getString(6), s.getString(7), s.getString(8), s.getString(9));
                 personnes.add(p);
             }
         } catch (SQLException ex) {
@@ -171,7 +200,21 @@ String sql = "SELECT * FROM personne WHERE email = '" + email + "' AND mdp = '" 
         }
         return personnes;
     }
-
+ public List<imagepers> getAllI() {
+        List<imagepers> personnes = new ArrayList<>();
+        try {
+            String sql = "select * from imagepers";
+            Statement ste = cnx.createStatement();
+            ResultSet s = ste.executeQuery(sql);
+            while (s.next()) {
+                imagepers p = new imagepers(s.getInt(1), s.getString(2),s.getString(3),s.getInt(4));
+                personnes.add(p);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return personnes;
+    }
     @Override
     public void supprimer(Personne p) {
        String sql = "delete from personne where id_pers=?";
@@ -185,7 +228,7 @@ String sql = "SELECT * FROM personne WHERE email = '" + email + "' AND mdp = '" 
         }
     }
     public void modifier(int id_perso, Personne p) {
-        String sql = "update personne set nom_pers=?, prenom_pers=?, num_tel=?, email=?,mdp=?, adresse=?, image=?, rib=?, role=? where id_pers=?";
+        String sql = "update personne set nom_pers=?, prenom_pers=?, num_tel=?, email=?,mdp=?, adresse=?, rib=?, role=? where id_pers=?";
         try 
         {
             PreparedStatement ste = cnx.prepareStatement(sql);
@@ -195,10 +238,9 @@ String sql = "SELECT * FROM personne WHERE email = '" + email + "' AND mdp = '" 
                ste.setString(4, p.getEmail());
                ste.setString(5, p.getMdp());
                 ste.setString(6, p.getAdresse());
-                 ste.setString(7, p.getImage());
-                  ste.setString(8, p.getRib());
-                   ste.setString(9, p.getRole());
-            ste.setInt(10, p.getId_pers());
+                  ste.setString(7, p.getRib());
+                   ste.setString(8, p.getRole());
+            ste.setInt(9, p.getId_pers());
             ste.executeUpdate();
             System.out.println("personne modifié");
         } catch (SQLException ex) {
@@ -213,7 +255,7 @@ String sql = "SELECT * FROM personne WHERE email = '" + email + "' AND mdp = '" 
             Statement ste = cnx.createStatement();
             ResultSet s = ste.executeQuery(sql);
             while (s.next()) {
-                Personne p = new Personne(s.getInt(1), s.getString(2),s.getString(3),s.getString(4), s.getString(5), s.getString(6), s.getString(7), s.getString(8), s.getString(9),s.getString(10));
+                Personne p = new Personne(s.getInt(1), s.getString(2),s.getString(3),s.getString(4), s.getString(5), s.getString(6), s.getString(7), s.getString(8), s.getString(9));
                 personnes.add(p);
             }
         } catch (SQLException ex) {
@@ -306,11 +348,25 @@ String sql = "SELECT * FROM personne WHERE email = '" + email + "' AND mdp = '" 
             pstmt.setString(1, email);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-               A1 = new Personne(rs.getInt(1), rs.getString(2),rs.getString(3),rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9),rs.getString(10));
+               A1 = new Personne(rs.getInt(1), rs.getString(2),rs.getString(3),rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));
                 }
         } catch (SQLException ex) {
               System.out.println(ex.getMessage());
         }
         return A1;
+    }
+
+    public void modifierI(int intValue, String image) {
+        String sql = "update imagepers set last=? where id_pers=?";
+        try 
+        {
+            PreparedStatement ste = cnx.prepareStatement(sql);
+            ste.setString(1, image);
+            ste.setInt(2, intValue);
+            ste.executeUpdate();
+            System.out.println("image modifié");
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 }

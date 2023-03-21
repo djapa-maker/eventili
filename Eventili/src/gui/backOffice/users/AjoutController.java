@@ -6,6 +6,7 @@
 package gui.backOffice.users;
 
 import entities.Personne;
+import entities.imagepers;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -267,9 +268,13 @@ public void getController(UserController u){
    {
      
                 String hashed = BCrypt.hashpw(txtMdp.getText(), BCrypt.gensalt());
-       Personne p=new Personne(nom, prenom, num,email,hashed, adresse, image, rib,  role);
+       Personne p=new Personne(nom, prenom, num,email,hashed, adresse, rib,  role);
        //System.out.println(p);
     ps.ajouter(p);
+     Personne p1= ps.findbyemail(email);
+     imagepers i=new imagepers(image,image, p1.getId_pers());
+      System.out.println(i);
+    ps.ajouterI(i);
     C.Refresh();
     Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setTitle("Ajout");

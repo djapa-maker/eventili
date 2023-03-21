@@ -12,7 +12,7 @@ package entities;
 public class Personne {
 
     private int id_pers;
-    private String nom_pers, prenom_pers, email, adresse, image, rib, num_tel,mdp;
+    private String nom_pers, prenom_pers, email, adresse, rib, num_tel,mdp;
     
     private String role;
 
@@ -20,7 +20,7 @@ public class Personne {
         id_pers=0;
     }
 
-    public Personne(int id_pers, String nom_pers, String prenom_pers, String num_tel, String email,String mdp, String adresse, String image, String rib,String role) {
+    public Personne(int id_pers, String nom_pers, String prenom_pers, String num_tel, String email,String mdp, String adresse, String rib,String role) {
         this.id_pers = id_pers;
         this.nom_pers = nom_pers;
         this.prenom_pers = prenom_pers;
@@ -28,18 +28,16 @@ public class Personne {
         this.email = email;
         this.mdp = mdp;
         this.adresse = adresse;
-        this.image = image;
         this.rib = rib;
         this.role=role;
     }
 
-    public Personne(String nom_pers, String prenom_pers, String num_tel,String email,String mdp, String adresse, String image, String rib, String role) {
+    public Personne(String nom_pers, String prenom_pers, String num_tel,String email,String mdp, String adresse, String rib, String role) {
         this.nom_pers = nom_pers;
         this.prenom_pers = prenom_pers;
         this.email = email;
         this.mdp = mdp;
         this.adresse = adresse;
-        this.image = image;
         this.rib = rib;
         this.num_tel = num_tel;
         this.role = role;
@@ -78,9 +76,7 @@ public class Personne {
         return adresse;
     }
 
-    public String getImage() {
-        return image;
-    }
+    
 
     public String getRib() {
         return rib;
@@ -111,9 +107,7 @@ public class Personne {
         this.adresse = adresse;
     }
 
-    public void setImage(String image) {
-        this.image = image;
-    }
+    
 
     public void setRib(String rib) {
         this.rib = rib;
@@ -130,7 +124,7 @@ public class Personne {
     
     @Override
     public String toString() {
-        return "Personne{" + "id_pers=" + id_pers + ", nom_pers=" + nom_pers + ", prenom_pers=" + prenom_pers +", num_tel=" + num_tel + ", email=" + email + ", mdp=" + mdp + ", adresse=" + adresse + ", image=" + image + ", rib=" + rib +  ", role=" +this.role+'}';
+        return "Personne{" + "id_pers=" + id_pers + ", nom_pers=" + nom_pers + ", prenom_pers=" + prenom_pers +", num_tel=" + num_tel + ", email=" + email + ", mdp=" + mdp + ", adresse=" + adresse + ", rib=" + rib +  ", role=" +this.role+'}';
     }
 
 }

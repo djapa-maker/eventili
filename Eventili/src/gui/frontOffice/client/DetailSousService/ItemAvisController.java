@@ -23,6 +23,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import services.AvisService;
+import services.PersonneService;
 import services.ServiceService;
 
 /**
@@ -52,6 +53,7 @@ public class ItemAvisController implements Initializable {
     private String n;
    // ListerServiceController li;
     AvisService as= new AvisService();
+    PersonneService ps=new PersonneService();
     ListerServiceController lst=new ListerServiceController();
   
     @Override
@@ -63,7 +65,7 @@ public class ItemAvisController implements Initializable {
        r=(float) a.getRating();
        p=a.getP();
        s=a.getS();
-       i=a.getP().getImage();
+        i = ps.findByIdI(a.getP().getId_pers()).getLast();
        n=a.getP().getNom_pers();
            Image img1 = new Image("http://localhost/img/"+i);
         img.setImage(img1);

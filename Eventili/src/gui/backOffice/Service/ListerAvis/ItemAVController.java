@@ -78,7 +78,8 @@ ListerAVController lst=new ListerAVController();
         System.out.println("avissssssss"+aa);
         String D = "";
         id_av = aa.getId_av();
-        i = aa.getP().getImage();
+        
+        i = ps.findByIdI(aa.getP().getId_pers()).getLast();
         np = aa.getP().getPrenom_pers();
         c = aa.getComment();
         sous = aa.getS().getNom_serv();

@@ -8,6 +8,7 @@ package eventili;
 import com.github.sarxos.webcam.Webcam;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import entities.Personne;
+import entities.imagepers;
 import gui.sigleton.singleton;
 import java.io.File;
 import java.io.IOException;
@@ -278,10 +279,17 @@ boolean test(String nom,String prenom,String num,String adresse,String image,Str
               
                 
     
-       Personne p=new Personne(nom, prenom, num,email,hashed, adresse, image, rib,  role);
+       Personne p=new Personne(nom, prenom, num,email,hashed, adresse, rib,  role);
+      
        System.out.println(p);
+       
     ps.ajouter(p);
+    Personne p1= ps.findbyemail(email);
+     imagepers i=new imagepers(image,image, p1.getId_pers());
+      System.out.println(i);
+    ps.ajouterI(i);
   data.setUser(p);
+  data.setImage(i);
             if(data.getUser().getRole().compareTo("admin")!=0){
          FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../gui/frontOffice/sidebar/SideBar.fxml"));
             Parent root = (Parent) fxmlLoader.load();

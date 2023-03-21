@@ -7,8 +7,6 @@ package gui.frontOffice.sidebar;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import entities.Personne;
-import gui.frontOffice.login.LoginController;
-import gui.frontOffice.signin.SigninController;
 import gui.sigleton.singleton;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -85,8 +83,8 @@ public class SideBarController implements Initializable {
     }
 
     private void GetProfileImg() throws FileNotFoundException {
-
-        String Image = data.getUser().getImage();
+       
+        String Image = data.getImage().getLast();
         FileInputStream inputstream = new FileInputStream("C:\\xampp\\htdocs\\img\\" + Image);
         Image image = new Image(inputstream);
         ProfileCircle.setStroke(javafx.scene.paint.Color.ORANGE);

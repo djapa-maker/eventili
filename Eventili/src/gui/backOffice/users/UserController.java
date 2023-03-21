@@ -9,6 +9,7 @@ import de.jensd.fx.glyphs.GlyphsDude;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import entities.Personne;
 import entities.Service;
+import entities.imagepers;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -53,9 +54,10 @@ public class UserController implements Initializable {
     private HBox hboxicon;
     @FXML
     private Button add;
-    
+    PersonneService v1 = new PersonneService();
     PersonneService v = new PersonneService();
     private ArrayList<Personne> listServ;
+    private ArrayList<imagepers> listI;
     private String nom;
     private int column = 0;
     private int row = 1;
@@ -107,7 +109,8 @@ public class UserController implements Initializable {
             fxmlLoader.setLocation(getClass().getResource("itemCard.fxml"));
             Pane pane = fxmlLoader.load();
            ItemCardController CardController = fxmlLoader.getController();
-            CardController.SetData(v);
+           imagepers i=v1.findByIdI(v.getId_pers());
+            CardController.SetData(v,i);
            CardController.getController(this);
             if (column == 1) {
                 column = 0;

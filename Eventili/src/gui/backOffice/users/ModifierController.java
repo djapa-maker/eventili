@@ -6,6 +6,7 @@
 package gui.backOffice.users;
 
 import entities.Personne;
+import entities.imagepers;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -118,7 +119,7 @@ UserController us=new UserController();
         }
         return change;
     });
-    public void modifierData(Personne s, int id) throws SQLException, FileNotFoundException {
+    public void modifierData(Personne s, int id,imagepers i) throws SQLException, FileNotFoundException {
    
        nom=s.getNom_pers();
        prenom=s.getPrenom_pers();
@@ -126,7 +127,7 @@ UserController us=new UserController();
        email=s.getEmail();
        mdp=s.getMdp();
        adresse=s.getAdresse();
-       //image=s.getImage();
+       image=i.getLast();
        rib=s.getRib();
        role=s.getRole();
        this.txtNom.setText(nom);
@@ -135,14 +136,15 @@ UserController us=new UserController();
            this.txtEmail.setText(email);
             this.txtMdp.setText(mdp);
              this.txtAdresse.setText(adresse);
-             this.txtImage.setText(s.getImage());
-        FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/"+s.getImage()); 
+             this.txtImage.setText(i.getLast());
+        FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/"+i.getLast()); 
         Image image = new Image(inputstream); 
         profileRectangle.setStroke(javafx.scene.paint.Color.ORANGE);
         profileRectangle.setFill(new ImagePattern(image)); 
                this.txtRib.setText(rib);
                 this.txtRole.setValue(role);
-                p=new Personne(nom, prenom, num, email, mdp, adresse, s.getImage(), rib, role);
+                p=new Personne(nom, prenom, num, email, mdp, adresse, rib, role);
+                //i=new imagepers(image, nom, id);
  
     }
 public  void getController(UserController u){
@@ -159,9 +161,9 @@ public  void getController(UserController u){
     String pimage=txtImage.getText();
    String prib=txtRib.getText();
     String prole=txtRole.getValue();
-     String hashed = BCrypt.hashpw(txtMdp.getText(), BCrypt.gensalt());
+    // String hashed = BCrypt.hashpw(txtMdp.getText(), BCrypt.gensalt());
         int id=ss.geIdbyemail(email);
-        p=new Personne(id,pnom, pprenom, pnum, pemail,hashed,padresse,pimage,prib,prole);
+        p=new Personne(id,pnom, pprenom, pnum, pemail,pmdp,padresse,prib,prole);
         
         if(test(pnom, pprenom, pnum, pemail,padresse,prib))
         
@@ -173,6 +175,12 @@ public  void getController(UserController u){
         Optional<ButtonType> action = a.showAndWait();
         if (action.get() == ButtonType.OK) {
            ss.modifier(id, p);
+           imagepers im=new imagepers(pimage,pimage, id);
+            System.out.println("lastt: "+im.getLast());
+        ss.ajouterI(im);
+         System.out.println("lastt2: "+im.getLast());
+        ss.modifierI(id,pimage);
+         System.out.println("lastt3: "+im.getLast());
         us.Refresh();
          Stage stage = (Stage) btnenregistrer.getScene().getWindow();
           stage.close();

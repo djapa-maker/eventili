@@ -71,7 +71,7 @@
             <Font size="24.0" />
          </font>
       </Text>
-      <Button fx:id="importer" layoutX="517.0" layoutY="435.0" mnemonicParsing="false" onAction="#importIcone" prefHeight="49.0" prefWidth="447.0" style="-fx-background-color: #e9effd;" styleClass="input" text="Importer des images" textFill="#260279">
+      <Button fx:id="importer" layoutX="517.0" layoutY="435.0" mnemonicParsing="false" onAction="#importIcone" prefHeight="49.0" prefWidth="447.0" style="-fx-background-color: #e9effd;" styleClass="input" text="Importer des image(s)" textFill="#260279">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
