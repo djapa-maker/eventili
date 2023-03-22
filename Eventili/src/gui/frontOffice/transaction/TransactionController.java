@@ -54,7 +54,12 @@ import com.stripe.param.ChargeCreateParams;
 import com.stripe.param.TokenCreateParams;
 import com.stripe.param.TokenCreateParams.Card;
 import entities.ServiceReservation;
+import gui.singleton.transeng;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import services.ServiceReservationService;
 
@@ -72,10 +77,10 @@ public class TransactionController implements Initializable {
     private EventService es;
     private PersonneService ps;
     // Twilio API credentials
-    private static final String ACCOUNT_SID = "AC3d4b4fc732980bfdd7ba4ea1ad08922f";
-    private static final String AUTH_TOKEN = "2b913469ae928b70afca58fe67672524";
+    private static final String ACCOUNT_SID = "ACd1bfdea7342078edf93113625738d7b7";
+    private static final String AUTH_TOKEN = "a6d52d023d784964104b0165e7df47ac";
     // Twilio phone number
-    private static final String TWILIO_PHONE_NUMBER = "+15673132427";
+    private static final String TWILIO_PHONE_NUMBER = "+14066307511";
     @FXML
     private ChoiceBox<String> devise;
     @FXML
@@ -88,6 +93,7 @@ public class TransactionController implements Initializable {
     private Button payer;
     singleton data = singleton.getInstance();
     Personne pa = data.getUser();
+    transeng info=transeng.getInstance();
     @FXML
     private TextField cvv;
     @FXML
@@ -120,8 +126,6 @@ public class TransactionController implements Initializable {
     @FXML
     private ImageView card;
     @FXML
-    private TextField totale1;
-    @FXML
     private TextField numordre;
     @FXML
     private TextField totale121;
@@ -132,20 +136,20 @@ public class TransactionController implements Initializable {
     @FXML
     private TextField nompre;
     @FXML
-    private ImageView teleni;
-    @FXML
     private TextField numcardcopy;
     private int transactionId = 0;
-    private int type = 0;
-    private String mountinit = "100";
-    String ammount = "100"; //integration caluclue ammount
-    private int idev;
+    private int type = info.getType();
+    private String mountinit = info.getAmmount();
+    String ammount = info.getAmmount(); //integration caluclue ammount
+ 
     ServiceReservationService srs = new ServiceReservationService();
+    @FXML
+    private Button closeButton;
 
-
-    public void setIdEvent(int id) {
-        idev = id;
-    }
+ 
+public void setOnTransactionClose(EventHandler<ActionEvent> handler) {
+    closeButton.setOnAction(handler);
+}
 
     public TransactionController(String mount, int type) {
 
@@ -163,7 +167,7 @@ public class TransactionController implements Initializable {
     }
 
     public void settype(int t, String mount) {
-         System.out.println("aaaaaaaaaaaa"+ammount);
+   
         ammount = mount;
         mountinit = mount;
         this.type = t;
@@ -190,7 +194,9 @@ public class TransactionController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println(type);
+        System.out.println("type :"+info.getType());
+                System.out.println("idev :"+info.getIdev());
+//      System.out.println("ammount :"+ts.calcule_montanttotale(info.getIdev()));
         //*******************setup notifaction sms
         numcard.textProperty().addListener((obs, oldVal, newVal) -> {
             numcardcopy.setText(newVal);
@@ -312,8 +318,8 @@ public class TransactionController implements Initializable {
         es = new EventService();
         mode.setItems(FXCollections.observableArrayList(ts.get_modepayment()));
         devise.setItems(FXCollections.observableArrayList(ts.get_devise()));
-        if (type == 2) {
-            ammount = String.valueOf(ts.calcule_montanttotale(idev));//integration
+        if (info.getType() == 2) {
+            ammount = String.valueOf(ts.calcule_montanttotale(info.getIdev()));//integration
         } else {
 
         }
@@ -331,18 +337,17 @@ public class TransactionController implements Initializable {
                 String apiKey = "fwRBmaxRmRvD8xcUFFfAY4CERrYvRnMb";
                 String baseUrl = "https://api.apilayer.com/fixer/convert";
                 String amount = "";
-                if (type == 2) {//event
-                    amount = String.valueOf(ts.calcule_montanttotale(idev));//integration
+                if (info.getType() == 2) {//event
+                    amount = String.valueOf(ts.calcule_montanttotale(info.getIdev()));//integration
                 } else if (type == 0) {
 
                     amount = mountinit;
 
                 }
-                String fromCurrency = oldValue;
+                if(newValue.compareTo("EUR")!=0){
+                String fromCurrency = "EUR";
                 String toCurrency = newValue;
-                if (oldValue != "EUR") {
-                    fromCurrency = "EUR";
-                }
+         
                 System.out.println(oldValue + amount + newValue);
                 String urll = String.format("%s?apikey=%s&amount=%s&from=%s&to=%s", baseUrl, apiKey, amount, fromCurrency, toCurrency);
                 Request request = new Request.Builder()
@@ -364,6 +369,16 @@ public class TransactionController implements Initializable {
                 System.out.println(result);
                 totale.setText(String.valueOf(result));
                 ammount = String.valueOf(result);
+                }
+                else {    
+                                     
+                   amount = String.valueOf(ts.calcule_montanttotale(info.getIdev()));//integration
+
+                    totale.setText(amount);
+
+                }
+                
+                
             } catch (IOException ex) {
                 Logger.getLogger(TransactionController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ParseException ex) {
@@ -410,9 +425,9 @@ public class TransactionController implements Initializable {
             if (response == okButton) {
                 Stage stage = (Stage) annulerbtn.getScene().getWindow();
                 stage.close();
-                Event t = es.findEventById(idev);
+                Event t = es.findEventById(info.getType());
                 es.supprimer(t);
-                ServiceReservation rs = srs.findByIdEvent(idev);
+                ServiceReservation rs = srs.findByIdEvent(info.getType());
                 srs.supprimer(rs);
             } else if (response == revenirButton) {
                 alert.close();
@@ -421,7 +436,7 @@ public class TransactionController implements Initializable {
     }
 
     @FXML
-    private void payer(ActionEvent event) {
+    private void payer(ActionEvent event) throws IOException {
         Stripe.apiKey = "sk_test_51MiCB1Gqpa2PZgAVrlv2LKXgwScv6giwP2nPMkB6pTxddtrFvf9Om5ZHuLdUwovIzRy1ChhrZvbuKtStvgwEnEsS00B3Sw1WSs";
         String payment = "";
         int close = 0;
@@ -437,7 +452,7 @@ public class TransactionController implements Initializable {
         } else {
             Transactions tr = new Transactions();
             Event eve = new Event();
-            eve = es.findEventById(idev);//integration
+            eve = es.findEventById(info.getType());//integration
 
             float montant_tot = Float.parseFloat(ammount);
             String devis = devise.getValue();
@@ -458,10 +473,10 @@ public class TransactionController implements Initializable {
 
             try {
                 String tokenId = Token.create(tokenParams).getId();
-
+                System.out.println("ammount"+amount);
                 // Create a charge with the test token
                 ChargeCreateParams chargeParams = ChargeCreateParams.builder()
-                        .setAmount(amount)
+                        .setAmount(amount*100)
                         .setCurrency(devise.getValue())
                         .setDescription("charge")
                         .setSource(tokenId)
@@ -472,7 +487,7 @@ public class TransactionController implements Initializable {
                 System.out.println("Charge succeeded! Status: " + charge.getStatus());
                 tr = new Transactions(0, 0, montant_tot, devis, LocalDateTime.now(), mode_trans, pa);
                 transactionId = ts.ajouterget(tr);
-
+                System.out.println("transactionId"+transactionId);
             } catch (CardException e) {
                 System.out.println("Charge failed: " + e.getMessage());
                 suceed = 0;
@@ -509,22 +524,32 @@ public class TransactionController implements Initializable {
                     alert.setContentText("Merci pour votre achat.");
                     payment = "Paiement réussi :  Le paiement a été effectué avec succès";
                     alert.showAndWait();
+                    close=1;
                     break;
                 }
             }
 
-           // Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-
-//            System.out.println(pa.getNum_tel());
+             Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+             System.out.println(pa.getNum_tel());
+ 
+            Message.creator(new PhoneNumber("+21628899807"), new PhoneNumber(TWILIO_PHONE_NUMBER), payment).create();
+        }
+if (close == 1) {
+// create a new scene object for the old scene
+//Parent root = FXMLLoader.load(getClass().getResource("../sidebar/SideBar.fxml"));
+//Scene oldScene = new Scene(root);
 //
-//            Message.creator(new PhoneNumber("+216" + pa.getNum_tel()), new PhoneNumber("+15673132427"), payment).create();
+//// Get the current stage and close it
+//Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//currentStage.close();
+//
+//// Create a new stage for the old scene
+//Stage oldStage = new Stage();
+//oldStage.setScene(oldScene); // set the old scene
+//oldStage.show(); // show the old stage
 
-        }
-        if (close == 1) {
-            // get the current stage and close it
-            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            currentStage.close();
-        }
+}
+
     }
 
 }

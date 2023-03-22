@@ -8,6 +8,7 @@ package gui.frontOffice.Devis;
 import entities.Event;
 import entities.ServiceReservation;
 import gui.frontOffice.transaction.TransactionController;
+import gui.singleton.transeng;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -50,8 +51,8 @@ public class PDFGeneratorController implements Initializable {
     private Button annulerbtn;
     EventService es = new EventService();
     ServiceReservationService srs = new ServiceReservationService();
-
-    public ImageView getPdfImageView() {
+   transeng info=transeng.getInstance();
+   public ImageView getPdfImageView() {
         return img;
     }
 
@@ -73,6 +74,7 @@ public class PDFGeneratorController implements Initializable {
 
     @FXML
     private void download(ActionEvent event) throws COSVisitorException {
+ 
         if (pdDocument != null) {
             try {
                 FileChooser fileChooser = new FileChooser();
@@ -91,10 +93,13 @@ public class PDFGeneratorController implements Initializable {
 
     @FXML
     private void Payer(ActionEvent event) throws IOException {
+        info.setType(2);
+        info.setIdev(idev);
         FXMLLoader addLoader = new FXMLLoader(getClass().getResource("../transaction/transaction.fxml"));
         Parent Root = addLoader.load();
         TransactionController list = addLoader.getController();
-        list.setIdEvent(idev);
+    
+        
         Stage stage = (Stage) Payer.getScene().getWindow();
         stage.setScene(new Scene(Root));
     }

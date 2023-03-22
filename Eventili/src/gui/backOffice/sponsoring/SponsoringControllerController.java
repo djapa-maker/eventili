@@ -107,6 +107,8 @@ public class SponsoringControllerController implements Initializable {
     search.textProperty().addListener((observable, oldValue, newValue) -> {
         try {
             listspon = (ArrayList<sponsoring>) ss.findByName(newValue);
+            System.out.println("listspon:"+listspon);
+                    System.out.println("newValue :"+newValue);
             Grid.getChildren().clear();  
             LoadData();
         } catch (SQLException ex) {

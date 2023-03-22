@@ -150,7 +150,7 @@ EventService es=new EventService();
         try {
             String sql = "SELECT t.*\n" +
 "FROM sponsoring t\n" +
-"JOIN evenement u ON t.id_sponso = u.id_ev \n" +
+"JOIN evenement u ON t.id_event = u.id_ev \n" +
 "WHERE u.titre like '%" + nom + "%'";
             Statement ste = cnx.createStatement();
             ResultSet resultSet = ste.executeQuery(sql);
@@ -159,6 +159,7 @@ EventService es=new EventService();
 Event eve=es.findEventById(resultSet.getInt("id_event"));
 sponsoring sp=new sponsoring(resultSet.getInt("id_sponso"), resultSet.getTimestamp("date_debut").toLocalDateTime(),  resultSet.getTimestamp("date_fin").toLocalDateTime(), resultSet.getInt("nombre_impression"), eve, c);
 st.add(sp);
+                System.out.println("sp :"+sp);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

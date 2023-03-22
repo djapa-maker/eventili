@@ -53,6 +53,8 @@ public class AdministrationController implements Initializable {
     private Button btnTran;
     @FXML
     private Button btndeconnexion;
+    @FXML
+    private Button btnspon;
 
 
     /**
@@ -176,6 +178,16 @@ public class AdministrationController implements Initializable {
             stg.setTitle("Eventili");
             stg.setScene(s);
             stg.show();
+    }
+
+    @FXML
+    private void btnspon(ActionEvent event) {
+                try {
+            AnchorPane view = FXMLLoader.load(getClass().getResource("../sponsoring/SponsoringController.fxml"));
+            BorderPane.setCenter(view);
+        } catch (IOException ex) { 
+            System.out.println(ex.getMessage());
+        }
     }
     
 }

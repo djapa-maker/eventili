@@ -26,6 +26,7 @@ import java.time.format.DateTimeFormatter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import entities.Event;
+import entities.imagepers;
 //stripe 
 
 
@@ -274,7 +275,29 @@ String sql = "SELECT REPLACE(REPLACE(REPLACE(SUBSTRING(COLUMN_TYPE, 6, LENGTH(CO
         return id;
 
     }
-               
-               
+//**************************************find img               
+     public String findimgId(int id) { 
+        imagepers p = new imagepers();
+        PersonneService ps = new PersonneService();
+String last="";
+        try {
+            String sql = "SELECT * FROM imagepers WHERE id_pers = ?";
+            PreparedStatement ste = cnx.prepareStatement(sql);
+            ste.setInt(1, id);
+            ResultSet resultSet = ste.executeQuery();
+
+            if (resultSet.next()) {
+ 
+                  last = resultSet.getString("last");
+                  } else {
+                System.out.println("Aucune transaction ne possède l'id " + id);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return last;
+
+    }             
  
 }

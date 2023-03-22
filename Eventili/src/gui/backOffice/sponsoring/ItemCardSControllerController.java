@@ -59,12 +59,7 @@ UserController us=new UserController();
  sponsoring sp=new sponsoring();
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        hboxsupp.getChildren()
-                .addAll(GlyphsDude.createIcon(FontAwesomeIcon.TRASH,
-                                "25px"));
-        hboxmodif.getChildren()
-                .addAll(GlyphsDude.createIcon(FontAwesomeIcon.PENCIL,
-                                "25px"));
+ 
         
         // TODO
     } 

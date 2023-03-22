@@ -21,6 +21,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import services.TransactionsService;
 
 /**
  * FXML Controller class
@@ -56,8 +57,10 @@ public class ItemCardTController implements Initializable {
     }    
 public void SetData(Transactions s) throws SQLException, FileNotFoundException {
         //affichage des services
-       System.out.println(s.getP().getImage());
-       FileInputStream inputstream = new FileInputStream("C:\\Users\\sel3a\\Desktop\\New folder (2)\\pidev\\Eventili\\src\\images\\"+s.getP().getImage()); 
+       TransactionsService ts=new TransactionsService();
+ 
+       System.out.println(ts.findimgId(s.getP().getId_pers()));
+       FileInputStream inputstream = new FileInputStream("C:\\Users\\sel3a\\Desktop\\eventi\\eventili\\Eventili\\src\\images\\"+ts.findimgId(s.getP().getId_pers())); 
         Image image = new Image(inputstream); 
          icon.setImage(image);
         nom.setText(s.getP().getNom_pers());

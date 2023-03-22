@@ -10,6 +10,7 @@ import entities.Transactions;
 import entities.sponsoring;
 import gui.frontOffice.transaction.TransactionController;
 import gui.sigleton.singleton;
+import gui.singleton.transeng;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -23,6 +24,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -57,6 +59,7 @@ public class SponsorController implements Initializable {
     private EventService es = new EventService();
     private PersonneService ps = new PersonneService();
     singleton data = singleton.getInstance();
+     transeng info=transeng.getInstance();
     Personne pa = data.getUser();
     String ammount = ""; //integration caluclue ammount
     @FXML
@@ -96,15 +99,14 @@ public class SponsorController implements Initializable {
     }
 
     public void setEventId(int id) {
-        ide = 219;
+        ide = id;
          System.out.println("welcome"+ide);
 
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println("aaaaaaaaaaaa"+ide);
-        idnombreimpression.textProperty().addListener((observable, oldValue, newValue) -> {
+         idnombreimpression.textProperty().addListener((observable, oldValue, newValue) -> {
             int nombre_impression = Integer.parseInt(newValue);
             int total = nombre_impression * 10;
             totale.setText(Integer.toString(total));
@@ -188,48 +190,50 @@ public class SponsorController implements Initializable {
 
     @FXML
 
-    private void ajoutersponsor_client(MouseEvent event) {
-        try {
-            // Load the transaction scene
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../transaction/transaction.fxml"));
-            Parent root = loader.load();
-            TransactionController transactionController = new TransactionController(totale.getText(), 0);
-            loader.getController();
-            //transactionController.settype(0, totale.getText());
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
-            // Get the transaction ID from the transaction scene
-            int transactionId = transactionController.getTransactionId();
-            // Use the transaction ID to create the sponsoring
-            sponsoringservice ps = new sponsoringservice();
-            TransactionsService ts = new TransactionsService();
-            EventService es = new EventService();
-             System.out.println("ajouter"+ide);
-            Event eve = es.findEventById(ide); //  
-            String date_debut = iddatadebut.getValue().toString();
-            String date_fin = iddatefin.getValue().toString();
-            int nombre_impression = Integer.parseInt(idnombreimpression.getText());
-
-            Transactions tr = ts.findById(transactionId);
-            LocalDate myDate = iddatadebut.getValue();
-            int year = myDate.getYear();
-            int Month = myDate.getMonthValue();
-            int Day = myDate.getDayOfMonth();
-            LocalDate myDatee = iddatefin.getValue();
-            int yeaer = myDatee.getYear();
-            int Monthe = myDatee.getMonthValue();
-            int Daye = myDatee.getDayOfMonth();
-            sponsoring sp = new sponsoring(0, LocalDateTime.of(year, Month, Day, 0, 0), LocalDateTime.of(yeaer, Monthe, Daye, 0, 0), nombre_impression, eve, tr);
-            System.out.println("kkkkkkkkkkkkkkkkkkkkk"+sp);
-            ps.ajouter(sp);
-
-            // Reset the sponsor form
-            reset_sponsor();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+private void ajoutersponsor_client(MouseEvent event) {
+    try {
+                       info.setType(1);
+        info.setAmmount(totale.getText());
+        // Load the transaction scene
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../transaction/transaction.fxml"));
+        Parent root = loader.load();
+                TransactionController transactionController = loader.getController();
+                       loader.getController();
+ transactionController.settype(0,totale.getText());
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
+        
+        // Get the transaction ID from the transaction scene
+         int transactionId = transactionController.getTransactionId();
+        
+        // Use the transaction ID to create the sponsoring
+        sponsoringservice ps = new sponsoringservice();
+        TransactionsService ts = new TransactionsService();
+        EventService es = new EventService();
+        Event eve = es.findEventById(ide); //  
+        String date_debut = iddatadebut.getValue().toString();
+        String date_fin = iddatefin.getValue().toString();
+        int nombre_impression = Integer.parseInt(idnombreimpression.getText());
+       
+          Transactions tr = ts.findById(transactionId);
+        LocalDate myDate = iddatadebut.getValue();
+        int year = myDate.getYear();
+        int Month = myDate.getMonthValue();
+        int Day = myDate.getDayOfMonth();
+        LocalDate myDatee = iddatefin.getValue();
+        int yeaer = myDatee.getYear();
+        int Monthe = myDatee.getMonthValue();
+        int Daye = myDatee.getDayOfMonth();
+        sponsoring sp = new sponsoring(0, LocalDateTime.of(year, Month, Day, 0, 0), LocalDateTime.of(yeaer, Monthe, Daye, 0, 0), nombre_impression, eve, tr);
+        ps.ajouter(sp);
+        
+        // Reset the sponsor form
+      reset_sponsor( );
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+}
 
     @FXML
     private void checkdate(ActionEvent event) {

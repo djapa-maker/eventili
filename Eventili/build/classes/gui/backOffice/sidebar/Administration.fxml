@@ -78,6 +78,17 @@
                         <Font size="18.0" />
                      </font>
                   </Button>
+                  <Button fx:id="btnspon" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#btnspon" prefHeight="70.0" prefWidth="258.0" styleClass="button1" stylesheets="@administration.css" text="sponsor" textFill="WHITE">
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="MONEY" text="" />
+                     </graphic>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
                </children>
             </VBox>
          </left>

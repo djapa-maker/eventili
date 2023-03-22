@@ -178,5 +178,6 @@
             <Font size="15.0" />
          </font>
       </TextField>
+      <Button fx:id="closeButton" layoutX="803.0" layoutY="704.0" mnemonicParsing="false" onAction="#annuler" prefHeight="39.0" prefWidth="103.0" style="-fx-background-color: #d1914d;" stylesheets="@../organisationev/creerevenement/creationev.css" text="close" textFill="#803e3e" />
    </children>
 </AnchorPane>
