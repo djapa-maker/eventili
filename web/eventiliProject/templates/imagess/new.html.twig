@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Imagess{% endblock %}
+
+{% block body %}
+    <h1>Create new Imagess</h1>
+
+    {{ include('imagess/_form.html.twig') }}
+
+    <a href="{{ path('app_imagess_index') }}">back to list</a>
+{% endblock %}

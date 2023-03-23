@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sousservice index{% endblock %}
+
+{% block body %}
+    <h1>Sousservice index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Image</th>
+                <th>Description</th>
+                <th>Prix</th>
+                <th>Note</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sousservice in sousservices %}
+            <tr>
+                <td>{{ sousservice.id }}</td>
+                <td>{{ sousservice.nom }}</td>
+                <td>{{ sousservice.image }}</td>
+                <td>{{ sousservice.description }}</td>
+                <td>{{ sousservice.prix }}</td>
+                <td>{{ sousservice.note }}</td>
+                <td>
+                    <a href="{{ path('app_sousservice_show', {'id': sousservice.id}) }}">show</a>
+                    <a href="{{ path('app_sousservice_edit', {'id': sousservice.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_sousservice_new') }}">Create new</a>
+{% endblock %}

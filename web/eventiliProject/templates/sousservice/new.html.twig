@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Sousservice{% endblock %}
+
+{% block body %}
+    <h1>Create new Sousservice</h1>
+
+    {{ include('sousservice/_form.html.twig') }}
+
+    <a href="{{ path('app_sousservice_index') }}">back to list</a>
+{% endblock %}
