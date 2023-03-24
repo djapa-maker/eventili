@@ -1,43 +1,77 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Sousservice index{% endblock %}
+{% extends 'navbar.html.twig'%}
 
 {% block body %}
-    <h1>Sousservice index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Image</th>
-                <th>Description</th>
-                <th>Prix</th>
-                <th>Note</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for sousservice in sousservices %}
-            <tr>
-                <td>{{ sousservice.id }}</td>
-                <td>{{ sousservice.nom }}</td>
-                <td>{{ sousservice.image }}</td>
-                <td>{{ sousservice.description }}</td>
-                <td>{{ sousservice.prix }}</td>
-                <td>{{ sousservice.note }}</td>
-                <td>
-                    <a href="{{ path('app_sousservice_show', {'id': sousservice.id}) }}">show</a>
-                    <a href="{{ path('app_sousservice_edit', {'id': sousservice.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_sousservice_new') }}">Create new</a>
+{% include 'navbar.html.twig' %}
+	<div class="page-wrapper">
+			<div class="page-content">
+				<!--breadcrumb-->
+				<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+					<div style="color:#758afd;font-size:25px;font-style:bold">Sous Service</div>
+					<div class="ms-auto">
+						<div class="btn-group">
+							<button type="button" style="border-radius:10px;color:white;background-color:#aeb8ff;border-color:#aeb8ff;font-size:19px">Créer un sous service</button>
+							</button>
+				
+						</div>
+					</div>
+				</div>
+				<!--end breadcrumb-->
+				
+				<hr/>
+				<div class="card">
+					<div class="card-body">
+						<div class="table-responsive">
+							<table id="example" class="table table-bordered" style="width:100%;border-color:#aeb8ff;border-radius:30px">
+								<thead>
+									<tr style="color:#27187f">
+										<th>Images</th>
+										<th>Nom du sous service</th>
+										<th>Service</th>
+										<th>Description</th>
+										<th>Prix</th>
+										<th>Note</th>
+										<th>Prestataire</th>
+										<th>Catégories d'évènement</th>
+										<th>Action</th>
+										
+									</tr>
+								</thead>
+								<tbody>
+								{% for sousservices in sousservices %}
+									<tr style="color:#27187f">
+										<td>{{sousservices.image}}</td>
+										<td>{{sousservices.nom}}</td>
+										<td>{{sousservices.idService.nom}}</td>
+										<td>{{sousservices.description}}</td>
+										<td>{{sousservices.prix}}</td>
+										<td>{{sousservices.note}}</td>
+										<td>{{sousservices.idPers.prenomPers}}</td>
+										<td>{{sousservices.idEventcateg.type}}</td>
+										<td>
+										<button style="border-radius:10px;background-color:#ff8601;border-color:#ff8601;color:white">Supprimer  </button>
+										<button style="border-radius:10px;background-color:#758afd;border-color:#758afd;color:white">Modifier</button>
+										</td>
+									</tr>
+								{% endfor %}
+								</tbody>
+								<tfoot>
+									<tr style="color:#27187f">
+										<th>Images</th>
+										<th>Nom du sous service</th>
+										<th>Service</th>
+										<th>Description</th>
+										<th>Prix</th>
+										<th>Note</th>
+										<th>Prestataire</th>
+										<th>Catégories d'évènement</th>
+										<th>Action</th>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 {% endblock %}
+

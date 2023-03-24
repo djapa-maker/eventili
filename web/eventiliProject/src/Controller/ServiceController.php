@@ -66,6 +66,26 @@ class ServiceController extends AbstractController
         ]);
     }
 //-------------------------------------------------------------------------------------------------
+#[Route('/{idService}/editt', name: 'app_service_edit1')]
+public function edit1(Request $request, Service $service, ServiceRepository $serviceRepository): Response
+{
+    $var = $request->get('inputService');
+    $service->setNom($var);
+//     $form = $this->createForm(ServiceType::class, $service);
+//     $form->handleRequest($request);
+
+    // if ($form->isSubmitted() && $form->isValid()) {
+        $serviceRepository->save($service, true);
+
+        return $this->redirectToRoute('app_service_index', [], Response::HTTP_SEE_OTHER);
+    // }
+
+    // return $this->renderForm('service/edit.html.twig', [
+    //     'service' => $service,
+    //     // 'form' => $form,
+    // ]);
+}    
+//-------------------------------------------------------------------------------------------------
     #[Route('/{idService}', name: 'app_service_delete', methods: ['POST'])]
     public function delete(Request $request, Service $service, ServiceRepository $serviceRepository): Response
     {

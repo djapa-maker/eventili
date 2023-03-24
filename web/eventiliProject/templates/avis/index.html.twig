@@ -1,39 +1,61 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Avis index{% endblock %}
+{% extends 'navbar.html.twig'%}
 
 {% block body %}
-    <h1>Avis index</h1>
+{% include 'navbar.html.twig' %}
+	<div class="page-wrapper">
+			<div class="page-content">
+				<!--breadcrumb-->
+				<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+					<div style="color:#758afd;font-size:25px;font-style:bold">Avis</div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>IdAv</th>
-                <th>Rating</th>
-                <th>Comment</th>
-                <th>Date</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for avi in avis %}
-            <tr>
-                <td>{{ avi.idAv }}</td>
-                <td>{{ avi.rating }}</td>
-                <td>{{ avi.comment }}</td>
-                <td>{{ avi.date ? avi.date|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_avis_show', {'idAv': avi.idAv}) }}">show</a>
-                    <a href="{{ path('app_avis_edit', {'idAv': avi.idAv}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_avis_new') }}">Create new</a>
+				</div>
+				<!--end breadcrumb-->
+				
+				<hr/>
+				<div class="card">
+					<div class="card-body">
+						<div class="table-responsive">
+							<table id="example" class="table table-bordered " style="width:100%;border-color:#aeb8ff;border-radius:30px">
+								<thead>
+									<tr style="color:#27187f">
+										<th>Personne</th>
+										<th>Note</th>
+										<th>Commentaire</th>
+										<th>Sous Service</th>
+										<th>Date</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+								{% for avis in avis %}
+									<tr style="color:#27187f">
+										<td>{{avis.pers.prenomPers}}</td>
+										<td>{{avis.rating}}</td>
+										<td>{{avis.comment}}</td>
+										<td>{{avis.idService.nom}}</td>
+										<td>{{avis.date|date('Y-m-d H:i:s')}}</td>
+										<td>
+										<button style="border-radius:20px;background-color:#ff8601;border-color:#ff8601;color:white">Supprimer  </button>
+										{# <button style="border-radius:20px;background-color:#758afd;border-color:#758afd;color:white">Modifier</button> #}
+										</td>
+									</tr>
+								{% endfor %}
+								</tbody>
+								<tfoot>
+									<tr style="color:#27187f">
+										<th>Personne</th>
+										<th>Note</th>
+										<th>Commentaire</th>
+										<th>Sous Service</th>
+										<th>Date</th>
+										<th>Action</th>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 {% endblock %}
+
