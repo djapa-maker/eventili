@@ -1,61 +1,77 @@
 {% extends 'navbar.html.twig'%}
 
 {% block body %}
-{% include 'navbar.html.twig' %}
+	{% include 'navbar.html.twig' %}
 	<div class="page-wrapper">
-			<div class="page-content">
-				<!--breadcrumb-->
-				<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-					<div style="color:#758afd;font-size:25px;font-style:bold">Avis</div>
-
+		<div
+			class="page-content">
+			<!--breadcrumb-->
+			<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+				<div style="color:#758afd;font-size:25px;font-style:bold">Avis</div>
+				<div class="search-bar flex-grow-1" style="margin-left:20%;">
+					<div class="position-relative search-bar-box">
+						<form id="annuite_form" class="form" action="{{ path('app_avis_index') }}" enctype="multipart/form-data" method="GET">
+							<input type="text" name="search" style="border-radius:20px;border: 2px solid #aeb8ff  " class="form-control search-control" id="placeholder1" placeholder="Rechercher...">
+						</form>
+						<span class="position-absolute top-50 search-show translate-middle-y">
+							<i class='bx bx-search' style="color:#aeb8ff"></i>
+						</span>
+						<span class="position-absolute top-50 search-close translate-middle-y">
+							<i class='bx bx-x' style="color:white"></i>
+						</span>
+					</div>
 				</div>
-				<!--end breadcrumb-->
-				
-				<hr/>
-				<div class="card">
-					<div class="card-body">
-						<div class="table-responsive">
-							<table id="example" class="table table-bordered " style="width:100%;border-color:#aeb8ff;border-radius:30px">
-								<thead>
-									<tr style="color:#27187f">
-										<th>Personne</th>
-										<th>Note</th>
-										<th>Commentaire</th>
-										<th>Sous Service</th>
-										<th>Date</th>
-										<th>Action</th>
-									</tr>
-								</thead>
-								<tbody>
+			</div>
+			<!--end breadcrumb-->
+			<hr/>
+			
+			<div class="card">
+				<div class="card-body">
+					<div class="table-responsive">
+						<table id="example" class="table table-bordered " style="width:100%;border-color:#aeb8ff;border-radius:30px">
+							<thead>
+								<tr style="color:#27187f">
+									<th>Personne</th>
+									<th>Note</th>
+									<th>Commentaire</th>
+									<th>Sous Service</th>
+									<th>Date</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
 								{% for avis in avis %}
 									<tr style="color:#27187f">
-										<td>{{avis.pers.prenomPers}}</td>
+										<td>{{avis.pers.prenomPers}}
+											{{avis.pers.nomPers}}</td>
 										<td>{{avis.rating}}</td>
 										<td>{{avis.comment}}</td>
 										<td>{{avis.idService.nom}}</td>
 										<td>{{avis.date|date('Y-m-d H:i:s')}}</td>
 										<td>
-										<button style="border-radius:20px;background-color:#ff8601;border-color:#ff8601;color:white">Supprimer  </button>
-										{# <button style="border-radius:20px;background-color:#758afd;border-color:#758afd;color:white">Modifier</button> #}
+											<form method="post" action="{{ path('app_avis_delete', {'idAv': avis.idAv}) }}" onsubmit="return confirm('Etes-vous sure de vouloir supprimer cet avis ?');">
+												<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ avis.idAv) }}">
+												<button style="margin-right:5px;border-radius:10px;background-color:#ff8601;border-color:#ff8601;color:white">Supprimer</button>
+											</form>
+											{# <button style="border-radius:20px;background-color:#758afd;border-color:#758afd;color:white">Modifier</button> #}
 										</td>
 									</tr>
 								{% endfor %}
-								</tbody>
-								<tfoot>
-									<tr style="color:#27187f">
-										<th>Personne</th>
-										<th>Note</th>
-										<th>Commentaire</th>
-										<th>Sous Service</th>
-										<th>Date</th>
-										<th>Action</th>
-									</tr>
-								</tfoot>
-							</table>
-						</div>
+							</tbody>
+							<tfoot>
+								<tr style="color:#27187f">
+									<th>Personne</th>
+									<th>Note</th>
+									<th>Commentaire</th>
+									<th>Sous Service</th>
+									<th>Date</th>
+									<th>Action</th>
+								</tr>
+							</tfoot>
+						</table>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 {% endblock %}
-

@@ -1,4 +1,121 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form, {'attr': {'class': 'was-validated', 'novalidate': 'novalidate'}}) }}
+<div
+	style="margin-left:20%;">
+	{# ---------------------------------------- #}
+	<div class="row g-3">
+		<div class="form-group col-sm">
+			<div style="color:#6B67E9;font-size:20px">
+				{{ form_label(form.nom, 'Nom du sous service', {'label_attr': {'class': 'form-label'}}) }}
+			</div>
+			<div style="width:65%">
+				{{ form_widget(form.nom, {'attr': {'class': 'form-control', 'placeholder': 'nom ...'}}) }}
+			</div>
+			<div style="color:red;border-color:red">
+				{{ form_errors(form.nom,{'attr': {'class': 'invalide-feedback'}}) }}
+			</div>
+		</div>
+	</div>
+	{# ---------------------------------------- #}
+	<div style="margin-top:2%" class="form-group col-sm">
+		<div style="color:#6B67E9;font-size:20px">
+			{{ form_label(form.description, 'Description :', {'label_attr': {'class': 'form-label'}}) }}
+		</div>
+		<div style="width:65%;height:120%">
+			{{ form_widget(form.description, {'attr': {'class': 'form-control', 'placeholder': 'description ...'}}) }}
+		</div>
+		<div style="color:red;border-color:red">
+			{{ form_errors(form.description,{'attr': {'class': 'invalide-feedback'}}) }}
+		</div>
+	</div>
+	{# ---------------------------------------- #}
+	{# <div class="row g-2">
+					<div class="col-sm">
+						<div class="form-group">
+							<div style="color:#6B67E9;font-size:20px">
+								{{ form_label(form.idEventcateg, 'Evenement :', {'label_attr': {'class': 'form-label'}}) }}
+							</div>
+							<div class="input-group" >
+								<div style="width:65%">
+									{{ form_widget(form.idEventcateg, {'attr': {'class': 'form-control'}}) }}
+								</div>
+							</div>
+							{% if form.idEventcateg.vars.errors|length > 0 %}
+								<div class="invalid-feedback">
+									{{ form_errors(form.idEventcateg) }}
+								</div>
+							{% endif %}
+						</div>
+					</div>
+				</div> #}
+	{# ---------------------------------------- #}
+		<div class="row g-3"> <div class="form-group col-sm">
+			<div style="color:#6B67E9;font-size:20px">
+				{{ form_label(form.idService, 'Services', {'label_attr': {'class': 'form-label'}}) }}
+			</div>
+			<div style="width:39%">
+				{{ form_widget(form.idService, {'attr': {'class': 'form-control', 'placeholder': 'description'}}) }}
+			</div>
+			<div style="color:red;border-color:red">
+				{{ form_errors(form.idService,{'attr': {'class': 'invalide-feedback'}}) }}
+			</div>
+		</div>
+		<div class="form-group col-sm" style="margin-left:-25%">
+			<div style="color:#6B67E9;font-size:20px">
+				{{ form_label(form.prix, 'Prix ', {'label_attr': {'class': 'form-label'}}) }}
+			</div>
+			<div style="width:29%">
+				{{ form_widget(form.prix, {'attr': {'class': 'form-control', 'placeholder': 'prix ...'}}) }}
+			</div>
+			<div style="color:red;border-color:red">
+				{{ form_errors(form.prix,{'attr': {'class': 'invalide-feedback'}}) }}
+			</div>
+		</div>
+
+		{# ---------------------------------------- #}
+	</div>
+	<div class="form-group col-sm">
+		<div style="color:#6B67E9;font-size:20px">
+			{{ form_label(form.image, 'Image', {'label_attr': {'class': 'form-label'}}) }}
+		</div>
+		<div style="width:65%">
+			{{ form_widget(form.image, {'attr': {'class': 'form-control', 'placeholder': ''}}) }}
+		</div>
+		<div style="color:red;border-color:red">
+			{{ form_errors(form.image,{'attr': {'class': 'invalide-feedback'}}) }}
+		</div>
+	</div>
+	<br>
+	{% for i in eventCat %}
+	<div style="margin-right:20%;border-color:red">
+		<label style=" display: inline-block;
+								  position: relative;
+								  padding-left: 25px;
+								  margin-right: 15px;
+								  font-size: 16px;
+								  line-height: 1.2;
+								  color:#6B67E9;
+								  cursor: pointer;">
+			<input type="checkbox" name="my-checkbox[]" value={{i.idCateg}} 
+			{% if i in selectedCategories %}checked{% endif %}
+			style="
+				  color: #fff;
+				  background-color: #6B67E9;
+				  border-color: #6B67E9;
+				  text-align: center;
+				  line-height: 16px;">
+			{{i.type}}
+		</label>
+	</div>	
+	{% endfor %}
+</div>
+<center>
+	<button id="submit-button" style="margin-top:20px;
+					width:30%;
+					border-radius:10px;
+					color:white;
+					background-color:#aeb8ff;
+					border-color:#aeb8ff;
+					font-size:19px" type="submit" class="btn btn-primary">{{ button_label|default('Créer') }}</button>
+</center>
+{{form_errors(form)}}
 {{ form_end(form) }}

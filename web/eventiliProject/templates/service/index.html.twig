@@ -1,85 +1,96 @@
 {% extends 'navbar.html.twig'%}
 
-{% block body %}
-{% include 'navbar.html.twig' %}
-	<div class="page-wrapper">
-			<div class="page-content">
-				<!--breadcrumb-->
-				<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-					<div  style="color:#758afd;font-size:25px;font-style:bold">Service</div>
-					<div class="ms-auto">
-						<div class="btn-group">
-							<button type="button" style="border-radius:10px;color:white;background-color:#aeb8ff;border-color:#aeb8ff;font-size:19px">Créer un service </button>
-							</button>
-				
-						</div>
-					</div>
-				</div>
-				<!--end breadcrumb-->
-				
-				<div class="card">
-					<div class="card-body">
-						<div class="table-responsive">
-							<table id="example" class="table  table-bordered " style="width:100%;border-color:#aeb8ff;border-radius:30px">
-								<thead>
-									<tr style="color:#27187f">
-										<th>Nom du service</th>
-										<th>Action</th>
-									</tr>
-								</thead>
-								<tbody>
-								{% for service in services %}
-									<tr style="color:#27187f">
-										<td>{{service.nom}}</td>
-										<td>
-										<div style="display: flex; align-items: center;">
-										<form method="post" action="{{ path('app_service_delete', {'idService': service.idService}) }}" onsubmit="return confirm('Etes-vous sure de vouloir supprimer ce service ?');">
-											<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ service.idService) }}">
-											<button style="margin-right:5px;border-radius:10px;background-color:#ff8601;border-color:#ff8601;color:white">Supprimer</button>
-										</form>
-										<button data-bs-toggle="modal" data-bs-target="#importAnnModal" style="border-radius:10px;background-color:#758afd;border-color:#758afd;color:white">Modifier</button>
-										
-										<div class="modal fade" id="importAnnModal" tabindex="-1" aria-labelledby="annModalLabel" aria-hidden="true">
-										<div class="modal-dialog">
-											<form id="annuite_form" class="form" action="{{ path('app_service_edit1', {'idService': service.idService})}}" enctype="multipart/form-data"  method="POST">
-												<div class="modal-content">
-													<div class="modal-header">
-														<h5 class="modal-title" id="annModalLabel" style="color:#ff8601">Modifier ce service </h5>
-														{# <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> #}
-													</div>
-													<div class="modal-body">
-													<label style="font-size:20px">Nom du service : </label>
-													<input name="inputService" type="text" style="border-radius:10px;border-color:#758afd"></input>
-														{# <div class="form-group">
-															<input type='file' name="annimport" class="form-control" />
-														</div> #}
-													</div>
-													<div class="modal-footer">
-														<button type="button" data-bs-dismiss="modal" style="border-color:transparent;border-radius:10px;color:grey">Annuler</button>
-														<button type="submit" style="border-color:transparent;border-radius:10px;color:white;background-color:#ff8601" > Modifier</button>
-													</div>
-												</div>
-											</form>
-										</div>
-        </div>
-										</div>
-										</td>
-									</tr>
-								{% endfor %}
-								</tbody>
-								<tfoot>
-									<tr>
-										<th style="color:#27187f">Nom du service</th>
-										<th style="color:#27187f">Action</th>
-									</tr>
-								</tfoot>
-							</table>
-						</div>
-					</div>
-				</div>
+{% block content %}
+	<div
+		class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+		{# -------------------------------------------------------------------------- #}
+		<div style="color:#758afd;font-size:25px;font-style:bold">Service</div>
+		<div class="search-bar flex-grow-1" style="margin-left:20%;">
+			<div class="position-relative search-bar-box">
+				<form id="annuite_form" class="form" action="{{ path('app_service_index') }}" enctype="multipart/form-data" method="GET">
+					<input type="text" name="search" style="border-radius:20px;border: 2px solid #aeb8ff  " class="form-control search-control" id="placeholder1" placeholder="Rechercher...">
+				</form>
+				<span class="position-absolute top-50 search-show translate-middle-y">
+					<i class='bx bx-search' style="color:#aeb8ff"></i>
+				</span>
+				<span class="position-absolute top-50 search-close translate-middle-y">
+					<i class='bx bx-x' style="color:white"></i>
+				</span>
 			</div>
 		</div>
-		<!-- Modal -->
-        
-{% endblock %}
+		{# -------------------------------------------------------------------------- #}
+		<div class="ms-auto">
+			<div
+				class="btn-group">
+				{# -------------------------------------------------------------------------- #}
 
+				<a href="{{ path('app_service_new') }}" class="btn btn-info" style="border-radius:10px;color:white;background-color:#aeb8ff;border-color:#aeb8ff;font-size:19px">Créer un service</a>
+
+				{# -------------------------------------------------------------------------- #}
+			</div>
+		</div>
+	</div>
+	{# -------------------------------------------------------------------------- #}
+	<div class="card">
+		<div class="card-body">
+			<div
+				class="table-responsive">
+				{# -------------------------------------------------------------------------- #}
+				<table
+					id="example" class="table table-bordered" style="
+						width:100%;
+						border-color:#aeb8ff;
+						border-radius:30px">
+					{# -------------------------------------------------------------------------- #}
+					<thead>
+						<tr style="color:#27187f">
+							<th>Nom du service</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					{# -------------------------------------------------------------------------- #}
+					<tbody>
+						{% for service in services %}
+							<tr style="color:#27187f">
+								<td>{{service.nom}}</td>
+								<td>
+									<div style="display: flex; align-items: center;">
+										{{ include('service/_delete_form.html.twig') }}
+										<a  href="{{ path('app_service_edit',{'idService':service.idService}) }}" style="
+																								border-radius:10px;
+																								background-color:#758afd;
+																								border-color:#758afd;
+																								height:30px;
+																								width:90px;
+																								display: flex; justify-content: center; align-items: center;
+																								color:white">Modifier</a>
+									</td>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+					{# -------------------------------------------------------------------------- #}
+					<tfoot>
+						<tr>
+							<th style="color:#27187f">Nom du service</th>
+							<th style="color:#27187f">Action</th>
+						</tr>
+					</tfoot>
+					{# -------------------------------------------------------------------------- #}
+				</table>
+				{# -------------------------------------------------------------------------- #}
+			</div>
+		</div>
+	</div>
+	{# -------------------------------------------------------------------------- #}
+
+
+	<!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<!-- Popper.js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
+
+	<!-- Bootstrap JS -->
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<!-- Modal -->
+{% endblock %}

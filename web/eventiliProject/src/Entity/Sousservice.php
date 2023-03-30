@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\SousserviceRepository;
-
+use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: SousserviceRepository::class)]
 class Sousservice
 {
@@ -16,24 +16,32 @@ class Sousservice
     private ?int $id=null;
 
    #[ORM\Column]
+   #[Assert\NotBlank(message: 'Merci de remplir le nom')]
     private ?String $nom=null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Merci de choisir une image')]
     private ?String $image=null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Merci de remplir la descritpion')]
     private ?String $description=null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Merci de remplir le prix')]
+    // #[Assert\Regex(pattern: '/^[0-9]+(?:\.[0-9]+)?$/', message:"Le prix doit contenir uniquement des chiffres.")]
     private ?float $prix=null;
 
     #[ORM\Column]
+    // #[Assert\Regex(pattern: '/^[0-9]*$')]
     private ?float $note=null;
 
     // #[ORM\ManyToOne(inversedBy:'Sousservice')]
-    #[ORM\ManyToOne(targetEntity: CategEvent::class)]
-    #[ORM\JoinColumn(name: "id_eventCateg", referencedColumnName: "id_categ")]
-    private ?CategEvent $idEventcateg=null;
+    // #[ORM\ManyToOne(targetEntity: CategEvent::class)]
+    // #[ORM\JoinColumn(name: "id_eventCateg", referencedColumnName: "id_categ")]
+    #[ORM\Column]
+    // #[Assert\NotBlank(message: 'Merci de selectionner un ou plusieurs evenement(s)')]
+    private ?String $idEventcateg=null;
 
     // #[ORM\ManyToOne(inversedBy:'Sousservice')]
     #[ORM\ManyToOne(targetEntity: Personne::class)]
@@ -43,6 +51,7 @@ class Sousservice
     // #[ORM\ManyToOne(inversedBy:'Sousservice')]
     #[ORM\ManyToOne(targetEntity: Service::class)]
     #[ORM\JoinColumn(name: "id_service", referencedColumnName: "id_service")]
+    #[Assert\NotBlank(message: 'Merci de choisir un service')]
     private ?Service $idService=null;
 //---------------------------------------------------------------------------------------
     public function getId(): ?int
@@ -105,12 +114,12 @@ class Sousservice
         return $this;
     }
 
-    public function getIdEventcateg(): ?CategEvent
+    public function getIdEventcateg(): ?String
     {
         return $this->idEventcateg;
     }
 
-    public function setIdEventcateg(CategEvent $idEventcateg): self
+    public function setIdEventcateg(String $idEventcateg): self
     {
         $this->idEventcateg = $idEventcateg;
         return $this;

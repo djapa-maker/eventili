@@ -38,4 +38,24 @@ class CategEventRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    //-------------------------------------------------------------------------
+
+    /**
+    * @return Sousservice[] Returns an array of Service objects
+    */
+    public function findListCateg(): array
+    {
+        $arrayNames=[];
+        $arrayNames=$this->createQueryBuilder('s')
+            
+            ->getQuery()
+            ->getResult()
+        ;
+        $tab2=[];
+        foreach($arrayNames as $i)
+        {
+            $tab2[]=$i->getType();
+        }
+        return $tab2;
+    }
 }

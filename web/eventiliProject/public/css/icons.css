@@ -2812,15 +2812,18 @@ File: icons.css
 }
 
 .bx-search:before {
-	content: "\eb54"
+	content: "\eb54";
+	
 }
 
 .bx-search-alt:before {
-	content: "\eb55"
+	content: "\eb55";
+	
 }
 
 .bx-search-alt-2:before {
-	content: "\eb56"
+	content: "\eb56";
+	
 }
 
 .bx-selection:before {

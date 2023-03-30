@@ -1,11 +1,19 @@
-{% extends 'base.html.twig' %}
+{% extends 'navbar.html.twig' %}
 
-{% block title %}New Sousservice{% endblock %}
+{% block title %}New Sousservice
+{% endblock %}
 
-{% block body %}
-    <h1>Create new Sousservice</h1>
+{% block content %}
+	<center>
+		<h1 style="color:#aeb8ff">Créer un nouveau sous service</h1>
+	</center>
+	{{ include('sousservice/_form.html.twig') }}
+	<br>
+	{# <center>	
+			<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+			<lottie-player src="https://assets1.lottiefiles.com/packages/lf20_ud6csclv.json" background="transparent" speed="1" style="width: 400px; height: 400px;" loop autoplay></lottie-player>
+			<a style="margin-left: 200%;color:grey;margin-top:10%" href="{{ path('app_service_index') }}">Retour</a>
+		</center> #}
+	
 
-    {{ include('sousservice/_form.html.twig') }}
-
-    <a href="{{ path('app_sousservice_index') }}">back to list</a>
 {% endblock %}

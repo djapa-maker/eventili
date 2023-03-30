@@ -14,10 +14,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class AvisController extends AbstractController
 {
     #[Route('/', name: 'app_avis_index', methods: ['GET'])]
-    public function index(AvisRepository $avisRepository): Response
+    public function index(AvisRepository $avisRepository,request $request): Response
     {
+        $search=$request->query->get('search');
+        if($search){
+            $av=$avisRepository->getAvisByPersonName($search);
+        }
+        else {
+            $av = $avisRepository->findAll(); 
+        }
         return $this->render('avis/index.html.twig', [
-            'avis' => $avisRepository->findAll(),
+            'avis' => $av,
+            
         ]);
     }
 //------------------------------------------------------------------------------------------------
@@ -25,19 +33,14 @@ class AvisController extends AbstractController
     public function new(Request $request, AvisRepository $avisRepository): Response
     {
         $avi = new Avis();
-        $form = $this->createForm(AvisType::class, $avi);
-        $form->handleRequest($request);
+       
 
-        if ($form->isSubmitted() && $form->isValid()) {
             $avisRepository->save($avi, true);
 
             return $this->redirectToRoute('app_avis_index', [], Response::HTTP_SEE_OTHER);
-        }
 
-        return $this->renderForm('avis/new.html.twig', [
-            'avi' => $avi,
-            'form' => $form,
-        ]);
+
+        return $this->renderForm('avis/new.html.twig');
     }
 //------------------------------------------------------------------------------------------------
     #[Route('/{idAv}', name: 'app_avis_show', methods: ['GET'])]
