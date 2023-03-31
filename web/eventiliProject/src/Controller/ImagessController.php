@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Imagess;
+use App\Entity\Sousservice;
 use App\Form\ImagessType;
 use App\Repository\ImagessRepository;
+use App\Repository\SousserviceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,21 +19,33 @@ class ImagessController extends AbstractController
     public function index(ImagessRepository $imagessRepository): Response
     {
         return $this->render('imagess/index.html.twig', [
-            'imagesses' => $imagessRepository->findAll(),
+            'imagess' => $imagessRepository->findAll(),
         ]);
     }
 //------------------------------------------------------------------------------------------------
     #[Route('/new', name: 'app_imagess_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ImagessRepository $imagessRepository): Response
+    public function new(Request $request,SousserviceRepository $SousserviceRepository, ImagessRepository $imagessRepository ): Response
     {
         $imagess = new Imagess();
+        $ss=$request->query->get('idss');
+
         $form = $this->createForm(ImagessType::class, $imagess);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('img')->getData();
+            if ($imageFile) {
+                $imageFilename = uniqid() . '.' . $imageFile->guessExtension();
+                $imageFile->move(
+                    $this->getParameter('images_directory'),
+                    $imageFilename  //configured fel config service.yaml                  
+                );
+                $imagess->setImg($imageFilename);
+            }
+            $imagess->setSousService($SousserviceRepository->findOneById($ss));
             $imagessRepository->save($imagess, true);
 
-            return $this->redirectToRoute('app_imagess_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_sousservice_index', [], Response::HTTP_SEE_OTHER);
         }
 //------------------------------------------------------------------------------------------------
         return $this->renderForm('imagess/new.html.twig', [
@@ -75,7 +89,6 @@ class ImagessController extends AbstractController
 
         return $this->redirectToRoute('app_imagess_index', [], Response::HTTP_SEE_OTHER);
     }
-
 //---------------------------------------------------------------------------------------------------
 #[Route('/findImagessById/{idimgss}', name: 'app_imagess_findImagessById', methods: ['GET'])]
 public function findImagessById(ImagessRepository $ImagessRepository,$idimgss): Response

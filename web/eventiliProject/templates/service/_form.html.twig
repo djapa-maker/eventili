@@ -7,31 +7,31 @@
 
 		{{ form_widget(form.nom, {'attr': {'class': 'form-control', 'placeholder': ''}}) }}
 
-	<div style="color:red;border-color:red">
-		{{ form_errors(form.nom,{'attr': {'class': 'invalide-feedback'}}) }}
+		<div style="color:red;border-color:red">
+			{{ form_errors(form.nom,{'attr': {'class': 'invalide-feedback'}}) }}
+		</div>
 	</div>
-</div>
-	
+
 	<button id="submit-button" disabled style="margin-top:20px;margin-left:510px;width:15%;border-radius:10px;color:white;background-color:#aeb8ff;border-color:#aeb8ff;font-size:19px" type="submit" class="btn btn-primary">{{ button_label|default('Créer') }}</button>
 	{{ form_end(form) }}
 </center>
 <script>
-    const inputs = document.querySelectorAll('input[required]');
-    const submitBtn = document.querySelector('#submit-button');
+	const inputs = document.querySelectorAll('input[required]');
+const submitBtn = document.querySelector('#submit-button');
 
-    inputs.forEach(input => {
-        input.addEventListener('input', () => {
-            let allFilled = true;
-            inputs.forEach(input => {
-                if (input.value.trim() === '') {
-                    allFilled = false;
-                }
-            });
-            if (allFilled) {
-                submitBtn.removeAttribute('disabled');
-            } else {
-                submitBtn.setAttribute('disabled', 'disabled');
-            }
-        });
-    });
+inputs.forEach(input => {
+input.addEventListener('input', () => {
+let allFilled = true;
+inputs.forEach(input => {
+if (input.value.trim() === '') {
+allFilled = false;
+}
+});
+if (allFilled) {
+submitBtn.removeAttribute('disabled');
+} else {
+submitBtn.setAttribute('disabled', 'disabled');
+}
+});
+});
 </script>

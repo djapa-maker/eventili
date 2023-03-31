@@ -59,45 +59,40 @@
 					{# -------------------------------------------------------------------------- #}
 					<thead>
 						<tr style="color:#27187f">
-							<th>Images</th>
-							<th>Nom du sous service</th>
-							<th>Service</th>
-							<th>Description</th>
-							<th>Prix</th>
-							<th>Note</th>
-							<th>Prestataire</th>
-							<th>Catégories d'évènement</th>
-							<th>Action</th>
+							<th style="text-align:center">Images</th>
+							<th style="text-align:center">Nom du sous service</th>
+							<th style="text-align:center">Service</th>
+							<th style="text-align:center">Description</th>
+							<th style="text-align:center">Prix</th>
+							<th style="text-align:center">Note</th>
+							<th style="text-align:center">Prestataire</th>
+							<th style="text-align:center">Catégories d'évènement</th>
+							<th style="text-align:center">Action</th>
 						</tr>
 					</thead>
 					{# -------------------------------------------------------------------------- #}
 					<tbody>
 						{% for sousservices in sousservices %}
 							<tr style="color:#27187f">
-								<td><img src="http://localhost/img/{{ sousservices.image }}" alt="{{ sousservices.nom }}" style="max-width: 50px; border-radius: 5px;"></td>
-								<td>{{sousservices.nom}}</td>
-								<td>{{sousservices.idService.nom}}</td>
+								<td style="text-align:center"><img src="http://localhost/img/{{ sousservices.image }}" alt="{{ sousservices.nom }}" style="max-width: 50px; border-radius: 5px;"></td>
+								<td style="text-align:center">{{sousservices.nom}}</td>
+								<td style="text-align:center">{{sousservices.idService.nom}}</td>
 								{# {% if sousservices.description|length >30  %} #}
-								<td style="max-width: 250px;  white-space: nowrap;overflow: hidden;  text-overflow: ellipsis;">{{sousservices.description}}</td>
+								<td style="max-width: 250px;text-align:center;  white-space: nowrap;overflow: hidden;  text-overflow: ellipsis;">{{sousservices.description}}</td>
 								{# {% endif %} #}
-								<td>{{sousservices.prix}}</td>
-								<td>{{sousservices.note}}</td>
-								<td>{{sousservices.idPers.prenomPers}}</td>
-								<td style="max-width: 250px;  white-space: nowrap;overflow: hidden;  text-overflow: ellipsis;">{{sousservices.idEventcateg}}</td>
+								<td style="text-align:center">{{sousservices.prix}}</td>
+								<td style="text-align:center">{{sousservices.note}}</td>
+								<td style="text-align:center">{{sousservices.idPers.prenomPers}}</td>
+								<td style="max-width: 250px;  white-space: nowrap;overflow: hidden;  text-align:center;text-overflow: ellipsis;">{{sousservices.idEventcateg}}</td>
 								<td>
-									<div style="display: flex; align-items: center;">
+									<div style="display: flex; align-items:center;margin-left:30px;text-align:center;">
 									
 										{{ include('sousservice/_delete_form.html.twig') }}
-										<a href="{{ path('app_sousservice_edit',{'id':sousservices.id}) }}" style="
-											border-radius:10px;
-											background-color:#758afd;
-											border-color:#758afd;
-											height:30px;
-											width:90px;
-											display: flex; justify-content: center; align-items: center;
-											color:white">Modifier
+										<a href="{{ path('app_sousservice_edit',{'id':sousservices.id}) }}" style=" border-radius:40px; background-color:#758afd; border-color:#758afd; height:30px; width:30px; display: flex; justify-content: center; align-items: center;color:white">
+										<i class='bx bx-edit' style="font-size:20px"></i>
 										</a>
-									
+										{{ include('sousservice/show.html.twig') }}
+										
 									</div>
 								</td>
 							</tr>
@@ -106,15 +101,15 @@
 					{# -------------------------------------------------------------------------- #}
 					<tfoot>
 						<tr style="color:#27187f">
-							<th>Images</th>
-							<th>Nom du sous service</th>
-							<th>Service</th>
-							<th>Description</th>
-							<th>Prix</th>
-							<th>Note</th>
-							<th>Prestataire</th>
-							<th>Catégories d'évènement</th>
-							<th>Action</th>
+							<th style="text-align:center">Images</th>
+							<th style="text-align:center">Nom du sous service</th>
+							<th style="text-align:center">Service</th>
+							<th style="text-align:center">Description</th>
+							<th style="text-align:center">Prix</th>
+							<th style="text-align:center">Note</th>
+							<th style="text-align:center">Prestataire</th>
+							<th style="text-align:center">Catégories d'évènement</th>
+							<th style="text-align:center">Action</th>
 						</tr>
 					</tfoot>
 					{# -------------------------------------------------------------------------- #}

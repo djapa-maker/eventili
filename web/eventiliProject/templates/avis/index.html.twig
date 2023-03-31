@@ -1,10 +1,6 @@
 {% extends 'navbar.html.twig'%}
 
-{% block body %}
-	{% include 'navbar.html.twig' %}
-	<div class="page-wrapper">
-		<div
-			class="page-content">
+{% block content %}
 			<!--breadcrumb-->
 			<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
 				<div style="color:#758afd;font-size:25px;font-style:bold">Avis</div>
@@ -31,28 +27,29 @@
 						<table id="example" class="table table-bordered " style="width:100%;border-color:#aeb8ff;border-radius:30px">
 							<thead>
 								<tr style="color:#27187f">
-									<th>Personne</th>
-									<th>Note</th>
-									<th>Commentaire</th>
-									<th>Sous Service</th>
-									<th>Date</th>
-									<th>Action</th>
+									<th style="text-align:center">Personne</th>
+									<th style="text-align:center">Note</th>
+									<th style="text-align:center">Commentaire</th>
+									<th style="text-align:center">Sous Service</th>
+									<th style="text-align:center">Date</th>
+									<th style="text-align:center">Action</th>
 								</tr>
 							</thead>
 							<tbody>
 								{% for avis in avis %}
 									<tr style="color:#27187f">
-										<td>{{avis.pers.prenomPers}}
+										<td style="text-align:center">{{avis.pers.prenomPers}}
 											{{avis.pers.nomPers}}</td>
-										<td>{{avis.rating}}</td>
-										<td>{{avis.comment}}</td>
-										<td>{{avis.idService.nom}}</td>
-										<td>{{avis.date|date('Y-m-d H:i:s')}}</td>
-										<td>
-											<form method="post" action="{{ path('app_avis_delete', {'idAv': avis.idAv}) }}" onsubmit="return confirm('Etes-vous sure de vouloir supprimer cet avis ?');">
+										<td style="text-align:center">{{avis.rating}}</td>
+										<td style="text-align:center">{{avis.comment}}</td>
+										<td style="text-align:center">{{avis.idService.nom}}</td>
+										<td style="text-align:center">{{avis.date|date('Y-m-d H:i:s')}}</td>
+										<td style="text-align:center">
+										{{ include('avis/_delete_form.html.twig') }}
+											{# <form method="post" action="{{ path('app_avis_delete', {'idAv': avis.idAv}) }}" onsubmit="return confirm('Etes-vous sure de vouloir supprimer cet avis ?');">
 												<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ avis.idAv) }}">
 												<button style="margin-right:5px;border-radius:10px;background-color:#ff8601;border-color:#ff8601;color:white">Supprimer</button>
-											</form>
+											</form> #}
 											{# <button style="border-radius:20px;background-color:#758afd;border-color:#758afd;color:white">Modifier</button> #}
 										</td>
 									</tr>
@@ -60,18 +57,16 @@
 							</tbody>
 							<tfoot>
 								<tr style="color:#27187f">
-									<th>Personne</th>
-									<th>Note</th>
-									<th>Commentaire</th>
-									<th>Sous Service</th>
-									<th>Date</th>
-									<th>Action</th>
+									<th style="text-align:center">Personne</th>
+									<th style="text-align:center">Note</th>
+									<th style="text-align:center">Commentaire</th>
+									<th style="text-align:center">Sous Service</th>
+									<th style="text-align:center">Date</th>
+									<th style="text-align:center">Action</th>
 								</tr>
 							</tfoot>
 						</table>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
 {% endblock %}

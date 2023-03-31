@@ -82,10 +82,14 @@ class SousserviceController extends AbstractController
             $ss->setIdPers($PersonneRepository->findOneByIdPers(18));
             $ss->setNote(0);
             $SousserviceRepository->save($ss, true);
-            return $this->redirectToRoute('app_sousservice_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_imagess_new', [
+                'idss' => $ss->getId(),
+                
+            ], Response::HTTP_SEE_OTHER);
         }
         return $this->renderForm('sousservice/new.html.twig', [
             'eventCat'=> $CategEventRepository->findAll(),
+            'selectedCategories'=>"",
             'sousservice' => $ss,
             'form' => $form,
         ]);

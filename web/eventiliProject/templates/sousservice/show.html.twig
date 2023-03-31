@@ -1,42 +1,54 @@
-{% extends 'base.html.twig' %}
+<a class="btn" data-bs-toggle="modal" data-bs-target="#showModal" style="
+			margin-left:5px;
+			border-radius:30px;
+			background-color:#27187f;
+			border-color:#27187f;
+			height:30px;
+			width:30px;
+			display: flex; 
+			justify-content: center; 
+			align-items: center;
+			color:white"><i style="margin-left:5px" class='bx bx-info-circle'></i>
+</a>
+<div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="showModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header  text-white" style="background-color:#ff8601">
+				<br>
+				<h5 class="modal-title" id="deleteModalLabel">Sousservice</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<table class="table">
+					<tbody>
+						<tr>
+							<th>Id</th>
+							<td>{{ sousservices.id }}</td>
+						</tr>
+						<tr>
+							<th>Nom</th>
+							<td>{{ sousservices.nom }}</td>
+						</tr>
+						<tr>
+							<th>Image</th>
+							<td>{{ sousservices.image }}</td>
+						</tr>
+						<tr>
+							<th>Description</th>
+							<td>{{ sousservices.description }}</td>
+						</tr>
+						<tr>
+							<th>Prix</th>
+							<td>{{ sousservices.prix }}</td>
+						</tr>
+						<tr>
+							<th>Note</th>
+							<td>{{ sousservices.note }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+    </div>
+</div>        
 
-{% block title %}Sousservice{% endblock %}
-
-{% block body %}
-    <h1>Sousservice</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ sousservice.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ sousservice.nom }}</td>
-            </tr>
-            <tr>
-                <th>Image</th>
-                <td>{{ sousservice.image }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ sousservice.description }}</td>
-            </tr>
-            <tr>
-                <th>Prix</th>
-                <td>{{ sousservice.prix }}</td>
-            </tr>
-            <tr>
-                <th>Note</th>
-                <td>{{ sousservice.note }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_sousservice_index') }}">back to list</a>
-
-    <a href="{{ path('app_sousservice_edit', {'id': sousservice.id}) }}">edit</a>
-
-    {{ include('sousservice/_delete_form.html.twig') }}
-{% endblock %}

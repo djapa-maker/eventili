@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ImagessRepository;
-
+use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: ImagessRepository::class)]
 class Imagess
 {
@@ -15,6 +15,7 @@ class Imagess
     private ?int $idimgss=null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Merci de choisir une image')]
     private ?String $img=null;
 
     // #[ORM\ManyToOne(inversedBy:'Imagess')]
