@@ -106,16 +106,8 @@ class SousserviceController extends AbstractController
     #[Route('/{id}/edit', name: 'app_sousservice_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request,CategEventRepository $CategEventRepository, PersonneRepository $PersonneRepository, Sousservice $sousservice, SousserviceRepository $SousserviceRepository): Response
     {
-        
         $form = $this->createForm(SousserviceType::class, $sousservice);
         $form->handleRequest($request);
-        $checkboxes = explode(',', $sousservice->getIdEventcateg());
-        $list=[];
-        foreach($checkboxes as $c)
-        {
-            $list[]=$CategEventRepository->findOneByIdCateg($c);
-        }
-
         if ($form->isSubmitted() && $form->isValid()) {
             $imageFile = $form->get('image')->getData();
             if ($imageFile) {
@@ -133,11 +125,14 @@ class SousserviceController extends AbstractController
             $sousservice->setIdPers($PersonneRepository->findOneByIdPers(18));
             $sousservice->setNote(0);
             $SousserviceRepository->save($sousservice, true);
-            return $this->redirectToRoute('app_sousservice_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_imagess_edit', [
+                'idss' => $sousservice->getId(),
+                
+            ], Response::HTTP_SEE_OTHER);
         }
-        return $this->renderForm('sousservice/edit.html.twig', [
+        return $this->renderForm('sousservice/new.html.twig', [
             'eventCat'=> $CategEventRepository->findAll(),
-            'selectedCategories'=>$list,
+            'selectedCategories'=>"",
             'sousservice' => $sousservice,
             'form' => $form,
         ]);

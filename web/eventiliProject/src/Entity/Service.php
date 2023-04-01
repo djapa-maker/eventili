@@ -16,6 +16,7 @@ class Service
     #[ORM\Column]
     #[Assert\NotBlank(message: 'Merci de remplir le nom')]
     #[Assert\NotNull(message: 'Merci de remplir le nom')]
+    // #[Assert\Unique(message: 'Ce service existe déja')]
     private ?String $nom=null;
 //---------------------------------------------------------------------------------------
     public function getIdService(): ?int

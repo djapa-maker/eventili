@@ -17,8 +17,8 @@ class ImagessType extends AbstractType
         ->add('img',FileType::class,[
             'attr'=>[
                 'class' => 'form-control',
-                
-                'placeholder' => 'aucune image'
+                'placeholder' => 'aucune image',
+                'multiple' =>true,
             ]
             ,
             'data_class' => null,

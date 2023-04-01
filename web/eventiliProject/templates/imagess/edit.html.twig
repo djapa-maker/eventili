@@ -1,13 +1,12 @@
-{% extends 'navbar.html.twig' %}
+{% extends 'baseAdmin.html.twig' %}
 
 {% block title %}Edit Imagess{% endblock %}
-
 {% block content %}
-    <h1>Edit Imagess</h1>
+    <center>
+    <h1 style="color:#aeb8ff">Ajouter d'autres images</h1>
 
-    {{ include('imagess/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('imagess/_form.html.twig', {'button_label': 'Modifier'}) }}
+    </center>
 
-    <a href="{{ path('app_imagess_index') }}">back to list</a>
-
-    {{ include('imagess/_delete_form.html.twig') }}
 {% endblock %}
+

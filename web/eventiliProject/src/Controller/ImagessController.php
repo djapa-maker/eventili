@@ -27,27 +27,50 @@ class ImagessController extends AbstractController
     public function new(Request $request,SousserviceRepository $SousserviceRepository, ImagessRepository $imagessRepository ): Response
     {
         $imagess = new Imagess();
-        $ss=$request->query->get('idss');
-
+        $i=new Imagess(); 
+        $ss=$request->query->get('idss'); //get id of sous service
+        //create the form
         $form = $this->createForm(ImagessType::class, $imagess);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $imageFile = $form->get('img')->getData();
+            //image upload
+            $imageFiles = $form->get('img')->getData();
+            $tabImg=[];
+            foreach($imageFiles as $imageFile)
+            {
             if ($imageFile) {
                 $imageFilename = uniqid() . '.' . $imageFile->guessExtension();
                 $imageFile->move(
                     $this->getParameter('images_directory'),
                     $imageFilename  //configured fel config service.yaml                  
                 );
-                $imagess->setImg($imageFilename);
+                $tabImg[]=$imageFilename;
+                foreach($tabImg as $t){
+                    $imagess->setImg($t);
+                }
+                
+
             }
             $imagess->setSousService($SousserviceRepository->findOneById($ss));
             $imagessRepository->save($imagess, true);
-
+            }
+            //setting image with sous service image and new images
+            $i->setImg($SousserviceRepository->findOneById($ss)->getImage());
+            $i->setSousService($SousserviceRepository->findOneById($ss));
+            $imagessRepository->save($i, true);
+        
             return $this->redirectToRoute('app_sousservice_index', [], Response::HTTP_SEE_OTHER);
         }
-//------------------------------------------------------------------------------------------------
+        //in case there's no image added in the extra image page
+        //setting image only with sous service image  
+        else if($form->isSubmitted()){
+            $i->setImg($SousserviceRepository->findOneById($ss)->getImage());
+            $i->setSousService($SousserviceRepository->findOneById($ss));
+            $imagessRepository->save($i, true);
+            return $this->redirectToRoute('app_sousservice_index', [], Response::HTTP_SEE_OTHER);
+        }
+        //calling imagess creation page
         return $this->renderForm('imagess/new.html.twig', [
             'imagess' => $imagess,
             'form' => $form,
@@ -63,18 +86,42 @@ class ImagessController extends AbstractController
     }
 //------------------------------------------------------------------------------------------------
     #[Route('/{idimgss}/edit', name: 'app_imagess_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Imagess $imagess, ImagessRepository $imagessRepository): Response
-    {
+    public function edit(Request $request,SousserviceRepository $SousserviceRepository, Imagess $imagess, ImagessRepository $imagessRepository): Response
+    { 
+        $i=new Imagess();
+        $ss=$request->query->get('idss');
+
         $form = $this->createForm(ImagessType::class, $imagess);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('img')->getData();
+            if ($imageFile) {
+                $imageFilename = uniqid() . '.' . $imageFile->guessExtension();
+                $imageFile->move(
+                    $this->getParameter('images_directory'),
+                    $imageFilename  //configured fel config service.yaml                  
+                );
+                $imagess->setImg($imageFilename);
+            }
+            $i->setImg($SousserviceRepository->findOneById($ss)->getImage());
+            $i->setSousService($SousserviceRepository->findOneById($ss));
+            $imagessRepository->save($i, true);
+            
+            $imagess->setSousService($SousserviceRepository->findOneById($ss));
             $imagessRepository->save($imagess, true);
 
-            return $this->redirectToRoute('app_imagess_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_sousservice_index', [], Response::HTTP_SEE_OTHER);
+        }
+        else if($form->isSubmitted()){
+            $i->setImg($SousserviceRepository->findOneById($ss)->getImage());
+            $i->setSousService($SousserviceRepository->findOneById($ss));
+            $imagessRepository->save($i, true);
+            return $this->redirectToRoute('app_sousservice_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('imagess/edit.html.twig', [
+//------------------------------------------------------------------------------------------------
+        return $this->renderForm('imagess/new.html.twig', [
             'imagess' => $imagess,
             'form' => $form,
         ]);
