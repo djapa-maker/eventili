@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<title>Personne</title>
+
+{% block body %}
+    <h1>Personne</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>IdPers</th>
+                <td>{{ personne.idPers }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ personne.nomPers }}</td>
+            </tr>
+            <tr>
+                <th>Prénom</th>
+                <td>{{ personne.prenomPers }}</td>
+            </tr>
+            <tr>
+                <th>Numéro</th>
+                <td>{{ personne.numTel }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ personne.email }}</td>
+            </tr>
+            <tr>
+                <th>Mdp</th>
+                <td>{{ personne.mdp }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ personne.adresse }}</td>
+            </tr>
+            <tr>
+                <th>Rib</th>
+                <td>{{ personne.rib }}</td>
+            </tr>
+            <tr>
+                <th>Role</th>
+                <td>{{ personne.role }}</td>
+            </tr>
+            <tr>
+                <th>Token</th>
+                <td>{{ personne.token }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_personne_index') }}">back to list</a>
+
+    <a href="{{ path('app_personne_edit', {'idPers': personne.idPers}) }}">edit</a>
+
+    {{ include('templates_back/personne/_delete_form.html.twig') }}
+{% endblock %}

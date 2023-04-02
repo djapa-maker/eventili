@@ -3,47 +3,31 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ImagePersRepository;
 
-/**
- * Imagepers
- *
- * @ORM\Table(name="imagepers", indexes={@ORM\Index(name="fk_perI", columns={"id_pers"})})
- * @ORM\Entity
- */
+
+#[ORM\Entity(repositoryClass: ImagepersRepository::class)]
+
 class Imagepers
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_imp", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idImp;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="imageP", type="string", length=255, nullable=false)
-     */
-    private $imagep;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="last", type="string", length=255, nullable=false)
-     */
-    private $last;
-
-    /**
-     * @var \Personne
-     *
-     * @ORM\ManyToOne(targetEntity="Personne")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_pers", referencedColumnName="id_pers")
-     * })
-     */
-    private $idPers;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $idImp=null;
+    
+    
+    #[ORM\Column(length:255)]
+    private ?String $imagep=null;
+   
+    #[ORM\Column(length:255)]
+    private ?String $last=null;
+   
+    #[ORM\ManyToOne(targetEntity: Personne::class)]
+    #[ORM\JoinColumn(name: "id_pers", referencedColumnName: "id_pers")]
+    private ?Personne $idPers=null;
+    
+    /*#[ORM\ManyToOne(inversedBy: 'Personne')]
+    private ?Personne $idPers=null;*/
 
     public function getIdImp(): ?int
     {

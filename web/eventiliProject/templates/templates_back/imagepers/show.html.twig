@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<title>Imagepers</title>
+
+{% block body %}
+    <h1>Imagepers</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>IdImp</th>
+                <td>{{ imageper.idImp }}</td>
+            </tr>
+            <tr>
+                <th>Imagep</th>
+                <td>{{ imageper.imagep }}</td>
+            </tr>
+            <tr>
+                <th>Last</th>
+                <td>{{ imageper.last }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_imagepers_index') }}">back to list</a>
+
+    <a href="{{ path('app_imagepers_edit', {'idImp': imageper.idImp}) }}">edit</a>
+
+    {{ include('templates_back/imagepers/_delete_form.html.twig') }}
+{% endblock %}

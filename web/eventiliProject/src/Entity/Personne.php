@@ -5,7 +5,10 @@ namespace App\Entity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PersonneRepository;
+use phpDocumentor\Reflection\Types\Self_;
 use PhpParser\Node\Name;
+use Symfony\Component\Mime\Message;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PersonneRepository::class)]
 class Personne
@@ -16,37 +19,61 @@ class Personne
     private ?int $idPers=null;
 
     #[ORM\Column]
+    #[Assert\Length(min: 1, max: 255)]
+    #[Assert\Regex(
+        pattern: "/^[^0-9]*$/",
+       message: "Le nom ne doit pas contenir de chiffre"
+    )]  
     private ?String $nomPers=null;
 
     #[ORM\Column]
+    #[Assert\Regex(
+        pattern: "/^[^0-9]*$/",
+       message: "Le prénom ne doit pas contenir de chiffre"
+    )]  
     private ?String $prenomPers=null;
-
+   
     #[ORM\Column]
+    #[Assert\Length(min: 8, max: 8 , minMessage:"le numéro doit contenir 8 chiffres")]
+    #[Assert\Regex(
+        pattern: "/^[^a-zA-Z]+$/",
+       message: "Le numéro ne doit pas contenir de lettres"
+    )]  
     private ?String $numTel=null;
 
     #[ORM\Column]
+    #[Assert\Email(message: "L'adresse email '{{ value }}' n'est pas valide.")]
     private ?String $email=null;
 
     #[ORM\Column]
+    #[Assert\Length(min: 8, max: 255)]
+    #[Assert\Regex(
+        pattern: '/^(?=.*[a-zA-Z])(?=.*\d).+$/',
+        message: "Le mot de passe doit contenir au moins une lettre et un chiffre."
+    )]
     private ?String $mdp=null;
 
     #[ORM\Column]
     private ?String $adresse=null;
 
     #[ORM\Column]
+    #[Assert\Length(min: 20, max: 20)]
+    #[Assert\Regex(
+        pattern: "/^[^a-zA-Z]+$/",
+       message: "Le rib ne doit pas contenir de lettres"
+    )] 
     private ?String $rib=null;
 
     #[ORM\Column]
     private ?String $role=null;
 
     #[ORM\Column]
-    private ?String $token=null;
+    private ?String $token="";
 
     public function getIdPers(): ?int
     {
         return $this->idPers;
     }
-
     public function getNomPers(): ?string
     {
         return $this->nomPers;
@@ -154,6 +181,12 @@ class Personne
 
         return $this;
     }
-
+    public function __toString()
+    {
+        return (string) $this->idPers;
+    }
 
 }
+
+
+
