@@ -1,12 +1,12 @@
 {% extends 'baseAdmin.html.twig' %}
 
-{% block title %}New Imagess{% endblock %}
-
+{% block title %}Edit Imagess{% endblock %}
 {% block content %}
     <center>
     <h1 style="color:#aeb8ff">Ajouter d'autres images</h1>
 
-    {{ include('imagess/_form.html.twig') }}
+    {{ include('templates_back/imagess/_form.html.twig', {'button_label': 'Modifier'}) }}
     </center>
 
 {% endblock %}
+

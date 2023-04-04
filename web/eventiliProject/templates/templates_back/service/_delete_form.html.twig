@@ -1,5 +1,4 @@
-
-<a class="btn" data-bs-toggle="modal" data-bs-target="#deleteModal" style="
+<a class="btn" data-bs-toggle="modal" data-bs-target="#deleteModal{{service.idService}}" style="
 			margin-right:5px;
 			border-radius:30px;
 			background-color:#ff8601;
@@ -11,7 +10,7 @@
 			align-items: center;
 			color:white"><i style="margin-left:5px" class='bx bx-trash'></i>
 </a>
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteModal{{service.idService}}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header  text-white" style="background-color:#ff8601">
@@ -20,12 +19,12 @@
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
-				Etes vous sure de vouloir supprimer ce sous service ? 
+				Etes vous sure de vouloir supprimer ce service ? 
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn" data-bs-dismiss="modal">Annuler</button>
-				<form method="post" action="{{ path('app_sousservice_delete', {'id': sousservices.id}) }}">
-					<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ sousservices.id) }}">
+				<form method="post" action="{{ path('app_service_delete', {'idService': service.idService}) }}">
+					<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ service.idService) }}">
 					<button type="submit" style="background-color:#ff8601;color:white"class="btn">Supprimer</button>
 				</form>
 			</div>

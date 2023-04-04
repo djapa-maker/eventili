@@ -45,7 +45,7 @@
 										<td style="text-align:center">{{avis.idService.nom}}</td>
 										<td style="text-align:center">{{avis.date|date('Y-m-d H:i:s')}}</td>
 										<td style="text-align:center">
-										{{ include('avis/_delete_form.html.twig') }}
+										{{ include('templates_back/avis/_delete_form.html.twig') }}
 											{# <form method="post" action="{{ path('app_avis_delete', {'idAv': avis.idAv}) }}" onsubmit="return confirm('Etes-vous sure de vouloir supprimer cet avis ?');">
 												<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ avis.idAv) }}">
 												<button style="margin-right:5px;border-radius:10px;background-color:#ff8601;border-color:#ff8601;color:white">Supprimer</button>
