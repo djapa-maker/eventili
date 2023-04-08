@@ -12,13 +12,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\PersonneRepository;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-
+use Knp\Component\Pager\PaginatorInterface;
 
 #[Route('/service')]
 class ServiceController extends AbstractController
 {
     #[Route('/', name: 'app_service_index', methods: ['GET', 'POST'])]
-    public function index( ImagePersRepository $imagePersRepository,ServiceRepository $serviceRepository, request $request,SessionInterface $session): Response
+    public function index(  PaginatorInterface $paginator,ImagePersRepository $imagePersRepository,ServiceRepository $serviceRepository, request $request,SessionInterface $session): Response
     {
         $personne=$session->get('id'); 
         $idPerss = $session->get('personne'); 
@@ -50,10 +50,15 @@ class ServiceController extends AbstractController
 
             return $this->redirectToRoute('app_service_index', [], Response::HTTP_SEE_OTHER);
         }
-
+        $query = $service;
+        $pagination = $paginator->paginate(
+        $query,
+        $request->query->getInt('page', 1),
+        1 // limit per page
+    );
         return $this->renderForm('templates_back/service/index.html.twig', [
             'service' => $serv,
-            'services' => $service,
+            'services' => $pagination,
             'form' => $form,
             'personne' => $personne,
             'last'=> $last,

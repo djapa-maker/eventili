@@ -11,12 +11,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Repository\ImagePersRepository;
+use Knp\Component\Pager\PaginatorInterface;
 
 #[Route('/avis')]
 class AvisController extends AbstractController
 {
     #[Route('/', name: 'app_avis_index', methods: ['GET'])]
-    public function index(AvisRepository $avisRepository,request $request,SessionInterface $session,ImagePersRepository $imagePersRepository): Response
+    public function index( PaginatorInterface $paginator,AvisRepository $avisRepository,request $request,SessionInterface $session,ImagePersRepository $imagePersRepository): Response
     {
         $personne=$session->get('id'); 
         $idPerss = $session->get('personne'); 
@@ -39,8 +40,14 @@ class AvisController extends AbstractController
         else {
             $av = $avisRepository->findAll(); 
         }
+        $query = $av;
+        $pagination = $paginator->paginate(
+        $query,
+        $request->query->getInt('page', 1),
+        1 // limit per page
+    );
         return $this->render('templates_back/avis/index.html.twig', [
-            'avis' => $av,
+            'avis' => $pagination,
             'personne' => $personne,
             'last'=> $last,
             

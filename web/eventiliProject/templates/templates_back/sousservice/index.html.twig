@@ -3,9 +3,10 @@
 {% block content %}
 
 	<!--breadcrumb-->
-	<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-	{# -------------------------------------------------------------------------- #}
-	<div style="color:#758afd;font-size:25px;font-style:bold">Sous Service</div>
+	<div
+		class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+		{# -------------------------------------------------------------------------- #}
+		<div style="color:#758afd;font-size:25px;font-style:bold">Sous Service</div>
 		<div class="search-bar flex-grow-1" style="margin-left:20%;">
 			<div class="position-relative search-bar-box">
 				<form id="annuite_form" class="form" action="{{ path('app_sousservice_index') }}" enctype="multipart/form-data" method="GET">
@@ -21,7 +22,8 @@
 		</div>
 		{# -------------------------------------------------------------------------- #}
 		<div class="ms-auto">
-			<div class="btn-group">
+			<div
+				class="btn-group">
 				{# -------------------------------------------------------------------------- #}
 				<a type="button" href="{{ path('app_sousservice_new') }}" style="border-radius:10px;color:white;background-color:#aeb8ff;border-color:#aeb8ff;width:200px;height:35px;text-align:center;font-size:19px">Créer un sous service</a>
 				{# -------------------------------------------------------------------------- #}
@@ -30,7 +32,7 @@
 		{# -------------------------------------------------------------------------- #}
 	</div>
 	{# -------------------------------------------------------------------------- #}
-			
+
 	<br>
 	<form class="form" action="{{ path('app_sousservice_index')}}" method="GET">
 		<select name="inputfilter" id="filterService" style="height:31px;border-radius:5px;color:white;background-color:#ff8601;margin-bottom:10px;border-color:#ff8601;font-size:15px">
@@ -43,19 +45,21 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
 		$(document).ready(function () {
-			$('#filterService').on('change', function () {
-			$(this).closest('form').submit();});
-		});
+$('#filterService').on('change', function () {
+$(this).closest('form').submit();
+});
+});
 	</script>
 	<div class="card">
 		<div class="card-body">
-			<div class="table-responsive">
-			{# -------------------------------------------------------------------------- #}
-				<table id="example" class="table table-bordered" 
-				style="
-				width:100%;
-				border-color:#aeb8ff;
-				border-radius:30px">
+			<div
+				class="table-responsive">
+				{# -------------------------------------------------------------------------- #}
+				<table
+					id="example" class="table table-bordered" style="
+										width:100%;
+										border-color:#aeb8ff;
+										border-radius:30px">
 					{# -------------------------------------------------------------------------- #}
 					<thead>
 						<tr style="color:#27187f">
@@ -86,13 +90,13 @@
 								<td style="max-width: 250px;  white-space: nowrap;overflow: hidden;  text-align:center;text-overflow: ellipsis;">{{sousservices.idEventcateg}}</td>
 								<td>
 									<div style="display: flex; align-items:center;margin-left:30px;text-align:center;">
-									
+
 										{{ include('templates_back/sousservice/_delete_form.html.twig') }}
 										<a href="{{ path('app_sousservice_edit',{'id':sousservices.id}) }}" style=" border-radius:40px; background-color:#758afd; border-color:#758afd; height:30px; width:30px; display: flex; justify-content: center; align-items: center;color:white">
-										<i class='bx bx-edit' style="font-size:20px"></i>
+											<i class='bx bx-edit' style="font-size:20px"></i>
 										</a>
 										{{ include('templates_back/sousservice/show.html.twig') }}
-										
+
 									</div>
 								</td>
 							</tr>
@@ -114,6 +118,14 @@
 					</tfoot>
 					{# -------------------------------------------------------------------------- #}
 				</table>
+				{% if sousservices.totalItemCount > 0 %}
+				
+					<div class="pagination justify-content-center">
+						{{ knp_pagination_render(sousservices,'bootstrap_v4_pagination.html.twig') }}
+					</div>
+					
+				{% endif %}
+
 				{# -------------------------------------------------------------------------- #}
 			</div>
 		</div>

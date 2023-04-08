@@ -5,6 +5,10 @@ namespace App\Repository;
 use App\Entity\Sousservice;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query\Expr\Join;
+use App\Entity\Imagess;
+
 
 /**
  * @extends ServiceEntityRepository<Sousservice>
@@ -95,5 +99,33 @@ class SousserviceRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getSousserviceWithImagess(EntityManager $entityManager,$id)
+{
+    $queryBuilder = $entityManager->createQueryBuilder();
+    $queryBuilder->select('sousservice', 'imagess')
+    ->from('App\Entity\Sousservice', 'sousservice')
+    ->leftJoin(
+        'App\Entity\Imagess',
+        'imagess',
+        Join::WITH,
+        $queryBuilder->expr()->eq('sousservice', 'imagess.sousService')
+    )
+    ->where('sousservice.id = :id')
+    ->setParameter('id', $id);
+
+$subquery = $entityManager->createQueryBuilder();
+$subquery->select('im')
+    ->from('App\Entity\Imagess', 'im')
+    ->where('im.sousService = sousservice.id')
+    ->getDQL();
+
+$queryBuilder->andWhere($queryBuilder->expr()->in('imagess.id', $subquery->getDQL()));
+
+$query = $queryBuilder->getQuery();
+$result = $query->getResult();
+
+}
+
     
 }

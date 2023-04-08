@@ -1,54 +1,109 @@
 <a class="btn" data-bs-toggle="modal" data-bs-target="#showModal" style="
-			margin-left:5px;
-			border-radius:30px;
-			background-color:#27187f;
-			border-color:#27187f;
-			height:30px;
-			width:30px;
-			display: flex; 
-			justify-content: center; 
-			align-items: center;
-			color:white"><i style="margin-left:5px" class='bx bx-info-circle'></i>
+																			margin-left:5px;
+																			border-radius:30px;
+																			background-color:#27187f;
+																			border-color:#27187f;
+																			height:30px;
+																			width:30px;
+																			display: flex;
+																			justify-content: center;
+																			align-items: center;
+																			color:white">
+	<i style="margin-left:5px" class='bx bx-info-circle'></i>
 </a>
 <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="showModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<div class="modal-header  text-white" style="background-color:#ff8601">
+			<div class="modal-header  text-white" style="background-color:#27187f;">
 				<br>
-				<h5 class="modal-title" id="deleteModalLabel">Sousservice</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				<h5 class="modal-title" id="deleteModalLabel" style="color:white">{{ sousservices.nom }}</h5>
+				<button style="color:white" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
-				<table class="table">
-					<tbody>
+			<div class="col">
+					
+						<div class="card">
+							<div class="card-body">
+								<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+									<div class="carousel-inner">
+									{% for i in imagess %}
+										{% if i.sousService.id == sousservices.id %}
+										<div class="carousel-item active">
+											<img src="http://localhost/img/{{i.img}}" class="d-block w-100" alt="...">
+										</div>
+										{% endif %}
+
+									{% endfor %}
+									</div>
+									<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">	<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+										<span class="visually-hidden">Previous</span>
+									</a>
+									<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">	<span class="carousel-control-next-icon" aria-hidden="true"></span>
+										<span class="visually-hidden">Next</span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				{# <img src="http://localhost/img/{{sousservices.image}}" class="img-fluid" style="width:1500%;height:40%;"/> #}
+				<div class="card-body">
+
+					<label style="font-size:20px;color:#ff8601">Description :</label>
+					<table>
 						<tr>
-							<th>Id</th>
-							<td>{{ sousservices.id }}</td>
+
+							<p style="font-size:12px;word-break: break-all;word-break: break-word;
+ white-space: pre-line;">{{ sousservices.description}}</p>
+
 						</tr>
-						<tr>
-							<th>Nom</th>
-							<td>{{ sousservices.nom }}</td>
-						</tr>
-						<tr>
-							<th>Image</th>
-							<td>{{ sousservices.image }}</td>
-						</tr>
-						<tr>
-							<th>Description</th>
-							<td>{{ sousservices.description }}</td>
-						</tr>
-						<tr>
-							<th>Prix</th>
-							<td>{{ sousservices.prix }}</td>
-						</tr>
-						<tr>
-							<th>Note</th>
-							<td>{{ sousservices.note }}</td>
-						</tr>
-					</tbody>
-				</table>
+					</table><hr>
+
+
+					<div class="row">
+						<div class="col text-center">
+							<div style="color:#ff8601">
+								<i class="bx bx-money"></i>
+								Prix:
+							</div>
+							<div>{{sousservices.prix}}
+								Dt
+							</div>
+						</div>
+						<div class="col text-center">
+							<div style="color:#ff8601">
+								<i class="bx bx-user"></i>
+								Prestataire :
+							</div>
+							<div>{{sousservices.idPers.prenomPers}}
+								{{sousservices.idPers.nomPers}}
+							</div>
+						</div>
+						<div class="col text-center">
+							<div style="color:#ff8601">Service :
+							</div>
+							<div>{{sousservices.idService.nom}}
+							</div>
+						</div>
+					</div>
+					<hr>
+					<div class="row">
+						<div class="col text-center">
+							<div style="color:#ff8601">Catégories d'événement:
+							</div>
+
+							<div>{{sousservices.idEventcateg}}
+							</div>
+
+						</div>
+					</div>
+
+					{# </div> #}
+					{# <hr style="transform: rotate(90deg); transform-origin: left top;">
+																				 #}
+				</div>
+				{# </div>
+																												</div> #}
 			</div>
 		</div>
-    </div>
-</div>        
-
+	</div>
+</div>

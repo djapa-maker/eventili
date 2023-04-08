@@ -66,6 +66,13 @@
 								</tr>
 							</tfoot>
 						</table>
+						{% if avis.totalItemCount > 0 %}
+				
+					<div class="pagination justify-content-center">
+						{{ knp_pagination_render(avis,'bootstrap_v4_pagination.html.twig') }}
+					</div>
+					
+				{% endif %}
 					</div>
 				</div>
 			</div>

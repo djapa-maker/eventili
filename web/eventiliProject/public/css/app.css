@@ -860,7 +860,8 @@ a {
 	font-weight: 700;
 	float: right;
 	font-size: 16px;
-	cursor: pointer
+	cursor: pointer;
+	
 }
 
 .chip.chip-md {

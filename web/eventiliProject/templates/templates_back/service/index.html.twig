@@ -78,6 +78,13 @@
 					</tfoot>
 					{# -------------------------------------------------------------------------- #}
 				</table>
+				{% if services.totalItemCount > 0 %}
+				
+					<div class="pagination justify-content-center">
+						{{ knp_pagination_render(services,'bootstrap_v4_pagination.html.twig') }}
+					</div>
+					
+				{% endif %}
 				{# -------------------------------------------------------------------------- #}
 			</div>
 		</div>
