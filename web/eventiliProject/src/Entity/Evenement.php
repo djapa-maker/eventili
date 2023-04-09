@@ -2,101 +2,67 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\EvenementRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * Evenement
- *
- * @ORM\Table(name="evenement", indexes={@ORM\Index(name="fk_categ", columns={"id_categ"}), @ORM\Index(name="fk_p", columns={"id_pers"})})
- * @ORM\Entity
- */
+
+#[ORM\Entity(repositoryClass: EvenementRepository::class)]
 class Evenement
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_ev", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idEv;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $idEv = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="titre", type="string", length=30, nullable=false)
-     */
-    private $titre;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="date_debut", type="datetime", nullable=false)
-     */
-    private $dateDebut;
+    #[ORM\Column]
+    #[Assert\NotBlank(message: 'Merci de remplir le titre')]
+    private ?String $titre =null;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="date_fin", type="datetime", nullable=false)
-     */
-    private $dateFin;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="description_ev", type="text", length=65535, nullable=false)
-     */
-    private $descriptionEv;
+    #[ORM\Column]
+    private ?DateTime $dateDebut = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="type", type="string", length=0, nullable=false)
-     */
-    private $type;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="visibilite", type="string", length=0, nullable=false)
-     */
-    private $visibilite;
+    #[ORM\Column]
+    private ?DateTime $dateFin= null;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="limiteParticipant", type="integer", nullable=false)
-     */
-    private $limiteparticipant;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="prix", type="float", precision=10, scale=0, nullable=false)
-     */
-    private $prix;
+    #[ORM\Column]
+    #[Assert\NotBlank(message: 'Merci de remplir le nom')]
+    private ?String $descriptionEv = null;
 
-    /**
-     * @var \CategEvent
-     *
-     * @ORM\ManyToOne(targetEntity="CategEvent")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_categ", referencedColumnName="id_categ")
-     * })
-     */
-    private $idCateg;
 
-    /**
-     * @var \Personne
-     *
-     * @ORM\ManyToOne(targetEntity="Personne")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_pers", referencedColumnName="id_pers")
-     * })
-     */
-    private $idPers;
+    #[ORM\Column]
+    private ?String $type=null;
+
+
+    #[ORM\Column]
+    private ?String $visibilite = null;
+
+
+    #[ORM\Column]
+    #[Assert\NotBlank(message: 'Merci de remplir le nom')]
+    private ?int $limiteparticipant =null;
+
+
+    #[ORM\Column]
+    #[Assert\NotBlank(message: 'Merci de remplir le prix')]
+    private ?float $prix = null;
+
+
+    #[ORM\ManyToOne(targetEntity: CategEvent::class)]
+    #[ORM\JoinColumn(name: "id_categ", referencedColumnName: "id_categ")]
+    private ?CategEvent $idCateg;
+
+
+
+    #[ORM\ManyToOne(targetEntity: Personne::class)]
+    #[ORM\JoinColumn(name: "id_pers", referencedColumnName: "id_pers")]
+    private ?Personne $idPers=null;
 
     public function getIdEv(): ?int
     {

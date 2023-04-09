@@ -1,0 +1,17 @@
+{% extends 'baseFront.html.twig'%}
+{% block title %}
+	<title>Créer un événement</title>
+{% endblock %}
+{% block naver %}
+	<div class="naver" style="top:-90px;"></div>
+{% endblock %}
+{% block PageTitle %}
+	<div class="title-wrap">
+		<h1 class="title is-4">Créer un événement</h1>
+	</div>
+{% endblock %}
+{% block content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+			{{ include('templates_front/evenement/_form.html.twig') }}
+			{# <a href="{{ path('app_evenement_index') }}">back to list</a> #}
+</div>{% endblock %}

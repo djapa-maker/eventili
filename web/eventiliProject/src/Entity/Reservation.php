@@ -4,47 +4,29 @@ namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\reservationRepository;
 
-/**
- * Reservation
- *
- * @ORM\Table(name="reservation", indexes={@ORM\Index(name="fk_event", columns={"id_ev"})})
- * @ORM\Entity
- */
+
+#[ORM\Entity(repositoryClass: reservationRepository::class)]
 class Reservation
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_res", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idRes;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $idRes=null;
 
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="id_ss", type="text", length=65535, nullable=true)
-     */
-    private $idSs;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="status", type="boolean", nullable=false)
-     */
-    private $status;
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?String $idSs = null;
 
-    /**
-     * @var \Evenement
-     *
-     * @ORM\ManyToOne(targetEntity="Evenement")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_ev", referencedColumnName="id_ev")
-     * })
-     */
-    private $idEv;
+
+    #[ORM\Column(type: 'boolean')]
+    private ?bool $status = null;
+
+
+    #[ORM\ManyToOne(targetEntity: Evenement::class)]
+    #[ORM\JoinColumn(name: "id_ev", referencedColumnName: "id_ev")]
+    private ?Evenement $idEv=null;
 
     public function getIdRes(): ?int
     {

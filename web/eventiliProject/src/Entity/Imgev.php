@@ -3,40 +3,25 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ImgevRepository;
 
-/**
- * Imgev
- *
- * @ORM\Table(name="imgev", indexes={@ORM\Index(name="fk_even", columns={"id_even"})})
- * @ORM\Entity
- */
+
+#[ORM\Entity(repositoryClass: ImgevRepository::class)]
 class Imgev
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_imgev", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idImgev;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $idImgev=null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="imageE", type="string", length=255, nullable=false)
-     */
-    private $imagee;
+    #[ORM\Column]
+    private ?String $imagee=null;
 
-    /**
-     * @var \Evenement
-     *
-     * @ORM\ManyToOne(targetEntity="Evenement")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_even", referencedColumnName="id_ev")
-     * })
-     */
-    private $idEven;
+
+    #[ORM\ManyToOne(targetEntity: Evenement::class)]
+    #[ORM\JoinColumn(name: "id_even", referencedColumnName: "id_ev")]
+    private ?Evenement $idEven=null;
+    
 
     public function getIdImgev(): ?int
     {
