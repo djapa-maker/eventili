@@ -1,0 +1,70 @@
+{% extends 'baseAdmin.html.twig'%}
+{% block content %}
+    <div class="row gap-1 justify-content-center">
+        <div class="card col-md-2 alert-info">
+            <div class="card-header">
+                Nombre de Réclamations
+            </div>
+            <div class="card-body align-items-center">
+                <h4>{{reclamations|length}}</h4>
+            </div>
+        </div>
+        <div class="card col-md-2 alert-success">
+            <div class="card-header">
+                Nombre de Réclamations Ouverte
+            </div>
+            <div class="card-body">
+                <h4>{{ nbReclamOuverte}}</h4>
+            </div>
+        </div>
+        <div class="card col-md-2 alert-secondary">
+            <div class="card-header">
+                Nombre de Réclamations Cloturé
+            </div>
+            <div class="card-body">
+                <h4>{{ nbReclamCloturer }}</h4>
+            </div>
+        </div>
+        <div class="card col-md-2 alert-warning">
+            <div class="card-header">
+                Nombre de Réclamations En Attente
+            </div>
+            <div class="card-body">
+                <h4>{{ nbReclamEnAttente }}</h4>
+            </div>
+        </div>
+    </div>
+    <div class="row gap-1 justify-content-center">
+        <div class="card">
+            <input type="text" placeholder="search" class="form-text">
+        </div>
+        <div class="btn-group"></div>
+    </div>
+    <div class="d-flex align-items-center flex-wrap gap-2">
+        {% for reclamation in reclamations %}
+        <div class="card col-md-3">
+            <div class="card-body">
+                <div class="row">
+                <h5 class="card-title has-margin col">#{{ reclamation.idRec }} - {{ reclamation.titre }}</h5>
+                    {% if reclamation.status == "ouvert" or reclamation.status == "EnAttenteRepAdmin" %}
+                        <p class="card-title has-margin col text-success d-flex justify-content-end">Ouvert</p>
+                    {% elseif reclamation.status == "cloturer" %}
+                        <p class="card-title has-margin col text-secondary d-flex justify-content-end">Cloturé</p>
+                    {% elseif reclamation.status == "EnAttenteRepUser" %}
+                        <p class="card-title has-margin col text-warning d-flex justify-content-end">En Attente</p>
+                    {% endif %}
+                </div>
+                <h6 class="card-subtitle mb-2 text-muted has-margin">#{{ reclamation.userid }} - User</h6>
+                <p class="card-text text-center">{{ reclamation.description }}</p>
+                <div class="d-flex flex-row justify-content-center gap-1">
+                    <a href="#" class="btn btn-outline-secondary p-2">Consulter</a>
+                    <form method="post" action="{{ path('app_reclamation_delete', {'idRec': reclamation.idRec}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ reclamation.idRec) }}">
+                        <button class ="btn btn-outline-danger p-2">Supprimer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

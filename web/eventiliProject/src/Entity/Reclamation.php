@@ -2,55 +2,31 @@
 
 namespace App\Entity;
 
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ReclamationRepository;
+use Symfony\Component\Validator\Constraints\DateTime;
+#[ORM\Entity(repositoryClass: ReclamationRepository::class)]
 
-/**
- * Reclamation
- *
- * @ORM\Table(name="reclamation", indexes={@ORM\Index(name="fk_personne", columns={"userId"})})
- * @ORM\Entity
- */
 class Reclamation
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_rec", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
     private $idRec;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="description", type="text", length=65535, nullable=false)
-     */
+    #[ORM\Column(length: 255)]
     private $description;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="titre", type="string", length=30, nullable=false)
-     */
+    #[ORM\Column(length: 255)]
     private $titre;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="dateheure", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
-     */
+    #[ORM\Column(length: 255)]
+    private $status;
+
+    #[ORM\Column(type: 'datetime')]
     private $dateheure = 'CURRENT_TIMESTAMP';
 
-    /**
-     * @var \Personne
-     *
-     * @ORM\ManyToOne(targetEntity="Personne")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="userId", referencedColumnName="id_pers")
-     * })
-     */
+    #[ORM\Column]
     private $userid;
 
     public function getIdRec(): ?int
@@ -69,7 +45,13 @@ class Reclamation
 
         return $this;
     }
-
+    public function setStatus(string $status): self{
+        $this->status = $status;
+        return $this;
+    }
+    public function getStatus(){
+        return $this->status;
+    }
     public function getTitre(): ?string
     {
         return $this->titre;
@@ -82,9 +64,10 @@ class Reclamation
         return $this;
     }
 
-    public function getDateheure(): ?\DateTimeInterface
+    public function getDateheure(): ?DateTime
     {
-        return $this->dateheure;
+        $dateheureString = $this->dateheure->format('Y-m-d H:i:s');
+        return new DateTime($dateheureString);
     }
 
     public function setDateheure(\DateTimeInterface $dateheure): self
@@ -94,7 +77,7 @@ class Reclamation
         return $this;
     }
 
-    public function getUserid(): ?Personne
+    public function getUserid(): ?int
     {
         return $this->userid;
     }
