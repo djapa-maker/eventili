@@ -1,4 +1,48 @@
 {% extends 'baseAdmin.html.twig'%}
 {% block content %}
-    <div class=""
+    <a class="btn btn-secondary" href="{{ path('app_reclamation_admin_index') }}">Retour</a>
+    <div class="card container-fluid" style="height: 75vh;">
+        <div class="card-body row text-center gap-5">
+            <div class="card col-md-5">
+                <div class="card-header align-items-center">
+                    <h5>{{ reclamation.titre }}</h5>
+                </div>
+                <div class="card-body">
+                    <h1>MessageBox</h1>
+                </div>
+                <div class="card-footer bg-white">
+                    <form method="post" class="row gap-1">
+                        <input type="text" class="form-control form-text w-75" style="width: 75%"/>
+                        <button class="btn btn-outline-success col w-25">Send</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-5">
+            <div class="card row"  style="height: 25%;">
+                <div class="card-body">
+                    <h6>Nom : {{ reclamation.userid }}</h6>
+                    <h6>Prenom : {{ reclamation.userid }}</h6>
+                    <h6>Date : {{ reclamation.dateheure }}</h6>
+                </div>
+            </div>
+            <div class="card row">
+                <div class="card-body d-flex flex-row gap-1 justify-content-center">
+                    <form method="post" action="{{ path('app_reclamation_delete', {'idRec': reclamation.idRec}) }}" onsubmit="return confirm('Confirmer vous la supression de l\'element');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ reclamation.idRec) }}">
+                        <button class ="btn btn-outline-danger">Supprimer</button>
+                    </form>
+                    <a href="#" class="btn btn-outline-warning">Modifier</a>
+                    {% if reclamation.status == "cloturer" %}
+                        <button disabled class="btn btn-outline-secondary" >Cloturer</button>
+                    {% else %}
+                    <form method="post" action="{{ path('app_reclamation_cloturer', {'idRec': reclamation.idRec}) }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('cloturer' ~ reclamation.idRec) }}" />
+                        <button class="btn btn-outline-secondary">Cloturé</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

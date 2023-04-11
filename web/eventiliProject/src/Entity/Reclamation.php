@@ -27,6 +27,8 @@ class Reclamation
     private $dateheure = 'CURRENT_TIMESTAMP';
 
     #[ORM\Column]
+    #[ORM\OneToMany(targetEntity: Personne::class)]
+    #[ORM\JoinColumn(referencedColumnName: "id_pers")]
     private $userid;
 
     public function getIdRec(): ?int
@@ -64,10 +66,10 @@ class Reclamation
         return $this;
     }
 
-    public function getDateheure(): ?DateTime
+    public function getDateheure(): string
     {
-        $dateheureString = $this->dateheure->format('Y-m-d H:i:s');
-        return new DateTime($dateheureString);
+        $dateheureString = $this->dateheure->format('d/m/Y');
+        return $dateheureString;
     }
 
     public function setDateheure(\DateTimeInterface $dateheure): self
@@ -88,6 +90,5 @@ class Reclamation
 
         return $this;
     }
-
 
 }

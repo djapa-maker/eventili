@@ -185,7 +185,6 @@ class Personne
     {
         return (string) $this->idPers;
     }
-
 }
 
 

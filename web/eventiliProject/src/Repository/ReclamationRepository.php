@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Personne;
 use App\Entity\Reclamation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -63,4 +64,7 @@ class ReclamationRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function findUserbyId($value) : Personne {
+        return $this->createQueryBuilder('r')->andWhere('r.= :val')->setParameter('val', $value)->getQuery()->getResult();
+    }
 }
