@@ -124,6 +124,18 @@ $file=$request->files->get('image');
     #[Route('new', name: 'app_imagepers_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ImagePersRepository $imagePersRepository, SessionInterface $session, EntityManagerInterface $entityManager): Response
     {
+        $personne1=$session->get('id'); 
+        $idPers = $session->get('personne'); 
+        $images = $imagePersRepository->findBy(['idPers' => $idPers]);
+        $images = array_reverse($images);
+        if(!empty($images)){
+            $i= $images[0];
+            $last=$i->getLast();
+        }
+        else{
+            $last="account (1).png";
+        }
+
         $idPerss = $session->get('idPer');
        // $per=$imagePersRepository->find($idPers);
        $personne = $entityManager->getRepository(Personne::class)->find($idPerss);
@@ -184,6 +196,8 @@ $file=$request->files->get('image');
         return $this->renderForm('templates_back/imagepers/new.html.twig', [
             'imageper' => $imageper,
             'form' => $form,
+            'last'=>$last,
+            'personne'=>$personne1,
         ]);
     }
 

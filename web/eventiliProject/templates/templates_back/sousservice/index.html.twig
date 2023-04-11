@@ -57,9 +57,9 @@ $(this).closest('form').submit();
 				{# -------------------------------------------------------------------------- #}
 				<table
 					id="example" class="table table-bordered" style="
-										width:100%;
-										border-color:#aeb8ff;
-										border-radius:30px">
+																width:100%;
+																border-color:#aeb8ff;
+																border-radius:30px">
 					{# -------------------------------------------------------------------------- #}
 					<thead>
 						<tr style="color:#27187f">
@@ -119,11 +119,11 @@ $(this).closest('form').submit();
 					{# -------------------------------------------------------------------------- #}
 				</table>
 				{% if sousservices.totalItemCount > 0 %}
-				
+
 					<div class="pagination justify-content-center">
 						{{ knp_pagination_render(sousservices,'bootstrap_v4_pagination.html.twig') }}
 					</div>
-					
+
 				{% endif %}
 
 				{# -------------------------------------------------------------------------- #}

@@ -1,142 +1,163 @@
-{{ form_start(form) }}
-             <div class="form-head stuck-header">
-                                            <div class="form-head-inner">
-                                                <div class="left">
-                                                    <h3>Info Générale</h3>
-                                                    <p>Saisissez vos informations Personnelles</p>
-                                                </div>
-                                                <div class="right">
-                                                    <div class="buttons">
-                                                     
-                                                        <a href="/admin-profile-view.html" class="button h-button is-light is-dark-outlined">
-                                                            <span class="icon">
-                                                              <i class="lnir lnir-arrow-left rem-100"></i>
-                                                          </span>
-                                                            <span>Retour</span>
-                                                        </a>
-                                                        <button id="save-button" type="submit" class="button h-button is-primary is-raised">{{ button_label|default('Suivant') }}</button>
-  
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>                            
+{{ form_start(form, {'attr': {'class': 'was-validated', 'novalidate': 'novalidate'}}) }}
+<div class="form-head stuck-header">
+	<div class="form-head-inner">
+		<div class="left">
+			<h3>Info Générale</h3>
+			<p>Saisissez vos informations Personnelles</p>
+		</div>
+		<div class="right">
+			<div class="buttons">
+
+				<a href="/admin-profile-view.html" class="button h-button is-light is-dark-outlined">
+					<span class="icon">
+						<i class="lnir lnir-arrow-left rem-100"></i>
+					</span>
+					<span>Retour</span>
+				</a>
+				<button id="save-button" type="submit" class="button h-button is-primary is-raised">{{ button_label|default('Suivant') }}</button>
+
+			</div>
+		</div>
+	</div>
+</div>
 <div class="form-body">
-                                            
-                                           
-                                            <div class="fieldset">
-                                                <div class="fieldset-heading">
-                                                    <h4>Info Personnelle</h4>
-                                                    <p>Veuillez remplir les champs</p>
-                                                </div>
 
-                                                <div class="columns is-multiline">
-                                                    <!--Field-->
-                                                    <div class="column is-6">
-                                                        <div class="field">
-                                                            <div class="control has-icon">
-                                                            {{ form_widget(form.nomPers, {'attr': {'class': 'input', 'placeholder': 'Nom'}}) }}
-                                                                <div class="form-icon">
-                                                                    <i data-feather="user"></i>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!--Field-->
-                                                    <div class="column is-6">
-                                                        <div class="field">
-                                                            <div class="control has-icon">
-                                                                {{ form_widget(form.prenomPers, {'attr': {'class': 'input', 'placeholder': 'Prénom'}}) }}
-                                                                <div class="form-icon">
-                                                                    <i data-feather="user"></i>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                   
-                                                    <!--Field-->
-                                                    <div class="column is-12">
-                                                        <div class="field">
-                                                            <div class="control has-icon">
-                                                               {{ form_widget(form.adresse, {'attr': {'class': 'input', 'placeholder': 'Adresse'}}) }}
-                                                            
-                                                                <div class="form-icon">
-                                                                    <i data-feather="map-pin"></i>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                     <!--Field-->
-                                                    <div class="column is-12">
-                                                        <div class="field">
-                                                            <div class="control has-icon">
-                                                                {{ form_widget(form.numTel, {'attr': {'class': 'input', 'placeholder': 'Numéro'}}) }}
-                                                                <div class="form-icon">
-                                                                    <i data-feather="phone-call"></i>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!--Field-->
-                                                    <div class="column is-12">
-                                                        <div class="field">
-                                                            <div class="control has-icon">
-                                                               {{ form_widget(form.email, {'attr': {'class': 'input', 'placeholder': 'E-mail'}}) }}
-                                                               <div class="form-icon">
-                                                                    <i data-feather="mail"></i>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                     <!--Field-->
-                                                    <div class="column is-12">
-                                                        <div class="field">
-                                                            <div class="control has-icon">
-                                                                {{ form_widget(form.mdp, {'attr': {'class': 'input', 'placeholder': 'Mot de passe'}}) }}
-                                                                <div class="form-icon">
-                                                                    <i data-feather="key"></i>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!--Field-->
-                                                    <div class="column is-12">
-                                                        <div class="field">
-                                                            <div class="control has-icon">
-                                                                {{ form_widget(form.rib, {'attr': {'class': 'input', 'placeholder': 'Rib'}}) }}
-                                                                <div class="form-icon">
-                                                                    <i data-feather="credit-card"></i>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
 
-                                            <!--Fieldset-->
-                                            <div class="fieldset">
-                                                <div class="fieldset-heading">
-                                                    <h4>Role</h4></div>
-                                                <div class="columns is-multiline">
+	<div class="fieldset">
+		<div class="fieldset-heading">
+			<h4>Info Personnelle</h4>
+			<p>Veuillez remplir les champs</p>
+		</div>
 
-                                                    <!--Field-->
-                                                    <div class="column is-6">
-                                                        <div class="field">
-                                                            <div class="control">
-                                                                <div class="h-select">
-                                                                 {{ form_widget(form.role, {'attr': {'class': 'select-box', 'placeholder': 'Mot de passe'}}) }}
-                                                                    
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                   
-                                                   
-                                                </div>
-                                            </div>
+		<div
+			class="columns is-multiline">
+			<!--Field-->
+			<div class="column is-6">
+				<div class="field">
+					<div class="control has-icon">
+						{{ form_widget(form.nomPers, {'attr': {'class': 'input', 'placeholder': 'Nom'}}) }}
+						<div style="color:red;border-color:red">
+							{{ form_errors(form.nomPers,{'attr': {'class': 'invalide-feedback'}}) }}
+						</div>
+						<div class="form-icon">
+							<i data-feather="user"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Field-->
+			<div class="column is-6">
+				<div class="field">
+					<div class="control has-icon">
+						{{ form_widget(form.prenomPers, {'attr': {'class': 'input', 'placeholder': 'Prénom'}}) }}
+						<div style="color:red;border-color:red">
+			{{ form_errors(form.prenomPers,{'attr': {'class': 'invalide-feedback'}}) }}
+		</div>
+                        <div class="form-icon">
+							<i data-feather="user"></i>
+						</div>
+					</div>
+				</div>
+			</div>
 
-                                           
+			<!--Field-->
+			<div class="column is-12">
+				<div class="field">
+					<div class="control has-icon">
+						{{ form_widget(form.adresse, {'attr': {'class': 'input', 'placeholder': 'Adresse'}}) }}
+<div style="color:red;border-color:red">
+			{{ form_errors(form.adresse,{'attr': {'class': 'invalide-feedback'}}) }}
+		</div>
+						<div class="form-icon">
+							<i data-feather="map-pin"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Field-->
+			<div class="column is-12">
+				<div class="field">
+					<div class="control has-icon">
+						{{ form_widget(form.numTel, {'attr': {'class': 'input', 'placeholder': 'Numéro'}}) }}
+						<div style="color:red;border-color:red">
+			{{ form_errors(form.numTel,{'attr': {'class': 'invalide-feedback'}}) }}
+		</div>
+                        <div class="form-icon">
+							<i data-feather="phone-call"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Field-->
+			<div class="column is-12">
+				<div class="field">
+					<div class="control has-icon">
+						{{ form_widget(form.email, {'attr': {'class': 'input', 'placeholder': 'E-mail'}}) }}
+						<div style="color:red;border-color:red">
+			{{ form_errors(form.email,{'attr': {'class': 'invalide-feedback'}}) }}
+		</div>
+                        <div class="form-icon">
+							<i data-feather="mail"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Field-->
+			<div class="column is-12">
+				<div class="field">
+					<div class="control has-icon">
+						{{ form_widget(form.mdp, {'attr': {'class': 'input', 'placeholder': 'Mot de passe'}}) }}
+						<div style="color:red;border-color:red">
+			{{ form_errors(form.mdp,{'attr': {'class': 'invalide-feedback'}}) }}
+		</div>
+                        <div class="form-icon">
+							<i data-feather="key"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Field-->
+			<div class="column is-12">
+				<div class="field">
+					<div class="control has-icon">
+						{{ form_widget(form.rib, {'attr': {'class': 'input', 'placeholder': 'Rib'}}) }}
+						<div style="color:red;border-color:red">
+			{{ form_errors(form.rib,{'attr': {'class': 'invalide-feedback'}}) }}
+		</div>
+                        <div class="form-icon">
+							<i data-feather="credit-card"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-                                        </div>
-                                        
-                                                    {{ form_end(form) }}
+	<!--Fieldset-->
+	<div class="fieldset">
+		<div class="fieldset-heading">
+			<h4>Role</h4>
+		</div>
+		<div
+			class="columns is-multiline">
+
+			<!--Field-->
+			<div class="column is-6">
+				<div class="field">
+					<div class="control">
+						<div class="h-select">
+							{{ form_widget(form.role, {'attr': {'class': 'select-box', 'placeholder': 'Mot de passe'}}) }}
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+
+
+</div>
+
+{{ form_end(form) }}

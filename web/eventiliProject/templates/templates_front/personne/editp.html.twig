@@ -2008,7 +2008,8 @@
                                     <div class="account-box is-form is-footerless">
                                        
                                          
-                                          {{ form_start(form) }}
+                                         {{ form_start(form, {'attr': {'class': 'was-validated', 'novalidate': 'novalidate'}}) }}
+
              <div class="form-head stuck-header">
                                             <div class="form-head-inner">
                                                 <div class="left">
@@ -2048,6 +2049,9 @@
                                                                 <div class="form-icon">
                                                                     <i data-feather="user"></i>
                                                                 </div>
+                                                                <div  style="color:red;border-color:red">
+			{{ form_errors(form.nomPers,{'attr': {'class': 'invalide-feedback'}}) }}
+		</div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2059,6 +2063,9 @@
                                                                 <div class="form-icon">
                                                                     <i data-feather="user"></i>
                                                                 </div>
+                                                                <div style="color:red;border-color:red">
+			{{ form_errors(form.prenomPers,{'attr': {'class': 'invalide-feedback'}}) }}
+		</div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2072,6 +2079,9 @@
                                                                 <div class="form-icon">
                                                                     <i data-feather="map-pin"></i>
                                                                 </div>
+                                                                <div style="color:red;border-color:red">
+			{{ form_errors(form.adresse,{'attr': {'class': 'invalide-feedback'}}) }}
+		</div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2083,6 +2093,9 @@
                                                                 <div class="form-icon">
                                                                     <i data-feather="phone-call"></i>
                                                                 </div>
+                                                                <div style="color:red;border-color:red">
+			{{ form_errors(form.numTel,{'attr': {'class': 'invalide-feedback'}}) }}
+		</div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2094,6 +2107,9 @@
                                                                <div class="form-icon">
                                                                     <i data-feather="mail"></i>
                                                                 </div>
+                                                                <div style="color:red;border-color:red">
+			{{ form_errors(form.email,{'attr': {'class': 'invalide-feedback'}}) }}
+		</div>
                                                             </div>
                                                         </div>
                                                     </div>

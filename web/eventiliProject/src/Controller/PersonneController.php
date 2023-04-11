@@ -21,7 +21,7 @@ class PersonneController extends AbstractController
    
 
     #[Route('/index', name: 'app_personne_index', methods: ['GET'])]
-    public function index( ImagePersRepository $imagePersRepository,PersonneRepository $personneRepository,SessionInterface $session ): Response
+    public function index( Request $request,ImagePersRepository $imagePersRepository,PersonneRepository $personneRepository,SessionInterface $session ): Response
     {
         $personne=$session->get('id'); 
         $idPerss = $session->get('personne'); 
@@ -37,8 +37,22 @@ class PersonneController extends AbstractController
         }
         $session->set('last', $last);
         $last=$session->get('last');
+
+        $search = $request->query->get('search1');
+        $filter = null;
+        $filter = $request->query->get('inputfilter');
+        if ($filter) {
+            $personnes = $personneRepository->getAllByPersonneRole($filter);
+        } elseif ($search) {
+            $personnes = $personneRepository->findOneByName($search);
+        } else {
+            $personnes = $personneRepository->findAll();
+        }
+
+       
+
         return $this->render('templates_back/personne/index.html.twig', [
-            'personnes' => $personneRepository->findAll(),
+            'personnes' => $personnes,
             'personne' => $personne,
             'last'=> $last,
         ]);
@@ -99,12 +113,7 @@ class PersonneController extends AbstractController
         ]);
 
     }
-    #[Route('/login', name: 'app_personne_login', methods: ['GET', 'POST'])]
-    public function login(Request $request, PersonneRepository $personneRepository): Response
-    {
-        
-        return $this->renderForm('templates_front/personne/login.html.twig');
-    }
+    
     #[Route('/deconnection', name: 'app_personne_deconnection', methods: ['GET', 'POST'])]
     public function deconnection(SessionInterface $session): Response
     {
@@ -128,14 +137,30 @@ class PersonneController extends AbstractController
             return $this->redirectToRoute('app_personne_index', [], Response::HTTP_SEE_OTHER);
            
         }
-        return $this->redirectToRoute('app_personne_login', [], Response::HTTP_SEE_OTHER);
+        $warningMessage = "email ou  mot de passe incorrect";
+        return $this->renderForm('templates_front/personne/login.html.twig', [
+            'warning_message' => $warningMessage, 
+        ]);
     }
     
     
 
     #[Route('/new', name: 'app_personne_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, PersonneRepository $personneRepository, SessionInterface $session): Response
+    public function new(Request $request,ImagePersRepository $imagePersRepository, PersonneRepository $personneRepository, SessionInterface $session): Response
     {
+        $idPerss = $session->get('personne'); 
+        $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
+        $images = array_reverse($images);
+
+        if(!empty($images)){
+            $i= $images[0];
+            $last=$i->getLast();
+        }
+        else{
+            $last="account (1).png";
+        }
+        $session->set('last', $last);
+        $last=$session->get('last');
 
         $personne = new Personne();
         $form = $this->createForm(PersonneType::class, $personne);
@@ -152,20 +177,45 @@ class PersonneController extends AbstractController
         return $this->renderForm('templates_back/personne/new.html.twig', [
             'personne' => $personne,
             'form' => $form,
+            'last'=> $last,
         ]);
     }
 
     #[Route('/{idPers}', name: 'app_personne_show', methods: ['GET'])]
-    public function show(Personne $personne): Response
+    public function show(Personne $personne,ImagePersRepository $imagePersRepository, PersonneRepository $personneRepository, SessionInterface $session): Response
     {
+        $personne1=$session->get('id'); 
+        $idPers = $session->get('personne'); 
+        $images = $imagePersRepository->findBy(['idPers' => $idPers]);
+        $images = array_reverse($images);
+        if(!empty($images)){
+            $i= $images[0];
+            $last=$i->getLast();
+        }
+        else{
+            $last="account (1).png";
+        }
         return $this->render('templates_back/personne/show.html.twig', [
             'personne' => $personne,
+            'last'=>$last,
         ]);
     }
 
     #[Route('/{idPers}/edit', name: 'app_personne_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Personne $personne, PersonneRepository $personneRepository): Response
+    public function edit(Request $request, Personne $personne, ImagePersRepository $imagePersRepository, PersonneRepository $personneRepository, SessionInterface $session): Response
     {
+        $personne1=$session->get('id'); 
+        $idPers = $session->get('personne'); 
+        $images = $imagePersRepository->findBy(['idPers' => $idPers]);
+        $images = array_reverse($images);
+        if(!empty($images)){
+            $i= $images[0];
+            $last=$i->getLast();
+        }
+        else{
+            $last="account (1).png";
+        }
+
         $form = $this->createForm(PersonneType::class, $personne);
         $form->handleRequest($request);
 
@@ -176,8 +226,10 @@ class PersonneController extends AbstractController
         }
 
         return $this->renderForm('templates_back/personne/edit.html.twig', [
-            'personne' => $personne,
+            'personne' => $personne1,
+            'personne1' => $personne,
             'form' => $form,
+            'last'=>$last,
         ]);
     }
 

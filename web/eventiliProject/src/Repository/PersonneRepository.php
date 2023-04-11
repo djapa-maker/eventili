@@ -70,7 +70,30 @@ class PersonneRepository extends ServiceEntityRepository
     
         return $personne;
     }
+    /**
+    * @return Personne 
+    */
+    public function findOneByName($value): array
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.nomPers like :n')
+            ->setParameter('n', '%'.$value.'%')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    /**
+    * @return Sousservice[] Returns an array of Service objects
+    */
     
+    public function getAllByPersonneRole($role):array
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.role = :role')
+            ->setParameter('role', $role)
+            ->getQuery()
+            ->getResult();
+    }
     public function findd($idPers): ?Personne
     {
         return $this->createQueryBuilder('p')
