@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Reclamation;
+use App\Entity\Reponse;
 use App\Form\ReclamationType;
+use App\Form\ReponseType;
 use App\Repository\ImagePersRepository;
 use App\Repository\PersonneRepository;
 use App\Repository\ReclamationRepository;
+use App\Repository\ReponseRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -91,8 +94,9 @@ class ReclamationController extends AbstractController
         ]);
     }
 
-    #[Route('/consulter/{idRec}', name: 'app_reclamation_consulter', methods: ['GET'])]
-    public function consulter(Reclamation $idRec,request $request,SessionInterface $session,ImagePersRepository $imagePersRepository): Response
+
+    #[Route('/admin/consulter/{idRec}', name: 'app_reclamation_admin_consulter', methods: ['GET','POST'])]
+    public function consulter(Reclamation $idRec,request $request,SessionInterface $session,ImagePersRepository $imagePersRepository, ReponseRepository $repRepo): Response
     {
         $personne=$session->get('id');
         $idPerss = $session->get('personne');
@@ -108,13 +112,61 @@ class ReclamationController extends AbstractController
         }
         $session->set('last', $last);
         $last=$session->get('last');
+        $date = $idRec->getDateheure()->format('d/m/y H:i');
+        $reps = $repRepo->findBy(['rec' => $idRec]);
+        $idUser = $session->get('id')->getIdPers();
+        $Message = new Reponse();
+        $form = $this->createForm(ReponseType::class,$Message,[
+            'sender' => $idUser,
+            'rec' => $idRec->getIdRec(),
+        ]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $repRepo->save($Message, true);
+            return $this->redirectToRoute('app_reclamation_admin_consulter', ['idRec' => $idRec->getIdRec()], Response::HTTP_SEE_OTHER);
+        }
+        $view = $form->createView();
         return $this->render('templates_back/reclamation/consulter.html.twig', [
             'personne' => $personne,
             'last'=> $last,
             'reclamation' => $idRec,
+            'date' => $date,
+            'reps' => $reps,
+            'uid' => $idUser,
+            'message' => $Message,
+            'form' => $view
         ]);
     }
+    #[Route('/modifier/{idRec}', name: 'app_reclamation_modifier', methods: ['GET', 'POST'])]
+    public function modifier(Reclamation $idRec,request $request,SessionInterface $session,ImagePersRepository $imagePersRepository,ReclamationRepository $reclamationRepository){
+        $personne=$session->get('id');
+        $idPerss = $session->get('personne');
+        $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
+        $images = array_reverse($images);
 
+        if(!empty($images)){
+            $i= $images[0];
+            $last=$i->getLast();
+        }
+        else{
+            $last="account (1).png";
+        }
+        $session->set('last', $last);
+        $last=$session->get('last');
+        $form = $this->createForm(ReclamationType::class, $idRec,['desc' => $idRec->getDescription()]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $reclamationRepository->save($idRec, true);
+            return $this->redirectToRoute('app_reclamation_admin_consulter', ['idRec' => $idRec->getIdRec()], Response::HTTP_SEE_OTHER);
+        }
+        $view = $form->createView();
+        return $this->render('templates_back/reclamation/modifier.html.twig', [
+            'personne' => $personne,
+            'last'=> $last,
+            'reclamation' => $idRec,
+            'form' => $view
+        ]);
+    }
     #[Route('/modifier/{idRec}', name: 'app_reclamation_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Reclamation $reclamation, ReclamationRepository $reclamationRepository): Response
     {
@@ -124,7 +176,7 @@ class ReclamationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $reclamationRepository->save($reclamation, true);
 
-            return $this->redirectToRoute('app_reclamation_consulter', ['idRec' => $reclamation->getIdRec()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_reclamation_admin_consulter', ['idRec' => $reclamation->getIdRec()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('templates_back/reclamation/edit.html.twig', [
@@ -145,9 +197,8 @@ class ReclamationController extends AbstractController
             }
         }
 
-        return $this->redirectToRoute('app_reclamation_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_reclamation_admin_index', [], Response::HTTP_SEE_OTHER);
     }
-
     #[Route('/supprimer/{idRec}', name: 'app_reclamation_delete', methods: ['POST'])]
     public function delete(Request $request, Reclamation $reclamation, ReclamationRepository $reclamationRepository): Response
     {

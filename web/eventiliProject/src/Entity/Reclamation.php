@@ -2,9 +2,14 @@
 
 namespace App\Entity;
 
+use App\Repository\PersonneRepository;
+use Doctrine\DBAL\Types\DateTimeType;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ReclamationRepository;
+use phpDocumentor\Reflection\Types\Integer;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\Validator\Constraints\DateTime;
+
 #[ORM\Entity(repositoryClass: ReclamationRepository::class)]
 
 class Reclamation
@@ -26,9 +31,8 @@ class Reclamation
     #[ORM\Column(type: 'datetime')]
     private $dateheure = 'CURRENT_TIMESTAMP';
 
-    #[ORM\Column]
-    #[ORM\OneToMany(targetEntity: Personne::class)]
-    #[ORM\JoinColumn(referencedColumnName: "id_pers")]
+    #[ORM\ManyToOne(targetEntity: Personne::class)]
+    #[ORM\JoinColumn(name: "userId",referencedColumnName: "id_pers")]
     private $userid;
 
     public function getIdRec(): ?int
@@ -66,10 +70,9 @@ class Reclamation
         return $this;
     }
 
-    public function getDateheure(): string
+    public function getDateheure(): \DateTime
     {
-        $dateheureString = $this->dateheure->format('d/m/Y');
-        return $dateheureString;
+        return $this->dateheure;
     }
 
     public function setDateheure(\DateTimeInterface $dateheure): self
@@ -79,7 +82,7 @@ class Reclamation
         return $this;
     }
 
-    public function getUserid(): ?int
+    public function getUserid(): Personne
     {
         return $this->userid;
     }
