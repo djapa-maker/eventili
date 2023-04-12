@@ -11,7 +11,9 @@
 	</div>
 {% endblock %}
 {% block content %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-			{{ include('templates_front/evenement/_form.html.twig') }}
-			{# <a href="{{ path('app_evenement_index') }}">back to list</a> #}
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bulma-calendar/dist/js/bulma-calendar.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+
+	{{ include('templates_front/evenement/_form.html.twig') }}
 </div>{% endblock %}

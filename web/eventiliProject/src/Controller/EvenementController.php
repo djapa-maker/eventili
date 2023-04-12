@@ -24,43 +24,83 @@ class EvenementController extends AbstractController
     }
 
     #[Route('/new', name: 'app_evenement_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EvenementRepository $evenementRepository, CategEventRepository $CategEventRepository, PersonneRepository $PersonneRepository): Response
+    public function new(Request $request, EvenementRepository $evenementRepository, PersonneRepository $PersonneRepository): Response
     {
         $evenement = new Evenement();
         $form = $this->createForm(EvenementType::class, $evenement);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $evenement->setVisibilite('Privé');
-            $activeTab = $request->request->get('activeTab');
-            if ($activeTab == 'gratuit-tab'){
-                $evenement->setType('Gratuit');
-                $evenement->setPrix(0);
-                $evenement->setLimiteparticipant(0);
+        $date = $request->get('event_date');
+        $timeString = $request->get('event_time');
+        $errorMessage = null;
+        $errorMessage2 = null;
+        
+
+        if ($form->isSubmitted()) {
+        list($startTime, $endTime) = array_map('trim', explode('-', $timeString));
+        $startTimeStamp = strtotime($startTime);
+        $endTimeStamp = strtotime($endTime);
+            // var_dump($startTimeStamp);
+            // var_dump($endTimeStamp);
+
+            // die();
+
+            if ($date === "") {
+                $errorMessage = "La date est obligatoire.";
+                $formIsValid = false;
             }
             else{
-                $evenement->setType('Payant');
+                $formIsValid = $form->isValid();
             }
-            $date = $request->get('event_date');
-            $start_time = $request->get('event_time')['start'];
-            $end_time = $request->get('event_time')['end'];
-            $dateDebString = $date . ' ' . $start_time;
-            $dateFinString = $date . ' ' . $end_time;
-            $dateDeb = \DateTime::createFromFormat('Y-m-d H:i', $dateDebString);
-            $dateFin = \DateTime::createFromFormat('Y-m-d H:i', $dateFinString);
-            $evenement->setDateDebut($dateDeb);
-            $evenement->setDateFin($dateFin);
-            $evenement->setIdPers($PersonneRepository->findOneByIdPers(19));
-            
 
-            $evenementRepository->save($evenement, true);
+            if($startTimeStamp > $endTimeStamp) {
+                $errorMessage2 = "Heure debut doit etre inférieure à l heure fin.";
+                $formIsValid = false;
+            }
+            else{
+                $formIsValid = $form->isValid();
+            }
 
-            // return $this->redirectToRoute('app_evenement_index', [], Response::HTTP_SEE_OTHER);
+            if ($formIsValid) {
+                // var_dump($request->get('event_time'));
+                // die();
+
+                
+                
+                $dateDebString = $date . ' ' . $startTime;
+                $dateFinString = $date . ' ' . $endTime;
+                $dateDeb = new \DateTime($dateDebString);
+                $dateFin = new \DateTime($dateFinString);
+
+                $evenement->setDateDebut($dateDeb);
+                $evenement->setDateFin($dateFin);
+                $evenement->setVisibilite('Privé');
+
+                $prix = $form->get('prix')->getData();
+                $nbticket = $form->get('limiteparticipant')->getData();
+
+                // var_dump($prix);
+                // die();
+                $evenement->setPrix($prix);
+                $evenement->setLimiteparticipant($nbticket);
+                if ($prix != "0") {
+                    $evenement->setType('Payant');
+                } else {
+                    $evenement->setType('Gratuit');
+                    // $evenement->setPrix(0);
+                    // $evenement->setLimiteparticipant(0);
+                }
+
+                $evenement->setIdPers($PersonneRepository->findOneByIdPers(19));
+                $evenementRepository->save($evenement, true);
+
+                return $this->redirectToRoute('app_reservation_index');
+            }
         }
-
         return $this->renderForm('templates_front/evenement/new.html.twig', [
-            'evenement' => $evenement,
+            'evenements' => $evenement,
             'form' => $form,
-            // 'eventCat' => $CategEventRepository->findAll(),
+            'errorMessage' => $errorMessage,
+            'errorMessage2' => $errorMessage2,
         ]);
     }
 
@@ -93,7 +133,7 @@ class EvenementController extends AbstractController
     #[Route('/{idEv}', name: 'app_evenement_delete', methods: ['POST'])]
     public function delete(Request $request, Evenement $evenement, EvenementRepository $evenementRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$evenement->getIdEv(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $evenement->getIdEv(), $request->request->get('_token'))) {
             $evenementRepository->remove($evenement, true);
         }
 

@@ -19,25 +19,35 @@ class Evenement
 
 
     #[ORM\Column]
+    #[Assert\Length(
+        max: 35,
+        maxMessage: 'Le titre de votre événement ne peut pas etre plus long que {{ limit }} caractères',
+    )]
     #[Assert\NotBlank(message: 'Merci de remplir le titre')]
-    private ?String $titre =null;
+    private ?String $titre = null;
 
-
+    // #[Assert\DateTime]
+    // #[Assert\GreaterThan('today')]
     #[ORM\Column]
     private ?DateTime $dateDebut = null;
 
+    // #[Assert\DateTime]
+    // #[Assert\GreaterThan('today')]
+    #[ORM\Column]
+    private ?DateTime $dateFin = null;
+
 
     #[ORM\Column]
-    private ?DateTime $dateFin= null;
-
-
-    #[ORM\Column]
-    #[Assert\NotBlank(message: 'Merci de remplir le nom')]
+    #[Assert\NotBlank(message: 'Merci de remplir la description')]
+    #[Assert\Length(
+        max: 200,
+        maxMessage: 'La description de votre événement ne peut pas etre plus longue que {{ limit }} caractères',
+    )]
     private ?String $descriptionEv = null;
 
 
     #[ORM\Column]
-    private ?String $type=null;
+    private ?String $type = null;
 
 
     #[ORM\Column]
@@ -45,24 +55,34 @@ class Evenement
 
 
     #[ORM\Column]
-    #[Assert\NotBlank(message: 'Merci de remplir le nom')]
-    private ?int $limiteparticipant =null;
+    #[Assert\NotBlank(message: 'Merci de remplir le nombre de tickets')]
+    #[Assert\Regex(
+        pattern: '/^\d+$/',
+        message: 'Le prix doit être un entier positif'
+    )]
+    private ?int $limiteparticipant = null;
 
 
     #[ORM\Column]
     #[Assert\NotBlank(message: 'Merci de remplir le prix')]
+    #[Assert\Regex(
+        pattern: '/^\d+(\.\d{1,3})?$/',
+        message: 'Le prix doit être positif et ne pas dépasser 3 chiffres après la virgule'
+    )]
+    // #[Assert\PositiveOrZero]
     private ?float $prix = null;
 
 
     #[ORM\ManyToOne(targetEntity: CategEvent::class)]
     #[ORM\JoinColumn(name: "id_categ", referencedColumnName: "id_categ")]
+    // #[Assert\NotBlank(message: 'Merci de choisir une categorie devenement')]
     private ?CategEvent $idCateg;
 
 
 
     #[ORM\ManyToOne(targetEntity: Personne::class)]
     #[ORM\JoinColumn(name: "id_pers", referencedColumnName: "id_pers")]
-    private ?Personne $idPers=null;
+    private ?Personne $idPers = null;
 
     public function getIdEv(): ?int
     {
@@ -188,6 +208,4 @@ class Evenement
 
         return $this;
     }
-
-
 }
