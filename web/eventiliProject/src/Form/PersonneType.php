@@ -21,12 +21,7 @@ class PersonneType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nomPers',TypeTextType::class,[
-                'attr'=>[
-                    'class' => 'form-control',
-                    'placeholder' => 'veuillez saisir votre nom'
-                ]
-            ])
+            ->add('nomPers')
             ->add('prenomPers',TypeTextType::class,[
                 'attr'=>[
                     'placeholder' => 'veuillez saisir votre prénom'

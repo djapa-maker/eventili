@@ -1,5 +1,21 @@
-{{ form_start(form) }}
-<a href="{{ path('app_personne_index') }}">retour     </a>
-   <button type="submit"   class ="btn btn-success"> Enregistrer</button>
-  <br> <br>
+{{ form_start(form, {'attr': {'class': 'was-validated', 'novalidate': 'novalidate'}}) }}
+
+<div class="form-group col-sm">
+	<div style="color:#6B67E9;font-size:20px">
+		{{ form_label(form.imagep, 'Image', {'label_attr': {'class': 'form-label'}}) }}
+	</div>
+	<div style="width:65%">
+		{{ form_widget(form.imagep, {'attr': {'class': 'form-control', 'placeholder': ''}}) }}
+	</div>
+	<div style="color:red;border-color:red">
+		{{ form_errors(form.imagep,{'attr': {'class': 'invalide-feedback'}}) }}
+	</div>
+</div>
+<br><br>
+<a style="border-radius:10px;color:white;background-color:#FEA116;;border-color:white;font-size:19px" class="btn btn-primary" href="{{ path('app_personne_index') }}">ignorer
+</a>
+<button type="submit" style="border-radius:10px;color:white;background-color:#aeb8ff;border-color:#aeb8ff;font-size:19px" class="btn btn-primary">
+	Enregistrer</button>
+<br>
+<br>
 {{ form_end(form) }}

@@ -19,6 +19,7 @@ class Personne
     private ?int $idPers=null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Merci de remplir le nom')]
     #[Assert\Length(min: 1, max: 255)]
     #[Assert\Regex(
         pattern: "/^[^0-9]*$/",
@@ -27,6 +28,7 @@ class Personne
     private ?String $nomPers=null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Merci de remplir le prénom')]
     #[Assert\Regex(
         pattern: "/^[^0-9]*$/",
        message: "Le prénom ne doit pas contenir de chiffre"
@@ -34,7 +36,9 @@ class Personne
     private ?String $prenomPers=null;
    
     #[ORM\Column]
-    #[Assert\Length(min: 8, max: 8 , minMessage:"le numéro doit contenir 8 chiffres")]
+    #[Assert\NotBlank(message: 'Merci de remplir le numéro')]
+    #[Assert\Length(exactMessage: "le numéro doit contenir exactement {{ limit }} chiffres.",
+    exactly:  8)]
     #[Assert\Regex(
         pattern: "/^[^a-zA-Z]+$/",
        message: "Le numéro ne doit pas contenir de lettres"
@@ -42,11 +46,13 @@ class Personne
     private ?String $numTel=null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Merci de saisir un email')]
     #[Assert\Email(message: "L'adresse email '{{ value }}' n'est pas valide.")]
     private ?String $email=null;
 
     #[ORM\Column]
-    #[Assert\Length(min: 8, max: 255)]
+    #[Assert\NotBlank(message: 'Merci de saisir un mot de passe')]
+    #[Assert\Length(min: 8, minMessage:"Le mot de passe doit doit etre supérieur à 8")]
     #[Assert\Regex(
         pattern: '/^(?=.*[a-zA-Z])(?=.*\d).+$/',
         message: "Le mot de passe doit contenir au moins une lettre et un chiffre."
@@ -54,10 +60,13 @@ class Personne
     private ?String $mdp=null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Merci de saisir une adresse')]
     private ?String $adresse=null;
 
     #[ORM\Column]
-    #[Assert\Length(min: 20, max: 20)]
+    #[Assert\NotBlank(message: 'Merci de saisir un rib')]
+    #[Assert\Length(exactMessage: "le rib doit contenir exactement {{ limit }} chiffres.",
+    exactly:  20)]
     #[Assert\Regex(
         pattern: "/^[^a-zA-Z]+$/",
        message: "Le rib ne doit pas contenir de lettres"

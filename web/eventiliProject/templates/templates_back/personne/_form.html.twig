@@ -1,6 +1,65 @@
-{{ form_start(form) }}
+<center>{{ form_start(form, {'attr': {'class': 'was-validated', 'novalidate': 'novalidate'}}) }}
 
-   
-    		 <button type="submit" style="margint-top:-20;margin-left: 80px;"  class ="btn btn-success"> Enregistrer</button>
-  
-   {{ form_end(form) }}
+	<div class="form-group col-sm-7">
+		<div style="color:#6B67E9;font-size:20px">
+			<br>
+			{{ form_widget(form.nomPers, {'attr': {'class': 'form-control', 'placeholder': 'veuillez saisir votre nom'}}) }}
+		</div>
+		<div  style="color:red;border-color:red">
+			{{ form_errors(form.nomPers,{'attr': {'class': 'invalide-feedback'}}) }}
+		</div>
+        <div style="color:#6B67E9;font-size:20px">
+			<br>
+			{{ form_widget(form.prenomPers, {'attr': {'class': 'form-control', 'placeholder': 'veuillez saisir votre prénom'}}) }}
+		</div>
+		<div style="color:red;border-color:red">
+			{{ form_errors(form.prenomPers,{'attr': {'class': 'invalide-feedback'}}) }}
+		</div>
+        <div style="color:#6B67E9;font-size:20px">
+			<br>
+			{{ form_widget(form.numTel, {'attr': {'class': 'form-control', 'placeholder': 'veuillez saisir votre numéro','id': 'form_numTel'}}) }}
+		</div>
+		<div style="color:red;border-color:red">
+			{{ form_errors(form.numTel,{'attr': {'class': 'invalide-feedback'}}) }}
+		</div>
+        <div style="color:#6B67E9;font-size:20px">
+			<br>
+			{{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'veuillez saisir votre email'}}) }}
+		</div>
+		<div style="color:red;border-color:red">
+			{{ form_errors(form.email,{'attr': {'class': 'invalide-feedback'}}) }}
+		</div>
+        <div style="color:#6B67E9;font-size:20px">
+			<br>
+			{{ form_widget(form.mdp, {'attr': {'class': 'form-control', 'placeholder': 'veuillez saisir votre mot de passe'}}) }}
+		</div>
+		<div style="color:red;border-color:red">
+			{{ form_errors(form.mdp,{'attr': {'class': 'invalide-feedback'}}) }}
+		</div>
+        <div style="color:#6B67E9;font-size:20px">
+			<br>
+			{{ form_widget(form.adresse, {'attr': {'class': 'form-control', 'placeholder': 'veuillez saisir votre adresse'}}) }}
+		</div>
+		<div style="color:red;border-color:red">
+			{{ form_errors(form.adresse,{'attr': {'class': 'invalide-feedback'}}) }}
+		</div>
+        <div style="color:#6B67E9;font-size:20px">
+			<br>
+			{{ form_widget(form.rib, {'attr': {'class': 'form-control', 'placeholder': 'veuillez saisir votre rib'}}) }}
+		</div>
+		<div style="color:red;border-color:red">
+			{{ form_errors(form.rib,{'attr': {'class': 'invalide-feedback'}}) }}
+		</div>
+        <div style="color:#6B67E9;font-size:20px">
+			<br>
+			{{ form_widget(form.role, {'attr': {'class': 'form-control', 'placeholder': 'veuillez saisir votre nom'}}) }}
+		</div>
+		<div style="color:red;border-color:red">
+			{{ form_errors(form.role,{'attr': {'class': 'invalide-feedback'}}) }}
+		</div>
+	</div>
+
+	<button id="submit-button" style="margin-top:20px;margin-left:510px;width:15%;border-radius:10px;color:white;background-color:#aeb8ff;border-color:#aeb8ff;font-size:19px" type="submit" class="btn btn-primary">{{ button_label|default('Suivant') }}</button>
+	{{ form_end(form) }}
+</center>
+
