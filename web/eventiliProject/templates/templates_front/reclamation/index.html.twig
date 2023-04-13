@@ -1,0 +1,32 @@
+{% extends 'baseAdmin.html.twig'%}
+{% block content %}
+    <a class="btn btn-outline-success mb-2" href="{{ path('app_reclamation_ajouter') }}">Nouvelle Réclamation</a>
+    <div class="card">
+        <div class="card-body">
+        <H1 class="text-secondary align-self-center" style="margin-left: 35%;">Réclamations</H1>
+
+    <div class="d-flex align-items-center flex-wrap gap-2">
+    {% for reclamation in reclamations %}
+        <div class="card col-md-3">
+            <div class="card-body">
+                <div class="row">
+                    <h5 class="card-title has-margin col">#{{ reclamation.idRec }} - {{ reclamation.titre }}</h5>
+                    {% if reclamation.status == "ouvert" or reclamation.status == "EnAttenteRepAdmin" %}
+                        <p class="card-title has-margin col text-success d-flex justify-content-end">Ouvert</p>
+                    {% elseif reclamation.status == "cloturer" %}
+                        <p class="card-title has-margin col text-secondary d-flex justify-content-end">Cloturé</p>
+                    {% elseif reclamation.status == "EnAttenteRepUser" %}
+                        <p class="card-title has-margin col text-warning d-flex justify-content-end">En Attente</p>
+                    {% endif %}
+                </div>
+                <h6 class="card-subtitle mb-2 text-muted has-margin">#{{ reclamation.userid.nomPers }} {{ reclamation.userid.prenomPers }}</h6>
+                <p class="card-text text-center">{{ reclamation.description }}</p>
+                <div class="d-flex flex-row justify-content-center gap-1">
+                    <a href="{{ path('app_reclamation_admin_consulter', {'idRec': reclamation.idRec}) }}" class="btn btn-outline-secondary p-2">Consulter</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    {% endfor %}
+{% endblock %}

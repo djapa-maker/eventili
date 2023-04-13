@@ -28,8 +28,8 @@ class Reclamation
     #[ORM\Column(length: 255)]
     private $status;
 
-    #[ORM\Column(type: 'datetime')]
-    private $dateheure = 'CURRENT_TIMESTAMP';
+    #[ORM\Column(type: 'datetime', options: ["default" => "CURRENT_TIMESTAMP"])]
+    private $dateheure;
 
     #[ORM\ManyToOne(targetEntity: Personne::class)]
     #[ORM\JoinColumn(name: "userId",referencedColumnName: "id_pers")]
@@ -82,7 +82,7 @@ class Reclamation
         return $this;
     }
 
-    public function getUserid(): Personne
+    public function getUserid(): ?Personne
     {
         return $this->userid;
     }

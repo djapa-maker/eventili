@@ -29,7 +29,8 @@ class ReclamationType extends AbstractType
         }
         $status = [];
         $status['ouvert'] = "ouvert";
-        $status['En Attente'] = "EnAttenteRepUser";
+        $status['En Attente Admin'] = "EnAttenteRepAdmin";
+        $status['En Attente User'] = "EnAttenteRepUser";
         $status['cloturer'] = "cloturer";
         $builder
             ->add('description',TextType::class,[

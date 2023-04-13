@@ -1,6 +1,7 @@
 {% extends 'baseAdmin.html.twig'%}
 {% block content %}
-    <a class="btn btn-dark m-2" href="{{ path('app_reclamation_admin_index') }}">Retour</a>
+    <a class="btn btn-dark m-2" href="{{ path('app_reclamation_admin_index') }}"><i class="fas fa-arrow-left"></i>
+    </a>
     <div class="card container-fluid" style="height: 75vh;">
         <div class="card-body row gap-5">
             <div class="card col-md-5">
@@ -8,10 +9,13 @@
                     <h5>{{ reclamation.titre }}</h5>
                 </div>
                 <div class="card-body overflow-auto" style="max-height: 25em;">
-                    <div class="bg-secondary text-white" style="width: 35%; padding: 2%; padding-left: 8%; border-radius: 16px;margin-left: 2%">{{ reclamation.description }}</div>
+                    <div class="bg-secondary text-white mb-2" style="width: 35%; padding: 2%; padding-left: 8%; border-radius: 16px;margin-left: 2%">{{ reclamation.description }}</div>
+
                     {% for reponse in reps %}
                         {% if reponse.senderid.idPers == uid %}
-                            <div class="text-white row mb-2" style="background-color: #0b5ed7; width: 35%; padding: 2%; padding-left: 8%; border-radius: 16px;margin-left: 65%">{{ reponse.message }}</div>
+                            <div class="text-white row mb-2" style="background-color: #0b5ed7; width: 35%; padding: 2%; padding-left: 8%; border-radius: 16px;margin-left: 65%">
+                                {{ reponse.message }}
+                            </div>
                         {% else %}
                             <div class="bg-secondary text-white row mb-2" style="width: 35%; padding: 2%; padding-left: 8%; border-radius: 16px;margin-left: 2%">{{ reponse.message }}</div>
                         {% endif %}
@@ -27,7 +31,7 @@
                         {{ form_start(form) }}
                             {{ form_widget(form._token) }}
                             {{ form_row(form.message) }}
-                        <button class="btn btn-outline-success col w-25">Send</button>
+                        <button class="btn btn-outline-success col w-25">Envoyé</button>
                         {{ form_end(form) }}
 
                     {% endif %}

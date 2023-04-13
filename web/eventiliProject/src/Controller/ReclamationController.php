@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Reclamation;
 use App\Entity\Reponse;
+use App\Form\ReclamationAjouterType;
 use App\Form\ReclamationType;
 use App\Form\ReponseType;
 use App\Repository\ImagePersRepository;
@@ -71,32 +72,63 @@ class ReclamationController extends AbstractController
         ]);
     }
     #[Route('/user', name: 'app_reclamation_user_index', methods: ['GET'])]
-    public function user_index(request $request,SessionInterface $session):Response{
-
-        return $this->render('templates_front/reclamation/index.html.twig');
-    }
-    #[Route('/new', name: 'app_reclamation_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ReclamationRepository $reclamationRepository): Response
+    public function user_index(request $request,SessionInterface $session,ImagePersRepository $imagePersRepository,ReclamationRepository $reclamationRepository):Response
     {
-        $reclamation = new Reclamation();
-        $form = $this->createForm(ReclamationType::class, $reclamation);
-        $form->handleRequest($request);
+        $personne=$session->get('id');
+        $idPerss = $session->get('personne');
+        $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
+        $images = array_reverse($images);
+        $role = $personne->getRole();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $reclamationRepository->save($reclamation, true);
-
-            return $this->redirectToRoute('app_reclamation_index', [], Response::HTTP_SEE_OTHER);
+        if(!empty($images)){
+            $i= $images[0];
+            $last=$i->getLast();
         }
-
-        return $this->renderForm('templates_back/reclamation/new.html.twig', [
-            'reclamation' => $reclamation,
-            'form' => $form,
+        else{
+            $last="account (1).png";
+        }
+        $session->set('last', $last);
+        $last=$session->get('last');
+        $reclamationss = $reclamationRepository->findAll();
+        return $this->render('templates_front/reclamation/index.html.twig',[
+            'personne' => $personne,
+            'last'=> $last,
+            'reclamations' => $reclamationss
         ]);
     }
-
-
-    #[Route('/admin/consulter/{idRec}', name: 'app_reclamation_admin_consulter', methods: ['GET','POST'])]
-    public function consulter(Reclamation $idRec,request $request,SessionInterface $session,ImagePersRepository $imagePersRepository, ReponseRepository $repRepo): Response
+    #[Route('/ajouter', name: 'app_reclamation_ajouter', methods: ['GET', 'POST'])]
+    public function ajouter(request $request,SessionInterface $session,ImagePersRepository $imagePersRepository,ReclamationRepository $reclamationRepository):Response{
+        $personne=$session->get('id');
+        $idPerss = $session->get('personne');
+        $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
+        $images = array_reverse($images);
+        if(!empty($images)){
+            $i= $images[0];
+            $last=$i->getLast();
+        }
+        else{
+            $last="account (1).png";
+        }
+        $session->set('last', $last);
+        $last=$session->get('last');
+        $reclam = new Reclamation();
+        $form = $this->createForm(ReclamationAjouterType::class,$reclam,[
+            'sender' => $idPerss,
+        ]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $reclamationRepository->save($reclam, true);
+            return $this->redirectToRoute('app_reclamation_user_consulter', ['idRec' => $reclam->getIdRec()], Response::HTTP_SEE_OTHER);
+        }
+        $view = $form->createView();
+        return $this->render('templates_front/reclamation/ajouter.html.twig',[
+            'personne' => $personne,
+            'last'=> $last,
+            'form' => $view
+        ]);
+    }
+    #[Route('/user/consulter/{idRec}', name: 'app_reclamation_user_consulter', methods: ['GET', 'POST'])]
+    public function consulterr(Reclamation $idRec,request $request,SessionInterface $session,ImagePersRepository $imagePersRepository, ReponseRepository $repRepo, ReclamationRepository $recRepo): Response
     {
         $personne=$session->get('id');
         $idPerss = $session->get('personne');
@@ -123,6 +155,52 @@ class ReclamationController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $repRepo->save($Message, true);
+            $idRec->setStatus("EnAttenteRepAdmin");
+            $recRepo->save($idRec,true);
+            return $this->redirectToRoute('app_reclamation_admin_consulter', ['idRec' => $idRec->getIdRec()], Response::HTTP_SEE_OTHER);
+        }
+        $view = $form->createView();
+        return $this->render('templates_front/reclamation/consulter.html.twig',[
+            'personne' => $personne,
+            'last'=> $last,
+            'reclamation' => $idRec,
+            'date' => $date,
+            'reps' => $reps,
+            'uid' => $idUser,
+            'message' => $Message,
+            'form' => $view
+        ]);
+    }
+    #[Route('/admin/consulter/{idRec}', name: 'app_reclamation_admin_consulter', methods: ['GET','POST'])]
+    public function consulter(Reclamation $idRec,request $request,SessionInterface $session,ImagePersRepository $imagePersRepository, ReponseRepository $repRepo, ReclamationRepository $recRepo): Response
+    {
+        $personne=$session->get('id');
+        $idPerss = $session->get('personne');
+        $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
+        $images = array_reverse($images);
+
+        if(!empty($images)){
+            $i= $images[0];
+            $last=$i->getLast();
+        }
+        else{
+            $last="account (1).png";
+        }
+        $session->set('last', $last);
+        $last=$session->get('last');
+        $date = $idRec->getDateheure()->format('d/m/y H:i');
+        $reps = $repRepo->findBy(['rec' => $idRec]);
+        $idUser = $session->get('id')->getIdPers();
+        $Message = new Reponse();
+        $form = $this->createForm(ReponseType::class,$Message,[
+            'sender' => $idUser,
+            'rec' => $idRec->getIdRec(),
+        ]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $repRepo->save($Message, true);
+            $idRec->setStatus("EnAttenteRepUser");
+            $recRepo->save($idRec,true);
             return $this->redirectToRoute('app_reclamation_admin_consulter', ['idRec' => $idRec->getIdRec()], Response::HTTP_SEE_OTHER);
         }
         $view = $form->createView();
@@ -167,23 +245,6 @@ class ReclamationController extends AbstractController
             'form' => $view
         ]);
     }
-    #[Route('/modifier/{idRec}', name: 'app_reclamation_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Reclamation $reclamation, ReclamationRepository $reclamationRepository): Response
-    {
-        $form = $this->createForm(ReclamationType::class, $reclamation);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $reclamationRepository->save($reclamation, true);
-
-            return $this->redirectToRoute('app_reclamation_admin_consulter', ['idRec' => $reclamation->getIdRec()], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('templates_back/reclamation/edit.html.twig', [
-            'reclamation' => $reclamation,
-            'form' => $form,
-        ]);
-    }
     #[Route('/cloturer/{idRec}', name: 'app_reclamation_cloturer', methods: ['POST'])]
     public function cloturer(Request $request, Reclamation $reclamation,SessionInterface $session, ReclamationRepository $reclamationRepository): Response{
         $session->getFlashBag()->clear();
@@ -211,6 +272,6 @@ class ReclamationController extends AbstractController
             }
         }
 
-        return $this->redirectToRoute('app_reclamation_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_reclamation_admin_index', [], Response::HTTP_SEE_OTHER);
     }
 }

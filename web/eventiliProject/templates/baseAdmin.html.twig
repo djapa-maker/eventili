@@ -32,6 +32,7 @@
 			<script src="{{asset('plugins/chartjs/js/Chart.min.js')}}"></script>
 			<script src="{{asset('plugins/chartjs/js/Chart.extension.js')}}"></script>
 			<script src="{{asset('js/index.js')}}"></script>
+			<script src="https://kit.fontawesome.com/beb115de22.js" crossorigin="anonymous"></script>
 		{% endblock %}
 
 		{% block loader %}
@@ -107,7 +108,7 @@
 								<li><a href="{{path('app_service_index')}}"><i class="bx bx-right-arrow-alt"></i>Services</a></li>
 								<li><a href="{{path('app_sousservice_index')}}"><i class="bx bx-right-arrow-alt"></i>Sous services</a></li>
 								<li><a href="{{path('app_avis_index')}}"><i class="bx bx-right-arrow-alt"></i>Avis</a></li>
-								<li><a href="app-contact-list.html"><i class="bx bx-right-arrow-alt"></i>Réclamations</a></li>
+								<li><a href="{{path('app_reclamation_admin_index') }}"><i class="bx bx-right-arrow-alt"></i>Réclamations</a></li>
 								<li><a href="app-to-do.html"><i class="bx bx-right-arrow-alt"></i>Transactions</a></li>
 
 							</ul>

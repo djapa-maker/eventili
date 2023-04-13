@@ -59,8 +59,6 @@ class ReponseType extends AbstractType
                 'attr' => ['hidden' => true],
                 'label' => false,
                 'data' => $sender
-
-
             ])
         ;
     }

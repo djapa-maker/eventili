@@ -1,4 +1,68 @@
 {% extends 'baseAdmin.html.twig'%}
 {% block content %}
-    <div class=""
+    <a class="btn btn-dark m-2" href="{{ path('app_reclamation_admin_index') }}"><i class="fas fa-arrow-left"></i>
+    </a>
+    <div class="card container-fluid" style="height: 75vh;">
+        <div class="card-body row gap-5">
+            <div class="card col-md-5">
+                <div class="card-header align-items-center text-center">
+                    <h5>{{ reclamation.titre }}</h5>
+                </div>
+                <div class="card-body overflow-auto" style="max-height: 25em;">
+                    <div class="bg-secondary text-white mb-2" style="width: 35%; padding: 2%; padding-left: 8%; border-radius: 16px;margin-left: 2%">{{ reclamation.description }}</div>
+
+                    {% for reponse in reps %}
+                        {% if reponse.senderid.idPers == uid %}
+                            <div class="text-white row mb-2" style="background-color: #0b5ed7; width: 35%; padding: 2%; padding-left: 8%; border-radius: 16px;margin-left: 65%">
+                                {{ reponse.message }}
+                            </div>
+                        {% else %}
+                            <div class="bg-secondary text-white row mb-2" style="width: 35%; padding: 2%; padding-left: 8%; border-radius: 16px;margin-left: 2%">{{ reponse.message }}</div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="card-footer bg-white">
+                    {% if reclamation.status == "cloturer" %}
+                        <form method="post" class="row gap-1">
+                            <input type="text" class="form-control disabled w-75" style="width: 75%" disabled/>
+                            <button class="btn btn-outline-success col w-25 disabled">Send</button>
+                        </form>
+                    {% else %}
+                        {{ form_start(form) }}
+                        {{ form_widget(form._token) }}
+                        {{ form_row(form.message) }}
+                        <button class="btn btn-outline-success col w-25">Envoyé</button>
+                        {{ form_end(form) }}
+
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="card row"  style="height: 25%;">
+                    <div class="card-body text-center ">
+                        <h6>Nom : {{ reclamation.userid.nomPers }}</h6>
+                        <h6>Prenom : {{ reclamation.userid.prenomPers }}</h6>
+                        <h6>Date : {{ date }}</h6>
+                    </div>
+                </div>
+                <div class="card row">
+                    <div class="card-body d-flex flex-row gap-1 justify-content-center">
+                        <form method="post" action="{{ path('app_reclamation_delete', {'idRec': reclamation.idRec}) }}" onsubmit="return confirm('Confirmer vous la supression de l\'element');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ reclamation.idRec) }}">
+                            <button class ="btn btn-outline-danger">Supprimer</button>
+                        </form>
+                        <a href="{{ path('app_reclamation_modifier', {'idRec': reclamation.idRec}) }}" class="btn btn-outline-warning">Modifier</a>
+                        {% if reclamation.status == "cloturer" %}
+                            <button disabled class="btn btn-outline-secondary" >Cloturer</button>
+                        {% else %}
+                            <form method="post" action="{{ path('app_reclamation_cloturer', {'idRec': reclamation.idRec}) }}">
+                                <input type="hidden" name="_token" value="{{ csrf_token('cloturer' ~ reclamation.idRec) }}" />
+                                <button class="btn btn-outline-secondary">Cloturé</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
