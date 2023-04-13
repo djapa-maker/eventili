@@ -16,8 +16,18 @@
                     {{ form_row(form.titre, {'attr': {'class': 'form form-control form-text'}}) }}
                 </div>
                 <div class="card-body">
-                        {{ form_row(form.description, {'attr': {'class': 'text-white row mb-2 bg-secondary','style': 'border:0;width: 35%; padding: 2%; padding-left: 8%; border-radius: 16px;margin-left: 2%'}}) }}
                     <small style="margin-left: 2%;">ce champs est modifiable</small>
+                        {{ form_row(form.description, {'attr': {'class': 'text-white row mb-2 bg-secondary','style': 'border:0;width: 35%; padding: 2%; padding-left: 8%; border-radius: 16px;margin-left: 2%'}}) }}
+
+                    {% for reponse in reps %}
+                        {% if reponse.senderid.idPers == uid %}
+                            <a href="#"><div class="text-white row mb-2" style="background-color: #0b5ed7; width: 35%; padding: 2%; padding-left: 8%; border-radius: 16px;margin-left: 65%">
+                                    {{ reponse.message }}
+                                </div></a>
+                        {% else %}
+                            <a href="#"><div class="bg-secondary text-white row mb-2" style="width: 35%; padding: 2%; padding-left: 8%; border-radius: 16px;margin-left: 2%">{{ reponse.message }}</div></a>
+                        {% endif %}
+                    {% endfor %}
                 </div>
                 <div class="card-footer bg-white">
                     <div class="row gap-1">

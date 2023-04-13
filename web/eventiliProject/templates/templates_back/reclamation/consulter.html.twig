@@ -13,11 +13,11 @@
 
                     {% for reponse in reps %}
                         {% if reponse.senderid.idPers == uid %}
-                            <div class="text-white row mb-2" style="background-color: #0b5ed7; width: 35%; padding: 2%; padding-left: 8%; border-radius: 16px;margin-left: 65%">
+                            <a href="{{ path('app_reclamation_modifierMessage', {'idRep': reponse.idRep}) }}"><div class="text-white row mb-2" style="background-color: #0b5ed7; width: 35%; padding: 2%; padding-left: 8%; border-radius: 16px;margin-left: 65%">
                                 {{ reponse.message }}
-                            </div>
+                            </div></a>
                         {% else %}
-                            <div class="bg-secondary text-white row mb-2" style="width: 35%; padding: 2%; padding-left: 8%; border-radius: 16px;margin-left: 2%">{{ reponse.message }}</div>
+                            <a href="{{ path('app_reclamation_modifierMessage', {'idRep': reponse.idRep}) }}"><div class="bg-secondary text-white row mb-2" style="width: 35%; padding: 2%; padding-left: 8%; border-radius: 16px;margin-left: 2%">{{ reponse.message }}</div></a>
                         {% endif %}
                     {% endfor %}
                 </div>
@@ -25,7 +25,7 @@
                     {% if reclamation.status == "cloturer" %}
                     <form method="post" class="row gap-1">
                         <input type="text" class="form-control disabled w-75" style="width: 75%" disabled/>
-                        <button class="btn btn-outline-success col w-25 disabled">Send</button>
+                        <button class="btn btn-outline-success col w-25 disabled">Envoyé</button>
                     </form>
                     {% else %}
                         {{ form_start(form) }}
@@ -53,9 +53,9 @@
                     </form>
                     <a href="{{ path('app_reclamation_modifier', {'idRec': reclamation.idRec}) }}" class="btn btn-outline-warning">Modifier</a>
                     {% if reclamation.status == "cloturer" %}
-                        <button disabled class="btn btn-outline-secondary" >Cloturer</button>
+                        <button disabled class="btn btn-outline-secondary" >La Réclamation est Cloturé</button>
                     {% else %}
-                    <form method="post" action="{{ path('app_reclamation_cloturer', {'idRec': reclamation.idRec}) }}">
+                    <form method="post" action="{{ path('app_reclamation_user_cloturer', {'idRec': reclamation.idRec}) }}">
                         <input type="hidden" name="_token" value="{{ csrf_token('cloturer' ~ reclamation.idRec) }}" />
                         <button class="btn btn-outline-secondary">Cloturé</button>
                     </form>

@@ -1,6 +1,6 @@
-{% extends 'baseAdmin.html.twig'%}
+{% extends 'baseFront.html.twig'%}
 {% block content %}
-    <a class="btn btn-dark m-2" href="{{ path('app_reclamation_admin_index') }}"><i class="fas fa-arrow-left"></i>
+    <a class="btn btn-dark m-2" href="{{ path('app_reclamation_user_index') }}"><i class="fas fa-arrow-left"></i>
     </a>
     <div class="card container-fluid" style="height: 75vh;">
         <div class="card-body row gap-5">
@@ -9,13 +9,22 @@
                     <h5>{{ reclamation.titre }}</h5>
                 </div>
                 <div class="card-body overflow-auto" style="max-height: 25em;">
-                    <div class="bg-secondary text-white mb-2" style="width: 35%; padding: 2%; padding-left: 8%; border-radius: 16px;margin-left: 2%">{{ reclamation.description }}</div>
+                    <div class="text-white row mb-2" style="background-color: #0b5ed7; width: 35%; padding: 2%; padding-left: 8%; border-radius: 16px;margin-left: 65%">
+                        {{ reclamation.description }}</div>
 
                     {% for reponse in reps %}
                         {% if reponse.senderid.idPers == uid %}
-                            <div class="text-white row mb-2" style="background-color: #0b5ed7; width: 35%; padding: 2%; padding-left: 8%; border-radius: 16px;margin-left: 65%">
+                            {% if reponse.rec.status != "cloturer" %}
+                            <a href="{{ path('app_reclamation_modifierMessage_user',{'idRep': reponse.idRep }) }}"><div class="text-white row mb-2" style="background-color: #0b5ed7; width: 35%; padding: 2%; padding-left: 8%; border-radius: 16px;margin-left: 65%">
                                 {{ reponse.message }}
                             </div>
+                            </a>
+                                {% else %}
+                                    <div class="text-white row mb-2" style="background-color: #0b5ed7; width: 35%; padding: 2%; padding-left: 8%; border-radius: 16px;margin-left: 65%">
+                                            {{ reponse.message }}
+                                        </div>
+
+                            {% endif %}
                         {% else %}
                             <div class="bg-secondary text-white row mb-2" style="width: 35%; padding: 2%; padding-left: 8%; border-radius: 16px;margin-left: 2%">{{ reponse.message }}</div>
                         {% endif %}
@@ -33,7 +42,7 @@
                         {{ form_row(form.message) }}
                         <button class="btn btn-outline-success col w-25">Envoyé</button>
                         {{ form_end(form) }}
-
+                        <small>Cliqué sur le message a modifier / Supprimé</small>
                     {% endif %}
                 </div>
             </div>
@@ -47,17 +56,12 @@
                 </div>
                 <div class="card row">
                     <div class="card-body d-flex flex-row gap-1 justify-content-center">
-                        <form method="post" action="{{ path('app_reclamation_delete', {'idRec': reclamation.idRec}) }}" onsubmit="return confirm('Confirmer vous la supression de l\'element');">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ reclamation.idRec) }}">
-                            <button class ="btn btn-outline-danger">Supprimer</button>
-                        </form>
-                        <a href="{{ path('app_reclamation_modifier', {'idRec': reclamation.idRec}) }}" class="btn btn-outline-warning">Modifier</a>
-                        {% if reclamation.status == "cloturer" %}
-                            <button disabled class="btn btn-outline-secondary" >Cloturer</button>
+                         {% if reclamation.status == "cloturer" %}
+                            <button disabled class="btn btn-outline-secondary" >Probleme Réglé</button>
                         {% else %}
-                            <form method="post" action="{{ path('app_reclamation_cloturer', {'idRec': reclamation.idRec}) }}">
+                            <form method="post" action="{{ path('app_reclamation_user_cloturer', {'idRec': reclamation.idRec}) }}">
                                 <input type="hidden" name="_token" value="{{ csrf_token('cloturer' ~ reclamation.idRec) }}" />
-                                <button class="btn btn-outline-secondary">Cloturé</button>
+                                <button class="btn btn-outline-secondary">Probleme Réglé</button>
                             </form>
                         {% endif %}
                     </div>

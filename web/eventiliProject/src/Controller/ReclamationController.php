@@ -6,6 +6,7 @@ use App\Entity\Reclamation;
 use App\Entity\Reponse;
 use App\Form\ReclamationAjouterType;
 use App\Form\ReclamationType;
+use App\Form\ReponseModifierType;
 use App\Form\ReponseType;
 use App\Repository\ImagePersRepository;
 use App\Repository\PersonneRepository;
@@ -93,7 +94,8 @@ class ReclamationController extends AbstractController
         return $this->render('templates_front/reclamation/index.html.twig',[
             'personne' => $personne,
             'last'=> $last,
-            'reclamations' => $reclamationss
+            'reclamations' => $reclamationss,
+            'uid' => $idPerss
         ]);
     }
     #[Route('/ajouter', name: 'app_reclamation_ajouter', methods: ['GET', 'POST'])]
@@ -157,7 +159,7 @@ class ReclamationController extends AbstractController
             $repRepo->save($Message, true);
             $idRec->setStatus("EnAttenteRepAdmin");
             $recRepo->save($idRec,true);
-            return $this->redirectToRoute('app_reclamation_admin_consulter', ['idRec' => $idRec->getIdRec()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_reclamation_user_consulter', ['idRec' => $idRec->getIdRec()], Response::HTTP_SEE_OTHER);
         }
         $view = $form->createView();
         return $this->render('templates_front/reclamation/consulter.html.twig',[
@@ -216,12 +218,12 @@ class ReclamationController extends AbstractController
         ]);
     }
     #[Route('/modifier/{idRec}', name: 'app_reclamation_modifier', methods: ['GET', 'POST'])]
-    public function modifier(Reclamation $idRec,request $request,SessionInterface $session,ImagePersRepository $imagePersRepository,ReclamationRepository $reclamationRepository){
+    public function modifier(Reclamation $idRec,request $request,SessionInterface $session,ImagePersRepository $imagePersRepository,ReclamationRepository $reclamationRepository,ReponseRepository $repRepo){
         $personne=$session->get('id');
         $idPerss = $session->get('personne');
         $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
         $images = array_reverse($images);
-
+        $reps = $repRepo->findBy(['rec' => $idRec]);
         if(!empty($images)){
             $i= $images[0];
             $last=$i->getLast();
@@ -242,7 +244,9 @@ class ReclamationController extends AbstractController
             'personne' => $personne,
             'last'=> $last,
             'reclamation' => $idRec,
-            'form' => $view
+            'form' => $view,
+            'reps' => $reps,
+            'uid' => $idPerss
         ]);
     }
     #[Route('/cloturer/{idRec}', name: 'app_reclamation_cloturer', methods: ['POST'])]
@@ -260,6 +264,21 @@ class ReclamationController extends AbstractController
 
         return $this->redirectToRoute('app_reclamation_admin_index', [], Response::HTTP_SEE_OTHER);
     }
+    #[Route('/user/cloturer/{idRec}', name: 'app_reclamation_user_cloturer', methods: ['POST'])]
+    public function cloturerU(Request $request, Reclamation $reclamation,SessionInterface $session, ReclamationRepository $reclamationRepository): Response{
+        $session->getFlashBag()->clear();
+        if ($this->isCsrfTokenValid('cloturer'.$reclamation->getIdRec(), $request->request->get('_token'))) {
+            try{
+                $reclamation->setStatus("cloturer");
+                $reclamationRepository->save($reclamation,true);
+                $this->addFlash('success', 'Réclamation a été cloturé avec success');
+            } catch (\Exception $e){
+                $this->addFlash('error', 'Erreur lors de la cloturation de la reclamation');
+            }
+        }
+
+        return $this->redirectToRoute('app_reclamation_user_consulter', ['idRec' => $reclamation->getIdRec()], Response::HTTP_SEE_OTHER);
+    }
     #[Route('/supprimer/{idRec}', name: 'app_reclamation_delete', methods: ['POST'])]
     public function delete(Request $request, Reclamation $reclamation, ReclamationRepository $reclamationRepository): Response
     {
@@ -273,5 +292,93 @@ class ReclamationController extends AbstractController
         }
 
         return $this->redirectToRoute('app_reclamation_admin_index', [], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('/user/reponse/supprimer/{idRep}', name: 'app_reclamation_user_deleteRep', methods: ['POST'])]
+    public function deleteRepU(Request $request, Reponse $rep, ReponseRepository $repRepo): Response
+    {
+        $idRec = $rep->getRec();
+        if ($this->isCsrfTokenValid('delete'.$rep->getIdRep(), $request->request->get('_token'))) {
+            $repRepo->remove($rep, true);
+        }
+
+        return $this->redirectToRoute('app_reclamation_user_consulter', ['idRec'=> $idRec->getIdRec()], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('/admin/reponse/supprimer/{idRep}', name: 'app_reclamation_admin_deleteRep', methods: ['POST'])]
+    public function deleteRepA(Request $request, Reponse $rep, ReponseRepository $repRepo): Response
+    {
+        $idRec = $rep->getRec();
+        if ($this->isCsrfTokenValid('delete'.$rep->getIdRep(), $request->request->get('_token'))) {
+            $repRepo->remove($rep, true);
+        }
+
+        return $this->redirectToRoute('app_reclamation_admin_consulter', ['idRec'=> $idRec->getIdRec()], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('/admin/modifierMessage/{idRep}', name: 'app_reclamation_modifierMessage', methods: ['GET','POST'])]
+    public function editM(Reponse $idRep,request $request,SessionInterface $session,ImagePersRepository $imagePersRepository, ReponseRepository $repRepo, ReclamationRepository $recRepo) : Response{
+        $personne=$session->get('id');
+        $idPerss = $session->get('personne');
+        $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
+        $images = array_reverse($images);
+
+        if(!empty($images)){
+            $i= $images[0];
+            $last=$i->getLast();
+        }
+        else{
+            $last="account (1).png";
+        }
+        $session->set('last', $last);
+        $last=$session->get('last');
+        $form = $this->createForm(ReponseModifierType::class, $idRep,[
+            'sender' => (string) $idRep->getSenderid()->getIdPers(),
+            'rec' => (string) $idRep->getRec()->getIdRec(),
+            'mess'=> $idRep->getMessage()
+        ]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $repRepo->save($idRep, true);
+            return $this->redirectToRoute('app_reclamation_admin_consulter', ['idRec' => $idRep->getRec()->getIdRec()], Response::HTTP_SEE_OTHER);
+        }
+        $view = $form->createView();
+        return $this->render('templates_back/reclamation/modifierRep.html.twig',[
+            'personne' => $personne,
+            'last'=> $last,
+            'form' => $view,
+            'rep' => $idRep
+        ]);
+    }
+    #[Route('/user/modifierMessage/{idRep}', name: 'app_reclamation_modifierMessage_user', methods: ['GET','POST'])]
+    public function editMe(Reponse $idRep,request $request,SessionInterface $session,ImagePersRepository $imagePersRepository, ReponseRepository $repRepo, ReclamationRepository $recRepo) : Response{
+        $personne=$session->get('id');
+        $idPerss = $session->get('personne');
+        $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
+        $images = array_reverse($images);
+
+        if(!empty($images)){
+            $i= $images[0];
+            $last=$i->getLast();
+        }
+        else{
+            $last="account (1).png";
+        }
+        $session->set('last', $last);
+        $last=$session->get('last');
+        $form = $this->createForm(ReponseModifierType::class, $idRep,[
+            'sender' => (string) $idRep->getSenderid()->getIdPers(),
+            'rec' => (string) $idRep->getRec()->getIdRec(),
+            'mess'=> $idRep->getMessage()
+        ]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $repRepo->save($idRep, true);
+            return $this->redirectToRoute('app_reclamation_user_consulter', ['idRec' => $idRep->getRec()->getIdRec()], Response::HTTP_SEE_OTHER);
+        }
+        $view = $form->createView();
+        return $this->render('templates_front/reclamation/modifierRep.html.twig',[
+            'personne' => $personne,
+            'last'=> $last,
+            'form' => $view,
+            'rep' => $idRep
+        ]);
     }
 }
