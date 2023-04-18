@@ -31,6 +31,15 @@ class PersonneRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+ public function update(Personne $entity, bool $flush = false): void
+    {
+        $unitOfWork = $this->getEntityManager()->getUnitOfWork();
+        $unitOfWork->merge($entity);
+    
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
     public function modifyPersonne(int $idPers, Personne $personne): void
 {
     $entityManager = $this->getEntityManager();

@@ -32,11 +32,20 @@ class ImagepersController extends AbstractController
         $last=$session->get('last');
         $personne=$session->get('id'); 
         $idPerss = $session->get('personne'); 
-        return $this->render('templates_back/imagepers/index.html.twig', [
-            'imagepers' => $imagePersRepository->findAll(),
-            'last'=>$last,
-            'personne'=>$personne
-        ]);
+        if (!$personne) {
+            return $this->redirectToRoute('app_personne_accueil', [], Response::HTTP_SEE_OTHER);
+        }else{
+        if($personne->getRole()=="admin"){
+            return $this->render('templates_back/imagepers/index.html.twig', [
+                'imagepers' => $imagePersRepository->findAll(),
+                'last'=>$last,
+                'personne'=>$personne
+            ]);
+        }
+        else{
+            return $this->redirectToRoute('app_personne_accueil', [], Response::HTTP_SEE_OTHER);
+        }
+    }
     }
     #[Route('add', name: 'app_imagepers_add', methods: ['GET', 'POST'])]
     public function add(Request $request, ImagePersRepository $imagePersRepository, SessionInterface $session, EntityManagerInterface $entityManager): Response
@@ -72,13 +81,23 @@ $file=$request->files->get('image');
             return $this->redirectToRoute('app_imagepers_affich', [], Response::HTTP_SEE_OTHER);
         }
             
-        
+        if (!$personne) {
+            return $this->redirectToRoute('app_personne_accueil', [], Response::HTTP_SEE_OTHER);
+        }
+        else{
+            if($personne->getRole()=="organisateur" ||$personne->getRole()=="partenaire"){
+                return $this->render('templates_front/imagepers/signinimage.html.twig', [
+                    'imageper' => $imageper,
+                ]);
+            }
+            else {
+                return $this->redirectToRoute('app_personne_index', [], Response::HTTP_SEE_OTHER);
+            }
+        }
 
-        return $this->render('templates_front/imagepers/signinimage.html.twig', [
-            'imageper' => $imageper,
-        ]);
+       
     }
-
+    
     #[Route('modifier', name: 'app_imagepers_modifier', methods: ['GET', 'POST'])]
     public function modifier(Request $request, ImagePersRepository $imagePersRepository, SessionInterface $session, EntityManagerInterface $entityManager): Response
     {       $idPerss = $session->get('personne');
@@ -97,7 +116,8 @@ $file=$request->files->get('image');
             
             
             if (!$personne) {
-                throw $this->createNotFoundException('Personne not found');
+                return $this->redirectToRoute('app_personne_accueil', [], Response::HTTP_SEE_OTHER);
+        
             }
     
             $file = $request->files->get('filepond');
@@ -115,10 +135,18 @@ $file=$request->files->get('image');
                 return $this->redirectToRoute('app_imagepers_affich', [], Response::HTTP_SEE_OTHER);
             }
         }
-        return $this->renderForm('templates_front/imagepers/modifimage.html.twig', [
-            'personne' => $personne,
-            'last' =>$last,
-        ]);
+       
+            if($personne->getRole()=="organisateur" ||$personne->getRole()=="partenaire"){
+                return $this->renderForm('templates_front/imagepers/modifimage.html.twig', [
+                    'personne' => $personne,
+                    'last' =>$last,
+                ]);
+            }
+            else {
+                return $this->redirectToRoute('app_personne_index', [], Response::HTTP_SEE_OTHER);
+            }
+        
+        
     }
     
     #[Route('new', name: 'app_imagepers_new', methods: ['GET', 'POST'])]
@@ -192,13 +220,21 @@ $file=$request->files->get('image');
 
             return $this->redirectToRoute('app_imagepers_index', [], Response::HTTP_SEE_OTHER);
         }
-
-        return $this->renderForm('templates_back/imagepers/new.html.twig', [
-            'imageper' => $imageper,
-            'form' => $form,
-            'last'=>$last,
-            'personne'=>$personne1,
-        ]);
+        if (!$personne) {
+            return $this->redirectToRoute('app_personne_accueil', [], Response::HTTP_SEE_OTHER);
+        }else{
+        if($personne1->getRole()=="admin"){
+            return $this->renderForm('templates_back/imagepers/new.html.twig', [
+                'imageper' => $imageper,
+                'form' => $form,
+                'last'=>$last,
+                'personne'=>$personne1,
+            ]);
+        }
+        else{
+            return $this->redirectToRoute('app_personne_accueil', [], Response::HTTP_SEE_OTHER);
+        }
+    }
     }
 
     #[Route('/{idImp}', name: 'app_imagepers_show', methods: ['GET'])]
@@ -223,11 +259,22 @@ $file=$request->files->get('image');
         else{
             $last="account (1).png";
         }
-        return $this->render('templates_front/personne/profil.html.twig', [
-            'images' => $images,
-            'last' => $last,
-            'personne' => $personne,
-        ]);
+        if (!$personne) {
+            return $this->redirectToRoute('app_personne_accueil', [], Response::HTTP_SEE_OTHER);
+        }
+        else{
+        if($personne->getRole()=="organisateur" ||$personne->getRole()=="partenaire"){
+            return $this->render('templates_front/personne/profil.html.twig', [
+                'images' => $images,
+                'last' => $last,
+                'personne' => $personne,
+            ]);
+        }
+        else if($personne->getRole()=="admin"){
+            return $this->redirectToRoute('app_personne_index', [], Response::HTTP_SEE_OTHER);
+        }}
+
+       
     }
     #[Route('/{idImp}/edit', name: 'app_imagepers_edit', methods: ['GET', 'POST'])]
 public function edit(Request $request, Imagepers $imageper, ImagePersRepository $imagePersRepository): Response

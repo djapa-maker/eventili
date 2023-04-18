@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 		<meta http-equiv="x-ua-compatible" content="ie=edge"/>
 
-		<title>Huro :: S'inscrire</title>
+		<title>Inscription</title>
 		<link
 		rel="icon" type="image/png" href="../assets/img/favicon.png"/>
 
@@ -71,7 +71,7 @@
 											<li>
 												<a class="notification-item">
 													<div class="img-left">
-														<img class="user-photo" alt="" src="{{ asset('images/' ~ last) }}" data-demo-src="../assets/img/avatars/photos/7.jpg"/>
+														<img class="user-photo" alt="" src="https://via.placeholder.com/150x150" data-demo-src="../assets/img/avatars/photos/7.jpg"/>
 													</div>
 													<div class="user-content">
 														<p class="user-info">
@@ -84,7 +84,7 @@
 											<li>
 												<a class="notification-item">
 													<div class="img-left">
-														<img class="user-photo" alt="" src="{{ asset('images/' ~ last) }}" data-demo-src="../assets/img/avatars/photos/12.jpg"/>
+														<img class="user-photo" alt="" src="https://via.placeholder.com/150x150" data-demo-src="../assets/img/avatars/photos/12.jpg"/>
 													</div>
 													<div class="user-content">
 														<p class="user-info">
@@ -97,7 +97,7 @@
 											<li>
 												<a class="notification-item">
 													<div class="img-left">
-														<img class="user-photo" alt="" src="{{ asset('images/' ~ last) }}" data-demo-src="../assets/img/avatars/photos/13.jpg"/>
+														<img class="user-photo" alt="" src="https://via.placeholder.com/150x150" data-demo-src="../assets/img/avatars/photos/13.jpg"/>
 													</div>
 													<div class="user-content">
 														<p class="user-info">
@@ -110,7 +110,7 @@
 											<li>
 												<a class="notification-item">
 													<div class="img-left">
-														<img class="user-photo" alt="" src="{{ asset('images/' ~ last) }}" data-demo-src="../assets/img/avatars/photos/25.jpg"/>
+														<img class="user-photo" alt="" src="https://via.placeholder.com/150x150" data-demo-src="../assets/img/avatars/photos/25.jpg"/>
 													</div>
 													<div class="user-content">
 														<p class="user-info">
@@ -137,37 +137,64 @@
 												<img class="avatar" src="{{ asset('images/' ~ last) }}" data-demo-src="../assets/img/avatars/photos/8.jpg" alt="">
 											</div>
 											<div class="meta">
-												<span>{{personne.prenomPers}}</span>
+												<span>{{personne.nomPers}}</span>
 												<span>{{personne.role}}</span>
 											</div>
 										</div>
-										<a href="{{ path('app_imagepers_affich')}}" class="dropdown-item is-media">
+										<a href="#" class="dropdown-item is-media">
 											<div class="icon">
 												<i class="lnil lnil-user-alt"></i>
 											</div>
 											<div class="meta">
-												<span>Profil</span>
-												<span>Consulter votre profil</span>
+												<span>Profile</span>
+												<span>View your profile</span>
+											</div>
+										</a>
+										<a class="dropdown-item is-media layout-switcher">
+											<div class="icon">
+												<i class="lnil lnil-layout"></i>
+											</div>
+											<div class="meta">
+												<span>Layout</span>
+												<span>Switch to admin/webapp</span>
 											</div>
 										</a>
 										<hr class="dropdown-divider">
-										<a href="{{ path('app_personne_editprofil')}}" class="dropdown-item is-media">
+										<a href="#" class="dropdown-item is-media">
+											<div class="icon">
+												<i class="lnil lnil-briefcase"></i>
+											</div>
+											<div class="meta">
+												<span>Projects</span>
+												<span>All my projects</span>
+											</div>
+										</a>
+										<a href="#" class="dropdown-item is-media">
+											<div class="icon">
+												<i class="lnil lnil-users-alt"></i>
+											</div>
+											<div class="meta">
+												<span>Team</span>
+												<span>Manage your team</span>
+											</div>
+										</a>
+										<hr class="dropdown-divider">
+										<a href="#" class="dropdown-item is-media">
 											<div class="icon">
 												<i class="lnil lnil-cog"></i>
 											</div>
 											<div class="meta">
-												<span>Réglages</span>
-												<span>Réglages du compte</span>
+												<span>Settings</span>
+												<span>Account settings</span>
 											</div>
 										</a>
 										<hr class="dropdown-divider">
 										<div class="dropdown-item is-button">
-											<button onclick="window.location.href = '{{ path('app_personne_deconnection') }}';" class="button h-button is-primary is-raised is-fullwidth logout-button">
-
+											<button class="button h-button is-primary is-raised is-fullwidth logout-button">
 												<span class="icon is-small">
 													<i data-feather="log-out"></i>
 												</span>
-												<span>Se déconnecter</span>
+												<span>Logout</span>
 											</button>
 										</div>
 									</div>
@@ -297,26 +324,10 @@
 					</ul>
 
 					<!-- User account -->
-					<ul
-						class="bottom-menu">
+					<ul class="bottom-menu">
 						<!-- Notifications -->
-						<li class="right-panel-trigger" data-panel="search-panel">
-							<a href="javascript:void(0);" id="open-search" data-content="Search">
-								<i class="sidebar-svg" data-feather="search"></i>
-							</a>
-							<a href="javascript:void(0);" id="close-search" class="is-hidden is-inactive">
-								<i class="sidebar-svg" data-feather="x"></i>
-							</a>
-						</li>
-						<!-- Wallet -->
-						<li>
-							<a href="/admin-profile-settings.html" id="open-settings" data-content="Settings">
-								<i class="sidebar-svg" data-feather="settings"></i>
-							</a>
-						</li>
 						<!-- Profile -->
-						<li id="user-menu">
-							<div id="profile-menu" class="dropdown profile-dropdown dropdown-trigger is-spaced is-up">
+							<li id="user-menu"> <div id="profile-menu" class="dropdown profile-dropdown dropdown-trigger is-spaced is-up">
 								<img src="{{ asset('images/' ~ last) }}" data-demo-src="../assets/img/avatars/photos/8.jpg" alt="">
 								<span class="status-indicator"></span>
 
@@ -327,7 +338,7 @@
 												<img class="avatar" src="{{ asset('images/' ~ last) }}" data-demo-src="../assets/img/avatars/photos/8.jpg" alt="">
 											</div>
 											<div class="meta">
-												<span>{{personne.prenomPers}}</span>
+												<span>{{personne.nomPers}}</span>
 												<span>{{personne.role}}</span>
 											</div>
 										</div>
@@ -504,7 +515,7 @@
 								<div class="team-card">
 									<div class="h-avatar">
 										<img class="avatar" src="{{ asset('images/' ~ last) }}" data-demo-src="../assets/img/avatars/photos/12.jpg" alt="">
-										<img class="badge" src="{{ asset('images/' ~ last) }}" data-demo-src="../assets/img/icons/flags/united-states-of-america.svg" alt="">
+										<img class="badge" src="https://via.placeholder.com/150x150" data-demo-src="../assets/img/icons/flags/united-states-of-america.svg" alt="">
 									</div>
 									<div class="meta">
 										<span>Joshua S.</span>
@@ -522,7 +533,7 @@
 								<div class="team-card">
 									<div class="h-avatar">
 										<img class="avatar" src="{{ asset('images/' ~ last) }}" data-demo-src="../assets/img/avatars/photos/25.jpg" alt="">
-										<img class="badge" src="{{ asset('images/' ~ last) }}" data-demo-src="../assets/img/icons/flags/united-states-of-america.svg" alt="">
+										<img class="badge" src="https://via.placeholder.com/150x150" data-demo-src="../assets/img/icons/flags/united-states-of-america.svg" alt="">
 									</div>
 									<div class="meta">
 										<span>Melany W.</span>
@@ -540,7 +551,7 @@
 								<div class="team-card">
 									<div class="h-avatar">
 										<img class="avatar" src="{{ asset('images/' ~ last) }}" data-demo-src="../assets/img/avatars/photos/18.jpg" alt="">
-										<img class="badge" src="{{ asset('images/' ~ last) }}" data-demo-src="../assets/img/icons/flags/united-states-of-america.svg" alt="">
+										<img class="badge" src="https://via.placeholder.com/150x150" data-demo-src="../assets/img/icons/flags/united-states-of-america.svg" alt="">
 									</div>
 									<div class="meta">
 										<span>Esteban C.</span>
@@ -558,7 +569,7 @@
 								<div class="team-card">
 									<div class="h-avatar">
 										<img class="avatar" src="{{ asset('images/' ~ last) }}" data-demo-src="../assets/img/avatars/photos/13.jpg" alt="">
-										<img class="badge" src="{{ asset('images/' ~ last) }}" data-demo-src="../assets/img/icons/flags/united-states-of-america.svg" alt="">
+										<img class="badge" src="https://via.placeholder.com/150x150" data-demo-src="../assets/img/icons/flags/united-states-of-america.svg" alt="">
 									</div>
 									<div class="meta">
 										<span>Tara S.</span>
@@ -578,7 +589,7 @@
 								<!--Project-->
 								<div class="project-card">
 									<div class="project-inner">
-										<img class="project-avatar" src="{{ asset('images/' ~ last) }}" data-demo-src="../assets/img/icons/logos/slicer.svg" alt="">
+										<img class="project-avatar" src="https://via.placeholder.com/150x150" data-demo-src="../assets/img/icons/logos/slicer.svg" alt="">
 										<div class="meta">
 											<span>The slicer project</span>
 											<span>getslicer.io</span>
@@ -610,7 +621,7 @@
 							<!--Project-->
 							<div class="project-card">
 								<div class="project-inner">
-									<img class="project-avatar" src="{{ asset('images/' ~ last) }}" data-demo-src="../assets/img/icons/logos/metamovies.svg" alt="">
+									<img class="project-avatar" src="https://via.placeholder.com/150x150" data-demo-src="../assets/img/icons/logos/metamovies.svg" alt="">
 									<div class="meta">
 										<span>Metamovies reworked</span>
 										<span>metamovies.co</span>
@@ -639,7 +650,7 @@
 						<!--Project-->
 						<div class="project-card">
 							<div class="project-inner">
-								<img class="project-avatar" src="{{ asset('images/' ~ last) }}" data-demo-src="../assets/img/icons/logos/fastpizza.svg" alt="">
+								<img class="project-avatar" src="https://via.placeholder.com/150x150" data-demo-src="../assets/img/icons/logos/fastpizza.svg" alt="">
 								<div class="meta">
 									<span>Fast Pizza redesign</span>
 									<span>fastpizza.com</span>
@@ -1336,7 +1347,7 @@
 								<li>
 									<a class="notification-item">
 										<div class="img-left">
-											<img class="user-photo" alt="" src="{{ asset('images/' ~ last) }}" data-demo-src="../assets/img/avatars/photos/7.jpg"/>
+											<img class="user-photo" alt="" src="https://via.placeholder.com/150x150" data-demo-src="../assets/img/avatars/photos/7.jpg"/>
 										</div>
 										<div class="user-content">
 											<p class="user-info">
@@ -1349,7 +1360,7 @@
 								<li>
 									<a class="notification-item">
 										<div class="img-left">
-											<img class="user-photo" alt="" src="{{ asset('images/' ~ last) }}" data-demo-src="../assets/img/avatars/photos/12.jpg"/>
+											<img class="user-photo" alt="" src="https://via.placeholder.com/150x150" data-demo-src="../assets/img/avatars/photos/12.jpg"/>
 										</div>
 										<div class="user-content">
 											<p class="user-info">
@@ -1362,7 +1373,7 @@
 								<li>
 									<a class="notification-item">
 										<div class="img-left">
-											<img class="user-photo" alt="" src="{{ asset('images/' ~ last) }}" data-demo-src="../assets/img/avatars/photos/13.jpg"/>
+											<img class="user-photo" alt="" src="https://via.placeholder.com/150x150" data-demo-src="../assets/img/avatars/photos/13.jpg"/>
 										</div>
 										<div class="user-content">
 											<p class="user-info">
@@ -1375,7 +1386,7 @@
 								<li>
 									<a class="notification-item">
 										<div class="img-left">
-											<img class="user-photo" alt="" src="{{ asset('images/' ~ last) }}" data-demo-src="../assets/img/avatars/photos/25.jpg"/>
+											<img class="user-photo" alt="" src="https://via.placeholder.com/150x150" data-demo-src="../assets/img/avatars/photos/25.jpg"/>
 										</div>
 										<div class="user-content">
 											<p class="user-info">
@@ -1446,82 +1457,105 @@
 
 				<!--Form-->
 				<div class="column is-8">
-					<div class="account-box is-form is-footerless"></form>
-					<form method="POST" action="{{ path('app_imagepers_modifier') }}" enctype="multipart/form-data">
-						<div class="form-head stuck-header">
-							<div class="form-head-inner">
-								<div class="left">
-									<h3>Info Générale</h3>
-									<p>Saisissez vos informations Personnelles</p>
-								</div>
-								<div class="right">
-									<div class="buttons">
+					<div class="account-box is-form is-footerless">
 
-										<a href="{{ path('app_personne_editprofil')}}" class="button h-button is-light is-dark-outlined">
-											<span class="icon">
-												<i class="lnir lnir-arrow-left rem-100"></i>
-											</span>
-											<span>Retour</span>
-										</a>
-                                        <a href="{{ path('app_imagepers_affich')}}" style="background-color: #ff6e20;" class="button h-button is-primary is-raised">Ignorer</a>
+						<form method="POST" id="my_form" action="{{ path('app_personne_change') }}">
+							<div class="form-head stuck-header">
+								<div class="form-head-inner">
+									<div class="left">
+										<h3>Info Générale</h3>
+										<p>Saisissez vos informations Personnelles</p>
+									</div>
+                                    	
+									<div class="right">
+										<div class="buttons">
+
+											<a href="{{ path('app_imagepers_affich')}}" class="button h-button is-light is-dark-outlined">
+												<span class="icon">
+													<i class="lnir lnir-arrow-left rem-100"></i>
+												</span>
+												<span>Retour</span>
+											</a>
+											<a href="{{ path('app_imagepers_modifier')}}" style="background-color: #ff6e20;" class="button h-button is-primary is-raised">Ignorer</a>
 											
-										
+											<button id="save-button" type="submit" class="button h-button is-primary is-raised">{{ button_label|default('Suivant') }}</button>
+
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div
-							class="form-body">
-							<!--Fieldset-->
-							<div class="fieldset">
-								<div style="text-align: center;" class="fieldset-heading">
-									<h4>photo de profil</h4>
-								</div>
 
-								{#----#}
-								<div class="container">
-									<figure class="image-container">
-                                    <div class="h-avatar profile-h-avatar ">
-										<img  style="margin-left: 121px; width: 50%;" id="chosen-image"src="{{ asset('images/' ~ last) }}" >
+
+							<div class="form-body">
+
+								<div class="fieldset">
+									<div class="fieldset-heading">
+										<h4>Mot de passe</h4>
+										<p>Changer le mot de passe</p>
+									</div>
+
+
+									
+									<div class="column is-12">
+										<div class="field">
+											<div class="control has-icon">
+												<input id="new_password" name="new_password" type="password" class="input" placeholder="Nouveau mot de passe">
+												<div class="form-icon">
+													<i data-feather="key"></i>
+												</div>
+											</div>
+											<br>
+											<p id="error_message" style=" color: red;
+																																				    font-size: 14px;
+																																				    margin-top: 5px; "></p>
+											<!-- Élément pour afficher le message d'erreur -->
 										</div>
-                                        <figcaption id="file-name"></figcaption>
-									</figure>
-									<input name="filepond" style="display:none;" type="file" id="image" name="image">
-									<br>
-                                    <label style="background-color:#aeb8ff;border-color:#aeb8ff;color:white;font-family:'Rubik',sans-serif;position:relative;display:block;font-size:18px;text-align:center;padding:18px 0;width:200px;border-radius:5px;margin-left:138px;" for="image">
-										<i class="fas fa-upload"></i>
-										&nbsp; Choisir
-									</label>
-									<br>
-									<button style="margin-left:183px"name="submit" id="save-button" type="submit" class="button h-button is-primary is-raised">{{ button_label|default('Enregistrer') }}</button>
+									</div>
 
+
+									<br>
+
+
+									<script>
+										// Récupérer l'élément input pour le nouveau mot de passe
+var newPasswordInput = document.getElementById("new_password");
+// Récupérer l'élément pour afficher le message d'erreur
+var errorMessage = document.getElementById("error_message");
+// Récupérer le formulaire
+var form = document.getElementById("my_form");
+
+// Ajouter un écouteur d'événement sur le champ de saisie
+newPasswordInput.addEventListener("input", function () {
+var newPassword = newPasswordInput.value;
+
+// Vérifier si la longueur du mot de passe est inférieure à 8 caractères
+if (newPassword.length < 8) { // Mettre à jour le texte du message d'erreur
+errorMessage.textContent = "Le nouveau mot de passe doit contenir au moins 8 caractères.";
+} else if (!/\d/.test(newPassword) || !/[a-zA-Z]/.test(newPassword)) { // Vérifier si le mot de passe ne contient pas de chiffre ou de caractère
+errorMessage.textContent = "Le mot de passe doit contenir au moins un chiffre ou un caractère.";
+} else { // Réinitialiser le texte du message d'erreur
+errorMessage.textContent = "";
+}
+});
+
+// Ajouter un écouteur d'événement sur la soumission du formulaire
+form.addEventListener("submit", function (event) {
+var newPassword = newPasswordInput.value;
+// Vérifier si la longueur du mot de passe est inférieure à 8 caractères
+if (newPassword.length < 8 || !/\d/.test(newPassword) || !/[a-zA-Z]/.test(newPassword)) { // Empêcher la soumission du formulaire
+event.preventDefault();
+// Mettre à jour le texte du message d'erreur
+errorMessage.textContent = "Le nouveau mot de passe doit contenir au moins 8 caractères et inclure au moins un chiffre et un caractère.";
+} else { // Réinitialiser le texte du message d'erreur
+errorMessage.textContent = "";
+}
+});
+									</script>
 								</div>
-								{#----#}
-							<!--Script-->
-    <script >
-	let uploadButton = document.getElementById("image");
-let chosenImage = document.getElementById("chosen-image");
-let fileName = document.getElementById("file-name");
 
-uploadButton.onchange = () => {
-    let reader = new FileReader();
-    reader.readAsDataURL(uploadButton.files[0]);
-    reader.onload = () => {
-        chosenImage.setAttribute("src",reader.result);
-    }
-    fileName.textContent = uploadButton.files[0].name;
-}</script>
-								<!--Script-->
-								
+
 							</div>
-							<!--Fieldset-->
-
-							<div class="fieldset">
-								<div class="columns is-multiline"></div>
-							</div>
-
-
-						</div>
+						</form>
 
 					</div>
 				</div>

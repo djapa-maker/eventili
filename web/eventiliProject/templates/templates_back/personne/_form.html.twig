@@ -31,9 +31,11 @@
 		</div>
         <div style="color:#6B67E9;font-size:20px">
 			<br>
-			{{ form_widget(form.mdp, {'attr': {'class': 'form-control', 'placeholder': 'veuillez saisir votre mot de passe'}}) }}
+			<input type="password" {{ form_widget(form.mdp, {'attr': {'class': 'form-control','placeholder': 'veuillez saisir votre mot de passe'}}) }}
+			
 		</div>
 		<div style="color:red;border-color:red">
+			
 			{{ form_errors(form.mdp,{'attr': {'class': 'invalide-feedback'}}) }}
 		</div>
         <div style="color:#6B67E9;font-size:20px">
