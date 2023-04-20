@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Personne;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Form\PersonneType;
 use App\Repository\ImagePersRepository;
 use App\Repository\PersonneRepository;
@@ -13,7 +14,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGenerator;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Swift_Mailer;
+use Swift_Message;
+use Swift_SmtpTransport;
 
 #[Route('/personne')]
 class PersonneController extends AbstractController
@@ -71,20 +79,67 @@ class PersonneController extends AbstractController
     {
         return $this->render('templates_front/personne/accueil.html.twig');
     }
+    #[Route('/activation', name: 'app_personne_activation', methods: ['GET', 'POST'])]
+    public function activation(Request $request,SessionInterface $session, PersonneRepository $personneRepository): Response
+    {
+        $personne=$session->get('id'); 
+        $personne->setIs_verified(1);
+        $personneRepository->update($personne, true);
+        $warningMessage = "email vérifié avec succès";
+            return $this->renderForm('templates_front/personne/activation.html.twig', [
+                'warning_message' => $warningMessage, 
+            ]);
+    }
     #[Route('/signin', name: 'app_personne_signin', methods: ['GET', 'POST'])]
-    public function signin(Request $request, PersonneRepository $personneRepository,SessionInterface $session ): Response
+    public function signin(Request $request, Swift_Mailer $mailer, PersonneRepository $personneRepository,SessionInterface $session,TokenGeneratorInterface $tokenGenerator, UserPasswordEncoderInterface $PasswordEncoder): Response
     {
         $personne = new Personne();
         $form = $this->createForm(PersonneType::class, $personne);
         $form->handleRequest($request);
        
         if ($form->isSubmitted() && $form->isValid()) {
-            $personneRepository->save($personne, true);
+            $password = $personne->getMdp();
+            
+            $personne->setMdp($PasswordEncoder->encodePassword(
+                $personne,
+                $password
+            ));
+            
+            $token=$tokenGenerator->generateToken();
+            try{
+                $personne->setToken($token);
+                $personneRepository->save($personne, true);
+            }catch(\Exception $exception){
+                return $this->renderForm('templates_front/personne/signin.html.twig', [
+                    'personne' => $personne,
+                    'form' => $form,
+                ]);
+            }
             $session->set('id', $personne);
             $session->set('personne', $personne->getIdPers());
+            $url=$this->generateUrl('app_personne_activation',array('token'=>$token),UrlGeneratorInterface::ABSOLUTE_URL);
+          
+// Create the Transport
+$transport = (new Swift_SmtpTransport('smtp.gmail.com', 465, 'ssl'))
+    ->setUsername('yesmine.guesmi@esprit.tn')
+    ->setPassword('BACMATH2K20')
+;
+
+// Create the Mailer using your created Transport
+$mailer = new Swift_Mailer($transport);
+
+// Create a message
+$message = (new Swift_Message('Activation de Compte'))
+    ->setFrom(['yesmine.guesmi@esprit.tn' => 'Evëntili'])
+    ->setTo([$personne->getEmail()])
+    ->setBody("<p>Salut! </p>Veuillez cliquer: " . $url, 'text/html')
+;
+
+// Send the message
+$result = $mailer->send($message);
             return $this->redirectToRoute('app_imagepers_add', [], Response::HTTP_SEE_OTHER);
+
         }
-    
         return $this->renderForm('templates_front/personne/signin.html.twig', [
             'personne' => $personne,
             'form' => $form,
@@ -188,24 +243,37 @@ class PersonneController extends AbstractController
         return $this->redirectToRoute('app_personne_accueil', [], Response::HTTP_SEE_OTHER);
     }
     #[Route('/verif', name: 'app_personne_verif', methods: ['GET', 'POST'])]
-    public function verif(Request $request, PersonneRepository $personneRepository, SessionInterface $session): Response
+    public function verif(Request $request, PersonneRepository $personneRepository, SessionInterface $session, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $mdp = $request->request->get('mdp');
         $email = $request->request->get('email');
-        $personne=$personneRepository->findemm($email,$mdp);
-        if($personne!=null){
-            $session->set('id', $personne);
-            $session->set('personne', $personne->getIdPers());
-            if($personne->getRole()!="admin")
-            return $this->redirectToRoute('app_imagepers_affich', [], Response::HTTP_SEE_OTHER);
-            else
-            return $this->redirectToRoute('app_personne_index', [], Response::HTTP_SEE_OTHER);
-           
+        $personne = $personneRepository->findOneBy(['email' => $email]);
+        if(!$personne){
+            $warningMessage = "email ou  mot de passe incorrect";
+            return $this->renderForm('templates_front/personne/login.html.twig', [
+                'warning_message' => $warningMessage, 
+            ]);
         }
-        $warningMessage = "email ou  mot de passe incorrect";
-        return $this->renderForm('templates_front/personne/login.html.twig', [
-            'warning_message' => $warningMessage, 
-        ]);
+        if (!$passwordEncoder->isPasswordValid($personne, $mdp)) {
+            $warningMessage = "email ou  mot de passe incorrect";
+            return $this->renderForm('templates_front/personne/login.html.twig', [
+                'warning_message' => $warningMessage, 
+            ]);
+        }
+        if($personne->getIs_verified()==0){
+            $warningMessage = "email non vérifié";
+            return $this->renderForm('templates_front/personne/login.html.twig', [
+                'warning_message' => $warningMessage, 
+            ]);
+        }
+        $session->set('id', $personne);
+        $session->set('personne', $personne->getIdPers());
+        if($personne->getRole()!="admin")
+        return $this->redirectToRoute('app_imagepers_affich', [], Response::HTTP_SEE_OTHER);
+        else
+        return $this->redirectToRoute('app_personne_index', [], Response::HTTP_SEE_OTHER);
+       
+        
     }
     
     

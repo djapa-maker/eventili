@@ -7,11 +7,12 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PersonneRepository;
 use phpDocumentor\Reflection\Types\Self_;
 use PhpParser\Node\Name;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Mime\Message;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PersonneRepository::class)]
-class Personne
+class Personne implements UserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -79,6 +80,19 @@ class Personne
     #[ORM\Column]
     private ?String $token="";
 
+    #[ORM\Column]
+    private ?int $is_verified=0;
+
+    public function getIs_verified(): ?int
+    {
+        return $this->is_verified;
+    }
+    public function setIs_verified(int $is_verified): self
+    {
+        $this->is_verified = $is_verified;
+
+        return $this;
+    }
     public function getIdPers(): ?int
     {
         return $this->idPers;
@@ -194,7 +208,41 @@ class Personne
     {
         return (string) $this->idPers;
     }
+   
+    public function getUserIdentifier(): string
+    {
+        return $this->email; // Remplacez avec le champ qui représente l'identifiant unique de l'utilisateur
+    }
 
+    public function getRoles(): array
+    {
+        return ['ROLE_USER'];
+        // Retournez un tableau de rôles auxquels l'utilisateur appartient
+        // Par exemple : return ['ROLE_USER'];
+    }
+
+    public function getPassword(): string
+    {
+        return $this->mdp; // Remplacez avec le champ qui représente le mot de passe de l'utilisateur
+    }
+
+    public function getSalt(): ?string
+    {
+        // Vous pouvez générer et retourner une valeur de sel aléatoire ici
+        // ou retourner null si vous n'utilisez pas de sel
+        return null;
+    }
+
+    public function eraseCredentials()
+    {
+        // Vous pouvez implémenter cette méthode pour effacer toute donnée sensible de l'utilisateur,
+        // par exemple, le mot de passe en clair après l'authentification
+    }
+
+    public function getUsername(): string
+    {
+        return $this->nomPers; // Remplacez avec le champ qui représente le nom d'utilisateur de l'utilisateur
+    }
 }
 
 

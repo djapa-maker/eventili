@@ -78,7 +78,7 @@ $file=$request->files->get('image');
 
             $imagePersRepository->save($imageper, true);
 
-            return $this->redirectToRoute('app_imagepers_affich', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_personne_verif', [], Response::HTTP_SEE_OTHER);
         }
             
         if (!$personne) {
