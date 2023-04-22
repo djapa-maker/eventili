@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-
+//---------------------------------------------------------------------------------------
 use App\Entity\Avis;
 use App\Form\AvisType;
 use App\Repository\AvisRepository;
@@ -12,10 +12,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Repository\ImagePersRepository;
 use Knp\Component\Pager\PaginatorInterface;
-
+//---------------------------------------------------------------------------------------
 #[Route('/avis')]
 class AvisController extends AbstractController
 {
+//---------------------------------------------------------------------------------------    
     #[Route('/', name: 'app_avis_index', methods: ['GET'])]
     public function index( PaginatorInterface $paginator,AvisRepository $avisRepository,request $request,SessionInterface $session,ImagePersRepository $imagePersRepository): Response
     {
@@ -148,99 +149,99 @@ class AvisController extends AbstractController
         return $this->redirectToRoute('app_avis_index', [], Response::HTTP_SEE_OTHER);
     }
 //------------------------------------------------------------------------------------------------
-#[Route('/findAvisById/{idAv}', name: 'app_avis_findAvisById', methods: ['GET'])]
-public function findAvisById(AvisRepository $AvisRepository,$idAv,SessionInterface $session,ImagePersRepository $imagePersRepository): Response
-{
-    $personne=$session->get('id'); 
-        $idPerss = $session->get('personne'); 
-        $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
-        $images = array_reverse($images);
+    #[Route('/findAvisById/{idAv}', name: 'app_avis_findAvisById', methods: ['GET'])]
+    public function findAvisById(AvisRepository $AvisRepository,$idAv,SessionInterface $session,ImagePersRepository $imagePersRepository): Response
+    {
+        $personne=$session->get('id'); 
+            $idPerss = $session->get('personne'); 
+            $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
+            $images = array_reverse($images);
 
-        if(!empty($images)){
-            $i= $images[0];
-            $last=$i->getLast();
-        }
-        else{
-            $last="account (1).png";
-        }
-        $session->set('last', $last);
-        $last=$session->get('last');
-    return $this->render('templates_back/avis/index.html.twig', [
-        'avis' => $AvisRepository->findby(array('idAv'=>$idAv)),
-        'personne' => $personne,
-        'last'=> $last,
-    ]);
-} 
+            if(!empty($images)){
+                $i= $images[0];
+                $last=$i->getLast();
+            }
+            else{
+                $last="account (1).png";
+            }
+            $session->set('last', $last);
+            $last=$session->get('last');
+        return $this->render('templates_back/avis/index.html.twig', [
+            'avis' => $AvisRepository->findby(array('idAv'=>$idAv)),
+            'personne' => $personne,
+            'last'=> $last,
+        ]);
+    } 
 //------------------------------------------------------------------------------------------------
-#[Route('/findByIdSousService/{idService}', name: 'app_avis_findByIdSousService', methods: ['GET'])]
-public function findByIdSousService(AvisRepository $AvisRepository,$idService,SessionInterface $session,ImagePersRepository $imagePersRepository): Response
-{
-    $personne=$session->get('id'); 
-        $idPerss = $session->get('personne'); 
-        $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
-        $images = array_reverse($images);
+    #[Route('/findByIdSousService/{idService}', name: 'app_avis_findByIdSousService', methods: ['GET'])]
+    public function findByIdSousService(AvisRepository $AvisRepository,$idService,SessionInterface $session,ImagePersRepository $imagePersRepository): Response
+    {
+        $personne=$session->get('id'); 
+            $idPerss = $session->get('personne'); 
+            $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
+            $images = array_reverse($images);
 
-        if(!empty($images)){
-            $i= $images[0];
-            $last=$i->getLast();
-        }
-        else{
-            $last="account (1).png";
-        }
-        $session->set('last', $last);
-        $last=$session->get('last');
-    return $this->render('templates_back/avis/index.html.twig', [
-        'avis' => $AvisRepository->findby(array('idService'=>$idService)),
-        'personne' => $personne,
-        'last'=> $last,
-    ]);
-} 
+            if(!empty($images)){
+                $i= $images[0];
+                $last=$i->getLast();
+            }
+            else{
+                $last="account (1).png";
+            }
+            $session->set('last', $last);
+            $last=$session->get('last');
+        return $this->render('templates_back/avis/index.html.twig', [
+            'avis' => $AvisRepository->findby(array('idService'=>$idService)),
+            'personne' => $personne,
+            'last'=> $last,
+        ]);
+    } 
 //------------------------------------------------------------------------------------------------
-#[Route('/findByIdP/{pers}', name: 'app_avis_findByIdP', methods: ['GET'])]
-public function findByIdP(AvisRepository $AvisRepository,$pers,SessionInterface $session,ImagePersRepository $imagePersRepository): Response
-{
-    $personne=$session->get('id'); 
-        $idPerss = $session->get('personne'); 
-        $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
-        $images = array_reverse($images);
+    #[Route('/findByIdP/{pers}', name: 'app_avis_findByIdP', methods: ['GET'])]
+    public function findByIdP(AvisRepository $AvisRepository,$pers,SessionInterface $session,ImagePersRepository $imagePersRepository): Response
+    {
+        $personne=$session->get('id'); 
+            $idPerss = $session->get('personne'); 
+            $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
+            $images = array_reverse($images);
 
-        if(!empty($images)){
-            $i= $images[0];
-            $last=$i->getLast();
-        }
-        else{
-            $last="account (1).png";
-        }
-        $session->set('last', $last);
-        $last=$session->get('last');
-    return $this->render('templates_back/avis/index.html.twig', [
-        'avis' => $AvisRepository->findby(array('pers'=>$pers)),
-        'personne' => $personne,
-        'last'=> $last,
-    ]);
-}
+            if(!empty($images)){
+                $i= $images[0];
+                $last=$i->getLast();
+            }
+            else{
+                $last="account (1).png";
+            }
+            $session->set('last', $last);
+            $last=$session->get('last');
+        return $this->render('templates_back/avis/index.html.twig', [
+            'avis' => $AvisRepository->findby(array('pers'=>$pers)),
+            'personne' => $personne,
+            'last'=> $last,
+        ]);
+    }
 //------------------------------------------------------------------------------------------------
-#[Route('/getAvisByPersonName/{nom}', name: 'app_avis_getAvisByPersonName', methods: ['GET'])]
-public function getAvisByPersonName(AvisRepository $AvisRepository,$nom,SessionInterface $session,ImagePersRepository $imagePersRepository): Response
-{
-    $personne=$session->get('id'); 
-        $idPerss = $session->get('personne'); 
-        $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
-        $images = array_reverse($images);
+    #[Route('/getAvisByPersonName/{nom}', name: 'app_avis_getAvisByPersonName', methods: ['GET'])]
+    public function getAvisByPersonName(AvisRepository $AvisRepository,$nom,SessionInterface $session,ImagePersRepository $imagePersRepository): Response
+    {
+        $personne=$session->get('id'); 
+            $idPerss = $session->get('personne'); 
+            $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
+            $images = array_reverse($images);
 
-        if(!empty($images)){
-            $i= $images[0];
-            $last=$i->getLast();
-        }
-        else{
-            $last="account (1).png";
-        }
-        $session->set('last', $last);
-        $last=$session->get('last');
-    return $this->render('templates_back/avis/index.html.twig', [
-        'avis' => $AvisRepository->getAvisByPersonName($nom),
-        'personne' => $personne,
-        'last'=> $last,
-    ]);
-}
+            if(!empty($images)){
+                $i= $images[0];
+                $last=$i->getLast();
+            }
+            else{
+                $last="account (1).png";
+            }
+            $session->set('last', $last);
+            $last=$session->get('last');
+        return $this->render('templates_back/avis/index.html.twig', [
+            'avis' => $AvisRepository->getAvisByPersonName($nom),
+            'personne' => $personne,
+            'last'=> $last,
+        ]);
+    }
 }

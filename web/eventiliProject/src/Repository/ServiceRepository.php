@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Repository;
-
+//---------------------------------------------------------------------------------------
 use App\Entity\Service;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-
+//---------------------------------------------------------------------------------------
 /**
  * @extends ServiceEntityRepository<Service>
  *
@@ -14,6 +14,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Service[]    findAll()
  * @method Service[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
+//---------------------------------------------------------------------------------------
 class ServiceRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
@@ -64,4 +65,5 @@ class ServiceRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+//---------------------------------------------------------------------------------------    
 }

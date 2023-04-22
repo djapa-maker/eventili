@@ -1,15 +1,14 @@
 <?php
 
 namespace App\Repository;
-
+//---------------------------------------------------------------------------------------
 use App\Entity\Sousservice;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query\Expr\Join;
 use App\Entity\Imagess;
-
-
+//---------------------------------------------------------------------------------------
 /**
  * @extends ServiceEntityRepository<Sousservice>
  *
@@ -18,6 +17,7 @@ use App\Entity\Imagess;
  * @method Sousservice[]    findAll()
  * @method Sousservice[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
+//---------------------------------------------------------------------------------------
 class SousserviceRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
@@ -43,53 +43,50 @@ class SousserviceRepository extends ServiceEntityRepository
         }
     }
 //-----------------------------------------------------------------------------  
-/**
-    * @return Sousservice 
-    */
+    /**
+     * @return Sousservice 
+     */
     public function findOneByName($value): array
     {
         return $this->createQueryBuilder('s')
             ->where('s.nom like :n')
-            ->setParameter('n', '%'.$value.'%')
+            ->setParameter('n', '%' . $value . '%')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 //-----------------------------------------------------------------------------
-   /**
-    * @return Sousservice[] Returns an array of Service objects
-    */
+    /**
+     * @return Sousservice[] Returns an array of Service objects
+     */
     public function findListByNames($value): array
     {
         return $this->createQueryBuilder('s')
             ->where('s.nom like :n')
-            ->setParameter('n', '%'.$value.'%')
+            ->setParameter('n', '%' . $value . '%')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 //----------------------------------------------------------------------------- 
-     /**
-    * @return Sousservice[] Returns an array of Service objects
-    */
-    public function findSSByServiceIdAndName($value,$value1): array
+    /**
+     * @return Sousservice[] Returns an array of Service objects
+     */
+    public function findSSByServiceIdAndName($value, $value1): array
     {
         return $this->createQueryBuilder('s')
             ->where('s.idService = :n')
             ->andWhere('s.nom like :z')
-            ->setParameter('n',$value)
-            ->setParameter('z', '%'.$value1.'%')
+            ->setParameter('n', $value)
+            ->setParameter('z', '%' . $value1 . '%')
             ->getQuery()
-            ->getResult()
-        ;
-    }  
+            ->getResult();
+    }
 //-----------------------------------------------------------------------------
 
-     /**
-    * @return Sousservice[] Returns an array of Service objects
-    */
-    
-    public function getAllByServiceName($name):array
+    /**
+     * @return Sousservice[] Returns an array of Service objects
+     */
+
+    public function getAllByServiceName($name): array
     {
         return $this->createQueryBuilder('s')
             ->join('s.idService', 'c')
@@ -99,33 +96,30 @@ class SousserviceRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+//---------------------------------------------------------------------------------------
+    public function getSousserviceWithImagess(EntityManager $entityManager, $id)
+    {
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder->select('sousservice', 'imagess')
+            ->from('App\Entity\Sousservice', 'sousservice')
+            ->leftJoin(
+                'App\Entity\Imagess',
+                'imagess',
+                Join::WITH,
+                $queryBuilder->expr()->eq('sousservice', 'imagess.sousService')
+            )
+            ->where('sousservice.id = :id')
+            ->setParameter('id', $id);
 
-    public function getSousserviceWithImagess(EntityManager $entityManager,$id)
-{
-    $queryBuilder = $entityManager->createQueryBuilder();
-    $queryBuilder->select('sousservice', 'imagess')
-    ->from('App\Entity\Sousservice', 'sousservice')
-    ->leftJoin(
-        'App\Entity\Imagess',
-        'imagess',
-        Join::WITH,
-        $queryBuilder->expr()->eq('sousservice', 'imagess.sousService')
-    )
-    ->where('sousservice.id = :id')
-    ->setParameter('id', $id);
+        $subquery = $entityManager->createQueryBuilder();
+        $subquery->select('im')
+            ->from('App\Entity\Imagess', 'im')
+            ->where('im.sousService = sousservice.id')
+            ->getDQL();
 
-$subquery = $entityManager->createQueryBuilder();
-$subquery->select('im')
-    ->from('App\Entity\Imagess', 'im')
-    ->where('im.sousService = sousservice.id')
-    ->getDQL();
+        $queryBuilder->andWhere($queryBuilder->expr()->in('imagess.id', $subquery->getDQL()));
 
-$queryBuilder->andWhere($queryBuilder->expr()->in('imagess.id', $subquery->getDQL()));
-
-$query = $queryBuilder->getQuery();
-$result = $query->getResult();
-
-}
-
-    
+        $query = $queryBuilder->getQuery();
+        $result = $query->getResult();
+    }
 }

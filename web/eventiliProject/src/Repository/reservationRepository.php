@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Repository;
-
+//---------------------------------------------------------------------------------------
 use App\Entity\Reservation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-
+//---------------------------------------------------------------------------------------
 /**
  * @extends ServiceEntityRepository<Reservation>
  *
@@ -20,7 +20,7 @@ class reservationRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Reservation::class);
     }
-
+//---------------------------------------------------------------------------------------
     public function save(Reservation $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -29,7 +29,7 @@ class reservationRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
+//---------------------------------------------------------------------------------------
     public function remove(Reservation $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
@@ -38,7 +38,7 @@ class reservationRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
+//---------------------------------------------------------------------------------------
 //    /**
 //     * @return Reservation[] Returns an array of Reservation objects
 //     */
@@ -53,7 +53,7 @@ class reservationRepository extends ServiceEntityRepository
 //            ->getResult()
 //        ;
 //    }
-
+//---------------------------------------------------------------------------------------
 //    public function findOneBySomeField($value): ?Reservation
 //    {
 //        return $this->createQueryBuilder('r')

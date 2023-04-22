@@ -1,13 +1,13 @@
 {% extends 'baseAdmin.html.twig'%}
-
+{# ------------------------------------------------------------------------------------------- #}
 {% block content %}
 	<div
 		class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
 		{# -------------------------------------------------------------------------- #}
 		<div style="color:#758afd;font-size:25px;font-style:bold">Service</div>
-		<div class="search-bar flex-grow-1" style="margin-left:20%;">
-			<div class="position-relative search-bar-box">
-				<form id="annuite_form" class="form" action="{{ path('app_service_index') }}" enctype="multipart/form-data" method="GET">
+		<div class="search-bar flex-grow-1" style="margin-left:33%;">
+			<div id="search-input" class="position-relative search-bar-box">
+				<form class="form" action="{{ path('app_service_index') }}" enctype="multipart/form-data" method="GET">
 					<input type="text" name="search" style="border-radius:20px;border: 2px solid #aeb8ff  " class="form-control search-control" id="placeholder1" placeholder="Rechercher...">
 				</form>
 				<span class="position-absolute top-50 search-show translate-middle-y">
@@ -31,73 +31,105 @@
 		</div>
 	</div>
 	{# -------------------------------------------------------------------------- #}
-	<div class="card">
-		<div class="card-body">
-			<div
-				class="table-responsive">
-				{# -------------------------------------------------------------------------- #}
-				<table
-					id="example" class="table table-bordered" style="
-						width:100%;
-						border-color:#aeb8ff;
-						border-radius:30px">
-					{# -------------------------------------------------------------------------- #}
-					<thead>
-						<tr style="color:#27187f">
-							<th>Nom du service</th>
-							<th>Action</th>
-						</tr>
-					</thead>
-					{# -------------------------------------------------------------------------- #}
-					<tbody>
-						{% for service in services %}
-							<tr style="color:#27187f">
-								<td>{{service.nom}}</td>
-								<td>
-									<div style="display: flex; align-items: center;">
-										{{ include('templates_back/service/_delete_form.html.twig') }}
-										<a  href="{{ path('app_service_edit',{'idService':service.idService}) }}" style="
-																								border-radius:40px;
-																								background-color:#758afd;
-																								border-color:#758afd;
-																								height:30px;
-																								width:30px;
-																								display: flex; justify-content: center; align-items: center;
-																								color:white"><i class='bx bx-edit' style="font-size:20px"></i></a>
-									</td>
-								</td>
-							</tr>
-						{% endfor %}
-					</tbody>
-					{# -------------------------------------------------------------------------- #}
-					<tfoot>
-						<tr>
-							<th style="color:#27187f">Nom du service</th>
-							<th style="color:#27187f">Action</th>
-						</tr>
-					</tfoot>
-					{# -------------------------------------------------------------------------- #}
-				</table>
+	<center>
+		<div id="nom" class="card" style="width:50%;border-radius: 25px;height:580px;background-color:#d2d9fc">
+			<center>
+				<div class="card" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);margin-top:20px;width:90%;border-radius:12px;height:35px;background-color:white">
+					<div style="display: flex;">
+						<label style="color:#241b7c;margin-right: 65%;margin-left: 20px;margin-top: 7px;font-weight: bold;">Nom du service</label>
+						<label style="color:#241b7c;position: absolute;top: 7px; left: 85%; font-weight: bold;">Actions</label>
+					</div>
+				</div>
+				{# ------------------------------------------------------------------------------------------- #}
+				{% if  services is not empty %}
+					{% for service in services %}
+						<div class="card" style="margin-top:-10px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);width:90%;border-radius:14px;height:50px;background-color:white">
+							<div style="display: flex;">
+								<label style="color:#241b7c;margin-right: 30%;margin-left: 20px;margin-top: 15px;">{{service.nom}}</label>
+								<div style="display: flex;color:#241b7c;position: absolute;top: 10px; left: 85%; ">
+									{{ include('templates_back/service/_delete_form.html.twig') }}
+									<a href="{{ path('app_service_edit',{'idService':service.idService})}}" style="
+																				margin-right:5px;
+																				border-radius:30px;
+																				background-color:#241b7c;
+																				border-color:#241b7c;
+																				height:30px;
+																				width:30px;
+																				display: flex;
+																				justify-content: center;
+																				align-items: center;
+																				color:white">
+										<i class='bx bx-edit' style="font-size:20px"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				{% else %}
+					<div class="placeholder-content">
+						<img
+						style="height:250px;width:250px" class="light-image" src="{{asset('assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/>
+						{# <img class="dark-image" src="{{asset('assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/> #}
+						<h3 class="dark-inverted">Pas de services !</h3>
+						<p>Veillez ajouter des services pour pouvoir les visualiser 
+						</p>
+					</div>
+				{% endif %}
+				{# ------------------------------------------------------------------------------------------- #}
 				{% if services.totalItemCount > 0 %}
-				
-					<div class="pagination justify-content-center">
+					<div class="pagination justify-content-center" style="position: absolute;top: 90%; left: 30%;margin-top:10px;">
 						{{ knp_pagination_render(services,'bootstrap_v4_pagination.html.twig') }}
 					</div>
-					
 				{% endif %}
-				{# -------------------------------------------------------------------------- #}
-			</div>
+				<br>
+			</center>
 		</div>
-	</div>
+	</center>
 	{# -------------------------------------------------------------------------- #}
-
-
 	<!-- jQuery -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<!-- Popper.js -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
-
 	<!-- Bootstrap JS -->
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<!-- Modal -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(function () {
+var typingTimer; // timer identifier
+var doneTypingInterval = 500; // time in ms, 0.5 second for example
+var $input = $('#search-input');
+
+$input.on('keyup', function () {
+clearTimeout(typingTimer);
+typingTimer = setTimeout(doneTyping, doneTypingInterval);
+});
+
+$input.on('keydown', function () {
+clearTimeout(typingTimer);
+});
+
+function doneTyping() {
+var search = $input.val().trim();
+if (search.length > 0) {
+$.ajax({
+url: "{{ path('app_service_search') }}",
+method: "POST",
+data: {
+search: search
+},
+success: function (response) {
+$('#nom').html(response.html);
+console.log(response.html);
+},
+error: function (xhr) {
+console.log(xhr.responseText);
+}
+});
+} else {
+$('#nom').empty();
+}
+}
+});
+	</script>
 {% endblock %}

@@ -1,10 +1,9 @@
 {% extends 'baseAdmin.html.twig' %}
-
+{# ------------------------------------------------------------------------------------------- #}
 {% block title %}Service{% endblock %}
-
+{# ------------------------------------------------------------------------------------------- #}
 {% block body %}
     <h1>Service</h1>
-
     <table class="table">
         <tbody>
             <tr>
@@ -17,7 +16,7 @@
             </tr>
         </tbody>
     </table>
-
+{# ------------------------------------------------------------------------------------------- #}
     <a href="{{ path('app_service_index') }}">back to list</a>
 
     <a href="{{ path('app_service_edit', {'idService': service.idService}) }}">edit</a>

@@ -1,11 +1,10 @@
 {% extends 'baseAdmin.html.twig'%}
-
+{# ------------------------------------------------------------------------------------------- #}
 {% block content %}
-
+	{# ------------------------------------------------------------------------------------------- #}
 	<!--breadcrumb-->
-	<div
-		class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-		{# -------------------------------------------------------------------------- #}
+		<div
+		class="page-breadcrumb d-none d-sm-flex align-items-center mb-3"> {# -------------------------------------------------------------------------- #}
 		<div style="color:#758afd;font-size:25px;font-style:bold">Sous Service</div>
 		<div class="search-bar flex-grow-1" style="margin-left:20%;">
 			<div class="position-relative search-bar-box">
@@ -32,16 +31,15 @@
 		{# -------------------------------------------------------------------------- #}
 	</div>
 	{# -------------------------------------------------------------------------- #}
-
-	<br>
 	<form class="form" action="{{ path('app_sousservice_index')}}" method="GET">
-		<select name="inputfilter" id="filterService" style="height:31px;border-radius:5px;color:white;background-color:#ff8601;margin-bottom:10px;border-color:#ff8601;font-size:15px">
+		<select name="inputfilter" id="filterService" style="height:31px;border-radius:25px;color:white;background-color:#ff8601;margin-bottom:10px;border-color:#ff8601;font-size:15px">
 			<option value="" name="choose">choisissez</option>
 			{% for serv in options %}
-				<option value="{{serv.nom }}" name="inputfilter">{{ serv.nom }}</option>
+				<option value="{{serv.nom}}" name="inputfilter">{{ serv.nom }}</option>
 			{% endfor %}
 		</select>
 	</form>
+	{# ------------------------------------------------------------------------------------------- #}
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
 		$(document).ready(function () {
@@ -50,84 +48,73 @@ $(this).closest('form').submit();
 });
 });
 	</script>
-	<div class="card">
-		<div class="card-body">
-			<div
-				class="table-responsive">
-				{# -------------------------------------------------------------------------- #}
-				<table
-					id="example" class="table table-bordered" style="
-																width:100%;
-																border-color:#aeb8ff;
-																border-radius:30px">
-					{# -------------------------------------------------------------------------- #}
-					<thead>
-						<tr style="color:#27187f">
-							<th style="text-align:center">Images</th>
-							<th style="text-align:center">Nom du sous service</th>
-							<th style="text-align:center">Service</th>
-							<th style="text-align:center">Description</th>
-							<th style="text-align:center">Prix</th>
-							<th style="text-align:center">Note</th>
-							<th style="text-align:center">Prestataire</th>
-							<th style="text-align:center">Catégories d'évènement</th>
-							<th style="text-align:center">Action</th>
-						</tr>
-					</thead>
-					{# -------------------------------------------------------------------------- #}
-					<tbody>
-						{% for sousservices in sousservices %}
-							<tr style="color:#27187f">
-								<td style="text-align:center"><img src="http://localhost/img/{{ sousservices.image }}" alt="{{ sousservices.nom }}" style="max-width: 50px; border-radius: 5px;"></td>
-								<td style="text-align:center">{{sousservices.nom}}</td>
-								<td style="text-align:center">{{sousservices.idService.nom}}</td>
-								{# {% if sousservices.description|length >30  %} #}
-								<td style="max-width: 250px;text-align:center;  white-space: nowrap;overflow: hidden;  text-overflow: ellipsis;">{{sousservices.description}}</td>
-								{# {% endif %} #}
-								<td style="text-align:center">{{sousservices.prix}}</td>
-								<td style="text-align:center">{{sousservices.note}}</td>
-								<td style="text-align:center">{{sousservices.idPers.prenomPers}}</td>
-								<td style="max-width: 250px;  white-space: nowrap;overflow: hidden;  text-align:center;text-overflow: ellipsis;">{{sousservices.idEventcateg}}</td>
-								<td>
-									<div style="display: flex; align-items:center;margin-left:30px;text-align:center;">
-
-										{{ include('templates_back/sousservice/_delete_form.html.twig') }}
-										<a href="{{ path('app_sousservice_edit',{'id':sousservices.id}) }}" style=" border-radius:40px; background-color:#758afd; border-color:#758afd; height:30px; width:30px; display: flex; justify-content: center; align-items: center;color:white">
-											<i class='bx bx-edit' style="font-size:20px"></i>
-										</a>
-										{{ include('templates_back/sousservice/show.html.twig') }}
-
-									</div>
-								</td>
-							</tr>
-						{% endfor %}
-					</tbody>
-					{# -------------------------------------------------------------------------- #}
-					<tfoot>
-						<tr style="color:#27187f">
-							<th style="text-align:center">Images</th>
-							<th style="text-align:center">Nom du sous service</th>
-							<th style="text-align:center">Service</th>
-							<th style="text-align:center">Description</th>
-							<th style="text-align:center">Prix</th>
-							<th style="text-align:center">Note</th>
-							<th style="text-align:center">Prestataire</th>
-							<th style="text-align:center">Catégories d'évènement</th>
-							<th style="text-align:center">Action</th>
-						</tr>
-					</tfoot>
-					{# -------------------------------------------------------------------------- #}
-				</table>
-				{% if sousservices.totalItemCount > 0 %}
-
-					<div class="pagination justify-content-center">
-						{{ knp_pagination_render(sousservices,'bootstrap_v4_pagination.html.twig') }}
-					</div>
-
-				{% endif %}
-
-				{# -------------------------------------------------------------------------- #}
+	{# -------------------------------------------------------------------------- #}
+	<div class="card" style="width:100%;border-radius: 25px;height:550px;background-color:#d2d9fc">
+		<center>
+			<div class="card" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);margin-top:20px;width:95%;border-radius:12px;height:35px;background-color:white">
+				<div style="display: flex;">
+					<label style="color:#241b7c;font-weight: bold;position: absolute;top: 7px; left: 10px;">Images</label>
+					<label style="color:#241b7c;font-weight: bold;position: absolute;top: 7px; left: 110px">Nom du sous service</label>
+					<label style="color:#241b7c;font-weight: bold;position: absolute;top: 7px; left: 310px">Service</label>
+					<label style="color:#241b7c;font-weight: bold;position: absolute;top: 7px; left: 420px">description</label>
+					<label style="color:#241b7c;font-weight: bold;position: absolute;top: 7px; left: 550px;">Prix (Dt)
+					</label>
+					<label style="color:#241b7c;font-weight: bold;position: absolute;top: 7px; left: 660px">Note</label>
+					<label style="color:#241b7c;font-weight: bold;position: absolute;top: 7px; left: 740px">Prestataire</label>
+					<label style="color:#241b7c;font-weight: bold;position: absolute;top: 7px; left: 860px">Evènements</label>
+					<label style="color:#241b7c;position: absolute;top: 7px; left: 92%; font-weight: bold;">Actions</label>
+				</div>
 			</div>
+			{# ------------------------------------------------------------------------------------------- #}
+			{% if sousservices is not empty %}
+			{% for sousservices in sousservices %}
+				<div class="card" style="margin-top:-10px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);width:95%;border-radius:20px;height:50px;background-color:white">
+					<div style="display: flex;">
+						{% for n in firstimg %}
+							{% if n.sousService.id == sousservices.id %}
+								<div style="color:#241b7c;font-weight: bold;position: absolute;top: 9px; left: 10px;">
+									<img src="http://localhost/img/{{ n.img}}" style="max-width:40px; max-height:40px;padding :5px ">
+								</div>
+							{% endif %}
+
+						{% endfor %}
+						<label style="color:#241b7c;position: absolute;top: 15px; left: 150px ;max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{sousservices.nom}}</label>
+						<label style="color:#241b7c;position: absolute;top: 15px; left: 320px;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{sousservices.idService.nom}}</label>
+						<label style="color:#241b7c;position: absolute;top: 15px; left: 430px; max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{sousservices.description}}</label>
+						<label style="color:#241b7c;position: absolute;top:15px; left: 560px;">{{sousservices.prix}}</label>
+						<label style="color:#241b7c;position: absolute;top: 15px; left: 670px">{{sousservices.note}}</label>
+						<label style="color:#241b7c;position: absolute;top: 15px; left: 750px">{{sousservices.idPers.prenomPers}}</label>
+						<label style="color:#241b7c;position: absolute;top: 15px; left: 860px;max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{sousservices.idEventcateg}}</label>
+						<div style="display: flex; align-items:center;text-align:center;color:#241b7c;position: absolute;top: 10px; left: 90%; font-weight: bold;">
+
+							{{ include('templates_back/sousservice/_delete_form.html.twig') }}
+							<a href="{{ path('app_sousservice_edit',{'id':sousservices.id}) }}" style=" border-radius:40px; background-color:#758afd; border-color:#758afd; height:30px; width:30px;  justify-content: center; align-items: center;color:white">
+								<i class='bx bx-edit' style="font-size:20px"></i>
+							</a>
+							{{ include('templates_back/sousservice/show.html.twig') }}
+
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+			{% else %}
+			<div class="section-placeholder">
+		<div class="placeholder-content">
+			<img style="height:250px;width:250px"class="light-image" src="{{asset('assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/>
+			{# <img class="dark-image" src="{{asset('assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/> #}
+			<h3 class="dark-inverted">Pas de sous services !</h3>
+			<p>Veillez ajouter des sous services pour pouvoir les visualiser ici </p>
 		</div>
 	</div>
+			{% endif %}
+			{# ------------------------------------------------------------------------------------------- #}
+		</center>
+		{# ------------------------------------------------------------------------------------------- #}
+	</div>
+	{% if sousservices.totalItemCount > 0 %}
+		<div class="pagination justify-content-center" style="position: absolute;top: 85%; left: 50%;margin-top:10px;">
+			{{ knp_pagination_render(sousservices,'bootstrap_v4_pagination.html.twig') }}
+		</div>
+	{% endif %}
+	<br>
 {% endblock %}

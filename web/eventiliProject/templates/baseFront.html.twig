@@ -7,13 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <!--Core CSS -->
-    <link rel="stylesheet" href="../assets/css/app.css" />
-    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="{{asset('assets/css/app.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets/css/main.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets/css/card.css')}}" />
+
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700" rel="stylesheet" />
     
-    <link rel="icon" type="image/png" href="../assets/img/App-logo-dark.png"/>
+    <link rel="icon" type="image/png" href="{{asset('assets/img/App-logo-dark.png')}}"/>
     
     <!-- JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -247,8 +249,8 @@
         <!--Sidebar-->
         <div class="main-sidebar">
             <div class="sidebar-brand">
-                    <img class="light-image" src="../assets/img/App-logo-dark.png" alt="" style="width:70px;height:70px;">
-                    <img class="dark-image" src="../assets/img/App-logo-light.png" alt="" style="width:70px;height:70px;">
+                    <img class="light-image" src="{{asset('assets/img/App-logo-dark.png')}}" alt="" style="width:70px;height:70px;">
+                    <img class="dark-image" src="{{asset('assets/img/App-logo-light.png')}}" alt="" style="width:70px;height:70px;">
             </div>
             <div class="sidebar-inner">
                {% block naver %}
@@ -271,8 +273,8 @@
                     </li>
                      <!-- Services -->
                     <li>
-                        <a href="#" >
-                            <i class="sidebar-svg" data-feather="grid"></i>
+                        <a href="{{ path('app_sousservice_front')}}" >
+                            <i class="fas fa-tools"></i>
                         </a>
                     </li>
                     {# <li>
@@ -486,19 +488,23 @@
         </div>
 
         <!-- Concatenated plugins -->
-        <script src="../assets/js/app.js"></script>
+        <script src="{{asset('assets/js/app.js')}}"></script>
 
         <!-- js -->
-        <script src="../assets/js/functions.js"></script>
-        <script src="../assets/js/main.js" async></script>
-        <script src="../assets/js/components.js" async></script>
-        <script src="../assets/js/popover.js" async></script>
-        <script src="../assets/js/widgets.js" async></script>
+        <script src="{{asset('assets/js/functions.js')}}"></script>
+        <script src="{{asset('assets/js/main.js')}}" async></script>
+        <script src="{{asset('assets/js/components.js')}}" async></script>
+        <script src="{{asset('assets/js/popover.js')}}" async></script>
+        <script src="{{asset('assets/js/widgets.js')}}" async></script>
 
 
         <!-- Additional Features -->
-        <script src="../assets/js/touch.js" async></script>
-        <script src="../assets/js/syntax.js" async></script>
+        <script src="{{asset('assets/js/touch.js')}}" async></script>
+        <script src="{{asset('assets/js/syntax.js')}}" async></script>
+        <!-- Dashboards js -->
+
+        <script src="{{asset('assets/js/apps-1.js')}}" async></script>
+
     </div>
 </body>
 </html>

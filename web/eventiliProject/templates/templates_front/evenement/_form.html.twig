@@ -105,7 +105,7 @@
 							{{ form_label(form.titre, 'Insérer le titre de votre événement') }}
 							{# <div class="control has-icon"> #}
 
-							{{ form_widget(form.titre, {'attr': {'class': 'input', 'placeholder': ''}}) }}
+							{{ form_widget(form.titre, {'attr': {'class': 'input', 'placeholder': ' Maximum 35 caractères'}}) }}
 							<div style="color:#e62965;border-color:#e62965">
 								{{ form_errors(form.titre,{'attr': {'class': 'invalide-feedback'}}) }}
 							</div>
@@ -116,7 +116,7 @@
 						<div class="field">
 							{{ form_label(form.descriptionEv, 'Insérer la description de votre événement') }}
 							{# <div class="control has-icon"> #}
-							{{ form_widget(form.descriptionEv, {'attr': {'class': 'input', 'placeholder': ''}}) }}
+							{{ form_widget(form.descriptionEv, {'attr': {'class': 'input', 'placeholder': ' Maximum 200 caractères'}}) }}
 							<div style="color:#e62965;border-color:#e62965">
 								{{ form_errors(form.descriptionEv,{'attr': {'class': 'invalide-feedback'}}) }}
 							</div>
@@ -136,7 +136,7 @@
 								</div>
 							</div>
 							{% if errorMessage is not null %}
-								<div  style="color:#e62965;border-color:#e62965">{{ errorMessage }}</div>
+								<div style="color:#e62965;border-color:#e62965">{{ errorMessage }}</div>
 							{% endif %}
 						</div>
 					</div>
@@ -144,77 +144,124 @@
 					<div
 						class="column is-6">
 						<!--Bulma Timerange picker-->
-						<div class="field is-bulma-timepicker">
+						<div class="field is-bulma-timepicker" data-close-on-select="false">
 							<label>Séléctionner l'horaire de l'événement</label>
 							<div class="control">
-								<input name="event_time" id="bulma-datepicker-6" class="input" type="time" data-is-range="true">
+								<input name="event_time" id="bulma-datepicker-6" class="input" type="time" data-is-range="true" >
 							</div>
-							{% if errorMessage2 is not null %}
-								<div  style="color:#e62965;border-color:#e62965">{{ errorMessage2 }}</div>
+
+							{% if errorMessage3 is not null %}
+								<div style="color:#e62965;border-color:#e62965">{{ errorMessage3 }}</div>
 							{% endif %}
 						</div>
 					</div>
+
 					{# ---------------------------------------- #}
-					{# <div class="column is-12">
-																																																	<div class="filepond-uploader is-three-grid">
-																																																		<div class="control">
-																																																			<input type="file" class="filepond" name="filepond" multiple data-allow-reorder="true" data-max-file-size="3MB" data-max-files="8">
-																																																		</div>
-																																																	</div>
-																																																	{# //Instanciate element
-																																																	FilePond.create(
-																																																		document.querySelector('.filepond-3-grid'),
-																																																	); 
-																																																</div>#}
+					<div class="column is-12">
+						<div class="file has-name">
+							<label class="file-label">
+								{{ form_widget(form.imgev, {'attr': {'class': 'file-input', 'multiple': 'multiple'}}) }}
+								<span class="file-cta">
+									<span class="file-icon">
+										<i class="lnil lnil-lg lnil-cloud-upload"></i>
+									</span>
+									<span class="file-label">
+										Choisir des images
+									</span>
+								</span>
+								<span class="file-name">
+									Aucun fichier sélectionné.
+								</span>
+							</label>
+						</div>
+						{% if errorMessage4 is not null %}
+							<div style="color:#e62965;border-color:#e62965">{{ errorMessage4}}</div>
+						{% endif %}
+						{% if errorMessage5 is not null %}
+							<div style="color:#e62965;border-color:#e62965">{{ errorMessage5}}</div>
+						{% endif %}
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	{{ form_errors(form) }}
-	{# </div> #}
-	{{ form_end(form) }}
+		{{ form_errors(form) }}
+		{# </div> #}
+		{{ form_end(form) }}
 
-	{# ---------------------------------------------------- #}
-	<script>
-
-	</script>
-	{# ---------------------------------------------------- #}
-	{# <script>
-					var picker = new Pikaday({
-					    field: document.getElementById('pickaday-datepicker'),
-					    i18n: {
-					        previousMonth : 'Mois précédent',
-					        nextMonth     : 'Mois suivant',
-					        months        : ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
-					        weekdays      : ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
-					        weekdaysShort : ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam']
-					    }
-					});
-					
-				</script> #}
-	{# ---------------------------------------------------- #}
-	{# <script>
-		const inputs = document.querySelectorAll('input[required]');
-		const submitBtn = document.querySelector('#save-button');
-		// console.log(submitBtn);
-		inputs.forEach(input => {
-		input.addEventListener('input', () => {
-		let allFilled = true;
-		inputs.forEach(input => {
-		if (input.value.trim() === '') {
-		allFilled = false;
-		}
-		});
-		if (allFilled) {
-		submitBtn.removeAttribute('disabled');
-		} else {
-		submitBtn.setAttribute('disabled', 'disabled');
-		}
-		});
-		});
-			</script> #}
-	{# ---------------------------------------------------- #}
+		{# ---------------------------------------------------- #}
 		<script>
+			document.addEventListener('DOMContentLoaded', function () {
+var fileInput = document.querySelector('.file-input');
+var fileLabel = document.querySelector('.file-name');
+if (fileInput.files.length === 0) {
+fileLabel.textContent = 'Aucun fichier sélectionné.';
+} else if (fileInput.files.length === 1) {
+fileLabel.textContent = fileInput.files[0].name;
+} else {
+fileLabel.textContent = fileInput.files.length + ' fichiers sélectionnés.';
+}
+fileInput.addEventListener('change', function () {
+if (fileInput.files.length === 0) {
+fileLabel.textContent = 'Aucun fichier sélectionné.';
+} else if (fileInput.files.length === 1) {
+fileLabel.textContent = fileInput.files[0].name;
+} else {
+fileLabel.textContent = fileInput.files.length + ' fichiers sélectionnés.';
+}
+});
+});
+		</script>
+		{# ---------------------------------------------------- #}
+		{# <script>
+										$(document).on('FilePond:addfile', '.filepond', function(e, file) {
+										    var reader = new FileReader();
+										    reader.onload = function() {
+										        file.getMetadata(function(metadata) {
+										            console.log(metadata.name); 
+										            console.log(reader.result); 
+										        });
+										    };
+										    reader.readAsDataURL(file.file);
+										});
+										</script> #}
+
+		{# ---------------------------------------------------- #}
+		{# <script>
+																							var picker = new Pikaday({
+																							    field: document.getElementById('pickaday-datepicker'),
+																							    i18n: {
+																							        previousMonth : 'Mois précédent',
+																							        nextMonth     : 'Mois suivant',
+																							        months        : ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+																							        weekdays      : ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
+																							        weekdaysShort : ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam']
+																							    }
+																							});
+																							
+																						</script> #}
+		{# ---------------------------------------------------- #}
+		{# <script>
+																				const inputs = document.querySelectorAll('input[required]');
+																				const submitBtn = document.querySelector('#save-button');
+																				// console.log(submitBtn);
+																				inputs.forEach(input => {
+																				input.addEventListener('input', () => {
+																				let allFilled = true;
+																				inputs.forEach(input => {
+																				if (input.value.trim() === '') {
+																				allFilled = false;
+																				}
+																				});
+																				if (allFilled) {
+																				submitBtn.removeAttribute('disabled');
+																				} else {
+																				submitBtn.setAttribute('disabled', 'disabled');
+																				}
+																				});
+																				});
+																					</script> #}
+		{# ---------------------------------------------------- #}
+			<script>
 $(document).ready(function () {
 var activeTab = 'gratuit-tab';
 const nbTicketInput = document.querySelector('#evenement_limiteparticipant');
@@ -242,50 +289,37 @@ nbTicketInput.value = 0;
 
 });
 });
-	</script>
+		</script>
 
-	{# ---------------------------------------------------- #}
+		{# ---------------------------------------------------- #}<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"> </script>
+
 		<script>
+			var dateInput = document.getElementById('pickaday-datepicker');
 
-var dateInput = document.getElementById('pickaday-datepicker');
-console.log("1", dateInput.value);
 dateInput.addEventListener('change', function () {
-var pickedDate = new Date(dateInput.value);
-var today = new Date();
-today.setHours(0, 0, 0, 0);
-
+var pickedDate = moment(dateInput.value, "DD MMM YYYY");
+var today = moment().startOf('day');
 
 if (pickedDate <= today) {
-alert("La date sélectionnée doit etre supérieur à la date actuelle.");
-pickedDate.setDate(today.getDate() + 1);
-dateInput.value = pickedDate.toLocaleString('default', {
-day: 'numeric',
-month: 'short',
-year: 'numeric'
-});
-console.log("2", dateInput.value);
-} else {
-dateInput.value = pickedDate.toLocaleString('default', {
-day: 'numeric',
-month: 'short',
-year: 'numeric'
-});
-console.log("3", dateInput.value);
+alert("La date sélectionnée doit être supérieure à la date actuelle.");
+pickedDate = moment().add(1, 'days').startOf('day');
 }
-});
-	</script>
 
-	{# ---------------------------------------------------- #}
+// Format the date value
+dateInput.value = pickedDate.format('DD MMM YYYY');
+});
+		</script>
+
+		{# ---------------------------------------------------- #}
 		<script>
-function filterInput(input) {
-var regex = /^\d+(?:\.\d{1,4})?$/;
-// var regex = /^[0-9]+(?:\.[0-9]+)?$/
+			function filterInput(input) { // var regex = /^\d+(?:\.\d{1,4})?$/;
+var regex = /^(?:\d{1,5}|\d{0,5}\.\d{1,4})$/;
 var filteredValue1 = '';
 var filteredValue = '';
 
 for (var i = 0; i < input.value.length; i++) {
 var char = input.value.charAt(i);
-filteredValue1 += char + "1";
+filteredValue1 += char + "0";
 console.log("char  " + char);
 console.log("filteredbeforecheck  " + filteredValue1);
 if (regex.test(filteredValue1)) {
@@ -296,13 +330,13 @@ console.log("filteredaftercheck  " + filteredValue);
 }
 input.value = filteredValue;
 }
-	</script>
+		</script>
 
-	{# ---------------------------------------------------- #}
+		{# ---------------------------------------------------- #}
 		<script>
-function filterInput2(input) {
-
-var regex = /^(?!0\d)\d+$/;
+			function filterInput2(input) {
+var regex = /^(?!0\d)\d{1,4}$/;
+// var regex = /^(?!0\d)\d+$/;
 var filteredValue = '';
 var filteredValue1 = '';
 for (var i = 0; i < input.value.length; i++) {
@@ -317,4 +351,4 @@ console.log("filteredaftercheck  " + filteredValue);
 }
 input.value = filteredValue;
 }
-	</script>
+		</script>

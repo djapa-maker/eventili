@@ -1,0 +1,52 @@
+
+<a class="button h-button is-rounded h-modal-trigger" data-modal="demo-right-actions-modal{{l.idimgss}}" 
+style="
+		position: absolute; 
+		top: 0; 
+		right:0%; 
+		background-color:red; 
+		color: white;
+		border: none;
+		cursor: pointer;
+		border-top-left-radius: 0px; 
+		border-top-right-radius: 0px;
+		border-bottom-right-radius: 0px;
+		border-bottom-left-radius: 30px;
+		height:20px;
+		width:5px;">
+		<i class='fas fa-trash' style="font-size:12px;margin-bottom:7px;margin-left:4px;margin-top:4px"></i>
+		{# s<tyle="position: absolute;top: 86%;left: 91%;transform: translate(-50%, -50%);-ms-transform: translate(-50%, -50%);background-color: orange; color: white;border: none;cursor: pointer;border-top-left-radius: 30px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px;height:20px;width:20px;" #}
+</a>
+{# ------------------------------------------------------------------------------------------- #}
+<div id="demo-right-actions-modal{{l.idimgss}}" class="modal h-modal is-small">
+	<div class="modal-background  h-modal-close"></div>
+	<div class="modal-content">
+		<div class="modal-card">
+			<header class="modal-card-head">
+				<h4 style="font-weight:bold;color:#671cc9;font-size:25px">Attention!</h4>
+				<button class="h-modal-close ml-auto" aria-label="close">
+					<i data-feather="x"></i>
+				</button>
+			</header>
+			<div class="modal-card-body">
+				<div class="inner-content">
+					<div class="section-placeholder">
+						<div class="placeholder-content">
+							<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+							<lottie-player src="https://lottie.host/c556282d-73a6-453e-8447-35f86293c5dd/4EnBoVK6vy.json" background="transparent" speed="1" style="margin-top:-40px;width: 150px; height: 150px;margin-left:60px;" loop autoplay></lottie-player>
+
+							<p style="color:black;font-size:15px;margin-bottom:-30px">Voulez-vous vraiment supprimer cette image ?</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-card-foot is-end">
+				<a style="margin-right:50px;"class="button h-button is-rounded h-modal-close">Annuler</a>
+				<form method="post" action="{{ path('app_imagess_delete_front', {'idimgss': l.idimgss}) }}">
+					<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ l.idimgss) }}">
+					<button style="margin-right:40px"type="submit"  class="button h-button is-primary is-raised is-rounded">Supprimer</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

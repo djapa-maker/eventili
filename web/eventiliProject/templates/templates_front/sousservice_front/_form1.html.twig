@@ -1,0 +1,173 @@
+{{ form_start(form, {'attr': {'class': 'was-validated', 'novalidate': 'novalidate'}}) }}
+{# ---------------------------------------- #}
+<div class="row g-3">
+	<div class="field">
+		<div style="color:#671cc9;font-size:20px;margin-top:10px;margin-bottom:10px">
+			{{ form_label(form.nom, 'Nom du sous service :') }}
+		</div>
+		<div style="width:450px" class="control">
+			{{ form_widget(form.nom, {'attr': {'class': 'input', 'placeholder': 'Nom ...','maxlength': 30}}) }}
+		</div>
+		<div style="color:red;border-color:red">
+			{{ form_errors(form.nom,{'attr': {'class': 'invalide-feedback'}}) }}
+		</div>
+	</div>
+</div>
+{# ---------------------------------------- #}
+<div style="margin-top:2%" class="form-group col-sm">
+	<div style="color:#671cc9;font-size:20px;margin-top:10px;margin-bottom:10px">
+		{{ form_label(form.description, 'Description :') }}
+	</div>
+	<div style="width:450px;height:120%">
+		{{ form_widget(form.description, {'attr': {'class': 'input', 'placeholder': 'Description ...','maxlength': 200}}) }}
+	</div>
+	<div style="color:red;border-color:red">
+		{{ form_errors(form.description,{'attr': {'class': 'invalide-feedback'}}) }}
+	</div>
+</div>
+{# ---------------------------------------- #}
+<div class="row g-3" style="display:inline-flex">
+	<div class="form-group col-sm">
+		<div style="color:#671cc9;font-size:20px;margin-top:10px;margin-bottom:10px">
+			{{ form_label(form.idService, 'Services', ) }}
+		</div>
+		<div style="width:200px">
+			{{ form_widget(form.idService, {'attr': {'class': 'input', 'placeholder': 'description'}}) }}
+		</div>
+		<div style="color:red;border-color:red">
+			{{ form_errors(form.idService,{'attr': {'class': 'invalide-feedback'}}) }}
+		</div>
+	</div>
+	<div class="form-group col-sm" style="margin-left:50px">
+		<div style="color:#671cc9;font-size:20px;margin-top:10px;margin-bottom:10px">
+			{{ form_label(form.prix, 'Prix en dt') }}
+		</div>
+		<div style="width:200px;">
+			{{ form_widget(form.prix, {'attr': {'class': 'input', 'placeholder': 'Prix ...','oninput': 'filterInput(this)' ,'id': 'Prix-input'}}) }}
+		</div>
+		<div style="color:red;border-color:red">
+			{{ form_errors(form.prix,{'attr': {'class': 'invalide-feedback'}}) }}
+		</div>
+	</div>
+</div>
+<br>
+{# ------------------------------------------------------------------------------------------- #}
+<p style="color:#671cc9;font-size:20px;margin-top:10px;margin-bottom:10px">Catégorie d'évènements</p>
+{% for i in eventCat %}
+	<div style="display: inline-flex;">
+		<label style="position: relative; padding-left: 5px; margin-right: 15px; font-size: 16px; line-height: 1.2; color: black; cursor: pointer;">
+			<input type="checkbox" name="my-checkbox[]" value={{i.idCateg}} {% if i in selectedCategories %} checked {% endif %} style="color: #fff;background-color: #6B67E;border-color: #6B67E9;text-align: center;line-height: 16px;">
+			{{i.type}}
+		</label>
+	</div>
+{% endfor %}
+{% if errorMessage is not null %}
+	<div style="color:#e62965;border-color:#e62965">{{ errorMessage }}</div>
+{% endif %}
+{# ------------------------------------------------------------------------------------------- #}
+<div class="form-group col-sm">
+	<div style="color:#671cc9;font-size:20px;margin-top:10px;margin-bottom:10px">
+		{{ form_label(form.imagess, 'Ajouter Image') }}
+	</div>
+	<div style="width:450px">
+		{{ form_widget(form.imagess, {'attr': {'class': 'input', 'placeholder': ''}}) }}
+	</div>
+	<div style="color:red;border-color:red">
+		{{ form_errors(form.imagess,{'attr': {'class': 'invalide-feedback'}}) }}
+	</div>
+</div>
+
+{# ------------------------------------------------------------------------------------------- #}
+<div class="form-group col-sm">
+	<label style="color:#671cc9;font-size:20px">All images</label>
+	<a style="margin-top:2px" href="{{path('app_imagess_new1',{'id':sousservice.id})}}">
+		<i class='bx bx-upload' style="font-size:12px;margin-left:4px;font-size:20px;color:#6B67E9;"></i>
+	</a>
+	{# ----------------------------------------------------------- #}
+	<div class="grid-container" style="grid-column-gap: 10px;grid-row-gap:10px;display: grid;grid-template-columns: 100px 100px 100px 100px;padding: 10px;">
+		{% for l in imglist %}
+			{% if imglist|length ==1 %}
+				<div style="position: relative;">
+					<img class="grid-item" style="mergin-right:10px;width:100px;height:100px" src="http://localhost/img/{{l.img}}"></img>
+				{# --------------------------------------------------------- #}
+				<a class="btn" href="{{path('app_imagess_edit_front',{'idimgss':l.idimgss})}}" style="position: absolute;top: 86%;left: 91%;transform: translate(-50%, -50%);-ms-transform: translate(-50%, -50%);background-color: orange; color: white;border: none;cursor: pointer;border-top-left-radius: 30px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px;height:20px;width:20px;">
+					<i class='fas fa-pencil-alt' style="font-size:12px;margin-bottom:2px;margin-left:4px"></i>
+				</a>
+				{# {{ include('templates_front/imagess_front/_delete_form.html.twig') }} #}
+
+			{% else %}
+				<div style="position: relative;">
+					<img class="grid-item" style="mergin-right:10px;width:100px;height:100px" src="http://localhost/img/{{l.img}}"></img>
+				{# --------------------------------------------------------- #}
+				<a class="btn" href="{{path('app_imagess_edit_front',{'idimgss':l.idimgss})}}" style="position: absolute;top: 86%;left: 91%;transform: translate(-50%, -50%);-ms-transform: translate(-50%, -50%);background-color: orange; color: white;border: none;cursor: pointer;border-top-left-radius: 30px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px;height:20px;width:20px;">
+					<i class='fas fa-pencil-alt' style="font-size:12px;margin-bottom:2px;margin-left:4px"></i>
+				</a>
+				{{ include('templates_front/imagess_front/_delete_form.html.twig') }}
+			{% endif %}
+		</div>
+	{% endfor %}
+</div>
+{# ------------------------------------------------------------------------------------------- #}
+<center>
+	<button id="submit-button" style="margin-top:27px;width:30%;height:50px;border-radius:10px;color:white;background-color:#ff8601;border-color:#ff8601;font-size:19px" type="submit" class="btn btn-primary ">{{ button_label|default('Créer') }}</button>
+</center>
+{{form_errors(form)}}
+{{ form_end(form) }}
+{# ------------------------------------------------------------------------------------------- #}
+<script>
+	const inputs = document.querySelectorAll('input[required]');
+	const submitBtn = document.querySelector('#submit-button');
+	const imageInput = document.querySelector('#{{ form.imagess.vars.id }}');
+
+		inputs.forEach(input => {
+		input.addEventListener('input', () => {
+		let allFilled = true;
+		inputs.forEach(input => {
+		if (input.value.trim() === '' || (input === imageInput && !input.files[0])) {
+		allFilled = false;
+		}
+		});
+		if (allFilled) {
+		submitBtn.classList.remove('is-disabled');
+		} else {
+		submitBtn.classList.add('is-disabled');
+		}
+		});
+		});
+
+		imageInput.addEventListener('change', () => {
+		let allFilled = true;
+		inputs.forEach(input => {
+		if (input.value.trim() === '' || (input === imageInput && !input.files[0])) {
+		allFilled = false;
+		}
+		});
+		if (allFilled) {
+		submitBtn.classList.remove('is-disabled');
+		} else {
+		submitBtn.classList.add('is-disabled');
+		}
+		});
+</script>
+
+<script>
+	function filterInput(input) {
+var regex = /^\d{1,5}(?:\.\d{1,4})?$/;
+// var regex = /^[0-9]+(?:\.[0-9]+)?$/
+var filteredValue1 = '';
+var filteredValue = '';
+
+for (var i = 0; i < input.value.length; i++) {
+var char = input.value.charAt(i);
+filteredValue1 += char + "1";
+console.log("char  " + char);
+console.log("filteredbeforecheck  " + filteredValue1);
+if (regex.test(filteredValue1)) {
+filteredValue += char;
+filteredValue1 = filteredValue1.substring(0, filteredValue1.length - 1);
+console.log("filteredaftercheck  " + filteredValue);
+}
+}
+input.value = filteredValue;
+}
+</script>

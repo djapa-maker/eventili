@@ -1,37 +1,472 @@
-<!DOCTYPE html>
-
-<title>Reservation index</title>
-
-{% block body %}
-    <h1>Reservation index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>IdRes</th>
-                <th>IdSs</th>
-                <th>Status</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for reservation in res %}
-            <tr>
-                <td>{{ reservation.idRes }}</td>
-                <td>{{ reservation.idSs }}</td>
-                <td>{{ reservation.status ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('app_reservation_show', {'idRes': reservation.idRes}) }}">show</a>
-                    <a href="{{ path('app_reservation_edit', {'idRes': reservation.idRes}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_reservation_new') }}">Create new</a>
+{% extends 'baseFront.html.twig'%}
+{# ------------------------------------------------------------------------------------------- #}
+{% block title %}
+	<title>Réservation service</title>
 {% endblock %}
+{# ------------------------------------------------------------------------------------------- #}
+{% block naver %}
+	<div class="naver" style="top:-90px;"></div>
+{% endblock %}
+{# ------------------------------------------------------------------------------------------- #}
+{% block PageTitle %}
+	<div class="title-wrap">
+		<h1 class="title is-4">Réservation des services</h1>
+	</div>
+{% endblock %}
+{# ------------------------------------------------------------------------------------------- #}
+{% block content %}
+	{% set current_route = app.request.attributes.get('_route') %}
+	{% set idService = app.request.get('idService') %}
+	{# ------------------------------------------------------------------------------------------- #}
+	<!--Food Delivery Dashboard-->
+		<div
+		class="food-delivery-dashboard"> <!--Left-->
+		<div class="left">
+			<div class="left-body">
+				<div
+					class="restaurants">
+					{# ------------------------------------------------------------------------------------------- #}
+					<div class="restaurants-toolbar">
+						<div class="left">
+							<h3>Services</h3>
+						</div>
+
+						<div class="right"></div>
+					</div>
+					{# ------------------------------------------------------------------------------------------- #}
+					<div class="food-pills">
+						<div
+							class="food-pills-inner pill-carousel">
+							<!--Pill-->
+							<div class="food-pill" style="width:120px;height:50px;display:none" hidden></div>
+							<div class="food-pill {{ current_route == 'app_reservation_index' ? 'is-active' : '' }}" style="width:120px;height:50px">
+								<a href="{{path('app_reservation_index')}}">
+									<span name="service" style="margin-top:-10px">Tout</span>
+								</a>
+							</div>
+							<!--Pill-->
+							{% for service in services %}
+								<div id="reload-button" class="food-pill {{ current_route == 'app_reservation_indexres' and idService  == service.idService ? 'is-active' : '' }}" style="width:120px;height:50px">
+									<a href="{{path('app_reservation_indexres',{'idService':service.idService})}}">
+										<span name="service" style="margin-top:-10px">{{service.nom}}</span>
+									</a>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+					{# ------------------------------------------------------------------------------------------- #}
+					<div class="restaurants-list">
+						<div
+							class="columns is-multiline">
+							<!--Restaurant-->
+							{% for s in souservices %}
+								<div class="column is-4">
+									<div class="restaurants-list-item" id="my-div">
+										<div
+											class="image-container" style="background-color:white;border-radius:35px;width:250px;">
+											{# <img style="width:250px;height:150px" src="http://localhost/img/{{ s.image }}" alt="" data-demo-src="assets/img/illustrations/dashboards/food/icon-2.svg" alt=""> #}
+											{% for n in firstimg %}
+												{% if n.sousService.id == s.id %}
+													<img class="light-image" src="http://localhost/img/{{n.img}}" style="height:200px;width:300px" alt="">
+													<img class="dark-image" src="http://localhost/img/{{n.img}}" alt="">
+												{% endif %}
+
+											{% endfor %}
+										</div>
+										<div
+											class="meta-container">
+											{#<div class="meta-icon" style="border-radius:15px">
+																							<img style="height:30px;width:30px;"src="{{asset('images/logo-eventili.png')}}" alt="" data-demo-src="assets/img/illustrations/dashboards/food/icon-2.svg" alt="">
+																						</div> #}
+											<div style="display:inline-flex">
+												<div class="meta-content">
+													<h4>{{s.nom}}</h4>
+													<p>
+														{# <i aria-hidden="true" class="fas fa-circle"></i> #}
+														<span>{{s.idPers.prenomPers}}
+															{{s.idPers.nomPers}}</span>
+													</p>
+												</div>
+												<div class="timer" style="margin-left:70px;height:30px;border-radius:10px;background-color:orange;border-color:orange;width:80px">
+													<div style="margin-top:4px">
+														<center>
+															<b>
+																<a class=" h-modal-trigger" data-modal="demo-right-actions-modal{{s.id}}" style="color:white">Detail</a>
+																<div id="demo-right-actions-modal{{s.id}}" class="modal h-modal is-medium">
+																	<div class="modal-background h-modal-close"></div>
+																	<div class="modal-content">
+																		<div class="modal-card">
+																			<header class="modal-card-head" style="background-color:#ffb25c">
+																				<h3>{{s.nom}}</h3>
+																				<button class="h-modal-close ml-auto" style="color:white" aria-label="close">
+																					<i data-feather="x"></i>
+																				</button>
+																			</header>
+																			<div class="modal-card-body">
+																				<div class="inner-content">
+																					{# <h2 style="font-size:30px;color:#9eadfd;margin-top:-10px">{{s.nom}}</h2> #}
+																					{# <div class="section-placeholder"> #}
+																					{# <div class="placeholder-content"> #}
+																						<div class="image-accordion" style="margin-top:1px;margin-bottom:3px"> <ul>
+																							{% for i in imagess %}
+																								{% if i.sousService.id == s.id %}
+																									{% if loop.index > 0 %}
+																										<li class="has-background-image" tabindex="{{loop.index}}" data-background="http://localhost/img/{{i.img}}"></li>
+																									{% endif %}
+																								{% endif %}
+																							{% endfor %}
+																						</ul>
+																					</div>
+
+																					<div class="row" style="display:inline-flex;margin-left:-75px;margin-top:20px">
+																						<div class="col text-center" style="margin-left:70px;">
+																							<div style="color:#ff8601;font-size:20px">
+																								<i style="color:#9eadfd" class="fas fa-user" style="margin-bottom:2px"></i>
+																							</div>
+																							<div style="font-weight:normal">{{s.idPers.prenomPers}}
+																								{{s.idPers.nomPers}}
+																							</div>
+																						</div>
+																						<div class="col text-center" style="margin-left:20px;">
+																							<div style="color:#ff8601;font-size:20px">
+																								<i style="color:#ffb25c" class="fas fa-money-bill" style="margin-bottom:2px"></i>
+																							</div>
+																							<div style="font-weight:normal">{{s.prix}}
+																								Dt
+																							</div>
+																						</div>
+																						<div class="col text-center" style="margin-left:20px;">
+																							<div style="color:#ff8601;font-size:20px;font-weight:normal">
+																								<i style="color:#241b7c" class="fas fa-toolbox" style="margin-bottom:2px"></i>
+																							</div>
+																							<div style="font-weight:normal">{{s.idService.nom}}
+																							</div>
+																						</div>
+																					</div>
+
+																					<hr>
+																					<div class="row">
+																						<label style="font-size:20px;color:#9eadfd">Description :</label>
+																						<table style="width : 150px">
+																							<tr>
+																								<p style="font-size:15px;color:black;word-break: break-all;word-break: break-word;white-space: pre-line;">{{ s.description}}</p>
+																							</tr>
+																						</table>
+																					</div>
+																					<hr>
+																					<div class="row">
+																						<div class="col text-center">
+																							<div style="font-size:20px;color:#9eadfd;">Catégories d'événement:
+																							</div>
+																							<div style="font-weight:normal">{{s.idEventcateg}}
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																			<div class="modal-card-foot is-end">
+																				<a class="button h-button is-rounded h-modal-close">Annuler</a>
+																				<a class="button h-button is-primary is-raised is-rounded" style="background-color:#ffb25c">Réserver</a>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</b>
+														</center>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{# ------------------------------------------------------------------------------------------- #}
+		<div class="right fixed-parent">
+			<div class="sticky-panel fixed-child">
+				<div class="widget icon-toolbar-widget">
+					<div class="icon-toolbar">
+						<h3 class="is-bigger" style="margin-left:80px;font-weight:bold">Detail de sous service
+						</h3>
+					</center>
+				</div>
+			</div>
+			{# ------------------------------------------------------------------------------------------- #}
+			<div id="cart-section" class="cart-widget side-section is-active">
+				<div class="section-placeholder">
+					<div class="placeholder-content">
+						<img src="assets/img/illustrations/dashboards/food/cart-placeholder.svg" alt="">
+						<h3 class="dark-inverted">Aucun sous service
+						</h3>
+						<p>Veuillez cliquer sur le boutton détail du sous service que vous voulez</p>
+					</div>
+				</div>
+				<div class="cart-button">
+					<div class="total" style="margin-top:40px;">
+						<span class="label">Total</span>
+						<span>20 DT</span>
+					</div>
+					<div class="button h-button is-primary is-raised is-bold is-fullwidth" style="margin-top:15px;margin-left:60px;width:150px">Réserver</div>
+				</div>
+			</div>
+			{# ------------------------------------------------------------------------------------------- #}
+			<div id="activity-section" class="side-section">
+				<div class="widget followers-widget">
+					<div class="widget-toolbar">
+						<div class="left">
+							<h3 class="is-bigger">Followers</h3>
+						</div>
+						<div class="right">
+							<div class="dropdown is-spaced is-dots is-right dropdown-trigger is-pushed-mobile">
+								<div class="is-trigger" aria-haspopup="true">
+									<i data-feather="more-vertical"></i>
+								</div>
+								<div class="dropdown-menu" role="menu">
+									<div class="dropdown-content">
+										<a href="#" class="dropdown-item is-media">
+											<div class="icon">
+												<i class="lnil lnil-reload"></i>
+											</div>
+											<div class="meta">
+												<span>Reload</span>
+												<span>Reload Widget</span>
+											</div>
+										</a>
+										<a href="#" class="dropdown-item is-media">
+											<div class="icon">
+												<i class="lnil lnil-cogs"></i>
+											</div>
+											<div class="meta">
+												<span>Configure</span>
+												<span>Configure widget</span>
+											</div>
+										</a>
+										<a href="#" class="dropdown-item is-media">
+											<div class="icon">
+												<i class="lnil lnil-cog"></i>
+											</div>
+											<div class="meta">
+												<span>Settings</span>
+												<span>Widget Settings</span>
+											</div>
+										</a>
+										<hr class="dropdown-divider">
+										<a href="#" class="dropdown-item is-media">
+											<div class="icon">
+												<i class="lnil lnil-trash-can-alt"></i>
+											</div>
+											<div class="meta">
+												<span>Remove</span>
+												<span>Remove from view</span>
+											</div>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="channels">
+						<div class="channel">
+							<div class="channel-icon">
+								<i aria-hidden="true" class="fab fa-facebook-f"></i>
+							</div>
+							<div class="channel-stats">
+								<span>22K</span>
+							</div>
+						</div>
+						<div class="channel">
+							<div class="channel-icon">
+								<i aria-hidden="true" class="fab fa-twitter"></i>
+							</div>
+							<div class="channel-stats">
+								<span>38K</span>
+							</div>
+						</div>
+						<div class="channel">
+							<div class="channel-icon">
+								<i aria-hidden="true" class="fab fa-instagram"></i>
+							</div>
+							<div class="channel-stats">
+								<span>5K</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="widget illustration-widget illustration-widget-v2">
+					<img class="main" src="assets/img/illustrations/dashboards/food/widget.svg" alt="">
+					<h3>You unlocked 2 new Achievements</h3>
+					<p>Congrats, your efforts have been rewarded. Keep up like this!</p>
+				</div>
+			</div>
+			{# ------------------------------------------------------------------------------------------- #}
+			<div id="address-section" class="side-section">
+				<div class="widget text-widget">
+					<div class="widget-toolbar">
+						<div class="left">
+							<h3 class="is-bigger">Deliver to</h3>
+						</div>
+						<div class="right">
+							<a class="action-link">
+								Edit
+							</a>
+						</div>
+					</div>
+					<div class="widget-content">
+						<p>Erik Kovalsky</p>
+						<p>38, Suite B2 Parkman Avenue</p>
+						<p>Los Angeles, CA</p>
+					</div>
+				</div>
+
+				<div class="widget contact-widget is-reversed">
+					<div class="widget-content">
+						<div class="left">
+							<div class="h-avatar is-medium">
+								<img class="avatar is-squared" src="https://via.placeholder.com/150x150" data-demo-src="assets/img/avatars/photos/8.jpg" alt="" data-user-popover="3">
+							</div>
+						</div>
+						<div class="right">
+							<h3>Erik K.</h3>
+							<div class="company">
+								<span>Huro Ltd.</span>
+								<p>Product Manager</p>
+							</div>
+							<div class="contact-info">
+								<span>
+									<i data-feather="map-pin"></i>
+									<span>Los Angeles, CA</span>
+								</span>
+								<span>
+									<i data-feather="phone"></i>
+									<span>+1 444-5156</span>
+								</span>
+							</div>
+						</div>
+					</div>
+
+					<p class="email">erikkovalsky@huro.io</p>
+				</div>
+			</div>
+			{# ------------------------------------------------------------------------------------------- #}
+			<div id="settings-section" class="side-section">
+				<div class="widget icon-list-widget">
+					<div class="widget-toolbar">
+						<div class="left">
+							<h3 class="is-bigger">Settings</h3>
+						</div>
+						<div class="right">
+							<div class="dropdown is-spaced is-dots is-right dropdown-trigger is-pushed-mobile">
+								<div class="is-trigger" aria-haspopup="true">
+									<i data-feather="more-vertical"></i>
+								</div>
+								<div class="dropdown-menu" role="menu">
+									<div class="dropdown-content">
+										<a href="#" class="dropdown-item is-media">
+											<div class="icon">
+												<i class="lnil lnil-reload"></i>
+											</div>
+											<div class="meta">
+												<span>Reload</span>
+												<span>Reload Widget</span>
+											</div>
+										</a>
+										<a href="#" class="dropdown-item is-media">
+											<div class="icon">
+												<i class="lnil lnil-cogs"></i>
+											</div>
+											<div class="meta">
+												<span>Configure</span>
+												<span>Configure widget</span>
+											</div>
+										</a>
+										<a href="#" class="dropdown-item is-media">
+											<div class="icon">
+												<i class="lnil lnil-cog"></i>
+											</div>
+											<div class="meta">
+												<span>Settings</span>
+												<span>Widget Settings</span>
+											</div>
+										</a>
+										<hr class="dropdown-divider">
+										<a href="#" class="dropdown-item is-media">
+											<div class="icon">
+												<i class="lnil lnil-trash-can-alt"></i>
+											</div>
+											<div class="meta">
+												<span>Remove</span>
+												<span>Remove from view</span>
+											</div>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="icon-list">
+						<div class="icon-list-item">
+							<div class="icon-wrap">
+								<i data-feather="circle"></i>
+							</div>
+							<div class="item-meta">
+								<span>Global</span>
+							</div>
+						</div>
+						<div class="icon-list-item">
+							<div class="icon-wrap">
+								<i data-feather="user"></i>
+							</div>
+							<div class="item-meta">
+								<span>Profile</span>
+							</div>
+						</div>
+						<div class="icon-list-item">
+							<div class="icon-wrap">
+								<i data-feather="credit-card"></i>
+							</div>
+							<div class="item-meta">
+								<span>Payments</span>
+							</div>
+						</div>
+						<div class="icon-list-item">
+							<div class="icon-wrap">
+								<i data-feather="clock"></i>
+							</div>
+							<div class="item-meta">
+								<span>History</span>
+							</div>
+						</div>
+						<div class="icon-list-item">
+							<div class="icon-wrap">
+								<i data-feather="file"></i>
+							</div>
+							<div class="item-meta">
+								<span>Invoices</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{# ------------------------------------------------------------------------------------------- #}
+		</div>
+	</div>
+</div>
+<script>
+	$(document).ready(function () { // Add a click event listener to the reload button
+$('#reload-button').click(function () { // Use AJAX to reload the content of the 'my-div' element
+$.ajax({
+url: 'app_reservation_indexres', // The URL of the page you want to reload
+type: 'GET', // The type of request
+dataType: 'html', // The expected data type
+success: function (data) { // If the request succeeds, replace the content of 'my-div' with the new data
+$('#my-div').html(data);
+}
+});
+});
+});
+</script>{% endblock %}

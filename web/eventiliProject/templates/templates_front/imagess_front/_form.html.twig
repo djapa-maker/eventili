@@ -1,0 +1,45 @@
+{{ form_start(form, {'attr': {'class': 'was-validated', 'novalidate': 'novalidate'}}) }}
+{# ------------------------------------------------------------------------------------------- #}
+<div>
+	<div class="row g-3">
+		<div class="form-group col-sm">
+			<div style="width:450px;margin-top:20px">
+				{{ form_widget(form.img, {'attr': {'class': 'form-control', 'placeholder': 'nom ...'}}) }}
+			</div>
+			<div style="color:red;border-color:red">
+				{{ form_errors(form.img,{'attr': {'class': 'invalide-feedback'}}) }}
+			</div>
+		</div>
+	</div>
+	{% if errorMessage is not null %}
+		<div style="color:red;border-color:red">{{ errorMessage }}</div>
+	{% endif %}
+	<button id="submit-button" style="margin-top:27px;
+																width:30%;
+																border-radius:10px;
+																color:white;
+																background-color:#ff8601;
+																border-color:#ff8601;
+																font-size:19px" type="submit" class="btn btn-primary is-disabled">{{ button_label|default('Enregistrer') }}</button>
+</div>
+{# ------------------------------------------------------------------------------------------- #}
+{{ form_end(form) }}
+<script>
+	const inputs = document.querySelectorAll('input[required]');
+	const submitBtn = document.querySelector('#submit-button');
+	inputs.forEach(input => {
+	input.addEventListener('input', () => {
+	let allFilled = true;
+	inputs.forEach(input => {
+	if (input.value.trim() === '') {
+	allFilled = false;
+	}
+	});
+	if (allFilled) {
+	submitBtn.classList.remove("is-disabled");
+	} else {
+	submitBtn.classList.add('is_disabled');
+	}
+	});
+	});
+</script>

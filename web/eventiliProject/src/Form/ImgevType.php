@@ -14,15 +14,6 @@ class ImgevType extends AbstractType
         $builder
             // ->add('imagee')
             // ->add('idEven')
-            ->add('img',FileType::class,[
-                'attr'=>[
-                    'class' => 'form-control',
-                    'placeholder' => 'aucune image',
-                    'multiple' =>true,
-                ]
-                ,
-                'data_class' => null,
-            ])
         ;
     }
 

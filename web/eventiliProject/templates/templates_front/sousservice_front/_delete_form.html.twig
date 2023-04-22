@@ -1,0 +1,49 @@
+<a class="button h-button is-rounded h-modal-trigger" data-modal="demo-right-actions-modal{{i.id}}" style="
+						margin-right:5px;
+						border-radius:5px;
+						background-color:#ff8601;
+						border-color:#ff8601;
+						height:30px;
+						width:100px;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						font-size:12px
+						color:white">
+<i class="fas fa-trash" style="color:white;margin-left:5px">Supprimer</i>
+</a>
+{# ------------------------------------------------------------------------------------------- #}
+{# <a class="button h-button is-rounded h-modal-trigger" data-modal="demo-right-actions-modal{{i.id}}" style="position: absolute; top: 0; right: 0; background-color:red; color: white;border: none;cursor: pointer;border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 30px;height:20px;width:20px;"> <i class='bx bx-trash' style="font-size:12px;margin-bottom:7px;margin-left:-4px"></i>
+</a> #}
+<div id="demo-right-actions-modal{{i.id}}" class="modal h-modal is-small">
+	<div class="modal-background  h-modal-close"></div>
+	<div class="modal-content">
+		<div class="modal-card">
+			<header class="modal-card-head">
+				<h4 style="font-weight:bold;color:#671cc9;font-size:25px">Attention!</h4>
+				<button class="h-modal-close ml-auto" aria-label="close">
+					<i data-feather="x"></i>
+				</button>
+			</header>
+			<div class="modal-card-body">
+				<div class="inner-content">
+					<div class="section-placeholder">
+						<div class="placeholder-content">
+							<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+							<lottie-player src="https://lottie.host/c556282d-73a6-453e-8447-35f86293c5dd/4EnBoVK6vy.json" background="transparent" speed="1" style="margin-top:-40px;width: 150px; height: 150px;margin-left:60px;" loop autoplay></lottie-player>
+							
+							<p style="color:black;font-size:15px;margin-bottom:-30px">Voulez-vous vraiment supprimer ce sous service ?</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-card-foot is-end">
+				<a style="margin-right:50px;" class="button h-button is-rounded h-modal-close">Annuler</a>
+				<form method="post" action="{{ path('app_sousservice_delete_front', {'id': i.id}) }}">
+					<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ i.id) }}">
+					<button style="margin-right:40px" type="submit" class="button h-button is-primary is-raised is-rounded">Supprimer</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

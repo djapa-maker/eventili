@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Repository;
-
+//---------------------------------------------------------------------------------------
 use App\Entity\Imagess;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-
+//---------------------------------------------------------------------------------------
 /**
  * @extends ServiceEntityRepository<Imagess>
  *
@@ -38,4 +38,5 @@ class ImagessRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+//---------------------------------------------------------------------------------------    
 }

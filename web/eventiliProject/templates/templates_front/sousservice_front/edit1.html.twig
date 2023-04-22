@@ -1,0 +1,15 @@
+{% extends 'baseFront.html.twig' %}
+{# ------------------------------------------------------------------------------------------- #}
+{% block title %}Modifier Sousservice{% endblock %}
+{# ------------------------------------------------------------------------------------------- #}
+{% block content %}
+<div
+	style=" box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);margin-left:27%;background-color:white;border-radius:25px;padding:30px;width:510px">
+    <center>
+    <h1 style="color:#671cc9;font-size:30px;font-weight:bold">Modifier votre sous service</h1>
+    </center>
+    {{ include('templates_front/sousservice_front/_form1.html.twig', {'button_label': 'Modifier'}) }}
+    </div>
+{% endblock %}
+
+

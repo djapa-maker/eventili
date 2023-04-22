@@ -1,0 +1,14 @@
+{% extends 'baseFront.html.twig' %}
+{# ------------------------------------------------------------------------------------------- #}
+{% block title %}Edit Imagess{% endblock %}
+{% block content %}
+    <center>
+    <div style=" box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);background-color:white;border-radius:25px;padding:30px;width:510px">
+    <h1 style="color:#671cc9;font-size:30px;font-weight:bold">Modifier image </h1>
+
+    {{ include('templates_front/imagess_front/_form.html.twig', {'button_label': 'Modifier'}) }}
+    </div>
+    </center>
+{# ------------------------------------------------------------------------------------------- #}
+{% endblock %}
+

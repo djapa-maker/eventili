@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Form;
-
+//---------------------------------------------------------------------------------------
 use App\Entity\CategEvent;
 use App\Entity\Sousservice;
 use App\Entity\Service;
@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Doctrine\ORM\EntityManagerInterface;
+//---------------------------------------------------------------------------------------
 class SousserviceType extends AbstractType
 {
     private $entityManager;
@@ -28,16 +29,6 @@ class SousserviceType extends AbstractType
         
         $builder
             ->add('nom')
-            ->add('image',FileType::class,[
-                'attr'=>[
-                    'class' => 'form-control',
-                    
-                    'placeholder' => 'aucune image'
-                ]
-                ,
-                'data_class' => null,
-             
-            ])
             ->add('description',TextareaType::class,[
                 'attr'=>[
                     'class' => 'form-control',
@@ -45,6 +36,12 @@ class SousserviceType extends AbstractType
                 ]
             ])
             ->add('prix')
+            ->add('imagess', FileType::class, [
+                    'multiple' => true,
+                    'mapped' => false,
+                    'required' => false,
+                'data_class' => null,
+            ])
             // ->add('note')
             // ->add('idEventcateg',EntityType::class,['class'=> CategEvent::class,'choice_label'=>'type','multiple'=>false,'expanded'=>false])
             // ->add('idEventcateg', ChoiceType::class, [
@@ -68,7 +65,7 @@ class SousserviceType extends AbstractType
             ->add('idService',EntityType::class,['class'=> Service::class,'choice_label'=>'nom','multiple'=>false,'expanded'=>false])
         ;
     }
-
+//---------------------------------------------------------------------------------------
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

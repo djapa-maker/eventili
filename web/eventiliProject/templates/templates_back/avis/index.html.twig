@@ -1,79 +1,75 @@
 {% extends 'baseAdmin.html.twig'%}
-
+{# ------------------------------------------------------------------------------------------- #}
 {% block content %}
-			<!--breadcrumb-->
-			<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-				<div style="color:#758afd;font-size:25px;font-style:bold">Avis</div>
-				<div class="search-bar flex-grow-1" style="margin-left:20%;">
-					<div class="position-relative search-bar-box">
-						<form id="annuite_form" class="form" action="{{ path('app_avis_index') }}" enctype="multipart/form-data" method="GET">
-							<input type="text" name="search" style="border-radius:20px;border: 2px solid #aeb8ff  " class="form-control search-control" id="placeholder1" placeholder="Rechercher...">
-						</form>
-						<span class="position-absolute top-50 search-show translate-middle-y">
-							<i class='bx bx-search' style="color:#aeb8ff"></i>
-						</span>
-						<span class="position-absolute top-50 search-close translate-middle-y">
-							<i class='bx bx-x' style="color:white"></i>
-						</span>
+	<!--breadcrumb-->
+	<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+		<div style="color:#758afd;font-size:25px;font-style:bold">Avis</div>
+		<div class="search-bar flex-grow-1" style="margin-left:30%;">
+			<div class="position-relative search-bar-box">
+				<form id="annuite_form" class="form" action="{{ path('app_avis_index') }}" enctype="multipart/form-data" method="GET">
+					<input type="text" name="search" style="border-radius:20px;border: 2px solid #aeb8ff  " class="form-control search-control" id="placeholder1" placeholder="Rechercher...">
+				</form>
+				<span class="position-absolute top-50 search-show translate-middle-y">
+					<i class='bx bx-search' style="color:#aeb8ff"></i>
+				</span>
+				<span class="position-absolute top-50 search-close translate-middle-y">
+					<i class='bx bx-x' style="color:white"></i>
+				</span>
+			</div>
+		</div>
+	</div>
+	<!--end breadcrumb-->
+	{# ------------------------------------------------------------------------------------------- #}
+	<center>
+		<div class="card" style="width:70%;border-radius: 25px;height:550px;background-color:#d2d9fc">
+			<center>
+				<div class="card" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);margin-top:20px;width:95%;border-radius:12px;height:35px;background-color:white">
+					<div style="display: flex;">
+						<label style="color:#241b7c;font-weight: bold;position: absolute;top: 7px; left: 10px;">Personne</label>
+						<label style="color:#241b7c;font-weight: bold;position: absolute;top: 7px; left: 170px">Note
+						</label>
+						<label style="color:#241b7c;font-weight: bold;position: absolute;top: 7px; left: 260px">Commentaire</label>
+						<label style="color:#241b7c;font-weight: bold;position: absolute;top: 7px; left: 380px">Sous service</label>
+						<label style="color:#241b7c;font-weight: bold;position: absolute;top: 7px; left: 550px;">Date
+						</label>
+						<label style="color:#241b7c;position: absolute;top: 7px; left: 92%; font-weight: bold;">Actions</label>
 					</div>
 				</div>
-			</div>
-			<!--end breadcrumb-->
-			<hr/>
-			
-			<div class="card">
-				<div class="card-body">
-					<div class="table-responsive">
-						<table id="example" class="table table-bordered " style="width:100%;border-color:#aeb8ff;border-radius:30px">
-							<thead>
-								<tr style="color:#27187f">
-									<th style="text-align:center">Personne</th>
-									<th style="text-align:center">Note</th>
-									<th style="text-align:center">Commentaire</th>
-									<th style="text-align:center">Sous Service</th>
-									<th style="text-align:center">Date</th>
-									<th style="text-align:center">Action</th>
-								</tr>
-							</thead>
-							<tbody>
-								{% for avis in avis %}
-									<tr style="color:#27187f">
-										<td style="text-align:center">{{avis.pers.prenomPers}}
-											{{avis.pers.nomPers}}</td>
-										<td style="text-align:center">{{avis.rating}}</td>
-										<td style="text-align:center">{{avis.comment}}</td>
-										<td style="text-align:center">{{avis.idService.nom}}</td>
-										<td style="text-align:center">{{avis.date|date('Y-m-d H:i:s')}}</td>
-										<td style="text-align:center">
-										{{ include('templates_back/avis/_delete_form.html.twig') }}
-											{# <form method="post" action="{{ path('app_avis_delete', {'idAv': avis.idAv}) }}" onsubmit="return confirm('Etes-vous sure de vouloir supprimer cet avis ?');">
-												<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ avis.idAv) }}">
-												<button style="margin-right:5px;border-radius:10px;background-color:#ff8601;border-color:#ff8601;color:white">Supprimer</button>
-											</form> #}
-											{# <button style="border-radius:20px;background-color:#758afd;border-color:#758afd;color:white">Modifier</button> #}
-										</td>
-									</tr>
-								{% endfor %}
-							</tbody>
-							<tfoot>
-								<tr style="color:#27187f">
-									<th style="text-align:center">Personne</th>
-									<th style="text-align:center">Note</th>
-									<th style="text-align:center">Commentaire</th>
-									<th style="text-align:center">Sous Service</th>
-									<th style="text-align:center">Date</th>
-									<th style="text-align:center">Action</th>
-								</tr>
-							</tfoot>
-						</table>
-						{% if avis.totalItemCount > 0 %}
-				
-					<div class="pagination justify-content-center">
+				{% if avis is not empty %}
+					{% for avis in avis %}
+						<div class="card" style="margin-top:-10px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);width:95%;border-radius:20px;height:50px;background-color:white">
+							<div style="display: flex;">
+								<label style="color:#241b7c;position: absolute;top: 15px; left: 20px">{{avis.pers.prenomPers}}
+									{{avis.pers.nomPers}}</label>
+								<label style="color:#241b7c;position: absolute;top: 15px; left: 180px">{{avis.rating}}</label>
+								<label style="color:#241b7c;position: absolute;top: 15px; left: 280px; max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{avis.comment}}</label>
+								<label style="color:#241b7c;position: absolute;top:15px; left: 400px;">{{avis.idService.nom}}</label>
+								<label style="color:#241b7c;position: absolute;top: 15px; left: 500px">{{avis.date|date('Y-m-d H:i:s')}}</label>
+								<div style="display: flex; align-items:center;text-align:center;color:#241b7c;position: absolute;top: 10px; left: 92%; font-weight: bold;">
+									{{ include('templates_back/avis/_delete_form.html.twig') }}
+
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				{% else %}
+					<div class="placeholder-content">
+						<img
+						style="height:250px;width:250px" class="light-image" src="{{asset('assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/>
+						{# <img class="dark-image" src="{{asset('assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/> #}
+						<h3 class="dark-inverted">Aucun avis' !</h3>
+						<p>il n'existe aucun avis pour le moment 
+						</p>
+					</div>
+				{% endif %}
+				{% if avis.totalItemCount > 0 %}
+					<div class="pagination justify-content-center" style="position: absolute;top: 85%; left: 35%;margin-top:10px;">
 						{{ knp_pagination_render(avis,'bootstrap_v4_pagination.html.twig') }}
 					</div>
-					
 				{% endif %}
-					</div>
-				</div>
-			</div>
+				<br>
+			</center>
+		</div>
+	</center>
+	{# ------------------------------------------------------------------------------------------- #}
 {% endblock %}

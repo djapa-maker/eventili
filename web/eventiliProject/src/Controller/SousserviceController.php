@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-
+//---------------------------------------------------------------------------------------
 use App\Entity\CategEvent;
 use App\Entity\Sousservice;
 use App\Entity\Service;
@@ -10,6 +10,7 @@ use App\Entity\Personne;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Repository\ImagePersRepository;
 use App\Form\SousserviceType;
+use App\Form\SousserviceType_edit;
 use App\Repository\SousserviceRepository;
 use App\Repository\ServiceRepository;
 use App\Repository\CategEventRepository;
@@ -22,12 +23,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+//---------------------------------------------------------------------------------------
 #[Route('/sousservice')]
 class SousserviceController extends AbstractController
 {
+
     #[Route('/', name: 'app_sousservice_index', methods: ['GET'])]
     public function index(
-        EntityManagerInterface $em,
         SousserviceRepository $SousserviceRepository,
         ServiceRepository $ServRepository,
         CategEventRepository $CategEventRepository,
@@ -37,14 +39,12 @@ class SousserviceController extends AbstractController
         ImagessRepository $ImagessRepository,
         PaginatorInterface $paginator,
         // ImagessController $c
-
     ): Response {
         // $c->test();
         $personne = $session->get('id');
         $idPerss = $session->get('personne');
         $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
         $images = array_reverse($images);
-
         if (!empty($images)) {
             $i = $images[0];
             $last = $i->getLast();
@@ -55,8 +55,7 @@ class SousserviceController extends AbstractController
         $last = $session->get('last');
         $search = $request->query->get('search1');
         $filter = null;
-        $filter = $request->query->get('inputfilter');
-
+        $filter = $request->get('inputfilter');
         if ($filter) {
             $SousService = $SousserviceRepository->getAllByServiceName($filter);
         } else if ($search) {
@@ -64,7 +63,17 @@ class SousserviceController extends AbstractController
         } else {
             $SousService = $SousserviceRepository->findAll();
         }
-        $imagess=$ImagessRepository->findAll();
+        $listimg = [];
+        foreach ($SousService as $serv) {
+            $firstimg = $ImagessRepository->findBySousService($serv);
+            if (!empty($firstimg)) {
+                $fimg = $firstimg[0];
+                $listimg[] = $fimg;
+            }
+        }
+
+        // $SousService = $SousserviceRepository->findOneByName($search);
+        $imagess = $ImagessRepository->findAll();
         foreach ($SousService as $s) {
             $checkboxes = explode(',', $s->getIdEventcateg());
             $list = [];
@@ -77,20 +86,21 @@ class SousserviceController extends AbstractController
         $service = $ServRepository->findAll();
         $query = $SousService;
         $pagination = $paginator->paginate(
-        $query,
-        $request->query->getInt('page', 1),
-        2 // limit per page
-    );
+            $query,
+            $request->query->getInt('page', 1),
+            9 // limit per page
+        );
         return $this->render('templates_back/sousservice/index.html.twig', [
             'sousservices' => $pagination,
-            'imagess'=>$imagess,
+            'imagess' => $imagess,
             'options' => $service,
             'personne' => $personne,
             'eventCat' => $CategEventRepository->findAll(),
             'last' => $last,
+            'firstimg' =>  $listimg,
+            'fimg'=>$fimg
         ]);
     }
-
     //-------------------------------------------------------------------------------------------------
     #[Route('/new', name: 'app_sousservice_new', methods: ['GET', 'POST'])]
     public function new(Request $request, SessionInterface $session, ImagePersRepository $imagePersRepository, CategEventRepository $CategEventRepository, PersonneRepository $PersonneRepository, SousserviceRepository $SousserviceRepository, ImagessRepository $imagessRepository, ServiceRepository $ServiceRepository): Response
@@ -99,7 +109,6 @@ class SousserviceController extends AbstractController
         $idPerss = $session->get('personne');
         $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
         $images = array_reverse($images);
-
         if (!empty($images)) {
             $i = $images[0];
             $last = $i->getLast();
@@ -108,32 +117,68 @@ class SousserviceController extends AbstractController
         }
         $session->set('last', $last);
         $last = $session->get('last');
+        //----------------------------------------------
         $ss = new Sousservice();
         $form = $this->createForm(SousserviceType::class, $ss);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $imageFile = $form->get('image')->getData();
-            if ($imageFile) {
-                $imageFilename = uniqid() . '.' . $imageFile->guessExtension();
-                $imageFile->move(
-                    $this->getParameter('images_directory'),
-                    $imageFilename  //configured fel config service.yaml                  
-                );
-                $ss->setImage($imageFilename);
-            }
-            // ----------------------------------------
-            $catev = $request->get('my-checkbox');
-            $selectedCheckboxes = implode(',', $catev);
-            $ss->setIdEventcateg($selectedCheckboxes);
-            $ss->setIdPers($PersonneRepository->findOneByIdPers(18));
-            $ss->setNote(0);
-            $SousserviceRepository->save($ss, true);
-            return $this->redirectToRoute('app_imagess_new', [
-                'idss' => $ss->getId(),
-                'personne' => $personne,
-                'last' => $last,
+        $errorMessage = null;
+        $errorMessage1 = null;
 
-            ], Response::HTTP_SEE_OTHER);
+        //-----------------------------------------------
+        if ($form->isSubmitted()) {
+            $cat = $request->request->get('my-checkbox');
+            $desc = $form->get('description')->getData();
+            $imag = $form->get('imagess')->getData();
+            //------------------------------------------
+            if ($cat) {
+                $formIsValid1 = true;
+            } else {
+                $errorMessage = "selectionner au moin une categorie ";
+                $formIsValid1 = false;
+            }
+            //-----------------------------------------
+            if ($desc) {
+                $formIsValid = true;
+            } else {
+                $formIsValid = false;
+            }
+            //------------------------------------------
+            if ($imag ) {
+                $formIsValid2 = true;
+            } else {
+                $errorMessage1 = "selectionner au moin une image ";
+                $formIsValid2 = false;
+            }
+            //-----------------------------------------
+            if ($formIsValid && $formIsValid1 && $formIsValid2 && $form->isValid()) {
+                //----------------------------------------
+                $imageFile = $form->get('imagess')->getData();
+                foreach ($imageFile as $imageFile) {
+                    $imageFilename = md5(uniqid()) . '.' . $imageFile->guessExtension();
+                    $imageFile->move(
+                        $this->getParameter('images_directory'),
+                        $imageFilename  //configured fel config service.yaml                  
+                    );
+                    $imageEntity = new Imagess();
+                    $imageEntity->setImg($imageFilename);
+                    $ss->addImagess($imageEntity);
+                }
+                // ----------------------------------------
+                $catev = $request->request->get('my-checkbox');
+                $selectedCheckboxes = implode(',', $catev);
+                $ss->setIdEventcateg($selectedCheckboxes);
+                $ss->setIdPers($PersonneRepository->findOneByIdPers(18));
+                $ss->setNote(0);
+                // $SousserviceRepository->save($ss, true);
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($ss);
+                $entityManager->flush();
+                return $this->redirectToRoute('app_sousservice_index', [
+                    // 'idss' => $ss->getId(),
+                    // 'personne' => $personne,
+                    // 'last' => $last,
+                ], Response::HTTP_SEE_OTHER);
+            }
         }
         return $this->renderForm('templates_back/sousservice/new.html.twig', [
             'eventCat' => $CategEventRepository->findAll(),
@@ -142,6 +187,8 @@ class SousserviceController extends AbstractController
             'form' => $form,
             'personne' => $personne,
             'last' => $last,
+            'errorMessage' => $errorMessage,
+            'errorMessage1' => $errorMessage1,
         ]);
     }
     //-------------------------------------------------------------------------------------------------
@@ -170,13 +217,13 @@ class SousserviceController extends AbstractController
     }
     //-------------------------------------------------------------------------------------------------
     #[Route('/{id}/edit', name: 'app_sousservice_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, SessionInterface $session, ImagePersRepository $imagePersRepository, CategEventRepository $CategEventRepository, PersonneRepository $PersonneRepository, Sousservice $sousservice, SousserviceRepository $SousserviceRepository): Response
+    public function edit(Request $request, ImagessRepository $ImagessRepository, SessionInterface $session, ImagePersRepository $imagePersRepository, CategEventRepository $CategEventRepository, PersonneRepository $PersonneRepository, Sousservice $sousservice, SousserviceRepository $SousserviceRepository): Response
     {
         $personne = $session->get('id');
         $idPerss = $session->get('personne');
         $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
         $images = array_reverse($images);
-
+        $iml = $ImagessRepository->findBysousService($sousservice);
         if (!empty($images)) {
             $i = $images[0];
             $last = $i->getLast();
@@ -185,39 +232,71 @@ class SousserviceController extends AbstractController
         }
         $session->set('last', $last);
         $last = $session->get('last');
-        $form = $this->createForm(SousserviceType::class, $sousservice);
+
+        $form = $this->createForm(SousserviceType_edit::class, $sousservice);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $imageFile = $form->get('image')->getData();
-            if ($imageFile) {
-                $imageFilename = uniqid() . '.' . $imageFile->guessExtension();
+        $errorMessage = null;
+        $errorMessage1 = null;
+        $checkboxes = explode(',', $sousservice->getIdEventcateg());
+        $list = [];
+        foreach ($checkboxes as $c) {
+            $list[] = $CategEventRepository->findOneByIdCateg($c);
+        }
+        if ($form->isSubmitted()) {
+
+            $cat = $request->request->get('my-checkbox');
+            $desc = $form->get('description')->getData();
+            $imag = $form->get('imagess')->getData();
+            if ($cat) {
+                $formIsValid = true;
+            } else {
+                $errorMessage = "il faut selectionner au moin une categorie ";
+                $formIsValid = false;
+            }
+            if ($desc) {
+                $formIsValid1 = true;
+            } else {
+                $errorMessage = "merci d'inserer une description ";
+                $formIsValid1 = false;
+            }
+            $imageFile = $form->get('imagess')->getData();
+            foreach ($imageFile as $imageFile) {
+
+                $imageFilename = md5(uniqid()) . '.' . $imageFile->guessExtension();
                 $imageFile->move(
                     $this->getParameter('images_directory'),
                     $imageFilename  //configured fel config service.yaml                  
                 );
-                $sousservice->setImage($imageFilename);
+                $imageEntity = new Imagess();
+                $imageEntity->setImg($imageFilename);
+                $sousservice->addImagess($imageEntity);
             }
-            // ----------------------------------------
-            $catev = $request->get('my-checkbox');
-            $selectedCheckboxes = implode(',', $catev);
-            $sousservice->setIdEventcateg($selectedCheckboxes);
-            $sousservice->setIdPers($PersonneRepository->findOneByIdPers(18));
-            $sousservice->setNote(0);
-            $SousserviceRepository->save($sousservice, true);
-            return $this->redirectToRoute('app_imagess_edit', [
-                'idss' => $sousservice->getId(),
-                'personne' => $personne,
-                'last' => $last,
 
-            ], Response::HTTP_SEE_OTHER);
+            // ----------------------------------------
+            if ($formIsValid && $formIsValid1  && $form->isValid()) {
+                $catev = $request->get('my-checkbox');
+                $selectedCheckboxes = implode(',', $catev);
+                $sousservice->setIdEventcateg($selectedCheckboxes);
+                $sousservice->setIdPers($PersonneRepository->findOneByIdPers(18));
+                $sousservice->setNote(0);
+                // $sousservice->setImagess($iml[0]->getImg());
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($sousservice);
+                $entityManager->flush();
+                return $this->redirectToRoute('app_sousservice_index', [], Response::HTTP_SEE_OTHER);
+            }
         }
-        return $this->renderForm('templates_back/sousservice/new.html.twig', [
+
+        return $this->renderForm('templates_back/sousservice/edit.html.twig', [
             'eventCat' => $CategEventRepository->findAll(),
-            'selectedCategories' => "",
+            'selectedCategories' => $list,
             'sousservice' => $sousservice,
             'form' => $form,
             'personne' => $personne,
             'last' => $last,
+            'imglist' => $iml,
+            'errorMessage' => $errorMessage,
+            'errorMessage1' => $errorMessage1,
         ]);
     }
     //-------------------------------------------------------------------------------------------------
@@ -370,4 +449,5 @@ class SousserviceController extends AbstractController
             'last' => $last,
         ]);
     }
+    //---------------------------------------------------------------------------------------    
 }

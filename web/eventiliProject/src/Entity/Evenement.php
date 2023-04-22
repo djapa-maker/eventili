@@ -6,6 +6,8 @@ use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\EvenementRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -60,13 +62,18 @@ class Evenement
         pattern: '/^\d+$/',
         message: 'Le prix doit être un entier positif'
     )]
+    #[Assert\Range(
+        min: 0,
+        max: 9999,
+        notInRangeMessage: 'Le nombre de tickets ne doit pas dépasser {{ max }} chiffres'
+    )]
     private ?int $limiteparticipant = null;
 
 
     #[ORM\Column]
     #[Assert\NotBlank(message: 'Merci de remplir le prix')]
     #[Assert\Regex(
-        pattern: '/^\d+(\.\d{1,3})?$/',
+        pattern: '/^(?:\d{1,4}|\d{0,4}\.\d{1,3})$/',
         message: 'Le prix doit être positif et ne pas dépasser 3 chiffres après la virgule'
     )]
     // #[Assert\PositiveOrZero]
@@ -83,6 +90,17 @@ class Evenement
     #[ORM\ManyToOne(targetEntity: Personne::class)]
     #[ORM\JoinColumn(name: "id_pers", referencedColumnName: "id_pers")]
     private ?Personne $idPers = null;
+
+
+    #[ORM\OneToMany(mappedBy: 'idEven',targetEntity: Imgev::class, orphanRemoval: true, cascade: ['persist'])]
+    private $imgev;
+
+
+    public function __construct()
+    {
+        $this->imgev = new ArrayCollection();
+    }
+
 
     public function getIdEv(): ?int
     {
@@ -205,6 +223,38 @@ class Evenement
     public function setIdPers(?Personne $idPers): self
     {
         $this->idPers = $idPers;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Images[]
+     */
+    
+    public function getImages(): Collection
+    {
+        return $this->imgev;
+    }
+
+    public function addImage(Imgev $image): self
+    {
+        if (!$this->imgev->contains($image)) {
+            $this->imgev[] = $image;
+            $image->setIdEven($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Imgev $image): self
+    {
+        if ($this->imgev->contains($image)) {
+            $this->imgev->removeElement($image);
+            // set the owning side to null (unless already changed)
+            if ($image->getIdEven() === $this) {
+                $image->getIdEven(null);
+            }
+        }
 
         return $this;
     }
