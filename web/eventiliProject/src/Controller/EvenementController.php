@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ImagePersRepository;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 
 #[Route('/evenement')]
 class EvenementController extends AbstractController
@@ -22,7 +23,7 @@ class EvenementController extends AbstractController
 
 
     #[Route('/', name: 'app_evenement_index', methods: ['GET'])]
-    public function index(ImagePersRepository $imagePersRepository, EvenementRepository $evenementRepository, SessionInterface $session,CategEventRepository $categEventRepository, ImgevRepository $imgevRepository): Response
+    public function index(ImagePersRepository $imagePersRepository, EvenementRepository $evenementRepository, SessionInterface $session, CategEventRepository $categEventRepository, ImgevRepository $imgevRepository): Response
     {
         $personne = $session->get('id');
         $idPerss = $session->get('personne');
@@ -36,8 +37,10 @@ class EvenementController extends AbstractController
         }
         $session->set('last', $last);
         $last = $session->get('last');
+
+
         $Categ = $categEventRepository->findAll();
-        $evenements = $evenementRepository->findAll();
+        $evenements = $evenementRepository->findBy(['idPers' => $idPerss]);
         $imgev = [];
 
         foreach ($evenements as $event) {
@@ -52,7 +55,7 @@ class EvenementController extends AbstractController
     }
 
     #[Route('/new', name: 'app_evenement_new', methods: ['GET', 'POST'])]
-    public function new(SessionInterface $session,ImagePersRepository $imagePersRepository,Request $request, EvenementRepository $evenementRepository, PersonneRepository $PersonneRepository): Response
+    public function new(SessionInterface $session, ImagePersRepository $imagePersRepository, Request $request, EvenementRepository $evenementRepository, PersonneRepository $PersonneRepository): Response
     {
         $personne = $session->get('id');
         $idPerss = $session->get('personne');
@@ -66,6 +69,8 @@ class EvenementController extends AbstractController
         }
         $session->set('last', $last);
         $last = $session->get('last');
+
+
         $evenement = new Evenement();
         $form = $this->createForm(EvenementType::class, $evenement);
         $form->handleRequest($request);
@@ -118,53 +123,6 @@ class EvenementController extends AbstractController
                     }
                 }
             }
-            // //-------------------
-            // if ($date === "") {
-            //     $errorMessage = "La date est obligatoire.";
-            //     $formIsValid = false;
-            //     // var_dump('Iam invalid and checking asserts aswell',$date);
-            //     // die();
-            // } else {
-            //     $today = new \DateTime();
-            //     $eventDate = new \DateTime($date);
-            //     if ($eventDate <= $today) {
-            //         $errorMessage2 = "La date ne doit pas être antérieure à aujourd'hui.";
-            //         $formIsValid = false;
-            //     }
-            //     if ($startTimeStamp > $endTimeStamp) {
-            //         $errorMessage3 = "Heure debut doit etre inférieure à l'heure fin.";
-            //         $formIsValid = false;
-            //     } else {
-            //         if (empty($images) || $images[0]->getError() == UPLOAD_ERR_NO_FILE) {
-            //             $errorMessage4 = "Il faut choisir au moin une image";
-            //             $formIsValid = false;
-            //         }
-            // }
-
-            //     if (empty($images) || $images[0]->getError() == UPLOAD_ERR_NO_FILE) {
-            //         $errorMessage4 = "Il faut choisir au moin une image";
-            //         $formIsValid = false;
-            //     } else {
-            //         var_dump($images);
-            //         die();
-            //         $formIsValid = $form->isValid();
-            //     }
-            //}
-
-
-
-            // foreach ($images as $image) {
-            //     // if (!in_array($image->getMimeType(), ['image/jpeg', 'image/png', 'image/gif'])) {
-            //     //     $errorMessage4 = "Merci d'entrer un image valide ";
-            //     // }
-            //     $fichier = md5(uniqid()) . '.' . $image->guessExtension();
-            //     $image->move(
-            //         $this->getParameter('images_directory'),
-            //         $fichier
-            //     );
-
-
-            // }
 
             if ($formIsValid) {
                 $dateDebString = $date . ' ' . $startTime;
@@ -191,7 +149,7 @@ class EvenementController extends AbstractController
                     $evenement->setLimiteparticipant(0);
                 }
 
-                $evenement->setIdPers($PersonneRepository->findOneByIdPers(19));
+                $evenement->setIdPers($PersonneRepository->findOneByIdPers($personne));
                 //$evenementRepository->save($evenement, true);
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($evenement);
@@ -212,7 +170,7 @@ class EvenementController extends AbstractController
         ]);
     }
 
-    
+
     // #[Route('/{idEv}', name: 'app_evenement_delete')]
     // public function delete( EvenementRepository $evenementRepository, $idEv ): Response
     // {
@@ -222,17 +180,19 @@ class EvenementController extends AbstractController
     // }
 
     #[Route('/{idEv}', name: 'app_evenement_delete', methods: ['POST'])]
-    public function delete(Request $request, Evenement $evenement, EvenementRepository $evenementRepository): Response
+    public function delete(FlashyNotifier $flashy, Request $request, Evenement $evenement, EvenementRepository $evenementRepository): Response
     {
         if ($this->isCsrfTokenValid('delete' . $evenement->getIdEv(), $request->request->get('_token'))) {
             $evenementRepository->remove($evenement, true);
+            $titre = $evenement->getTitre();
+            $flashy->success("$titre a été supprimé !");
         }
 
         return $this->redirectToRoute('app_evenement_index', [], Response::HTTP_SEE_OTHER);
     }
 
 
-    
+
     // #[Route('/{idEv}', name: 'app_evenement_show', methods: ['GET'])]
     // public function show(Evenement $evenement): Response
     // {
@@ -258,7 +218,4 @@ class EvenementController extends AbstractController
             'form' => $form,
         ]);
     }
-
-
-
 }

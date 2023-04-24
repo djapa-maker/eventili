@@ -11,8 +11,14 @@
 	</div>
 {% endblock %}
 {% block content %}
+	<link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
 
+	{{ include('@MercurySeriesFlashy/flashy.html.twig') }}
 	<div class="card-grid-toolbar">
 		<div class="control has-icon">
 			<input class="input custom-text-filter" placeholder="Recherche..." data-filter-target=".column">
@@ -63,14 +69,15 @@
 					<div class="column is-16">
 						<article>
 
-							<a href="###">
-
+							<a class="h-modal-trigger" data-modal="details-modal-{{ event.idEv }}">
+							
+							{{ include('templates_front/evenement/modals.html.twig') }}
 								<div>
 									<figure>
 										{% if Img[event.idEv]|length > 0 %}
 											<img src="http://localhost/img/{{ asset(Img[event.idEv][0].imagee) }}" alt=""/>
 										{% else %}
-											<img src="https://picsum.photos/id/1011/800/450" alt=""/>
+											<img src="https://estuario.org/wp-content/uploads/2019/09/image.png" alt=""/>
 										{% endif %}
 										<div class="figLabel">
 											{% if event.prix == 0 %}
@@ -92,7 +99,7 @@
 									</figure>
 									<div class="article-body">
 										<h2>{{event.titre}}</h2>
-										<p style="font-size: small;">{{ event.descriptionEv|slice(0, 170) ~ (event.descriptionEv|length > 190 ? '...' : '') }}</p>
+										<p style="font-size: small;">{{ event.descriptionEv|slice(0, 180) ~ (event.descriptionEv|length > 180 ? '...' : '') }}</p>
 									</div>
 								</div>
 							</a>
@@ -113,18 +120,15 @@
 													</div>
 												</a>
 												<hr class="dropdown-divider">
-												<form method="post" action="{{ path('app_evenement_delete', {'idEv': event.idEv}) }}">
-													<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ event.idEv) }}">
-													<button type="submit" style="background-color:#ff8601;color:white" class="btn">Supprimer</button>
-												</form>
-												{# <a href="{{path('app_evenement_delete',{'idEv':event.idEv}) }}" method="post" class="dropdown-item is-media">
-																									<div class="icon">
-																										<i class="lnil lnil-trash-can-alt-1"></i>
-																									</div>
-																									<div class="meta">
-																										<span>Supprimer</span>
-																									</div>
-																								</a> #}
+												<a class="dropdown-item is-media h-modal-trigger" data-modal="demo-right-actions-modal-{{ event.idEv }}">
+													<div class="icon">
+														<i class="lnil lnil-trash-can-alt-1"></i>
+													</div>
+													<div class="meta">
+														<span>Supprimer</span>
+													</div>
+												</a>
+												
 											</div>
 										</div>
 									</div>
@@ -152,9 +156,27 @@
 
 	</div>
 
+
 	<script>
-		console.log("Hello, world!");
+	$('.owl-carousel').owlCarousel({
+    loop:true,
+    margin:0,
+    nav:true,
+	autoplay:true,
+	autoplayTimeout: 2000,
+	stagePadding: 80,
+    responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:1
+        },
+        1000:{
+            items:1
+        }
+    }
+})
 	</script>
-
-
+	
 {% endblock %}

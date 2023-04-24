@@ -1,0 +1,82 @@
+
+<div id="demo-right-actions-modal-{{ event.idEv }}" class="modal h-modal is-small">
+	<div class="modal-background  h-modal-close"></div>
+	<div class="modal-content">
+		<div class="modal-card">
+			<header class="modal-card-head">
+				<h3>Attention!</h3>
+				<button class="h-modal-close ml-auto" aria-label="close">
+					<i data-feather="x"></i>
+				</button>
+			</header>
+			<div class="modal-card-body">
+				<div class="inner-content">
+					<div class="section-placeholder">
+						<div class="placeholder-content">
+							<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+							<lottie-player src="https://assets10.lottiefiles.com/packages/lf20_Tkwjw8.json" background="transparent" speed="1" style="width: 100px; height: 100px; margin: auto;" loop autoplay></lottie-player>
+							<h3 class="dark-inverted">Êtes-vous sûr de vouloir supprimer cet événement ?</h3>
+							<p>Pour annuler cette action, cliquez sur Annuler.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-card-foot is-centered">
+				<a class="button h-button is-rounded h-modal-close">Annuler</a>
+				<form method="post" action="{{ path('app_evenement_delete', {'idEv': event.idEv}) }}" class="dropdown-item is-media">
+					<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ event.idEv) }}">
+					<button type="submit" style="background-color:#ff8601;color:white" class="button h-button is-raised is-rounded">Confirmer</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+{# ------------------------------------------ #}
+<div id="details-modal-{{ event.idEv }}" class="modal h-modal is-big">
+	<div class="modal-background  h-modal-close"></div>
+	<div class="modal-content">
+		<div class="modal-card">
+			<header class="modal-card-head">
+				<h2 style="font-weight: bold; color: #37105ff; font-size: 18px;" >Detail de {{event.titre}}</h2>
+				<button class="h-modal-close ml-auto" aria-label="close">
+					<i data-feather="x"></i>
+				</button>
+			</header>
+
+			<div class="modal-card-body">
+				<div class="inner-content">
+				<div class="section-placeholder">
+					<div class="owl-carousel owl-theme">
+					
+						{% if Img[event.idEv]|length > 0 %}
+							{% for image in Img[event.idEv] %}
+								<div class="item">
+									<img src="http://localhost/img/{{ image.imagee }}"  style="width:500px; height:350px;" alt=""/>
+								</div>
+							{% endfor %}
+						{% else %}
+							<div class="item">
+								<img src="https://estuario.org/wp-content/uploads/2019/09/image.png" alt=""/>
+							</div>
+						{% endif %}
+					</div>
+				</div>
+					<div class="article-body">
+					
+										<h1 style="font-weight: bold; color: #797bf2; font-size: 16px;">Description:</h1>
+										<p style="font-size: small;">{{ event.descriptionEv }}</p>
+									</div>
+					<div>
+					<h1> Khedmet Bouba houni</h1>
+					</div>
+				</div>
+			</div>
+			<div class="modal-card-foot is-end">
+				{# <a class="button h-button is-rounded h-modal-close">Cancel</a>
+				<a class="button h-button is-primary is-raised is-rounded">Confirm</a> #}
+			</div>
+
+		</div>
+	</div>
+</div>

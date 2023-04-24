@@ -4,13 +4,17 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ImgevRepository;
+use DateTime;
 use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
-// use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
+
 
 
 #[ORM\Entity(repositoryClass: ImgevRepository::class)]
-// #[Vich\Uploadable]
+#[Vich\Uploadable]
+
 class Imgev
 {
     #[ORM\Id]
@@ -18,19 +22,24 @@ class Imgev
     #[ORM\Column]
     private ?int $idImgev=null;
 
-    // #[Vich\UploadableField(mapping: 'images_directory', fileNameProperty: 'imagee')]
-    private ?File $imageFile = null;
-
-
     #[ORM\Column]
     #[Assert\NotBlank(message: 'Merci de remplir la description')]
     private ?String $imagee=null;
 
-
-    #[ORM\ManyToOne(targetEntity: Evenement::class)]
+    #[ORM\ManyToOne(targetEntity: Evenement::class, inversedBy:'imgev')]
     #[ORM\JoinColumn(name: "id_even", referencedColumnName: "id_ev")]
     private ?Evenement $idEven=null;
-    
+
+    // #[Vich\UploadableField(mapping: 'images_directory', fileNameProperty: 'imagee')]
+    // private ?File $imageFile = null;
+
+    private ?DateTime $updatedAt = null;
+
+    public function __construct()
+    {
+        $this->updatedAt = new \DateTime();
+    }
+
 
     // public function setImageFile(?File $imageFile = null): void
     // {
@@ -39,7 +48,7 @@ class Imgev
     //     if (null !== $imageFile) {
     //         // It is required that at least one field changes if you are using doctrine
     //         // otherwise the event listeners won't be called and the file is lost
-    //        // $this->updatedAt = new \DateTimeImmutable();
+    //        $this->updatedAt = new \DateTime();
     //     }
     // }
 
