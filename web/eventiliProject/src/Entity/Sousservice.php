@@ -12,7 +12,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 #[ORM\Entity(repositoryClass: SousserviceRepository::class)]
 class Sousservice
 {
-    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

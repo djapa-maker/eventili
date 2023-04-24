@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : sam. 22 avr. 2023 à 18:29
+-- Généré le : dim. 23 avr. 2023 à 01:38
 -- Version du serveur : 10.4.27-MariaDB
 -- Version de PHP : 8.2.0
 
@@ -114,7 +114,9 @@ INSERT INTO `evenement` (`id_ev`, `titre`, `date_debut`, `date_fin`, `descriptio
 (294, 'bjn', '2023-04-23 00:00:00', '2023-04-23 23:59:00', 'hvb', 'Gratuit', 'Privé', 0, 0, 19, 19),
 (295, 'bjn', '2023-04-23 00:00:00', '2023-04-23 23:59:00', 'hvb', 'Gratuit', 'Privé', 0, 0, 19, 19),
 (296, 'bjn', '2023-05-24 00:00:00', '2023-05-24 23:59:00', 'hvb', 'Gratuit', 'Privé', 0, 0, 19, 19),
-(299, 'fxcgvhb', '2023-04-26 00:00:00', '2023-04-26 23:59:00', 'fghjk', 'Gratuit', 'Privé', 0, 0, 19, 19);
+(299, 'fxcgvhb', '2023-04-26 00:00:00', '2023-04-26 23:59:00', 'fghjk', 'Gratuit', 'Privé', 0, 0, 19, 19),
+(301, 'vbn', '2023-04-28 00:00:00', '2023-04-28 23:59:00', 'vhbjnk,', 'Gratuit', 'Privé', 0, 0, 19, 19),
+(302, 'sdfghjk', '2023-04-25 00:00:00', '2023-04-25 23:59:00', 'wdxfcgvbn,', 'Gratuit', 'Privé', 0, 0, 19, 19);
 
 -- --------------------------------------------------------
 
@@ -151,7 +153,8 @@ INSERT INTO `imagepers` (`id_imp`, `imageP`, `last`, `id_pers`) VALUES
 (28, 'b41e344ac65be32808603451ec2cb60e17e0de95_eventdecordesignlightingnjnyceggsoticeventsnjsbesteventdecoratoreventlightingeventdesignweddingbarmitzvahbatmitzvahgalafundraiser09.jpg', '1656681710445.jpg', 31),
 (29, '1656681710445.jpg', '1656681710445.jpg', 31),
 (32, '1656681710445.jpg', '1656681710445.jpg', 33),
-(33, 'profile.jpg', 'profile.jpg', 34);
+(33, 'profile.jpg', 'profile.jpg', 34),
+(34, '93156_w1024h1024c1cx2343cy1728.jpg', '93156_w1024h1024c1cx2343cy1728.jpg', 35);
 
 -- --------------------------------------------------------
 
@@ -170,8 +173,32 @@ CREATE TABLE `imagess` (
 --
 
 INSERT INTO `imagess` (`idimgss`, `img`, `sous_service`) VALUES
-(218, '88bfdd5fd320c37c19c7d9230f53ad24.jpg', 264),
-(219, '15ad927e386203bada7a32a6b39d69e6.jpg', 264);
+(218, '64441f91c234e.jpg', 264),
+(225, '64443223b9ed9.png', 266),
+(232, '92c1691315ead932d35309cfe1b0edb5.png', 266),
+(233, '05c70c32b4204c5eab5f198ef8af1754.jpg', 266),
+(234, 'e0c1489b34261a1a48624cd9aa6e902f.jpg', 266),
+(235, 'bd30ee739d43e1d0acfd86c928a8e8e5.jpg', 266),
+(236, '32c160f46e65ba7e9fc0072c05f0bd88.jpg', 266),
+(237, '466e9e76cae6297ea0428584b06d9b07.jpg', 266),
+(238, 'bfed279f251d5ebfda4c3824e77e0795.jpg', 266),
+(241, '644428486db57.jpg', 266),
+(246, '6444431628678.jpg', 264),
+(250, 'e7cb231c5278bd0e55869dca6d06c453.png', 267),
+(251, 'eb829559bba199ccc22cd0b39362b2e7.png', 267),
+(252, '0fe057eac0d7853c5d6e7744e7fec514.jpg', 267),
+(253, '6acfbe1c5f7e4329cb337188c9b1f4fe.jpg', 268),
+(254, '32a4e7ca68050cc4d8e4579c303e5348.jpg', 268),
+(255, '8ef3e8ba381c22d7fc0a1cc4da3ebbee.png', 268),
+(256, 'dce3d5f3a8f8a614e35c6cb18dfe4abb.jpg', 269),
+(257, '1c3eb031f9e9971094e86085fd6c2915.jpg', 269),
+(258, '40a8d21ec309eaffc40f5abccae68335.jpg', 269),
+(259, '728e9badf03dffc5d7faf92a8e2c10dd.jpg', 269),
+(260, '7809a26eaf7e658088f0e57e1f258d4f.png', 269),
+(261, '86e0504414bba61e7c063cb1de183a57.png', 269),
+(262, 'd5eb6bd53c1d13ba170daf19adec564d.png', 269),
+(263, '1ecd5b98e30a5b729fc5f6d61f8468af.jpg', 269),
+(264, 'd197c6d88eebfd9bba72b93287369567.jpg', 264);
 
 -- --------------------------------------------------------
 
@@ -194,7 +221,9 @@ INSERT INTO `imgev` (`id_imgev`, `imageE`, `id_even`) VALUES
 (47, '62376dfb39b3508e6fc55ca125ff8f9d.jpg', 294),
 (48, '847c95a2ae9bca885119478ac2e00f61.jpg', 295),
 (49, '05c15e08b5df78f7018205e5720ecf7b.jpg', 296),
-(52, '49f37e7abbcdc6d292c3ac816e04bbad.jpg', 299);
+(52, '49f37e7abbcdc6d292c3ac816e04bbad.jpg', 299),
+(54, 'b3ee73df902568c2d938a5076a8794d2.jpg', 301),
+(55, 'ec486af2d67def31ca1088c847abfc3c.jpg', 302);
 
 -- --------------------------------------------------------
 
@@ -212,19 +241,21 @@ CREATE TABLE `personne` (
   `adresse` varchar(30) NOT NULL,
   `rib` text NOT NULL,
   `role` enum('organisateur','partenaire','admin') NOT NULL,
-  `token` varchar(30) NOT NULL
+  `token` varchar(30) NOT NULL,
+  `is_verified` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Déchargement des données de la table `personne`
 --
 
-INSERT INTO `personne` (`id_pers`, `nom_pers`, `prenom_pers`, `num_tel`, `email`, `mdp`, `adresse`, `rib`, `role`, `token`) VALUES
-(18, 'bhy', 'rabeb', '28899807', 'rabeb.benhajyhaia@esprit.tn', '$2a$10$zpbHApcZ.ZsG2BkMZwC4.eSPST5fDOc5VTx6IHiwWlfqAtFl1v./.', 'tunis', '22222222222222222222', 'admin', ''),
-(19, 'tlili', 'chaima', '28899807', 'chaima.tli10@gmail.com', '$2a$10$l6pEkSQe4hD2i/5sSCbejej2BOHp12765/fE2JqbsksNy7Qpv6kVO', 'ezzahra', '33333333333333333333', 'organisateur', ''),
-(31, 'aaaa', 'aaa', '11111111', 'yesmine.guesmi@esprit.tn', '$2a$10$8JJBt6xrEsOf.p8r8EY0KeGUwZ/4M7cBPDAdposSKaywTd5QI2/Eq', 'aaaaaaaaa', '11111111111111111111', 'admin', 'JfbisNII'),
-(33, 'ben mohamed', 'ali', '99339684', 'tlili.chaima@esprit.tn', '$2a$10$zt3t59O4f3yuSRIcU7S7a.apBpLwS06QK.hSz0yBPgV7He0OhecUS', 'ezzahra', '11111111111111111112', 'admin', ''),
-(34, 'asida', 'asma', '53698741', 'asma@gmail.com', '123456789a', 'tunis', '11111111111111111111', 'organisateur', '');
+INSERT INTO `personne` (`id_pers`, `nom_pers`, `prenom_pers`, `num_tel`, `email`, `mdp`, `adresse`, `rib`, `role`, `token`, `is_verified`) VALUES
+(18, 'bhy', 'rabeb', '28899807', 'rabeb.benhajyhaia@esprit.tn', '$2a$10$zpbHApcZ.ZsG2BkMZwC4.eSPST5fDOc5VTx6IHiwWlfqAtFl1v./.', 'tunis', '22222222222222222222', 'admin', '', 1),
+(19, 'tlili', 'chaima', '28899807', 'chaima.tli10@gmail.com', '$2a$10$l6pEkSQe4hD2i/5sSCbejej2BOHp12765/fE2JqbsksNy7Qpv6kVO', 'ezzahra', '33333333333333333333', 'organisateur', '', 1),
+(31, 'aaaa', 'aaa', '11111111', 'yesmine.guesmi@esprit.tn', '$2a$10$8JJBt6xrEsOf.p8r8EY0KeGUwZ/4M7cBPDAdposSKaywTd5QI2/Eq', 'aaaaaaaaa', '11111111111111111111', 'admin', 'JfbisNII', 0),
+(33, 'ben mohamed', 'ali', '99339684', 'tlili.chaima@esprit.tn', '$2a$10$zt3t59O4f3yuSRIcU7S7a.apBpLwS06QK.hSz0yBPgV7He0OhecUS', 'ezzahra', '11111111111111111112', 'admin', '', 0),
+(34, 'asida', 'asma', '53698741', 'asma@gmail.com', '123456789a', 'tunis', '11111111111111111111', 'organisateur', '', 0),
+(35, 'j', 'j', '11111111', 'rabebbenhajyahia14@gmail.com', '$2y$13$75p1bnqJ/EzopCDCQYIkNujvaFlJtDyQQ88./8dOLVfAP500N9Yea', 'j', '11111111111111111111', 'admin', '5E8fSjZbUjMqce_brBtJzBQjXxjBOG', 1);
 
 -- --------------------------------------------------------
 
@@ -292,8 +323,10 @@ CREATE TABLE `service` (
 --
 
 INSERT INTO `service` (`id_service`, `nom`) VALUES
-(117, 'hgjk'),
-(118, 'iuokl');
+(117, 'musique'),
+(118, 'gateaux'),
+(119, 'lieu'),
+(120, 'Décoration');
 
 -- --------------------------------------------------------
 
@@ -317,7 +350,11 @@ CREATE TABLE `sousservice` (
 --
 
 INSERT INTO `sousservice` (`id`, `nom`, `description`, `prix`, `note`, `id_eventCateg`, `id_service`, `id_Pers`) VALUES
-(264, 'lm', 'n', 5, 0, '20', 117, 18);
+(264, 'lm', 'n', 6, 0, '20,21', 119, 18),
+(266, 'j', 'gjh', 5, 0, '21,22', 118, 18),
+(267, 'hh', 'jj', 5, 0, '20', 117, 18),
+(268, 'dxfcgvhbjn', 'dxfcgvhbjn,', 9, 0, '20', 117, 18),
+(269, 'fdghjkl', 'dsxfgvbhnj,k;', 85, 0, '19,20', 117, 18);
 
 -- --------------------------------------------------------
 
@@ -511,31 +548,31 @@ ALTER TABLE `chat`
 -- AUTO_INCREMENT pour la table `evenement`
 --
 ALTER TABLE `evenement`
-  MODIFY `id_ev` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=300;
+  MODIFY `id_ev` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=303;
 
 --
 -- AUTO_INCREMENT pour la table `imagepers`
 --
 ALTER TABLE `imagepers`
-  MODIFY `id_imp` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id_imp` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT pour la table `imagess`
 --
 ALTER TABLE `imagess`
-  MODIFY `idimgss` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=220;
+  MODIFY `idimgss` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=265;
 
 --
 -- AUTO_INCREMENT pour la table `imgev`
 --
 ALTER TABLE `imgev`
-  MODIFY `id_imgev` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id_imgev` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT pour la table `personne`
 --
 ALTER TABLE `personne`
-  MODIFY `id_pers` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id_pers` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT pour la table `reclamation`
@@ -559,13 +596,13 @@ ALTER TABLE `reservation`
 -- AUTO_INCREMENT pour la table `service`
 --
 ALTER TABLE `service`
-  MODIFY `id_service` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
+  MODIFY `id_service` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
 
 --
 -- AUTO_INCREMENT pour la table `sousservice`
 --
 ALTER TABLE `sousservice`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=265;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=270;
 
 --
 -- AUTO_INCREMENT pour la table `sponsoring`
