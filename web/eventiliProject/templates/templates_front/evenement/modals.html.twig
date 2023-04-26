@@ -1,4 +1,3 @@
-
 <div id="demo-right-actions-modal-{{ event.idEv }}" class="modal h-modal is-small">
 	<div class="modal-background  h-modal-close"></div>
 	<div class="modal-content">
@@ -38,7 +37,8 @@
 	<div class="modal-content">
 		<div class="modal-card">
 			<header class="modal-card-head">
-				<h2 style="font-weight: bold; color: #37105ff; font-size: 18px;" >Detail de {{event.titre}}</h2>
+				<h2 style="font-weight: bold; color: #37105ff; font-size: 18px;">Detail de
+					{{event.titre}}</h2>
 				<button class="h-modal-close ml-auto" aria-label="close">
 					<i data-feather="x"></i>
 				</button>
@@ -46,35 +46,87 @@
 
 			<div class="modal-card-body">
 				<div class="inner-content">
-				<div class="section-placeholder">
-					<div class="owl-carousel owl-theme">
-					
-						{% if Img[event.idEv]|length > 0 %}
-							{% for image in Img[event.idEv] %}
-								<div class="item">
-									<img src="http://localhost/img/{{ image.imagee }}"  style="width:500px; height:350px;" alt=""/>
-								</div>
-							{% endfor %}
-						{% else %}
-							<div class="item">
-								<img src="https://estuario.org/wp-content/uploads/2019/09/image.png" alt=""/>
-							</div>
-						{% endif %}
-					</div>
-				</div>
-					<div class="article-body">
-					
-										<h1 style="font-weight: bold; color: #797bf2; font-size: 16px;">Description:</h1>
-										<p style="font-size: small;">{{ event.descriptionEv }}</p>
+					<div class="section-placeholder">
+						<div class="owl-carousel owl-theme">
+
+							{% if Img[event.idEv]|length > 0 %}
+								{% for image in Img[event.idEv] %}
+									<div class="item">
+										<img src="http://localhost/img/{{ image.imagee }}" style="width:500px; height:350px;" alt=""/>
 									</div>
-					<div>
-					<h1> Khedmet Bouba houni</h1>
+								{% endfor %}
+							{% else %}
+								<div class="item">
+									<img src="https://estuario.org/wp-content/uploads/2019/09/image.png" alt=""/>
+								</div>
+							{% endif %}
+						</div>
 					</div>
+					<div class="article-body">
+
+						<h1 style="font-weight: bold; color: #797bf2; font-size: 16px;">Description:</h1>
+						<p style="font-size: small;">{{ event.descriptionEv }}</p>
+					</div>
+					<div class="article-body">
+					<h1 style="font-weight: bold; color: #797bf2; font-size: 16px;">Sous services réservés</h1>
+					</div>
+					{% if sous is not empty  %}
+						{% for s in sous %}
+							{% if loop.index % 2 == 1 %}
+								<div style="display: flex; justify-content: left;">
+								{% endif %}
+
+								<div style="width:370px;height:60px;margin-bottom:20px;margin-left:10px;box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);border-radius:15px">
+									<!-- Your card code goes here -->
+										<div class="media-flex-center"> 
+										{% for n in firstimg %}
+											{% if n.sousService.id == s.id %}
+												<div class="h-avatar" style="margin-top:10px;margin-left:10px;">
+													<img class="avatar is-squared" src="http://localhost/img/{{n.img}}" data-demo-src="assets/img/photo/demo/dashboards/lifestyle/1.jpg" alt="">
+												</div>
+											{% endif %}
+
+										{% endfor %}
+										<div class="flex-meta">
+											<span>{{s.nom}}</span>
+											<span>{{s.idPers.prenomPers}} {{s.idPers.nomPers}}</span>
+										</div>
+										<div class="button" style="margin-left:30px;margin-top:12px;border:none;width:60px">
+											<span class="icon is-medium" style="font-weight:bold;color:#ff8601">
+												<i class="fas fa-coins" style="margin-right:5px"></i>
+												{{s.prix}}
+												dt
+											</span>
+										</div>
+										<div class="flex-end" style="margin-right:10px;margin-top:12px">
+											<form action="{{ path('app_avis_new', {'idService': s.id}) }}" method="POST">
+												<button type="submit" class="button is-circle">
+
+													<span class="icon is-small">
+														<i data-feather="arrow-right"></i>
+													</span>
+												</button>
+											</form>
+										</div>
+									</div>
+									<!-- End of your card code -->
+								</div>
+								{% if loop.index % 2 == 0 or loop.last %}
+								</div>
+							{% endif %}
+						{% endfor %}
+						{% else %}
+						<p>wxcvbnh</p>
+						<!-- Code to handle when there are no cards to display -->
+					{% endif %}
+
+					{# </h1>
+																																								</div> #}
 				</div>
 			</div>
-			<div class="modal-card-foot is-end">
-				{# <a class="button h-button is-rounded h-modal-close">Cancel</a>
-				<a class="button h-button is-primary is-raised is-rounded">Confirm</a> #}
+			<div
+				class="modal-card-foot is-end">{# <a class="button h-button is-rounded h-modal-close">Cancel</a>
+																																																												<a class="button h-button is-primary is-raised is-rounded">Confirm</a> #}
 			</div>
 
 		</div>

@@ -17,6 +17,7 @@ use App\Repository\ImagePersRepository;
 #[Route('/imagessfront')]
 class ImagessFrontController extends AbstractController
 {
+    //affichage front ------------------------------------------------------------------------------------------------
     #[Route('/', name: 'app_imagess_index', methods: ['GET'])]
     public function index(ImagessRepository $imagessRepository, SessionInterface $session, ImagePersRepository $imagePersRepository): Response
     {
@@ -39,7 +40,7 @@ class ImagessFrontController extends AbstractController
             'last' => $last,
         ]);
     }
-    //------------------------------------------------------------------------------------------------
+    //ajout img front ------------------------------------------------------------------------------------------------
     #[Route('/new', name: 'app_imagess_new', methods: ['GET', 'POST'])]
     public function new(Request $request, SousserviceRepository $SousserviceRepository, ImagessRepository $imagessRepository, SessionInterface $session, ImagePersRepository $imagePersRepository): Response
     {
@@ -63,37 +64,13 @@ class ImagessFrontController extends AbstractController
         $form = $this->createForm(ImagessType::class, $imagess);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            //image upload
             $imageFile = $form->get('imageFile')->getData();
-            // $tabImg=[];
-            // foreach($imageFiles as $imageFile)
-            // {
-            // if ($imageFile) {
-            //     $imageFilename = uniqid() . '.' . $imageFile->guessExtension();
-            //     $imageFile->move(
-            //         $this->getParameter('images_directory'),
-            //         $imageFilename  //configured fel config service.yaml                  
-            //     );
-            //     // $tabImg[]=$imageFilename;
-            //     // foreach($tabImg as $t){
-            //     $imagess->setImg($imageFilename);
-            //     // }
-            // }
             $imagess->setSousService($SousserviceRepository->findOneById($ss));
             $imagessRepository->save($imagess, true);
-            // }
-            //setting image with sous service image and new images
-            // $i->setImg($SousserviceRepository->findOneById($ss)->getImagess());
-            // $i->setSousService($SousserviceRepository->findOneById($ss));
-            // $imagessRepository->save($i, true);
+
             return $this->redirectToRoute('app_sousservice_index', [], Response::HTTP_SEE_OTHER);
         }
-        //in case there's no image added in the extra image page
-        //setting image only with sous service image  
         else if ($form->isSubmitted()) {
-            // $i->setImg($SousserviceRepository->findOneById($ss)->getImagess());
-            // $i->setSousService($SousserviceRepository->findOneById($ss));
-            // $imagessRepository->save($i, true);
             return $this->redirectToRoute('app_sousservice_index', [], Response::HTTP_SEE_OTHER);
         }
         //calling imagess creation page

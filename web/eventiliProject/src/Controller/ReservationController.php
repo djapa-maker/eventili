@@ -10,6 +10,7 @@ use App\Repository\ServiceRepository;
 use App\Repository\SousserviceRepository;
 use App\Repository\ImagessRepository;
 use App\Repository\CategEventRepository;
+use App\Repository\AvisRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +22,7 @@ class ReservationController extends AbstractController
 {
 //---------------------------------------------------------------------------------------    
     #[Route('/', name: 'app_reservation_index', methods: ['GET'])]
-    public function index(ImagessRepository $ImagessRepository,CategEventRepository $CategEventRepository,request $request,SousserviceRepository $SousserviceRepository,reservationRepository $reservationRepository,ServiceRepository $ServiceRepository): Response
+    public function index(AvisRepository $AvisRepository,ImagessRepository $ImagessRepository,CategEventRepository $CategEventRepository,request $request,SousserviceRepository $SousserviceRepository,reservationRepository $reservationRepository,ServiceRepository $ServiceRepository): Response
     {
         $sousservice = $SousserviceRepository->findAll();
         foreach ($sousservice as $s) {
@@ -33,12 +34,6 @@ class ReservationController extends AbstractController
             $selectedCheckboxes = implode(',', $list);
             $s->setIdEventcateg($selectedCheckboxes);
         }
-        // if ($request->isXmlHttpRequest()) {
-        //     // If this is an AJAX request, return only the content for the 'my-div' element
-        //     $souservices = $SousserviceRepository->findAll();
-        //     $html = $this->renderView('templates_front/reservation/souservice_list.html.twig', ['souservices' => $souservices]);
-        //     return new JsonResponse(['html' => $html]);
-        // }
         $listimg = [];
         foreach ($sousservice as $serv) {
             $firstimg = $ImagessRepository->findBySousService($serv);
@@ -47,12 +42,14 @@ class ReservationController extends AbstractController
                 $listimg[] = $fimg;
             }
         }
+        $av=$AvisRepository->findAll();
         return $this->render('templates_front/reservation/index.html.twig', [
             'reservations' => $reservationRepository->findAll(),
             'services'=>$ServiceRepository->findAll(),
             'souservices'=>$sousservice,
             'imagess'=>$ImagessRepository->findAll(),
-            'firstimg' =>  $listimg
+            'firstimg' =>  $listimg,
+            'avis'=>$av
         ]);
     }
 //---------------------------------------------------------------------------------------

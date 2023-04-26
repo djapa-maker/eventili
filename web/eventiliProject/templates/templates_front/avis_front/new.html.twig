@@ -1,0 +1,17 @@
+{% extends 'baseFront.html.twig' %}
+
+{% block title %}New Avis
+{% endblock %}
+
+{% block content %}
+	<div style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);margin-left:27%;background-color:white;border-radius:25px;padding:30px;width:510px">
+		<center>
+			<h1 style="color:#671cc9;font-size:20px;font-weight:bold">Votre avis nous permet d'améliorer nos services</h1>
+			<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+			<lottie-player src="https://lottie.host/be3ee4a8-bd40-4f96-b483-38974e271fdd/mJLffW1A0t.json" background="transparent" speed="1" style="margin-top:-50px;width: 350px; height:250px;margin-left:20px;margin-bottom:-60px" loop autoplay></lottie-player>
+			{{ include('templates_front/avis_front/_form.html.twig') }}
+		</center>
+
+	</div>
+	{# <a href="{{ path('app_avis_index') }}">back to list</a> #}
+{% endblock %}

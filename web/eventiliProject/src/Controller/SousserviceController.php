@@ -71,8 +71,6 @@ class SousserviceController extends AbstractController
                 $listimg[] = $fimg;
             }
         }
-
-        // $SousService = $SousserviceRepository->findOneByName($search);
         $imagess = $ImagessRepository->findAll();
         foreach ($SousService as $s) {
             $checkboxes = explode(',', $s->getIdEventcateg());
@@ -88,7 +86,7 @@ class SousserviceController extends AbstractController
         $pagination = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
-            9 // limit per page
+            7 // limit per page
         );
         return $this->render('templates_back/sousservice/index.html.twig', [
             'sousservices' => $pagination,
@@ -286,7 +284,6 @@ class SousserviceController extends AbstractController
                 return $this->redirectToRoute('app_sousservice_index', [], Response::HTTP_SEE_OTHER);
             }
         }
-
         return $this->renderForm('templates_back/sousservice/edit.html.twig', [
             'eventCat' => $CategEventRepository->findAll(),
             'selectedCategories' => $list,

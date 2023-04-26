@@ -1,0 +1,61 @@
+{# <center> #}
+{{ form_start(form, {'attr': {'class': 'was-validated', 'novalidate': 'novalidate'}}) }}
+{# ------------------------------------------------------------------------------------------- #}
+<div class="row g-3" style="display:inline-flex">
+	<div class="field">
+		<div style="margin-top:30px;border-radius:15px;width:350px" class="control">
+			{{ form_widget(form.comment, {'attr': {'class': 'input', 'placeholder': 'commentaire ...'}}) }}
+		</div>
+		<div style="color:red;border-color:red">
+			{{ form_errors(form.comment,{'attr': {'class': 'invalide-feedback'}}) }}
+		</div>
+	</div>
+	<div class="field">
+		<div style="display:inline-flex;">
+			<div style="margin-top:30px;border-radius:15px;width:50px;margin-left:5px" class="control">
+				{{ form_widget(form.rating, {'attr': {'class': 'input', 'type': 'number', 'step': '1', 'min': '0', 'max': '5', 'id': 'yourInputId'}}) }}
+			</div>
+			<i class="fas fa-star" style="color:#ff8601;font-size:20px;margin-top:40px;margin-left:10px"></i>
+		</div>
+
+
+		<div style="color:red;border-color:red">
+			{{ form_errors(form.rating,{'attr': {'class': 'invalide-feedback'}}) }}
+		</div>
+	</div>
+
+</div>
+{# <button id="submit-button" disabled style="margin-top:20px;margin-left:10px;width:25%;border-radius:10px;color:white;background-color:#671cc9;border-color:#671cc9;font-size:19px;height:30px" type="submit" class="btn btn-primary">{{ button_label|default('Envoyer') }}</button> #}
+<button id="submit-button" style="margin-top:20px;margin-left:10px;width:35%;margin-bottom:3px;border-radius:10px;color:white;background-color:#671cc9;border-color:#671cc9;font-size:19px;height:50px" type="submit" class="btn btn-primary">
+	Envoyer
+	<i class="fas fa-location-arrow" style="font-size:15px"></i>
+</button></div>{# ------------------------------------------------------------------------------------------- #}
+{{ form_end(form) }}
+{# </center> #}{# ------------------------------------------------------------------------------------------- #}
+<script>
+// Get the input field element
+var input = document.getElementById("yourInputId");
+
+// Listen for the "input" event on the input field
+input.addEventListener("input", function() {
+  // Get the current value of the input field
+  var value = input.value;
+
+  // Remove any non-numeric characters
+  value = value.replace(/[^\d]/g, "");
+
+  // Limit the value to a single digit between 0 and 5
+  if (value.length > 1) {
+    value = value.slice(0, 1);
+  }
+  if (value < 0) {
+    value = 0;
+  }
+  if (value > 5) {
+    value = 5;
+  }
+
+  // Update the input field with the new value
+  input.value = value;
+});
+</script>

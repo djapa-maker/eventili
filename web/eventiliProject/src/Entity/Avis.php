@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\AvisRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 //---------------------------------------------------------------------------------------
 #[ORM\Entity(repositoryClass:AvisRepository::class)]
 class Avis
@@ -15,6 +16,11 @@ class Avis
     private ?int $idAv=null;
 //---------------------------------------------------------------------------------------
     #[ORM\Column]
+    #[Assert\Range(
+        min: 0,
+        max: 5,
+        notInRangeMessage: 'il ne faut pas dépasser {{ max }} étoiles'
+    )]
     private ?float $rating=null;
 //---------------------------------------------------------------------------------------
     #[ORM\Column]

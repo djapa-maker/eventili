@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 //---------------------------------------------------------------------------------------
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\SousserviceRepository;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -47,11 +46,7 @@ class Sousservice
     // #[Assert\Regex(pattern: '/^[0-9]*$')]
     private ?float $note=null;
 //---------------------------------------------------------------------------------------
-    // #[ORM\ManyToOne(inversedBy:'Sousservice')]
-    // #[ORM\ManyToOne(targetEntity: CategEvent::class)]
-    // #[ORM\JoinColumn(name: "id_eventCateg", referencedColumnName: "id_categ")]
     #[ORM\Column]
-    // #[Assert\NotBlank(message: 'Merci de selectionner un ou plusieurs evenement(s)')]
     private ?String $idEventcateg=null;
 //---------------------------------------------------------------------------------------    
     // #[ORM\ManyToOne(inversedBy:'Sousservice')]
@@ -68,7 +63,6 @@ class Sousservice
     #[ORM\OneToMany(targetEntity: Imagess::class,mappedBy:"sousService",orphanRemoval:true,cascade:["persist"])]
     #[Assert\NotBlank(message: 'Merci de choisir au moin une image')]
     private $imagess;
-    
 //---------------------------------------------------------------------------------------
     public function __construct()
 {

@@ -16,18 +16,6 @@ class ImagessType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        // ->add('imageFile',FileType::class,[
-        //     'attr'=>[
-        //         'class' => 'form-control',
-        //         'placeholder' => 'aucune image',
-        //         'multiple' =>true,
-        //         'mapped'=>false,
-                
-        //     ]
-        //     ,
-        //     'data_class' => null,
-        // ])
-
         ->add('img',FileType::class,[
             'attr'=>[
                 'class' => 'form-control',
@@ -38,7 +26,6 @@ class ImagessType extends AbstractType
             ,
             'data_class' => null,
         ])
-            // ->add('sousService',EntityType::class,['class'=> Sousservice::class,'choice_label'=>'nom','multiple'=>false,'expanded'=>false])
         ;
     }
 //---------------------------------------------------------------------------------------

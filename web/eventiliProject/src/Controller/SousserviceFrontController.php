@@ -17,6 +17,7 @@ use App\Form\SousserviceType_edit;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Repository\ImagessRepository;
+use App\Repository\AvisRepository;
 use App\Repository\ImagePersRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -34,6 +35,7 @@ class SousserviceFrontController extends AbstractController
         SessionInterface $session,
         ImagePersRepository $imagePersRepository,
         ImagessRepository $ImagessRepository,
+        AvisRepository $AvisRepository,
         PaginatorInterface $paginator,
         // ImagessController $c
     ): Response {
@@ -80,6 +82,7 @@ class SousserviceFrontController extends AbstractController
             $selectedCheckboxes = implode(',', $list);
             $s->setIdEventcateg($selectedCheckboxes);
         }
+        
         $service = $ServRepository->findAll();
         $query = $SousService;
         $pagination = $paginator->paginate(
@@ -87,6 +90,8 @@ class SousserviceFrontController extends AbstractController
             $request->query->getInt('page', 1),
             9 // limit per page
         );
+        $av=$AvisRepository->findAll();
+        $per=$imagePersRepository->findAll();
         return $this->render('templates_front/sousservice_front/index.html.twig', [
             'sousservices' => $pagination,
             'imagess' => $imagess,
@@ -94,7 +99,9 @@ class SousserviceFrontController extends AbstractController
             'personne' => $personne,
             'eventCat' => $CategEventRepository->findAll(),
             'last' => $last,
-            'firstimg' =>  $listimg
+            'firstimg' =>  $listimg,
+            'avis'=>$av,
+            'persimg'=>$per
         ]);
     }
     //-------------------------------------------------------------------------------------------------
@@ -164,7 +171,7 @@ class SousserviceFrontController extends AbstractController
 
                 $selectedCheckboxes = implode(',', $catev);
                 $ss->setIdEventcateg($selectedCheckboxes);
-                $ss->setIdPers($PersonneRepository->findOneByIdPers(18));
+                $ss->setIdPers($PersonneRepository->findOneByIdPers($idPerss));
                 $ss->setNote(0);
                 // $SousserviceRepository->save($ss, true);
                 $entityManager = $this->getDoctrine()->getManager();

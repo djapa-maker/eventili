@@ -17,21 +17,21 @@
 
             {% if previous is defined %}
                 <li class="page-item">
-                    <a class="page-link" rel="prev" href="{{ path(route, query|merge({(pageParameterName): previous})) }}">&laquo;&nbsp;{{ 'label_previous'|trans({}, 'KnpPaginatorBundle') }}</a>
+                    <a class="page-link" style="color: #9eadfd;"rel="prev" href="{{ path(route, query|merge({(pageParameterName): previous})) }}">&laquo;&nbsp;Precedent</a>
                 </li>
             {% else %}
                 <li class="page-item disabled">
-                    <span class="page-link">&laquo;&nbsp;{{ 'label_previous'|trans({}, 'KnpPaginatorBundle') }}</span>
+                    <span class="page-link">&laquo;&nbsp;Precedent</span>
                 </li>
             {% endif %}
 
             {% if startPage > 1 %}
                 <li class="page-item">
-                    <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): 1})) }}">1</a>
+                    <a class="page-link" style="background-color: #9eadfd;border-color:#9eadfd; color: white;"href="{{ path(route, query|merge({(pageParameterName): 1})) }}">1</a>
                 </li>
                 {% if startPage == 3 %}
                     <li class="page-item">
-                        <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): 2})) }}">2</a>
+                        <a class="page-link" style="background-color: #9eadfd; color: white;"href="{{ path(route, query|merge({(pageParameterName): 2})) }}">2</a>
                     </li>
                 {% elseif startPage != 2 %}
                     <li class="page-item disabled">
@@ -43,11 +43,11 @@
             {% for page in pagesInRange %}
                 {% if page != current %}
                     <li class="page-item">
-                        <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a>
+                        <a class="page-link"  style="color: #9eadfd;"href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a>
                     </li>
                 {% else %}
                     <li class="page-item active">
-                        <span class="page-link">{{ page }}</span>
+                        <span class="page-link" style="background-color: #9eadfd;border-color:#9eadfd; color: white;">{{ page }}</span>
                     </li>
                 {% endif %}
 
@@ -72,11 +72,11 @@
 
             {% if next is defined %}
                 <li class="page-item">
-                    <a class="page-link" rel="next" href="{{ path(route, query|merge({(pageParameterName): next})) }}">{{ 'label_next'|trans({}, 'KnpPaginatorBundle') }}&nbsp;&raquo;</a>
+                    <a class="page-link" style="color: #9eadfd;"rel="next" href="{{ path(route, query|merge({(pageParameterName): next})) }}">Suivant&nbsp;&raquo;</a>
                 </li>
             {% else %}
                 <li  class="page-item disabled">
-                    <span class="page-link">{{ 'label_next'|trans({}, 'KnpPaginatorBundle') }}&nbsp;&raquo;</span>
+                    <span class="page-link" >Suivant&nbsp;&raquo;</span>
                 </li>
             {% endif %}
         </ul>

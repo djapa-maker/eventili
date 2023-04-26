@@ -6,9 +6,9 @@
 		{# -------------------------------------------------------------------------- #}
 		<div style="color:#758afd;font-size:25px;font-style:bold">Service</div>
 		<div class="search-bar flex-grow-1" style="margin-left:33%;">
-			<div id="search-input" class="position-relative search-bar-box">
-				<form class="form" action="{{ path('app_service_index') }}" enctype="multipart/form-data" method="GET">
-					<input type="text" name="search" style="border-radius:20px;border: 2px solid #aeb8ff  " class="form-control search-control" id="placeholder1" placeholder="Rechercher...">
+			<div class="position-relative search-bar-box">
+				<form id="search-form" class="form" action="{{ path('app_service_index') }}" enctype="multipart/form-data" method="GET">
+					<input type="text" id="search-term" name="searchTerm" style="border-radius:20px;border: 2px solid #aeb8ff  " class="form-control search-control" placeholder="Rechercher...">
 				</form>
 				<span class="position-absolute top-50 search-show translate-middle-y">
 					<i class='bx bx-search' style="color:#aeb8ff"></i>
@@ -42,39 +42,42 @@
 				</div>
 				{# ------------------------------------------------------------------------------------------- #}
 				{% if  services is not empty %}
-					{% for service in services %}
-						<div class="card" style="margin-top:-10px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);width:90%;border-radius:14px;height:50px;background-color:white">
-							<div style="display: flex;">
-								<label style="color:#241b7c;margin-right: 30%;margin-left: 20px;margin-top: 15px;">{{service.nom}}</label>
-								<div style="display: flex;color:#241b7c;position: absolute;top: 10px; left: 85%; ">
-									{{ include('templates_back/service/_delete_form.html.twig') }}
-									<a href="{{ path('app_service_edit',{'idService':service.idService})}}" style="
-																				margin-right:5px;
-																				border-radius:30px;
-																				background-color:#241b7c;
-																				border-color:#241b7c;
-																				height:30px;
-																				width:30px;
-																				display: flex;
-																				justify-content: center;
-																				align-items: center;
-																				color:white">
-										<i class='bx bx-edit' style="font-size:20px"></i>
-									</a>
+					<div id="search-results">
+						{% for service in services %}
+							<div class="card" style="margin-top:-10px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);width:90%;border-radius:14px;height:50px;background-color:white">
+								<div style="display: flex;">
+									<label style="color:#241b7c;margin-right: 30%;margin-left: 20px;margin-top: 15px;">{{service.nom}}</label>
+									<div style="display: flex;color:#241b7c;position: absolute;top: 10px; left: 85%; ">
+										{{ include('templates_back/service/_delete_form.html.twig') }}
+										<a href="{{ path('app_service_edit',{'idService':service.idService})}}" style="
+																																					margin-right:5px;
+																																					border-radius:30px;
+																																					background-color:#241b7c;
+																																					border-color:#241b7c;
+																																					height:30px;
+																																					width:30px;
+																																					display: flex;
+																																					justify-content: center;
+																																					align-items: center;
+																																					color:white">
+											<i class='bx bx-edit' style="font-size:20px"></i>
+										</a>
+									</div>
 								</div>
 							</div>
-						</div>
-					{% endfor %}
+						{% endfor %}
+					</div>
 				{% else %}
 					<div class="placeholder-content">
 						<img
 						style="height:250px;width:250px" class="light-image" src="{{asset('assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/>
 						{# <img class="dark-image" src="{{asset('assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/> #}
 						<h3 class="dark-inverted">Pas de services !</h3>
-						<p>Veillez ajouter des services pour pouvoir les visualiser 
+						<p>Veillez ajouter des services pour pouvoir les visualiser
 						</p>
 					</div>
 				{% endif %}
+
 				{# ------------------------------------------------------------------------------------------- #}
 				{% if services.totalItemCount > 0 %}
 					<div class="pagination justify-content-center" style="position: absolute;top: 90%; left: 30%;margin-top:10px;">
@@ -82,8 +85,14 @@
 					</div>
 				{% endif %}
 				<br>
+
 			</center>
 		</div>
+
+
+		<ul id="search-results"></ul>
+		{# <a href='{{path('app_service_index1')}}'>fdghjklmù</a> #}
+
 	</center>
 	{# -------------------------------------------------------------------------- #}
 	<!-- jQuery -->
@@ -94,42 +103,36 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<!-- Modal -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script>
-		$(document).ready(function () {
-var typingTimer; // timer identifier
-var doneTypingInterval = 500; // time in ms, 0.5 second for example
-var $input = $('#search-input');
+				<script>
+					$(document).ready(function () {
+			$('#search-term').keyup(function () {
+			var searchTerm = $(this).val();
 
-$input.on('keyup', function () {
-clearTimeout(typingTimer);
-typingTimer = setTimeout(doneTyping, doneTypingInterval);
-});
+			$.ajax({
+			type: 'POST',
+			url: '{{ path('app_service_search') }}',
+			data: {
+			searchTerm: searchTerm
+			},
+			success: function (data) {
+			var results = '';
 
-$input.on('keydown', function () {
-clearTimeout(typingTimer);
-});
+			$.each(data, function (index, value) {
+			results += '<div class="card" style="margin-top:-10px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);width:90%;border-radius:14px;height:50px;background-color:white">' +
+				'<div style="display: flex;">' +
+					'<label style="color:#241b7c;margin-right: 30%;margin-left: 20px;margin-top: 15px;">' + value.nom + '</label>' +
+					'<div style="display: flex;color:#241b7c;position: absolute;top: 10px; left: 85%;">' +
+						
+					'</div>' +
+				'</div>' +
+			'</div>';
 
-function doneTyping() {
-var search = $input.val().trim();
-if (search.length > 0) {
-$.ajax({
-url: "{{ path('app_service_search') }}",
-method: "POST",
-data: {
-search: search
-},
-success: function (response) {
-$('#nom').html(response.html);
-console.log(response.html);
-},
-error: function (xhr) {
-console.log(xhr.responseText);
-}
-});
-} else {
-$('#nom').empty();
-}
-}
-});
-	</script>
+			});
+
+			$('#search-results').html(results);
+			}
+			});
+			});
+			});
+				</script>
 {% endblock %}

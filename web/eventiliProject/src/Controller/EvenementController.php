@@ -9,21 +9,23 @@ use App\Repository\CategEventRepository;
 use App\Repository\EvenementRepository;
 use App\Repository\ImgevRepository;
 use App\Repository\PersonneRepository;
+use App\Repository\SousserviceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ImagePersRepository;
+use App\Repository\reservationRepository;
 use MercurySeries\FlashyBundle\FlashyNotifier;
-
+use App\Repository\ImagessRepository;
 #[Route('/evenement')]
 class EvenementController extends AbstractController
 {
 
-
+//affichage------------------------------------------------------------------------------------------------
     #[Route('/', name: 'app_evenement_index', methods: ['GET'])]
-    public function index(ImagePersRepository $imagePersRepository, EvenementRepository $evenementRepository, SessionInterface $session, CategEventRepository $categEventRepository, ImgevRepository $imgevRepository): Response
+    public function index(ImagessRepository $ImagessRepository,SousserviceRepository $SousserviceRepository, reservationRepository $reservationRepository, ImagePersRepository $imagePersRepository, EvenementRepository $evenementRepository, SessionInterface $session, CategEventRepository $categEventRepository, ImgevRepository $imgevRepository): Response
     {
         $personne = $session->get('id');
         $idPerss = $session->get('personne');
@@ -37,8 +39,6 @@ class EvenementController extends AbstractController
         }
         $session->set('last', $last);
         $last = $session->get('last');
-
-
         $Categ = $categEventRepository->findAll();
         $evenements = $evenementRepository->findBy(['idPers' => $idPerss]);
         $imgev = [];
@@ -46,14 +46,32 @@ class EvenementController extends AbstractController
         foreach ($evenements as $event) {
             $imgev[$event->getIdEv()] = $imgevRepository->findBy(['idEven' => $event->getIdEV()]);
         }
+        // partie avis dans le detail de la reservation 
+        $res = $reservationRepository->findOneByIdEv($evenements);
+        $sous = explode(',', $res->getIdSs());
+        $list = [];
+        foreach ($sous as $ss) {
+            $list[] = $SousserviceRepository->findOneById($ss);
+        }
+        //first image mta3 el sousservice 
+        $listimg = [];
+        foreach ($list as $serv) {
+            $firstimg = $ImagessRepository->findBySousService($serv);
+            if (!empty($firstimg)) {
+                $fimg = $firstimg[0];
+                $listimg[] = $fimg;
+            }
+        }
         return $this->render('templates_front/evenement/index.html.twig', [
             'evenements' => $evenements,
             'Categ' => $Categ,
             'Img' => $imgev,
             'personne' => $personne,
+            'sous' => $list,
+            'firstimg' =>  $listimg,
         ]);
     }
-
+//ajout-----------------------------------------------------------------------------------------------
     #[Route('/new', name: 'app_evenement_new', methods: ['GET', 'POST'])]
     public function new(SessionInterface $session, ImagePersRepository $imagePersRepository, Request $request, EvenementRepository $evenementRepository, PersonneRepository $PersonneRepository): Response
     {
@@ -69,7 +87,6 @@ class EvenementController extends AbstractController
         }
         $session->set('last', $last);
         $last = $session->get('last');
-
 
         $evenement = new Evenement();
         $form = $this->createForm(EvenementType::class, $evenement);
@@ -170,15 +187,7 @@ class EvenementController extends AbstractController
         ]);
     }
 
-
-    // #[Route('/{idEv}', name: 'app_evenement_delete')]
-    // public function delete( EvenementRepository $evenementRepository, $idEv ): Response
-    // {
-    //     $evenement = $evenementRepository->findOneByIdEv($idEv);
-    //     $evenementRepository->remove($evenement);
-    //     return $this->redirectToRoute('app_evenement_index');
-    // }
-
+//supprimer ------------------------------------------------------------------------------------------------
     #[Route('/{idEv}', name: 'app_evenement_delete', methods: ['POST'])]
     public function delete(FlashyNotifier $flashy, Request $request, Evenement $evenement, EvenementRepository $evenementRepository): Response
     {
@@ -190,8 +199,6 @@ class EvenementController extends AbstractController
 
         return $this->redirectToRoute('app_evenement_index', [], Response::HTTP_SEE_OTHER);
     }
-
-
 
     // #[Route('/{idEv}', name: 'app_evenement_show', methods: ['GET'])]
     // public function show(Evenement $evenement): Response
