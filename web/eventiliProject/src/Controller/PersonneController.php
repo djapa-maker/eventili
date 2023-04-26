@@ -8,20 +8,21 @@ use App\Form\PersonneType;
 use App\Repository\ImagePersRepository;
 use App\Repository\PersonneRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Routing\RouterInterface;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
-use Symfony\Component\Mailer\MailerInterface;
+
+
 use Swift_Mailer;
 use Swift_Message;
 use Swift_SmtpTransport;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 #[Route('/personne')]
 class PersonneController extends AbstractController
@@ -29,8 +30,10 @@ class PersonneController extends AbstractController
 
 
     #[Route('/index', name: 'app_personne_index', methods: ['GET'])]
-    public function index(Request $request, ImagePersRepository $imagePersRepository, PersonneRepository $personneRepository, SessionInterface $session): Response
+    public function index(EntityManagerInterface $entityManager,PaginatorInterface $paginator,Request $request, ImagePersRepository $imagePersRepository, PersonneRepository $personneRepository, SessionInterface $session): Response
     {
+       
+
         $personne = $session->get('id');
         $idPerss = $session->get('personne');
         $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
@@ -46,23 +49,39 @@ class PersonneController extends AbstractController
         $last = $session->get('last');
 
         $search = $request->query->get('search1');
+        $queryBuilder = $entityManager
+            ->getRepository(Personne::class)
+            ->createQueryBuilder('p')
+            ;
         $filter = null;
         $filter = $request->query->get('inputfilter');
         if ($filter) {
             $personnes = $personneRepository->getAllByPersonneRole($filter);
         } elseif ($search) {
-            $personnes = $personneRepository->findOneByName($search);
+            $criteria = $request->query->get('criteria');
+            
+            $personnes=$personneRepository->findCriteria($search,$criteria);
         } else {
             $personnes = $personneRepository->findAll();
         }
+        $query = $personnes;
+        
+    
+$pagination = $paginator->paginate(
+        $query,
+        $request->query->getInt('page', 1),
+        8
+    );
         if (!$personne) {
             return $this->redirectToRoute('app_personne_accueil', [], Response::HTTP_SEE_OTHER);
         } else {
             if ($personne->getRole() == "admin") {
                 return $this->render('templates_back/personne/index.html.twig', [
-                    'personnes' => $personnes,
+                    'search' => $search,
+                    'personnes' => $pagination,
                     'personne' => $personne,
                     'last' => $last,
+                    'customproducts' => $pagination,
                 ]);
             } else {
                 return $this->redirectToRoute('app_personne_accueil', [], Response::HTTP_SEE_OTHER);
@@ -75,17 +94,13 @@ class PersonneController extends AbstractController
         return $this->render('templates_front/personne/accueil.html.twig');
     }
     #[Route('/activation', name: 'app_personne_activation', methods: ['GET', 'POST'])]
-    public function activation(Request $request, SessionInterface $session, PersonneRepository $personneRepository): Response
+    public function activation(FlashyNotifier $flashy, Request $request, SessionInterface $session, PersonneRepository $personneRepository): Response
     {
         $personne = $session->get('id');
-        // dump($personne);
-        // die();
         $personne->setIs_verified(1);
         $personneRepository->update($personne, true);
-        $warningMessage = "email vérifié avec succès";
-        return $this->renderForm('templates_front/personne/activation.html.twig', [
-            'warning_message' => $warningMessage,
-        ]);
+        $flashy->success('email vérifié avec succès');
+        return $this->renderForm('templates_front/personne/activation.html.twig');
     }
     #[Route('/signin', name: 'app_personne_signin', methods: ['GET', 'POST'])]
     public function signin(Request $request, Swift_Mailer $mailer, PersonneRepository $personneRepository, SessionInterface $session, TokenGeneratorInterface $tokenGenerator, UserPasswordEncoderInterface $PasswordEncoder): Response
@@ -227,35 +242,39 @@ class PersonneController extends AbstractController
         return $this->redirectToRoute('app_personne_accueil', [], Response::HTTP_SEE_OTHER);
     }
     #[Route('/verif', name: 'app_personne_verif', methods: ['GET', 'POST'])]
-    public function verif(Request $request, PersonneRepository $personneRepository, SessionInterface $session, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function verif(FlashyNotifier $flashy, Request $request, PersonneRepository $personneRepository, SessionInterface $session, UserPasswordEncoderInterface $passwordEncoder): Response
     {
-        $mdp = $request->request->get('mdp');
-        $email = $request->request->get('email');
-        $personne = $personneRepository->findOneBy(['email' => $email]);
-        if (!$personne) {
-            $warningMessage = "email ou  mot de passe incorrect";
-            return $this->renderForm('templates_front/personne/login.html.twig', [
-                'warning_message' => $warningMessage,
-            ]);
+        if ($request->isMethod('POST')) {
+            if (isset($_POST['g-recaptcha-response'])) {
+                $recaptcha = $_POST['g-recaptcha-response'];
+                if (!$recaptcha) {
+                    return $this->renderForm('templates_Front/personne/login.html.twig');
+                }
+                $mdp = $request->request->get('mdp');
+                $email = $request->request->get('email');
+                $personne = new Personne();
+                $personne = $personneRepository->findOneBy(['email' => $email]);
+                if (!$personne) {
+                    $flashy->error('email ou  mot de passe incorrect');
+                    return $this->renderForm('templates_front/personne/login.html.twig');
+                }
+                if (!$passwordEncoder->isPasswordValid($personne, $mdp)) {
+                    $flashy->error('email ou  mot de passe incorrect');
+                    return $this->renderForm('templates_front/personne/login.html.twig');
+                }
+                if ($personne->getIs_verified() == 0) {
+                    $flashy->warning('email non vérifié');
+                    return $this->renderForm('templates_front/personne/login.html.twig');
+                }
+                $session->set('id', $personne);
+                $session->set('personne', $personne->getIdPers());
+                if ($personne->getRole() != "admin")
+                    return $this->redirectToRoute('app_imagepers_affich', [], Response::HTTP_SEE_OTHER);
+                else
+                    return $this->redirectToRoute('app_personne_index', [], Response::HTTP_SEE_OTHER);
+            }
         }
-        if (!$passwordEncoder->isPasswordValid($personne, $mdp)) {
-            $warningMessage = "email ou  mot de passe incorrect";
-            return $this->renderForm('templates_front/personne/login.html.twig', [
-                'warning_message' => $warningMessage,
-            ]);
-        }
-        if ($personne->getIs_verified() == 0) {
-            $warningMessage = "email non vérifié";
-            return $this->renderForm('templates_front/personne/login.html.twig', [
-                'warning_message' => $warningMessage,
-            ]);
-        }
-        $session->set('id', $personne);
-        $session->set('personne', $personne->getIdPers());
-        if ($personne->getRole() != "admin")
-            return $this->redirectToRoute('app_imagepers_affich', [], Response::HTTP_SEE_OTHER);
-        else
-            return $this->redirectToRoute('app_personne_index', [], Response::HTTP_SEE_OTHER);
+        return $this->renderForm('templates_front/personne/login.html.twig');
     }
 
 
@@ -373,5 +392,33 @@ class PersonneController extends AbstractController
         }
 
         return $this->redirectToRoute('app_personne_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/searchCustom', name: 'app_personne_search', methods: ['GET'])]
+    public function searchCustomPersonne(Request $request, EntityManagerInterface $entityManager): JsonResponse
+    {
+        $searchValue = $request->query->get('searchValue');
+
+        $queryBuilder = $entityManager
+            ->getRepository(Personne::class)
+            ->createQueryBuilder('c')
+            ->where('c.nom LIKE :search')
+            ->setParameter('search', '%' . $searchValue . '%');
+
+        $customProducts = $queryBuilder->getQuery()->getResult();
+
+        $result = [];
+        foreach ($customProducts as $customProduct) {
+            $result[] = [
+                'nom' => $customProduct->getNom(),
+                'prenom' => $customProduct->getPrenom(),
+                'num' => $customProduct->getNum(),
+                'email' => $customProduct->getEmail(),
+                'adresse' => $customProduct->getAdresse(),
+                'role' => $customProduct->getRole(),
+            ];
+        }
+
+        return new JsonResponse($result);
     }
 }

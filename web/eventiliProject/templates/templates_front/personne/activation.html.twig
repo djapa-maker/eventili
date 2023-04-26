@@ -15,11 +15,17 @@
 		<link rel="stylesheet" href="../assets/css/app.css"/>
 		<link
 		rel="stylesheet" href="../assets/css/main.css"/>
+    <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
 
 		<!-- Fonts -->
 		<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=swap" rel="stylesheet"/>
 		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700" rel="stylesheet"/>
 
+<script src="//code.jquery.com/jquery.js"></script>
+    <!-- Load Flashy default JavaScript -->
+    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+	<link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet'>
 	</head>
 
 	<body>
@@ -1486,6 +1492,8 @@
 									</div>
 								</div>
 							</div>
+							
+{{ include('@MercurySeriesFlashy/flashy.html.twig') }}
 							{% if warning_message is defined %}
 								<div style="color:#664d03;background-color:#fff3cd;border-color:#ffecb5;    padding: 15px;
 									    margin-bottom: 20px;

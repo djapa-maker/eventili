@@ -40,6 +40,32 @@ class PersonneRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    public function findCriteria(string $search,string $criteria): ?array
+    {
+        if ($criteria === 'nom') {
+        $personnes = $this->createQueryBuilder('p')
+        ->andWhere('p.nomPers LIKE :search')
+        ->setParameter('search', '%' . $search . '%')
+        ->getQuery()
+        ->getResult();
+        return $personnes;
+        } elseif ($criteria === 'prenom') {
+            $personnes = $this->createQueryBuilder('p')
+            ->andWhere('p.prenomPers LIKE :search')
+            ->setParameter('search', '%' . $search . '%')
+            ->getQuery()
+            ->getResult();
+            return $personnes;
+        } elseif ($criteria === 'adresse') {
+            $personnes = $this->createQueryBuilder('p')
+            ->andWhere('p.adresse LIKE :search')
+            ->setParameter('search', '%' . $search . '%')
+            ->getQuery()
+            ->getResult();
+            return $personnes;
+        }
+    }
+    
     public function modifyPersonne(int $idPers, Personne $personne): void
 {
     $entityManager = $this->getEntityManager();

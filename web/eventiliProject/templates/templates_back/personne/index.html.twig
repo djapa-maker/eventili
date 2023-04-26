@@ -8,10 +8,22 @@
 		<div class="search-bar flex-grow-1" style="margin-left:20%;">
 			<div class="position-relative search-bar-box">
 				<form id="annuite_form" class="form" action="{{ path('app_personne_index') }}" enctype="multipart/form-data" method="GET">
-					<input type="text" name="search1" style="border-radius:20px;border: 2px solid #aeb8ff  " class="form-control search-control" id="placeholder1" placeholder="Rechercher...">
+					<br>
+					<input type="text" name="search1" style="border-radius:20px;border: 2px solid #aeb8ff" value="{{ search }}" class="form-control search-control" id="search-term" placeholder="Rechercher...">
+				<br>
+				<center>
+				<label for="criteria">Recherche par:</label>
+				
+						<select id="criteria" name="criteria" style="height:31px;border-radius:5px;color:white;background-color:#ff8601;border-color:#ff8601;font-size:15px">
+							<option value="nom" {% if app.request.query.get('criteria') == 'nom' %} selected {% endif %}>Nom</option>
+							<option value="prenom" {% if app.request.query.get('criteria') == 'prenom' %} selected {% endif %}>Prénom</option>
+							<option value="adresse" {% if app.request.query.get('criteria') == 'adresse' %} selected {% endif %}>Adresse</option>
+						</select>
+						</center>
 				</form>
+				
 				<span class="position-absolute top-50 search-show translate-middle-y">
-					<i class='bx bx-search' style="color:#aeb8ff"></i>
+					<i class='bx bx-search' style="color:#aeb8ff; margin-bottom:31px;"></i>
 				</span>
 				<span class="position-absolute top-50 search-close translate-middle-y">
 					<i class='bx bx-x' style="color:white"></i>
@@ -20,10 +32,10 @@
 		</div>
 	</div>
 	<button type="button" style="margin-left: 1350px;border-radius:10px;
-																				color:white;
-																				background-color:#aeb8ff;
-																				border-color:#aeb8ff;
-																				font-size:19px" class="btn btn-primary" onclick="window.location.href='{{ path('app_personne_new') }}'">Ajouter un utilisateur</button>
+																						color:white;
+																						background-color:#aeb8ff;
+																						border-color:#aeb8ff;
+																						font-size:19px" class="btn btn-primary" onclick="window.location.href='{{ path('app_personne_new') }}'">Ajouter un utilisateur</button>
 	<br>
 	<br>
 
@@ -47,7 +59,6 @@ $(this).closest('form').submit();
 });
 });
 	</script>
-
 
 	<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-4">
 		{% for personne in personnes %}
@@ -90,6 +101,8 @@ $(this).closest('form').submit();
 			</tr>
 		{% endfor %}
 	</div>
-
+<div class="pagination justify-content-center">
+						{{ knp_pagination_render(personnes,'bootstrap_v4_pagination.html.twig') }}
+					</div>
 
 {% endblock %}
