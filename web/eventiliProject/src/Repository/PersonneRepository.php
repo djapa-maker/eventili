@@ -65,6 +65,15 @@ class PersonneRepository extends ServiceEntityRepository
             return $personnes;
         }
     }
+    public function trie(): ?array
+    {
+        $personnes = $this->createQueryBuilder('p')
+        ->orderBy('p.nomPers', 'ASC')
+        ->getQuery()
+        ->getResult();
+    return $personnes;
+        
+    }
     
     public function modifyPersonne(int $idPers, Personne $personne): void
 {

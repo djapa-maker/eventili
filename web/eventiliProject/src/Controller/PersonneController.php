@@ -29,7 +29,7 @@ class PersonneController extends AbstractController
 {
 
 
-    #[Route('/index', name: 'app_personne_index', methods: ['GET'])]
+    #[Route('/index', name: 'app_personne_index', methods: ['GET', 'POST'])]
     public function index(EntityManagerInterface $entityManager,PaginatorInterface $paginator,Request $request, ImagePersRepository $imagePersRepository, PersonneRepository $personneRepository, SessionInterface $session): Response
     {
        
@@ -55,7 +55,7 @@ class PersonneController extends AbstractController
             ;
         $filter = null;
         $filter = $request->query->get('inputfilter');
-        if ($filter) {
+       if ($filter) {
             $personnes = $personneRepository->getAllByPersonneRole($filter);
         } elseif ($search) {
             $criteria = $request->query->get('criteria');
@@ -88,6 +88,8 @@ $pagination = $paginator->paginate(
             }
         }
     }
+    #[Route('/trie', name: 'app_personne_trie', methods: ['GET'])]
+   
     #[Route('/', name: 'app_personne_accueil', methods: ['GET'])]
     public function acceuil(): Response
     {

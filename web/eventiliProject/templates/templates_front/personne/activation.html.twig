@@ -15,8 +15,12 @@
 		<link rel="stylesheet" href="../assets/css/app.css"/>
 		<link
 		rel="stylesheet" href="../assets/css/main.css"/>
+		<!--flashy!-->
     <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
-
+    <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet'>
+	
+<!--flashy!-->
 		<!-- Fonts -->
 		<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=swap" rel="stylesheet"/>
 		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700" rel="stylesheet"/>
@@ -24,8 +28,7 @@
 <script src="//code.jquery.com/jquery.js"></script>
     <!-- Load Flashy default JavaScript -->
     <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
-	<link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet'>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 	</head>
 
 	<body>
@@ -1474,9 +1477,9 @@
 
 							<div class="column is-6">
 								<div class="field">
-									<div style="width: 230px;" class="control has-icon">
-										<input type="text" class="input" placeholder="E-mail" name="email">
-										<div class="form-icon">
+									<div style="width: 230px;" class="control has-icon ">
+										<input type="text" style="margin-left:26px;"class="input" placeholder="E-mail" name="email">
+										<div style="margin-left:26px;"class="form-icon">
 											<i data-feather="mail"></i>
 										</div>
 									</div>
@@ -1485,30 +1488,26 @@
 							<div class="column is-6">
 								<div class="field">
 									<div style="width: 230px;" class="control has-icon">
-										<input type="password" class="input" placeholder="Mot de passe" name="mdp">
-										<div class="form-icon">
+										<input type="password" style="margin-left:26px;" class="input" placeholder="Mot de passe" name="mdp">
+										<div style="margin-left:26px;" class="form-icon">
 											<i data-feather="key"></i>
 										</div>
 									</div>
 								</div>
 							</div>
-							
+							<div class="g-recaptcha" data-sitekey="6LfbCa0lAAAAAInB0IuTY-075WpxYf6KzBAziP6f"></div>              
 {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
-							{% if warning_message is defined %}
-								<div style="color:#664d03;background-color:#fff3cd;border-color:#ffecb5;    padding: 15px;
-									    margin-bottom: 20px;
-									    border: 1px solid transparent;
-									    border-radius: 4px;">{{ warning_message }}</div>
-							{% endif %}
+
+							<p>mot de passe oublié?<a href="{{path('app_forgot_password_request')}}">Cliquez ici.</a></p> 
 							<div class="buttons">
 								<button style="margin-top:-30px;" class="button h-button is-primary is-raised" onclick="window.location.href = '{{ path('app_personne_verif') }}';">Se connecter</button>
 							</div>
 						</form>
 					</div>
-					<br>
-					<p style="margin-left:39px;">Vous n'avez pas de compte?</p>
+					
+					<p style="margin-left:63px;">Vous n'avez pas de compte?</p>
 					<div class="buttons">
-						<button style="min-width: 180px;margin-left:34px;" class="button h-button is-primary is-raised">S'inscrire</button>
+						<button style="min-width: 180px;margin-left:62px;" class="button h-button is-primary is-raised">S'inscrire</button>
 					</div>
 				</div>
 			</div>

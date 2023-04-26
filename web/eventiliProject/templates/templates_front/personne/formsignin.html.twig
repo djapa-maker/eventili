@@ -106,10 +106,19 @@
 			<div class="column is-12">
 				<div class="field">
 					<div class="control has-icon">
-						<input</i type="password" {{ form_widget(form.mdp, {'attr': {'class': 'input','placeholder': 'Mot de passe'}} ) }} <div style="color:red;border-color:red"> {{ form_errors(form.mdp,{'attr': {'class': 'invalide-feedback'}} ) }} </div> <div class="form-icon"> <i data-feather="key">></div>
+						<input type="password" {{ form_widget(form.mdp, {'attr': {'class': 'input','placeholder': 'Mot de passe'}} ) }}
+						<div style="color:red;border-color:red">
+							{{ form_errors(form.mdp,{'attr': {'class': 'invalide-feedback'}}
+							) }}
+						</div>
+						<div class="form-icon">
+							<i data-feather="key"></i>
+						</div>
 					</div>
 				</div>
 			</div>
+
+
 			<!--Field-->
 			<div class="column is-12">
 				<div class="field">

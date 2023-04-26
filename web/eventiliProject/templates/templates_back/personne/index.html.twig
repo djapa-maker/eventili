@@ -10,18 +10,18 @@
 				<form id="annuite_form" class="form" action="{{ path('app_personne_index') }}" enctype="multipart/form-data" method="GET">
 					<br>
 					<input type="text" name="search1" style="border-radius:20px;border: 2px solid #aeb8ff" value="{{ search }}" class="form-control search-control" id="search-term" placeholder="Rechercher...">
-				<br>
-				<center>
-				<label for="criteria">Recherche par:</label>
-				
+					<br>
+					<center>
+						<label for="criteria">Recherche par:</label>
+
 						<select id="criteria" name="criteria" style="height:31px;border-radius:5px;color:white;background-color:#ff8601;border-color:#ff8601;font-size:15px">
 							<option value="nom" {% if app.request.query.get('criteria') == 'nom' %} selected {% endif %}>Nom</option>
 							<option value="prenom" {% if app.request.query.get('criteria') == 'prenom' %} selected {% endif %}>Prénom</option>
 							<option value="adresse" {% if app.request.query.get('criteria') == 'adresse' %} selected {% endif %}>Adresse</option>
 						</select>
-						</center>
+					</center>
 				</form>
-				
+
 				<span class="position-absolute top-50 search-show translate-middle-y">
 					<i class='bx bx-search' style="color:#aeb8ff; margin-bottom:31px;"></i>
 				</span>
@@ -32,16 +32,19 @@
 		</div>
 	</div>
 	<button type="button" style="margin-left: 1350px;border-radius:10px;
-																						color:white;
-																						background-color:#aeb8ff;
-																						border-color:#aeb8ff;
-																						font-size:19px" class="btn btn-primary" onclick="window.location.href='{{ path('app_personne_new') }}'">Ajouter un utilisateur</button>
+																								color:white;
+																								background-color:#aeb8ff;
+																								border-color:#aeb8ff;
+																								font-size:19px" class="btn btn-primary" onclick="window.location.href='{{ path('app_personne_new') }}'">Ajouter un utilisateur</button>
 	<br>
 	<br>
 
 
 	<br>
+	{# <button type="button" name="trie" style="background-color:#aeb8ff;color:white;border-radius:10px;border-color:#aeb8ff;" class="btn btn-primary" onclick="window.location.href='{{ path('app_personne_trie') }}'" id="trie">AàZ</button>
+	 #}
 	<form class="form" action="{{ path('app_personne_index')}}" method="GET">
+		
 		<select name="inputfilter" id="filterService" style="height:31px;border-radius:5px;color:white;background-color:#ff8601;margin-bottom:10px;border-color:#ff8601;font-size:15px">
 			<option value="" name="choose">choisissez</option>
 
@@ -50,6 +53,7 @@
 			<option value="partenaire" name="inputfilter">partenaire</option>
 
 		</select>
+		
 	</form>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
@@ -95,14 +99,18 @@ $(this).closest('form').submit();
 				</div>
 			</div>
 		{% else %}
-			<br>
-			<tr>
-				<td colspan="11">Aucun utilisateur trouvé</td>
-			</tr>
+			<div style="margin-left:590px;" class="placeholder-content">
+				<img
+				style="height:250px;width:250px" class="light-image" src="{{asset('assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/>
+				{# <img class="dark-image" src="{{asset('assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/> #}
+				<h3 class="dark-inverted">Aucun utilisateurs' !</h3>
+				<p>il n'existe aucun utilisateurs pour le moment
+				</p>
+			</div>
 		{% endfor %}
 	</div>
-<div class="pagination justify-content-center">
-						{{ knp_pagination_render(personnes,'bootstrap_v4_pagination.html.twig') }}
-					</div>
+	<div class="pagination justify-content-center">
+		{{ knp_pagination_render(personnes,'bootstrap_v4_pagination.html.twig') }}
+	</div>
 
 {% endblock %}
