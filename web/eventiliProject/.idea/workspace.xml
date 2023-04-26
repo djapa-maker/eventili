@@ -5,17 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a641bf00-998b-46a8-b2fc-6473ee65dafc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/templates/templates_back/reclamation/new_consulter.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ReclamationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ReclamationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/ReponseType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/ReponseType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/baseF.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseF.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/baseFront.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseFront.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/templates_front/reclamation/ajouter.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/templates_front/reclamation/ajouter.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/templates_front/reclamation/consulter.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/templates_front/reclamation/consulter.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/templates_front/reclamation/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/templates_front/reclamation/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/templates_front/reclamation/modifierRep.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/templates_front/reclamation/modifierRep.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/templates_back/reclamation/modifier.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/templates_back/reclamation/modifier.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -181,7 +173,6 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "othman",
     "last_opened_file_path": "/Users/bitri/Desktop/eventili/web/eventiliProject/templates/templates_back/reclamation",
@@ -189,6 +180,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -211,8 +203,16 @@
       <workItem from="1681494396565" duration="69000" />
       <workItem from="1681505273587" duration="391000" />
       <workItem from="1682036304387" duration="1337000" />
-      <workItem from="1682454157474" duration="8243000" />
+      <workItem from="1682454157474" duration="10064000" />
     </task>
+    <task id="LOCAL-00001" summary="fix design">
+      <created>1682505699272</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1682505699272</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -220,5 +220,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="fix design" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix design" />
   </component>
 </project>
