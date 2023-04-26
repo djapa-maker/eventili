@@ -162,6 +162,15 @@ class ReclamationController extends AbstractController
             return $this->redirectToRoute('app_reclamation_user_consulter', ['idRec' => $idRec->getIdRec()], Response::HTTP_SEE_OTHER);
         }
         $view = $form->createView();
+        $clientImg = $imagePersRepository->findBy(['idPers' => $idRec->getUserid()]);
+        $clientImg = array_reverse($clientImg);
+        if(!empty($clientImg)){
+            $i = $clientImg[0];
+            $client = $i->getLast();
+        }
+        else{
+            $client="account (1).png";
+        }
         return $this->render('templates_front/reclamation/consulter.html.twig',[
             'personne' => $personne,
             'last'=> $last,
@@ -170,7 +179,8 @@ class ReclamationController extends AbstractController
             'reps' => $reps,
             'uid' => $idUser,
             'message' => $Message,
-            'form' => $view
+            'form' => $view,
+            'clientImg' =>$client
         ]);
     }
     #[Route('/admin/consulter/{idRec}', name: 'app_reclamation_admin_consulter', methods: ['GET','POST'])]
@@ -206,7 +216,16 @@ class ReclamationController extends AbstractController
             return $this->redirectToRoute('app_reclamation_admin_consulter', ['idRec' => $idRec->getIdRec()], Response::HTTP_SEE_OTHER);
         }
         $view = $form->createView();
-        return $this->render('templates_back/reclamation/consulter.html.twig', [
+        $clientImg = $imagePersRepository->findBy(['idPers' => $idRec->getUserid()]);
+        $clientImg = array_reverse($clientImg);
+        if(!empty($clientImg)){
+            $i = $clientImg[0];
+            $client = $i->getLast();
+        }
+        else{
+            $client="account (1).png";
+        }
+        return $this->render('templates_back/reclamation/new_consulter.html.twig', [
             'personne' => $personne,
             'last'=> $last,
             'reclamation' => $idRec,
@@ -214,7 +233,8 @@ class ReclamationController extends AbstractController
             'reps' => $reps,
             'uid' => $idUser,
             'message' => $Message,
-            'form' => $view
+            'form' => $view,
+            'clientImg' => $client
         ]);
     }
     #[Route('/modifier/{idRec}', name: 'app_reclamation_modifier', methods: ['GET', 'POST'])]

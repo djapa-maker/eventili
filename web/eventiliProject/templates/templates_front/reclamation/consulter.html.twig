@@ -1,69 +1,93 @@
-{% extends 'baseFront.html.twig'%}
+{% extends 'baseF.html.twig'%}
 {% block content %}
-    <a class="btn btn-dark m-2" href="{{ path('app_reclamation_user_index') }}"><i class="fas fa-arrow-left"></i>
-    </a>
-    <div class="card container-fluid" style="height: 75vh;">
-        <div class="card-body row gap-5">
-            <div class="card col-md-5">
-                <div class="card-header align-items-center text-center">
-                    <h5>{{ reclamation.titre }}</h5>
-                </div>
-                <div class="card-body overflow-auto" style="max-height: 25em;">
-                    <div class="text-white row mb-2" style="background-color: #0b5ed7; width: 35%; padding: 2%; padding-left: 8%; border-radius: 16px;margin-left: 65%">
-                        {{ reclamation.description }}</div>
-
-                    {% for reponse in reps %}
-                        {% if reponse.senderid.idPers == uid %}
-                            {% if reponse.rec.status != "cloturer" %}
-                            <a href="{{ path('app_reclamation_modifierMessage_user',{'idRep': reponse.idRep }) }}"><div class="text-white row mb-2" style="background-color: #0b5ed7; width: 35%; padding: 2%; padding-left: 8%; border-radius: 16px;margin-left: 65%">
-                                {{ reponse.message }}
-                            </div>
-                            </a>
+    <script>
+        function scrollToBottom() {
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+        history.scrollRestoration = "manual";
+        window.onload = scrollToBottom;
+    </script>
+    <div class="container-fluid d-flex flex-row justify-content-between">
+        <div>
+            <a class="btn btn-dark m-2 mt-3" href="{{ path('app_reclamation_user_index') }}">Retour </a>
+        </div>
+        <div class="card">
+            <div class="card-body d-flex flex-row gap-1 justify-content-center">
+                {% if reclamation.status == "cloturer" %}
+                    <button disabled class="btn btn-outline-secondary" >Probleme Réglé</button>
+                {% else %}
+                    <form method="post" action="{{ path('app_reclamation_user_cloturer', {'idRec': reclamation.idRec}) }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('cloturer' ~ reclamation.idRec) }}" />
+                        <button class="btn btn-outline-secondary">Probleme Réglé</button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="card container" style="height: 75vh;">
+        <div class="card-body">
+            <div class="card m-2">
+                <div class="card-body">
+                    <div class="row d-flex justify-content-center">
+                        <h1 class="text-muted text-center mb-2">{{ reclamation.titre }}</h1>
+                        <hr class="w-50">
+                    </div>
+                    <div class="row">
+                        <div class="col-2 d-flex justify-content-center">
+                            <img src="{{ asset('images/' ~ last) }}" class="rounded-circle" width="80" height="80"/>
+                        </div>
+                        <div class="col-1" style="background-color: black; width: 2px; padding: 0;"></div>
+                        <div class="col-9">
+                            <h5><a class="text-muted align-self-center" href="#">{{ reclamation.userid.nomPers }} {{ reclamation.userid.prenomPers }}</a></h5>
+                            <p class="text-dark">{{ reclamation.description }}</p>
+                            <p class="text-end text-muted">{{ date }}</p>
+                        </div>
+                    </div>
+                    {% for rep in reps %}
+                        <hr>
+                        <div class="row">
+                            <div class="col-2 d-flex justify-content-center">
+                                {% if rep.senderid.idPers == uid %}
+                                    <img src="{{ asset('images/' ~ last) }}" class="rounded-circle" width="80" height="80"/>
                                 {% else %}
-                                    <div class="text-white row mb-2" style="background-color: #0b5ed7; width: 35%; padding: 2%; padding-left: 8%; border-radius: 16px;margin-left: 65%">
-                                            {{ reponse.message }}
-                                        </div>
+                                    <img src="{{ asset('images/' ~ clientImg) }}" class="rounded-circle" width="80" height="80" />
+                                {% endif %}
+                            </div>
+                            <div class="col-1" style="background-color: black; width: 2px; padding: 0;"></div>
+                            <div class="col-9">
+                                <div class="d-flex justify-content-between">
+                                    <h5><a class="text-muted align-self-center" href="#">{{ rep.senderid.nomPers }} {{ rep.senderid.prenomPers }}</a></h5>
+                                    <a class="btn btn-outline-info has-text-weight-bold" href="{{ path('app_reclamation_modifierMessage_user', {'idRep': rep.idRep}) }}">plus</a>
+                                </div>                                <p class="text-dark">{{ rep.message }}</p>
+                                <p class="text-end text-muted">{{ rep.timestamp|date('d/m/y H:i') }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <hr>
+                    <div class="row mb-2">
+                        <div class="col-12">
+                            {% if reclamation.status == "cloturer" %}
+                                <form method="post" class="row gap-1">
+                                    <div class="col-9">
+                                        <input type="text" class="form-control form-text disabled" style="width: 75%" disabled/>
+                                    </div>
+                                    <div class="col-2">
+                                        <button class="btn btn-outline-success disabled">Envoyé</button>
+                                    </div>
+                                </form>
+                            {% else %}
+                                {{ form_start(form) }}
+                                {{ form_widget(form._token) }}
+                                <div class="col-9">
+                                    {{ form_row(form.message) }}
+                                </div>
+                                <div class="col-2">
+                                    <button class="btn btn-outline-success">Envoyé</button>
+                                </div>
+                                {{ form_end(form) }}
 
                             {% endif %}
-                        {% else %}
-                            <div class="bg-secondary text-white row mb-2" style="width: 35%; padding: 2%; padding-left: 8%; border-radius: 16px;margin-left: 2%">{{ reponse.message }}</div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-                <div class="card-footer bg-white">
-                    {% if reclamation.status == "cloturer" %}
-                        <form method="post" class="row gap-1">
-                            <input type="text" class="form-control disabled w-75" style="width: 75%" disabled/>
-                            <button class="btn btn-outline-success col w-25 disabled">Send</button>
-                        </form>
-                    {% else %}
-                        {{ form_start(form) }}
-                        {{ form_widget(form._token) }}
-                        {{ form_row(form.message) }}
-                        <button class="btn btn-outline-success col w-25">Envoyé</button>
-                        {{ form_end(form) }}
-                        <small>Cliqué sur le message a modifier / Supprimé</small>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="col-md-5">
-                <div class="card row"  style="height: 25%;">
-                    <div class="card-body text-center ">
-                        <h6>Nom : {{ reclamation.userid.nomPers }}</h6>
-                        <h6>Prenom : {{ reclamation.userid.prenomPers }}</h6>
-                        <h6>Date : {{ date }}</h6>
-                    </div>
-                </div>
-                <div class="card row">
-                    <div class="card-body d-flex flex-row gap-1 justify-content-center">
-                         {% if reclamation.status == "cloturer" %}
-                            <button disabled class="btn btn-outline-secondary" >Probleme Réglé</button>
-                        {% else %}
-                            <form method="post" action="{{ path('app_reclamation_user_cloturer', {'idRec': reclamation.idRec}) }}">
-                                <input type="hidden" name="_token" value="{{ csrf_token('cloturer' ~ reclamation.idRec) }}" />
-                                <button class="btn btn-outline-secondary">Probleme Réglé</button>
-                            </form>
-                        {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>

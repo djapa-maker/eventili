@@ -69,7 +69,7 @@ class ReponseType extends AbstractType
             'data_class' => Reponse::class,
             'sender' => '',
             'rec' => '',
-            'attr' => ['class' => 'd-flex flex-row gap-1']
+            'attr' => ['class' => 'row gap-1']
         ]);
     }
 }
