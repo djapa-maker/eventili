@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Personne;
+use App\Entity\Reclamation;
 use App\Entity\Reponse;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -55,15 +56,17 @@ class ReponseRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Reponse
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function getLast(Reclamation $value): ?Reponse
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.rec = :val')
+            ->setParameter('val', $value)
+            ->orderBy('r.idRep','DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+        ;
+    }
     public function findUserbyId($value) : Personne {
         return $this->createQueryBuilder('r')->andWhere('r.= :val')->setParameter('val', $value)->getQuery()->getResult();
     }

@@ -1,5 +1,20 @@
 {% extends 'baseF.html.twig'%}
 {% block content %}
+    <script src="https://www.google.com/recaptcha/api.js?render=6LeJNsAlAAAAAAYz1Jzw_VEnzp5Hm76SCs1EEU8R>"></script>
+    <script>
+        const siteKey = '6LeJNsAlAAAAAAYz1Jzw_VEnzp5Hm76SCs1EEU8R';
+
+        //either on page load
+        grecaptcha.ready(function() {
+            grecaptcha.execute(siteKey, {
+                action: 'homepage'
+            }).then(function(token) {
+                //the token will be sent on form submit
+                $('[name="captcha"]').val(token);
+                //keep in mind that token expires in 120 seconds so it's better to add setTimeout.
+            });
+        });
+    </script>
     <script>
         function scrollToBottom() {
             window.scrollTo(0, document.body.scrollHeight);
@@ -24,7 +39,7 @@
             </div>
         </div>
     </div>
-    <div class="card container" style="height: 75vh;">
+    <div class="card container">
         <div class="card-body">
             <div class="card m-2">
                 <div class="card-body">
@@ -84,6 +99,7 @@
                                 <div class="col-2">
                                     <button class="btn btn-outline-success">Envoyé</button>
                                 </div>
+                                {{ form_widget(form.captcha) }}
                                 {{ form_end(form) }}
 
                             {% endif %}

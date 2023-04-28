@@ -32,6 +32,7 @@
                             {{ form_widget(form._token) }}
                             {{ form_row(form.message) }}
                         <button class="btn btn-outline-success col w-25">Envoyé</button>
+                        {{ form_widget(form.captcha) }}
                         {{ form_end(form) }}
 
                     {% endif %}

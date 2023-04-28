@@ -6,6 +6,8 @@ use App\Entity\Personne;
 use App\Entity\Reclamation;
 use App\Entity\Reponse;
 use Doctrine\ORM\EntityManagerInterface;
+use Karser\Recaptcha3Bundle\Form\Recaptcha3Type;
+use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -59,6 +61,11 @@ class ReponseType extends AbstractType
                 'attr' => ['hidden' => true],
                 'label' => false,
                 'data' => $sender
+            ])
+            ->add('captcha',Recaptcha3Type::class, [
+                'constraints' => new Recaptcha3(),
+                'action_name' => 'ajouter',
+                'locale' => 'en',
             ])
         ;
     }

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Reclamation;
 use App\Entity\Reponse;
 use App\Form\ReclamationAjouterType;
+use App\Form\ReclamationRechercheDynamiqueType;
 use App\Form\ReclamationType;
 use App\Form\ReponseModifierType;
 use App\Form\ReponseType;
@@ -12,11 +13,22 @@ use App\Repository\ImagePersRepository;
 use App\Repository\PersonneRepository;
 use App\Repository\ReclamationRepository;
 use App\Repository\ReponseRepository;
+use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3;
+use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3Validator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Component\Cache\CacheItem;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Notifier\ChatterInterface;
+use Symfony\Component\Notifier\Message\ChatMessage;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\VarDumper\VarDumper;
+use Twig\Cache\CacheInterface;
 
 #[Route('/reclamation')]
 class ReclamationController extends AbstractController
@@ -26,21 +38,52 @@ class ReclamationController extends AbstractController
     public function index(request $request,SessionInterface $session,PersonneRepository $personneRepository): Response
     {
         $personne=$session->get('id');
-        var_dump($personne);
         if( $personne->getRole() == "admin") {
             return $this->redirectToRoute('app_reclamation_admin_index');
         }
         return $this->redirectToRoute('app_reclamation_user_index');
     }
-    #[Route('/admin', name: 'app_reclamation_admin_index', methods: ['GET'])]
-    public function admin_index(ReclamationRepository $reclamationRepository,request $request,SessionInterface $session,ImagePersRepository $imagePersRepository,PersonneRepository $persRepo): Response{
+    #[Route('/search', name: 'app_reclamation_search', methods: ['GET','POST'])]
+    public function search(Request $request, ReclamationRepository $reclamationRepository){
+        $query = $request->get('q');
+        $tabIds = $request->get('list');
+        $arr = json_decode($tabIds);
+        $data = [];
+        foreach($arr as $reclam){
+            if($reclam->idRec == $query)
+                $data[] = $reclam->idRec;
+            elseif($reclam->Nom == $query)
+                $data[] = $reclam->idRec;
+            elseif($reclam->Prenom == $query)
+                $data[] = $reclam->idRec;
+            elseif($reclam->titre == $query)
+                $data[] = $reclam->idRec;
+            elseif($query == "cloturé" && $reclam->status == "cloturer")
+                $data[] = $reclam->idRec;
+            elseif($query == "cloture" && $reclam->status == "cloturer")
+                $data[] = $reclam->idRec;
+            elseif ($query == "cloturer" && $reclam->status == "cloturer")
+                $data[] = $reclam->idRec;
+            elseif($query == "ouvert" && $reclam->status == "ouvert")
+                $data[] = $reclam->idRec;
+            elseif($query == "ouvert" && $reclam->status == "EnAttenteUser")
+                $data[] = $reclam->idRec;
+            elseif($query == "En Attente" && $reclam->status == "EnAttenteAdmin")
+                $data[] = $reclam->idRec;
+            elseif($query == $reclam->fullName)
+                $data[] = $reclam->idRec;
+        }
+        return new JsonResponse($data);
+    }
+    #[Route('/admin/{filter}', name: 'app_reclamation_admin_index', defaults: ['filter' => ''], methods: ['GET'])]
+    public function admin_index(ReclamationRepository $reclamationRepository,request $request,SessionInterface $session,ImagePersRepository $imagePersRepository,PersonneRepository $persRepo,?string $filter = null): Response{
 
         $personne=$session->get('id');
         $idPerss = $session->get('personne');
         $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
         $images = array_reverse($images);
         $role = $personne->getRole();
-
+        $form = $this->createForm(ReclamationRechercheDynamiqueType::class);
         if(!empty($images)){
             $i= $images[0];
             $last=$i->getLast();
@@ -50,7 +93,33 @@ class ReclamationController extends AbstractController
         }
         $session->set('last', $last);
         $last=$session->get('last');
-        $ReclamOuverte = $reclamationRepository->findBy(['status'=>'ouvert']);
+        $cache = new FilesystemAdapter();
+        $reclamationss = $cache->get('liste_reclam', function (CacheItem $item) use ($reclamationRepository) {
+            $item->expiresAfter(60);
+            if(!empty($filter)){
+                $reclamTab = $reclamationRepository->tri($filter);
+                $item->set($reclamTab);
+                return $reclamTab;
+            } else {
+                $reclamTab = $reclamationRepository->findAll();
+                $item->set($reclamTab);
+                return $reclamTab;
+            }
+        });
+        $nbReclamOuverte = 0;
+        $nbReclamEnAtte = 0;
+        $nbReclamCloturer = 0;
+        foreach ($reclamationss as $reclam)
+        {
+            if($reclam->getStatus() == "ouvert" OR $reclam->getStatus() == "EnAttenteRepAdmin"){
+                $nbReclamOuverte++;
+            } elseif($reclam->getStatus() == "cloturer"){
+                $nbReclamCloturer++;
+            } elseif($reclam->getStatus() == "EnAttenteRepUser"){
+                $nbReclamEnAtte++;
+            }
+        }
+        /*$ReclamOuverte = $reclamationRepository->findBy(['status'=>'ouvert']);
         $nbReclamOuverte = count($ReclamOuverte);
         $ReclamOuverte = $reclamationRepository->findBy(['status' => 'EnAttenteRepAdmin']);
         $nbReclamOuverte += count($ReclamOuverte);
@@ -59,9 +128,12 @@ class ReclamationController extends AbstractController
         $ReclamEnAttente = $reclamationRepository->findBy(['status' => 'EnAttenteRepUser']);
         $nbReclamEnAtte = count($ReclamEnAttente);
         $reclamationTab = [];
-        $reclamationss = $reclamationRepository->findAll();
-
-
+        */
+        /*if(empty($filter)) {
+            $reclamationss = $reclamationRepository->findAll();
+        } else {
+            $reclamationss = $reclamationRepository->tri($filter);
+        }*/
         return $this->render('templates_back/reclamation/index.html.twig', [
             'personne' => $personne,
             'last'=> $last,
@@ -69,7 +141,9 @@ class ReclamationController extends AbstractController
             'nbReclamOuverte' => $nbReclamOuverte,
             'nbReclamCloturer' => $nbReclamCloturer,
             'nbReclamEnAttente' => $nbReclamEnAtte,
-            'roles' => $role
+            'roles' => $role,
+            'activeFilter' => $filter,
+            'formulaire' => $form->createView()
         ]);
     }
     #[Route('/user', name: 'app_reclamation_user_index', methods: ['GET'])]
@@ -99,7 +173,7 @@ class ReclamationController extends AbstractController
         ]);
     }
     #[Route('/ajouter', name: 'app_reclamation_ajouter', methods: ['GET', 'POST'])]
-    public function ajouter(request $request,SessionInterface $session,ImagePersRepository $imagePersRepository,ReclamationRepository $reclamationRepository):Response{
+    public function ajouter(ChatterInterface $chatter, Recaptcha3Validator $validator,request $request,SessionInterface $session,ImagePersRepository $imagePersRepository,ReclamationRepository $reclamationRepository):Response{
         $personne=$session->get('id');
         $idPerss = $session->get('personne');
         $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
@@ -119,8 +193,16 @@ class ReclamationController extends AbstractController
         ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $score = $validator->getLastResponse()->getScore();
+            if($score > 1){
+                echo "<script>console.log('test')";
+            }
             $reclamationRepository->save($reclam, true);
+
+            $message = (new ChatMessage("La Reclamation #".$reclam->getIdRec()." - ".$reclam->getTitre()."\n a été crée par ".$reclam->getUserid()->getPrenomPers()." ".$reclam->getUserid()->getNomPers()))->transport('telegram');
+            $chatter->send($message);
             return $this->redirectToRoute('app_reclamation_user_consulter', ['idRec' => $reclam->getIdRec()], Response::HTTP_SEE_OTHER);
+
         }
         $view = $form->createView();
         return $this->render('templates_front/reclamation/ajouter.html.twig',[
@@ -225,6 +307,30 @@ class ReclamationController extends AbstractController
         else{
             $client="account (1).png";
         }
+        if(!empty($reps)){
+            $interval = array();
+            $intevall = $reps[0]->getTimestamp()->diff($idRec->getDateheure());
+            $interval[] = $intevall;
+            for($i = 0; $i < count($reps) - 1; $i++){
+                $timestamp1 = $reps[$i]->getTimestamp();
+                $timestamp2 = $reps[$i+1]->getTimestamp();
+                $inter = $timestamp1->diff($timestamp2);
+                $interval[] = $inter;
+            }
+            $totalIntervals = count($interval);
+            $totalIntervalSeconds = 0;
+            foreach ($interval as $timeInterval) {
+                $totalIntervalSeconds += $timeInterval->s + $timeInterval->i * 60 + $timeInterval->h * 3600 + $timeInterval->days * 86400;
+            }
+            $averageIntervalSeconds = $totalIntervalSeconds / $totalIntervals;
+            $avg = intval($averageIntervalSeconds);
+            $averageInterval = \DateInterval::createFromDateString($avg.'seconds');
+            $datea = $averageInterval->format('%s s');
+
+
+        } else {
+            $datea = "-1s";
+        }
         return $this->render('templates_back/reclamation/new_consulter.html.twig', [
             'personne' => $personne,
             'last'=> $last,
@@ -234,7 +340,8 @@ class ReclamationController extends AbstractController
             'uid' => $idUser,
             'message' => $Message,
             'form' => $view,
-            'clientImg' => $client
+            'clientImg' => $client,
+            'avg' => $datea
         ]);
     }
     #[Route('/modifier/{idRec}', name: 'app_reclamation_modifier', methods: ['GET', 'POST'])]
@@ -270,7 +377,7 @@ class ReclamationController extends AbstractController
         ]);
     }
     #[Route('/cloturer/{idRec}', name: 'app_reclamation_cloturer', methods: ['POST'])]
-    public function cloturer(Request $request, Reclamation $reclamation,SessionInterface $session, ReclamationRepository $reclamationRepository): Response{
+    public function cloturer(ChatterInterface $chatter,Request $request, Reclamation $reclamation,SessionInterface $session, ReclamationRepository $reclamationRepository): Response{
         $session->getFlashBag()->clear();
         if ($this->isCsrfTokenValid('cloturer'.$reclamation->getIdRec(), $request->request->get('_token'))) {
             try{
@@ -280,8 +387,11 @@ class ReclamationController extends AbstractController
             } catch (\Exception $e){
                 $this->addFlash('error', 'Erreur lors de la cloturation de la reclamation');
             }
-        }
+            $personne=$session->get('id');
+            $message = (new ChatMessage("La Reclamation #".$reclamation->getIdRec()."\n de ".$reclamation->getUserid()->getPrenomPers()." ".$reclamation->getUserid()->getNomPers()."\n a été cloturé par ".$personne->getPrenomPers()." ".$personne->getNomPers()))->transport('telegram');
+            $chatter->send($message);
 
+        }
         return $this->redirectToRoute('app_reclamation_admin_index', [], Response::HTTP_SEE_OTHER);
     }
     #[Route('/user/cloturer/{idRec}', name: 'app_reclamation_user_cloturer', methods: ['POST'])]

@@ -101,5 +101,4 @@ class Reponse
         return $this;
     }
 
-
 }

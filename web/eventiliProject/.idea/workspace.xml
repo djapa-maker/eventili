@@ -4,10 +4,31 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a641bf00-998b-46a8-b2fc-6473ee65dafc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+    <list default="true" id="a641bf00-998b-46a8-b2fc-6473ee65dafc" name="Changes" comment="Creation">
+      <change afterPath="$PROJECT_DIR$/config/packages/karser_recaptcha3.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Command/AutoDeleteRaclamCommand.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Form/ReclamationRechercheDynamiqueType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/eventiliProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/eventiliProject.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/templates_back/reclamation/modifier.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/templates_back/reclamation/modifier.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/messenger.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/messenger.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/notifier.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/notifier.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ReclamationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ReclamationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Reponse.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Reponse.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/ReclamationAjouterType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/ReclamationAjouterType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/ReponseType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/ReponseType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/ReclamationRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ReclamationRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/ReponseRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ReponseRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/templates_back/reclamation/consulter.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/templates_back/reclamation/consulter.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/templates_back/reclamation/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/templates_back/reclamation/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/templates_back/reclamation/new_consulter.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/templates_back/reclamation/new_consulter.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/templates_front/reclamation/ajouter.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/templates_front/reclamation/ajouter.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/templates_front/reclamation/consulter.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/templates_front/reclamation/consulter.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,7 +178,13 @@
       <path value="$PROJECT_DIR$/vendor/symfony/options-resolver" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-idn" />
       <path value="$PROJECT_DIR$/vendor/symfony/redis-messenger" />
+      <path value="$PROJECT_DIR$/vendor/symfony/telegram-notifier" />
+      <path value="$PROJECT_DIR$/vendor/google/recaptcha" />
+      <path value="$PROJECT_DIR$/vendor/karser/karser-recaptcha3-bundle" />
     </include_path>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2OQYhtrDthBbq1LWb8eqrGlvDRm" />
   <component name="ProjectLevelVcsManager">
@@ -167,23 +194,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "othman",
-    "last_opened_file_path": "/Users/bitri/Desktop/eventili/web/eventiliProject/templates/templates_back/reclamation",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;othman&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/bitri/Desktop/eventili/web/eventiliProject/templates/templates_back/reclamation&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;discord-application&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/templates/templates_back/reclamation" />
@@ -203,7 +230,9 @@
       <workItem from="1681494396565" duration="69000" />
       <workItem from="1681505273587" duration="391000" />
       <workItem from="1682036304387" duration="1337000" />
-      <workItem from="1682454157474" duration="10064000" />
+      <workItem from="1682454157474" duration="31871000" />
+      <workItem from="1682535954858" duration="40065000" />
+      <workItem from="1682689486402" duration="15774000" />
     </task>
     <task id="LOCAL-00001" summary="fix design">
       <created>1682505699272</created>
@@ -212,7 +241,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682505699272</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="fix design front">
+      <created>1682507439329</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1682507439329</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -221,6 +257,7 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="fix design" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix design" />
+    <MESSAGE value="fix design front" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix design front" />
   </component>
 </project>

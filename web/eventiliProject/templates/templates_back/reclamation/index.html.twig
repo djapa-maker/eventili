@@ -9,10 +9,19 @@
     {% endfor %}
     <div class="card">
     <div class="row gap-1 justify-content-center card-body">
+
         <div class="row gap-1 justify-content-center">
                 <div class="card-body d-flex justify-content-center">
-                    <input type="text" class="form-control form-text w-75" style="height: 4em" placeholder="Rechercher Par User / Date / Status (Pas implémenter)" class="form-text">
+
+                    <input id="search-query" type="text" class="form-control form-text w-75" style="height: 4em" placeholder="Recherche">
+
                 </div>
+        </div>
+        <div class="d-flex flex-row justify-content-center gap-1 mb-2">
+            <a class="btn btn-outline-success" href="{{ path('app_reclamation_admin_index',{'filter' : 'ouvert'}) }}">Ouvert</a>
+            <a class="btn btn-outline-secondary" href="{{ path('app_reclamation_admin_index',{'filter' : 'cloturer'}) }}">Cloturé</a>
+            <a class="btn btn-outline-warning" href="{{ path('app_reclamation_admin_index',{'filter' : 'EnAttenteAdmin'}) }}">En Attente</a>
+            <a class="btn btn-outline-danger" href="{{ path('app_reclamation_admin_index') }}">Aucun Filtre</a>
         </div>
         <div class="card col-md-2 alert-info">
             <div class="card-header">
@@ -26,6 +35,7 @@
             <div class="card-header">
                 Nombre de Réclamations Ouverte
             </div>
+
             <div class="card-body">
                 <h4>{{ nbReclamOuverte}}</h4>
             </div>
@@ -50,9 +60,29 @@
 
     </div>
     </div>
-    <div class="d-flex align-items-center flex-wrap gap-2">
+    {% set idRecs = [] %}
+    {% set cardsList = [] %}
+    <div class="d-flex align-items-center flex-wrap gap-2" id="AffichageByDefault" style="display: block;">
+        {% if reclamations is empty %}
+            {% if activeFilter is not empty %}
+                <h1 class="text-danger">Aucun Resultat ne corespond au filtre</h1>
+            {% else %}
+                <h1 class="text-danger">Il existe aucune reclamation</h1>
+            {% endif %}
+        {% endif %}
         {% for reclamation in reclamations %}
-        <div class="card col-md-3">
+            {% set object = { 'idRec' : reclamation.idRec,
+                'status' : reclamation.status,
+                'Nom' : reclamation.userid.nomPers,
+                'Prenom' : reclamation.userid.prenomPers,
+                'titre' : reclamation.titre,
+                'userId' : reclamation.userid.idPers,
+                'fullName' : reclamation.userid.nomPers ~ ' ' ~ reclamation.userid.prenomPers,
+            }
+            %}
+            {% set idRecs = idRecs|merge([object]) %}
+            {% set cardsList = cardsList|merge([reclamation.idRec]) %}
+            <div class="card col-md-3" id="idRec{{ reclamation.idRec }}">
             <div class="card-body">
                 <div class="row">
                 <h5 class="card-title has-margin col">#{{ reclamation.idRec }} - {{ reclamation.titre }}</h5>
@@ -64,7 +94,7 @@
                         <p class="card-title has-margin col text-warning d-flex justify-content-end">En Attente</p>
                     {% endif %}
                 </div>
-                <h6 class="card-subtitle mb-2 text-muted has-margin">#{{ reclamation.userid.nomPers }} {{ reclamation.userid.prenomPers }}</h6>
+                <h6 class="card-subtitle mb-2 text-muted has-margin">{{ reclamation.userid.nomPers }} {{ reclamation.userid.prenomPers }}</h6>
                 <p class="card-text text-center">{{ reclamation.description }}</p>
                 <div class="d-flex flex-row justify-content-center gap-1">
                     <a href="{{ path('app_reclamation_admin_consulter', {'idRec': reclamation.idRec}) }}" class="btn btn-outline-secondary p-2">Consulter</a>
@@ -77,4 +107,49 @@
         </div>
         {% endfor %}
     </div>
+    <script>
+        var cardsList = {{ cardsList|json_encode|raw }};
+        var reclamations = {{ idRecs|json_encode|raw }};
+        var sendingInfo = JSON.stringify(reclamations);
+
+        $(document).ready(function() {
+            $('#search-query').on('input', function() {
+                var query = $(this).val();
+                $.ajax({
+                    url: '{{ path('app_reclamation_search') }}',
+                    type: 'POST',
+                    data: { q: query,list: sendingInfo},
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#search-results').empty();
+                        if(data.length === 0){
+                            cardsList.forEach(afficherTout)
+                        } else {
+                            cardsList.forEach(cacherTout);
+                            for(var i = 0; i < cardsList.length; i++)
+                            {
+                                if(data.includes(cardsList[i])){
+                                    let card = document.getElementById('idRec'+cardsList[i]);
+                                    card.style.display = "block"
+                                }
+                            }
+                        }
+
+                    },
+                    error: function(xhr, status, error) {
+                        console.log("Error:", error);
+                    }
+                });
+            });
+            function afficherTout(item){
+                let card = document.getElementById('idRec'+item);
+                card.style.display = "block"
+            }
+            function cacherTout(item){
+                let card = document.getElementById('idRec'+item);
+                card.style.display = "none"
+            }
+
+        });
+    </script>
 {% endblock %}
