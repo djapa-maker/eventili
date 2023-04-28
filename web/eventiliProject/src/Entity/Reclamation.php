@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\PersonneRepository;
 use Doctrine\DBAL\Types\DateTimeType;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ReclamationRepository;
 use phpDocumentor\Reflection\Types\Integer;
@@ -16,7 +17,7 @@ class Reclamation
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(name: "id_rec", type: "integer", nullable: false)]
     private $idRec;
 
     #[ORM\Column(length: 255)]
@@ -81,7 +82,6 @@ class Reclamation
 
         return $this;
     }
-
     public function getUserid(): ?Personne
     {
         return $this->userid;

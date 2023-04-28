@@ -35,7 +35,7 @@ class Reponse
     #[ORM\ManyToOne(targetEntity: Personne::class)]
     #[ORM\JoinColumn(name: "senderId", referencedColumnName: "id_pers")]
     private $senderid;
-
+    private $reponses;
     public function getIdRep(): ?int
     {
         return $this->idRep;

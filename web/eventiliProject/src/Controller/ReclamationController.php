@@ -94,6 +94,7 @@ class ReclamationController extends AbstractController
         $session->set('last', $last);
         $last=$session->get('last');
         $cache = new FilesystemAdapter();
+        $cache->clear();
         $reclamationss = $cache->get('liste_reclam', function (CacheItem $item) use ($reclamationRepository) {
             $item->expiresAfter(60);
             if(!empty($filter)){

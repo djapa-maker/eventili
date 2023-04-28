@@ -2,10 +2,8 @@
 
 namespace App\Command;
 
-use App\Entity\Personne;
 use App\Entity\Reclamation;
 use App\Entity\Reponse;
-use App\Repository\ReclamationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -54,6 +52,10 @@ class AutoDeleteRaclamCommand extends Command
                     $this->entityManager->getRepository(Reclamation::class)->remove($reclam,true);
                     $nbReclamSupprime += 1;
                 }
+            }
+            if(empty($lastRes) && $reclam->getDateheure()->getTimestamp() < $avant){
+                $this->entityManager->getRepository(Reclamation::class)->remove($reclam,true);
+                $nbReclamSupprime += 1;
             }
         }
         $output->writeln("[Script] Nb Reclamation Cloturé Supprimer : ".$nbReclamSupprime);
