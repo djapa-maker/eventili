@@ -30,7 +30,7 @@ class Avis
     private  \DateTime $date;
 //---------------------------------------------------------------------------------------
     // #[ORM\ManyToOne(inversedBy:'Avis')]
-    #[ORM\ManyToOne(targetEntity: Personne::class)]
+    #[ORM\ManyToOne(targetEntity: Personne::class, cascade: ["remove"])]
     #[ORM\JoinColumn(name: "pers", referencedColumnName: "id_pers")]
     private ?Personne $pers=null;
 //---------------------------------------------------------------------------------------

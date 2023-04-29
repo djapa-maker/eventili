@@ -5,12 +5,15 @@ namespace App\Entity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PersonneRepository;
+use DateTime;
 use phpDocumentor\Reflection\Types\Self_;
 use PhpParser\Node\Name;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Mime\Message;
 use Symfony\Component\Validator\Constraints as Assert;
 
+#[UniqueEntity(fields: ['email'], message: 'Un compte déjà existe avec cet email')]
 #[ORM\Entity(repositoryClass: PersonneRepository::class)]
 class Personne implements UserInterface
 {
@@ -83,9 +86,26 @@ class Personne implements UserInterface
     #[ORM\Column]
     private ?int $is_verified=0;
 
+    #[ORM\Column]
+    private ?DateTime $date;
+
+    public function __construct()
+    {
+        $this->date = new DateTime();
+    }
     public function getIs_verified(): ?int
     {
         return $this->is_verified;
+    }
+    public function getDate(): ?DateTime
+    {
+        return $this->date;
+    
+    }public function setDate(DateTime $date): self
+    {
+        $this->date = $date;
+
+        return $this;
     }
     public function setIs_verified(int $is_verified): self
     {

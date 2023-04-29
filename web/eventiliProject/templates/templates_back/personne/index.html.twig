@@ -9,42 +9,50 @@
 			<div class="position-relative search-bar-box">
 				<form id="annuite_form" class="form" action="{{ path('app_personne_index') }}" enctype="multipart/form-data" method="GET">
 					<br>
-					<input type="text" name="search1" style="border-radius:20px;border: 2px solid #aeb8ff" value="{{ search }}" class="form-control search-control" id="search-term" placeholder="Rechercher...">
-					<br>
-					<center>
-						<label for="criteria">Recherche par:</label>
+					<style>
+						#searchInput {
+							padding: 10px;
+							border: none;
+							border-radius: 5px;
+							background-color: #f1f1f1;
+							font-size: 16px;
+							width: 100%;
+							margin: 10px;
+						}
+					</style>
+					<input type="text" id="searchInput" style="border-radius:20px;border: 2px solid #aeb8ff;" placeholder="       Rechercher..."><br>
 
-						<select id="criteria" name="criteria" style="height:31px;border-radius:5px;color:white;background-color:#ff8601;border-color:#ff8601;font-size:15px">
-							<option value="nom" {% if app.request.query.get('criteria') == 'nom' %} selected {% endif %}>Nom</option>
-							<option value="prenom" {% if app.request.query.get('criteria') == 'prenom' %} selected {% endif %}>Prénom</option>
-							<option value="adresse" {% if app.request.query.get('criteria') == 'adresse' %} selected {% endif %}>Adresse</option>
-						</select>
-					</center>
 				</form>
 
 				<span class="position-absolute top-50 search-show translate-middle-y">
-					<i class='bx bx-search' style="color:#aeb8ff; margin-bottom:31px;"></i>
+					<i class='bx bx-search' style="color:#aeb8ff; margin-left:5px;margin-bottom:20px;"></i>
 				</span>
 				<span class="position-absolute top-50 search-close translate-middle-y">
 					<i class='bx bx-x' style="color:white"></i>
 				</span>
+				<button type="button" style="border-radius:10px;margin-left:1000px;
+																													color:white;
+																													background-color:#ff8601;
+																													border-color:#ff8601;
+																													font-size:19px" class="btn btn-primary" onclick="window.location.href='{{ path('app_trans_stat') }}'">Statistique</button>
+
 			</div>
 		</div>
 	</div>
 	<button type="button" style="margin-left: 1350px;border-radius:10px;
-																								color:white;
-																								background-color:#aeb8ff;
-																								border-color:#aeb8ff;
-																								font-size:19px" class="btn btn-primary" onclick="window.location.href='{{ path('app_personne_new') }}'">Ajouter un utilisateur</button>
+																										color:white;
+																										background-color:#aeb8ff;
+																										border-color:#aeb8ff;
+																										font-size:19px" class="btn btn-primary" onclick="window.location.href='{{ path('app_personne_new') }}'">Ajouter un utilisateur</button>
 	<br>
 	<br>
 
 
 	<br>
 	{# <button type="button" name="trie" style="background-color:#aeb8ff;color:white;border-radius:10px;border-color:#aeb8ff;" class="btn btn-primary" onclick="window.location.href='{{ path('app_personne_trie') }}'" id="trie">AàZ</button>
-	 #}
+		 #}
 	<form class="form" action="{{ path('app_personne_index')}}" method="GET">
-		
+
 		<select name="inputfilter" id="filterService" style="height:31px;border-radius:5px;color:white;background-color:#ff8601;margin-bottom:10px;border-color:#ff8601;font-size:15px">
 			<option value="" name="choose">choisissez</option>
 
@@ -53,47 +61,77 @@
 			<option value="partenaire" name="inputfilter">partenaire</option>
 
 		</select>
-		
+
 	</form>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
 		$(document).ready(function () {
-$('#filterService').on('change', function () {
-$(this).closest('form').submit();
+$('.card-body').click(function () {
+var table = $(this).parents('.row-cols-1').eq(0)
+var rows = table.find('.col').toArray().sort(comparer($(this).index()))
+this.asc = !this.asc
+if (!this.asc) {
+rows = rows.reverse()
+}
+for (var i = 0; i < rows.length; i++) {
+table.append(rows[i])
+}
+})
+})
+
+function comparer(index) {
+return function (a, b) {
+var valA = getCellValue(a, index),
+valB = getCellValue(b, index)
+return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB)
+}
+}
+
+function getCellValue(row, index) {
+return $(row).find('.card-body').children('h5').eq(index).text()
+}
+
+$(document).ready(function () {
+$('#searchInput').keyup(function () {
+var searchText = $(this).val().toLowerCase();
+$('.col').each(function () {
+var rowText = $(this).find('.card-body h5').text().toLowerCase();
+
+if (rowText.includes(searchText)) {
+$(this).show();
+} else {
+$(this).hide();
+}
+});
 });
 });
 	</script>
+
 
 	<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-4">
 		{% for personne in personnes %}
 			<div class="col">
 				<div class="card radius-15">
 					<div class="card-body text-center">
-						<div class="p-4 border radius-15">
-
-							<h5 class=" mt-2">{{ personne.nomPers }}
-								{{ personne.prenomPers }}</h5>
-							<p class="mb-1">{{ personne.role }}</p>
-							<p class="mb-1">
+						<div class="p-4 border radius-15" onclick>
+							<h5 class="card-title">{{ personne.prenomPers }}</h5>
+							<p class="card-text">{{ personne.role }}</p>
+							<p class="card-text">
 								<i class="bx bxs-phone"></i>
 								{{ personne.numTel }}</p>
-							<p class="mb-1">Adresse:
+							<p class="card-text">Adresse:
 								{{ personne.adresse }}</p><br>
 							<div style="display: flex; align-items:center;margin-left:110px;text-align:center;">
-
 								{{ include('templates_back/personne/_delete_form.html.twig') }}
 								<a href="{{ path('app_personne_edit',{'idPers':personne.idPers}) }}" style=" border-radius:40px; background-color:#758afd; border-color:#758afd; height:30px; width:30px; display: flex; justify-content: center; align-items: center;color:white">
 									<i class='bx bx-edit' style="font-size:20px"></i>
 								</a>
-
 							</div>
-
-
-							<p class="mb-0 mt-4">
+							<p class="card-text mb-0 mt-4">
 								<i class="bx bxs-message"></i>
 								{{ personne.email }}</p>
-
-
 						</div>
 					</div>
 				</div>
@@ -104,11 +142,40 @@ $(this).closest('form').submit();
 				style="height:250px;width:250px" class="light-image" src="{{asset('assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/>
 				{# <img class="dark-image" src="{{asset('assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/> #}
 				<h3 class="dark-inverted">Aucun utilisateurs' !</h3>
-				<p>il n'existe aucun utilisateurs pour le moment
-				</p>
+				<p>il n'existe aucun utilisateurs pour le moment</p>
 			</div>
 		{% endfor %}
 	</div>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function () {
+$('h5.card-title').click(function () {
+var cards = $('.card').toArray().sort(comparer($(this).index()))
+this.asc = !this.asc
+if (!this.asc) {
+cards = cards.reverse()
+}
+for (var i = 0; i < cards.length; i++) {
+$('.row').append(cards[i])
+}
+})
+})
+
+function comparer(index) {
+return function (a, b) {
+var valA = getCardValue(a, index),
+valB = getCardValue(b, index)
+return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB)
+}
+}
+
+function getCardValue(card, index) {
+return $(card).find('.card-title').text()
+}
+	</script>
+
+
 	<div class="pagination justify-content-center">
 		{{ knp_pagination_render(personnes,'bootstrap_v4_pagination.html.twig') }}
 	</div>

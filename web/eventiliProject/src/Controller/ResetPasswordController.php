@@ -22,6 +22,7 @@ use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 use Swift_Mailer;
 use Swift_Message;
 use Swift_SmtpTransport;
+use Swift_Image;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 #[Route('/reset-password')]
@@ -186,7 +187,7 @@ $email = (new TemplatedEmail())
         ]);
 $transport = (new Swift_SmtpTransport('smtp.gmail.com', 465, 'ssl'))
 ->setUsername('yesmine.guesmi@esprit.tn')
-->setPassword('BACMATH2K20');
+->setPassword('Bigadroug78910*');
 
 // Create the Mailer using your created Transport
 $mailer = new Swift_Mailer($transport);
@@ -196,6 +197,17 @@ $message = (new Swift_Message('Reset Password'))
 ->setFrom(['yesmineguesmi@esprit.tn' => 'Evëntili'])
 ->setTo([$user->getEmail()])
 ->setBody("<p>Salut! </p>cliquez ici pour reset le password: " . $url, 'text/html');
+// Joindre une image à l'e-mail
+$image = Swift_Image::fromPath('C:\xampp\htdocs\img\wedding.png');
+$image1 = Swift_Image::fromPath('C:\xampp\htdocs\img\logo.png');
+$body = '<img src="' . $message->embed($image1) . '" style="max-width:29%;height:auto;">';
+$body .= '<img src="' . $message->embed($image) . '" style="max-width:100%;height:auto;">';
+$body .= '<br><br><br>';
+$body .= '<p style="font-family: Comic Sans MS, cursive;margin-left: 288px;">Veuillez cliquer sur le bouton ci-dessous pour activer votre compte :</p>';
+$body .= '<a href="' . $url . '" style="display:inline-block;background-color:#f58922;margin-left: 398px;color:#fff;padding:19px 35px;text-decoration:none;border-radius:5px;">Activer mon compte</a>';
+
+// Ajouter l'image au contenu du message
+$message->setBody($body, 'text/html');
 
 // Send the message
 $result = $mailer->send($message);

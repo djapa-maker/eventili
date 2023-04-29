@@ -50,16 +50,16 @@
 									<div style="display: flex;color:#241b7c;position: absolute;top: 10px; left: 85%; ">
 										{{ include('templates_back/service/_delete_form.html.twig') }}
 										<a href="{{ path('app_service_edit',{'idService':service.idService})}}" style="
-																																					margin-right:5px;
-																																					border-radius:30px;
-																																					background-color:#241b7c;
-																																					border-color:#241b7c;
-																																					height:30px;
-																																					width:30px;
-																																					display: flex;
-																																					justify-content: center;
-																																					align-items: center;
-																																					color:white">
+																																																	margin-right:5px;
+																																																	border-radius:30px;
+																																																	background-color:#241b7c;
+																																																	border-color:#241b7c;
+																																																	height:30px;
+																																																	width:30px;
+																																																	display: flex;
+																																																	justify-content: center;
+																																																	align-items: center;
+																																																	color:white">
 											<i class='bx bx-edit' style="font-size:20px"></i>
 										</a>
 									</div>
@@ -103,36 +103,29 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<!-- Modal -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-				<script>
-					$(document).ready(function () {
-			$('#search-term').keyup(function () {
-			var searchTerm = $(this).val();
+	<script>
+		$(document).ready(function () {
+$('#search-term').keyup(function () {
+var searchTerm = $(this).val();
 
-			$.ajax({
-			type: 'POST',
-			url: '{{ path('app_service_search') }}',
-			data: {
-			searchTerm: searchTerm
-			},
-			success: function (data) {
-			var results = '';
+$.ajax({
+type: 'POST',
+url: '{{ path('app_service_search') }}',
+data: {
+searchTerm: searchTerm
+},
+success: function (data) {
+var results = '';
 
-			$.each(data, function (index, value) {
-			results += '<div class="card" style="margin-top:-10px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);width:90%;border-radius:14px;height:50px;background-color:white">' +
-				'<div style="display: flex;">' +
-					'<label style="color:#241b7c;margin-right: 30%;margin-left: 20px;margin-top: 15px;">' + value.nom + '</label>' +
-					'<div style="display: flex;color:#241b7c;position: absolute;top: 10px; left: 85%;">' +
-						
-					'</div>' +
-				'</div>' +
-			'</div>';
+$.each(data, function (index, value) {
+results += '<div class="card" style="margin-top:-10px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);width:90%;border-radius:14px;height:50px;background-color:white">' + '<div style="display: flex;">' + '<label style="color:#241b7c;margin-right: 30%;margin-left: 20px;margin-top: 15px;">' + value.nom + '</label>' + '<div style="display: flex;color:#241b7c;position: absolute;top: 10px; left: 85%;">' + '</div>' + '</div>' + '</div>';
 
-			});
+});
 
-			$('#search-results').html(results);
-			}
-			});
-			});
-			});
-				</script>
+$('#search-results').html(results);
+}
+});
+});
+});
+	</script>
 {% endblock %}

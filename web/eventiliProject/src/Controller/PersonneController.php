@@ -7,6 +7,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Form\PersonneType;
 use App\Repository\ImagePersRepository;
 use App\Repository\PersonneRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,6 +23,7 @@ use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Swift_Mailer;
 use Swift_Message;
 use Swift_SmtpTransport;
+use Swift_Image;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 #[Route('/personne')]
@@ -47,7 +49,12 @@ class PersonneController extends AbstractController
         }
         $session->set('last', $last);
         $last = $session->get('last');
+        $evenements = $personneRepository->findAll();
+        $imgev = [];
 
+        foreach ($evenements as $event) {
+            $imgev[$event->getIdPers()] = $imagePersRepository->findBy(['idPers' => $event->getIdPers()]);
+        }
         $search = $request->query->get('search1');
         $queryBuilder = $entityManager
             ->getRepository(Personne::class)
@@ -57,10 +64,6 @@ class PersonneController extends AbstractController
         $filter = $request->query->get('inputfilter');
        if ($filter) {
             $personnes = $personneRepository->getAllByPersonneRole($filter);
-        } elseif ($search) {
-            $criteria = $request->query->get('criteria');
-            
-            $personnes=$personneRepository->findCriteria($search,$criteria);
         } else {
             $personnes = $personneRepository->findAll();
         }
@@ -78,6 +81,8 @@ $pagination = $paginator->paginate(
             if ($personne->getRole() == "admin") {
                 return $this->render('templates_back/personne/index.html.twig', [
                     'search' => $search,
+                    'Img' => $imgev,
+                    'evenements' => $evenements,
                     'personnes' => $pagination,
                     'personne' => $personne,
                     'last' => $last,
@@ -88,7 +93,59 @@ $pagination = $paginator->paginate(
             }
         }
     }
-    #[Route('/trie', name: 'app_personne_trie', methods: ['GET'])]
+    #[Route('/stat', name: 'app_trans_stat', methods: ['GET'])]
+    public function statindex(SessionInterface $session,ImagePersRepository $imagePersRepository, Request $request,EntityManagerInterface $entityManager,FlashyNotifier $flashy ): Response
+    {
+        $personne = $session->get('id');
+        $idPerss = $session->get('personne');
+        $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
+        $images = array_reverse($images);
+
+        if (!empty($images)) {
+            $i = $images[0];
+            $last = $i->getLast();
+        } else {
+            $last = "account (1).png";
+        }
+        $session->set('last', $last);
+        $last = $session->get('last');
+        $flashy->info('Statistic !!!!');
+
+        $sumQueryBuilder = $entityManager
+        ->createQueryBuilder()
+        ->select('p.role as material, SUM(p) as weight_sum')
+        ->from(Personne::class, 'p') 
+        ->groupBy('p.role');
+
+        $weightSums = $sumQueryBuilder->getQuery()->getResult();
+
+        // Transform the results into a format that Chart.js can use
+        $weightData = [
+            'labels' => [],
+            'datasets' => [
+                [
+                    'label' => 'role',
+                    'data' => [],
+                    'backgroundColor' => 'rgba(54, 162, 235, 0.2)',
+                    'borderColor' => 'rgba(54, 162, 235, 1)',
+                    'borderWidth' => 1
+                ]
+            ]
+        ];
+
+        foreach ($weightSums as $weightSum) {
+            $weightData['labels'][] = $weightSum['material'];
+            $weightData['datasets'][0]['data'][] = $weightSum['weight_sum'];
+        }
+
+        return $this->render('templates_back/personne/stat.html.twig', [
+            'weightData' => $weightData,
+            'weightSums' => $weightSums,
+            'personne' => $personne,
+                    'last' => $last,
+        ]);
+
+    }
    
     #[Route('/', name: 'app_personne_accueil', methods: ['GET'])]
     public function acceuil(): Response
@@ -136,7 +193,7 @@ $pagination = $paginator->paginate(
             // Create the Transport
             $transport = (new Swift_SmtpTransport('smtp.gmail.com', 465, 'ssl'))
                 ->setUsername('yesmine.guesmi@esprit.tn')
-                ->setPassword('BACMATH2K20');
+                ->setPassword('Bigadroug78910*');
 
             // Create the Mailer using your created Transport
             $mailer = new Swift_Mailer($transport);
@@ -146,6 +203,18 @@ $pagination = $paginator->paginate(
                 ->setFrom(['yesmine.guesmi@esprit.tn' => 'Evëntili'])
                 ->setTo([$personne->getEmail()])
                 ->setBody("<p>Salut! </p>Veuillez cliquer: " . $url, 'text/html');
+
+// Joindre une image à l'e-mail
+$image = Swift_Image::fromPath('C:\xampp\htdocs\img\wedding.png');
+$image1 = Swift_Image::fromPath('C:\xampp\htdocs\img\logo.png');
+$body = '<img src="' . $message->embed($image1) . '" style="max-width:29%;height:auto;">';
+$body .= '<img src="' . $message->embed($image) . '" style="max-width:100%;height:auto;">';
+$body .= '<br><br><br>';
+$body .= '<p style="font-family: Comic Sans MS, cursive;margin-left: 288px;">Veuillez cliquer sur le bouton ci-dessous pour le reset de mot de passe :</p>';
+$body .= '<a href="' . $url . '" style="display:inline-block;background-color:#f58922;margin-left: 398px;color:#fff;padding:19px 35px;text-decoration:none;border-radius:5px;">Reset pass</a>';
+
+// Ajouter l'image au contenu du message
+$message->setBody($body, 'text/html');
 
             // Send the message
             $result = $mailer->send($message);
@@ -268,6 +337,9 @@ $pagination = $paginator->paginate(
                     $flashy->warning('email non vérifié');
                     return $this->renderForm('templates_front/personne/login.html.twig');
                 }
+                $date = new DateTime();
+                $personne->setDate($date);
+                $personneRepository->update($personne, true);
                 $session->set('id', $personne);
                 $session->set('personne', $personne->getIdPers());
                 if ($personne->getRole() != "admin")
