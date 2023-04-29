@@ -1,0 +1,121 @@
+{% extends 'baseAdmin.html.twig'%}
+
+{% block content %}
+
+	<!--breadcrumb-->
+	<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+	{# -------------------------------------------------------------------------- #}
+	<div style="color:#758afd;font-size:25px;font-style:bold">Sous Service</div>
+		<div class="search-bar flex-grow-1" style="margin-left:20%;">
+			<div class="position-relative search-bar-box">
+				<form id="annuite_form" class="form" action="{{ path('app_sousservice_index') }}" enctype="multipart/form-data" method="GET">
+					<input type="text" name="search1" style="border-radius:20px;border: 2px solid #aeb8ff  " class="form-control search-control" id="placeholder1" placeholder="Rechercher...">
+				</form>
+				<span class="position-absolute top-50 search-show translate-middle-y">
+					<i class='bx bx-search' style="color:#aeb8ff"></i>
+				</span>
+				<span class="position-absolute top-50 search-close translate-middle-y">
+					<i class='bx bx-x' style="color:white"></i>
+				</span>
+			</div>
+		</div>
+		{# -------------------------------------------------------------------------- #}
+		<div class="ms-auto">
+			<div class="btn-group">
+				{# -------------------------------------------------------------------------- #}
+				<a type="button" href="{{ path('app_sousservice_new') }}" style="border-radius:10px;color:white;background-color:#aeb8ff;border-color:#aeb8ff;width:200px;height:35px;text-align:center;font-size:19px">Créer un sous service</a>
+				{# -------------------------------------------------------------------------- #}
+			</div>
+		</div>
+		{# -------------------------------------------------------------------------- #}
+	</div>
+	{# -------------------------------------------------------------------------- #}
+			
+	<br>
+	<form class="form" action="{{ path('app_sousservice_index')}}" method="GET">
+		<select name="inputfilter" id="filterService" style="height:31px;border-radius:5px;color:white;background-color:#ff8601;margin-bottom:10px;border-color:#ff8601;font-size:15px">
+			<option value="" name="choose">choisissez</option>
+			{% for serv in options %}
+				<option value="{{serv.nom }}" name="inputfilter">{{ serv.nom }}</option>
+			{% endfor %}
+		</select>
+	</form>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			$('#filterService').on('change', function () {
+			$(this).closest('form').submit();});
+		});
+	</script>
+	<div class="card">
+		<div class="card-body">
+			<div class="table-responsive">
+			{# -------------------------------------------------------------------------- #}
+				<table id="example" class="table table-bordered" 
+				style="
+				width:100%;
+				border-color:#aeb8ff;
+				border-radius:30px">
+					{# -------------------------------------------------------------------------- #}
+					<thead>
+						<tr style="color:#27187f">
+							<th style="text-align:center">Images</th>
+							<th style="text-align:center">Nom du sous service</th>
+							<th style="text-align:center">Service</th>
+							<th style="text-align:center">Description</th>
+							<th style="text-align:center">Prix</th>
+							<th style="text-align:center">Note</th>
+							<th style="text-align:center">Prestataire</th>
+							<th style="text-align:center">Catégories d'évènement</th>
+							<th style="text-align:center">Action</th>
+						</tr>
+					</thead>
+					{# -------------------------------------------------------------------------- #}
+					<tbody>
+						{% for sousservices in sousservices %}
+							<tr style="color:#27187f">
+								<td style="text-align:center"><img src="http://localhost/img/{{ sousservices.image }}" alt="{{ sousservices.nom }}" style="max-width: 50px; border-radius: 5px;"></td>
+								<td style="text-align:center">{{sousservices.nom}}</td>
+								<td style="text-align:center">{{sousservices.idService.nom}}</td>
+								{# {% if sousservices.description|length >30  %} #}
+								<td style="max-width: 250px;text-align:center;  white-space: nowrap;overflow: hidden;  text-overflow: ellipsis;">{{sousservices.description}}</td>
+								{# {% endif %} #}
+								<td style="text-align:center">{{sousservices.prix}}</td>
+								<td style="text-align:center">{{sousservices.note}}</td>
+								<td style="text-align:center">{{sousservices.idPers.prenomPers}}</td>
+								<td style="max-width: 250px;  white-space: nowrap;overflow: hidden;  text-align:center;text-overflow: ellipsis;">{{sousservices.idEventcateg}}</td>
+								<td>
+									<div style="display: flex; align-items:center;margin-left:30px;text-align:center;">
+									
+										{{ include('templates_back/sousservice/_delete_form.html.twig') }}
+										<a href="{{ path('app_sousservice_edit',{'id':sousservices.id}) }}" style=" border-radius:40px; background-color:#758afd; border-color:#758afd; height:30px; width:30px; display: flex; justify-content: center; align-items: center;color:white">
+										<i class='bx bx-edit' style="font-size:20px"></i>
+										</a>
+										{{ include('templates_back/sousservice/show.html.twig') }}
+										
+									</div>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+					{# -------------------------------------------------------------------------- #}
+					<tfoot>
+						<tr style="color:#27187f">
+							<th style="text-align:center">Images</th>
+							<th style="text-align:center">Nom du sous service</th>
+							<th style="text-align:center">Service</th>
+							<th style="text-align:center">Description</th>
+							<th style="text-align:center">Prix</th>
+							<th style="text-align:center">Note</th>
+							<th style="text-align:center">Prestataire</th>
+							<th style="text-align:center">Catégories d'évènement</th>
+							<th style="text-align:center">Action</th>
+						</tr>
+					</tfoot>
+					{# -------------------------------------------------------------------------- #}
+				</table>
+				{# -------------------------------------------------------------------------- #}
+			</div>
+		</div>
+	</div>
+{% endblock %}

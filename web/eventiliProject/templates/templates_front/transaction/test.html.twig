@@ -1,0 +1,14 @@
+ <form action="{{ path('payAction') }}" method="POST">
+     <script
+         src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+         data-key="{{ stripe_public_key }}"
+         data-amount="100"
+         data-name="My Company Name"
+         data-description="Widget"
+         data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+         data-locale="auto"
+         data-currency="usd">
+     </script>
+     <input type="hidden" name="amount" value="100">
+     <input type="hidden" name="_token" value="{{ csrf_token('payAction') }}">
+ </form>

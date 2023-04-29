@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" fx:id="screen5" prefHeight="754.0" prefWidth="998.0" style="-fx-background-color: white;" styleClass="mainFxmlClass" stylesheets="@modifierssprestataire.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.frontOffice.servicePrestataire.modifierSousServicePrestataire.ModifierSSPrestataireController">
+   <children>
+      <Text fx:id="text1" fill="#798fff" layoutX="176.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="input" text="Modification d'un sous service" textAlignment="CENTER" wrappingWidth="646.71875">
+         <font>
+            <Font name="System Bold" size="44.0" />
+         </font>
+      </Text>
+      <Text fx:id="text3" fill="#ff8600" layoutX="80.0" layoutY="292.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="input" text="Description :">
+         <font>
+            <Font size="24.0" />
+         </font></Text>
+      <TextArea fx:id="description" layoutX="80.0" layoutY="320.0" prefHeight="151.0" prefWidth="310.0">
+         <styleClass>
+            <String fx:value="description" />
+            <String fx:value="input" />
+         </styleClass></TextArea>
+      <Button fx:id="annuler" layoutX="725.0" layoutY="684.0" mnemonicParsing="false" onAction="#close" prefHeight="49.0" prefWidth="111.0" style="-fx-background-color: white;" styleClass="input" text="Annuler" textFill="#c3c3c3">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="suivant" layoutX="848.0" layoutY="684.0" mnemonicParsing="false" onAction="#modifierSousService" prefHeight="49.0" prefWidth="132.0" style="-fx-background-color: FF8600;" styleClass="input" text="Modifier" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Text fx:id="txtprice" fill="#ff8600" layoutX="80.0" layoutY="534.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="input" text="Prix  :">
+         <font>
+            <Font size="24.0" />
+         </font></Text>
+      <TextField fx:id="price" layoutX="145.0" layoutY="512.0" prefHeight="32.0" prefWidth="203.0" styleClass="input" />
+      <Text fx:id="txtprice1" layoutX="355.0" layoutY="537.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="input" text="DT" wrappingWidth="29.603034496307373">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text fx:id="txtprice2" fill="#ff8600" layoutX="80.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="input" text="Nom du sous service :">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <TextField fx:id="nomSousService" layoutX="80.0" layoutY="196.0" prefHeight="49.0" prefWidth="310.0" styleClass="input" />
+      <Text fx:id="text31" fill="#ff8600" layoutX="547.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="input" text="Choisissez une catégorie d'événement :" wrappingWidth="415.5">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Button fx:id="importer" layoutX="547.0" layoutY="422.0" mnemonicParsing="false" onAction="#importIcone" prefHeight="49.0" prefWidth="416.0" style="-fx-background-color: #e9effd;" styleClass="input" text="Importer image(s)" textFill="#260279">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+      <ListView fx:id="list" layoutX="547.0" layoutY="498.0" prefHeight="151.0" prefWidth="416.0" />
+      <Separator layoutX="473.0" layoutY="161.0" orientation="VERTICAL" prefHeight="509.0" prefWidth="6.0" />
+      <ScrollPane layoutX="547.0" layoutY="200.0" prefHeight="210.0" prefWidth="416.0" style="-fx-background-color: white;" styleClass="scroll-bar" stylesheets="@modifierssprestataire.css">
+         <content>
+            <GridPane fx:id="grid" prefHeight="48.0" prefWidth="183.0" style="-fx-background-color: white;">
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </GridPane>
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

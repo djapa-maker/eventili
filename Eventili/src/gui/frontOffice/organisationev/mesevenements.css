@@ -1,0 +1,46 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+}
+.search-box{
+    -fx-background-color:  #fafafa ;
+    -fx-background-radius: 20;
+    -fx-border-color: #d9dadd;
+    -fx-border-radius: 20;
+    
+}
+.trasparent{
+    -fx-background-color: rgba(0,0,0,0);
+}
+
+.search-button{
+    -fx-background-color: #3a3289;
+    -fx-background-radius: 1 20 20 1;
+}
+.shadow{
+    -fx-effect: dropshadow(three-pass-box,rgba(0,0,0,0.1),10.0,0.0,0.0,10.0);
+}
+.right-bar{
+    -fx-background-color: #ffffff;
+}
+.event-card{
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-color:#d7dcff;
+    -fx-background-color: #ffffff ;
+    -fx-border-width: 2;
+}
+.button1{
+    -fx-background-color: #3a3289;
+    -fx-background-radius: 20px;
+}
+
+.scroll-pane > .viewport {
+   -fx-background-color: transparent;
+}
+.backgrounds{
+    -fx-background-color: white;
+}

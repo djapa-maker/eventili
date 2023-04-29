@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="754.0" prefWidth="998.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.backOffice.sponsoring.ModifersponsorController">
+   <children>
+      <Pane layoutX="17.0" layoutY="20.0" prefHeight="754.0" prefWidth="998.0" style="-fx-background-color: white;">
+         <children>
+            <Button fx:id="btnenregistrer" layoutX="726.0" layoutY="690.0" mnemonicParsing="false" onMouseClicked="#ajouter" prefHeight="33.0" prefWidth="153.0" style="-fx-background-color: #FF8600; -fx-background-radius: 10px;" text="Modifier" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Berlin Sans FB Demi Bold" size="19.0" />
+               </font>
+            </Button>
+            <TextField fx:id="txtNom" layoutX="63.0" layoutY="136.0" prefHeight="42.0" prefWidth="371.0" styleClass="input" stylesheets="@../../../../../../../djapa/pidev/Eventili/src/gui/frontOffice/organisationev/creerevenement/creationev.css" />
+            <Label layoutX="72.0" layoutY="88.0" text="Nom :">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtPrenom" layoutX="63.0" layoutY="506.0" prefHeight="42.0" prefWidth="371.0" styleClass="input" stylesheets="@../../../../../../../djapa/pidev/Eventili/src/gui/frontOffice/organisationev/creerevenement/creationev.css" />
+            <Label layoutX="67.0" layoutY="464.0" text="Date debut:">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="nbimpre" layoutX="63.0" layoutY="256.0" prefHeight="42.0" prefWidth="371.0" styleClass="input" stylesheets="@../../../../../../../djapa/pidev/Eventili/src/gui/frontOffice/organisationev/creerevenement/creationev.css" />
+            <Label layoutX="72.0" layoutY="208.0" text="Nombree impression :">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtAdresse" layoutX="63.0" layoutY="376.0" prefHeight="42.0" prefWidth="371.0" styleClass="input" stylesheets="@../../../../../../../djapa/pidev/Eventili/src/gui/frontOffice/organisationev/creerevenement/creationev.css" />
+            <Label layoutX="72.0" layoutY="340.0" text="Date fin:">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="67.0" layoutY="29.0" text="Modifier utilisateur" textFill="#758bfd">
+               <font>
+                  <Font name="Cambria Bold" size="24.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="datef" layoutX="63.0" layoutY="375.0" prefHeight="42.0" prefWidth="371.0" />
+            <DatePicker fx:id="dated" layoutX="63.0" layoutY="506.0" prefHeight="42.0" prefWidth="371.0" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

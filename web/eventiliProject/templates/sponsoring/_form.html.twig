@@ -1,0 +1,185 @@
+ 
+<style>
+
+ 
+ 
+     .btn-danger, .btn-secondary {
+        background-color: green;
+    }
+ 
+ 
+.custom-datepicker {
+background-color: #f7f7f7;
+border: 1px solid #e8e8e8;
+border-radius: 4px;
+padding: 10px;
+font-size: 14px;
+color: #555;
+box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+}
+ 
+
+ 
+
+</style>
+{{ form_start(form, {'attr': {'class': 'was-validated', 'novalidate': 'novalidate'}}) }}
+<div style="display: flex; justify-content: center;">
+    <table style="width: 50%; margin-top: 50px; border-collapse: collapse; box-shadow: 0 0 10px rgba(0,0,0,0.3);">
+        <tbody>
+            <tr>
+                <td style="padding: 10px; text-align: left;">date_debut of sponsoring:</td>
+     <td style="padding: 10px;">
+        {{ form_widget(form.date_debut, {
+            'attr': {
+                'class': 'form-control custom-datepicker',
+                'data-provide': 'datepicker'
+            }
+        }) }} 
+    </td>
+            </tr>
+          <td style="padding: 10px; text-align: left;">date_fin of sponsoring:</td>
+    <td style="padding: 10px;">
+        {{ form_widget(form.date_fin, {
+            'attr': {
+                'class': 'form-control custom-datepicker',
+                'data-provide': 'datepicker'
+            }
+        }) }} 
+    </td>
+ <tr>
+                <td style="padding: 10px; text-align: left;">nombre_impression:</td>
+                <td style="padding: 10px;">
+                    {{ form_row(form.nombre_impression, {
+                        'attr': {
+                            'class': 'form-control',
+                            'placeholder': 'Enter the total amount'
+                        }
+                    }) }}
+                </td>
+            </tr>
+
+            <tr>
+                <td style="padding: 10px; text-align: left;">id_trans:</td>
+                <td style="padding: 10px;">
+                    {{ form_row(form.id_trans, {
+                        'attr': {
+                            'class': 'form-control',
+                            'placeholder': 'Enter the user ID'
+                        }
+                    }) }}
+                </td>
+            </tr>
+
+            <tr>
+                <td style="padding: 10px; text-align: left;">id_event:</td>
+                <td style="padding: 10px;">
+                    {{ form_row(form.id_event, {
+                        'attr': {
+                            'class': 'form-control',
+                            'placeholder': 'Enter the user ID'
+                        }
+                    }) }}
+                </td>
+            </tr>
+            
+            <tr>
+                <td style="padding: 10px;"></td>
+                <td style="padding: 10px;">
+<form method="post" action="{{ path('app_transaction_new') }}">
+    <table style="width: 50%; margin-top: 50px; border-collapse: collapse; box-shadow: 0 0 10px rgba(0,0,0,0.3);">
+        <tbody>
+           
+            <tr>
+                <td style="padding: 10px;">
+   <button type="submit" id="submit-button" disabled style="border-radius:10px;color:white;background-color:#aeb8ff;border-color:#aeb8ff;font-size:19px; display: block; margin: 20px auto;" class="btn btn-danger btn-secondary">{{ button_label|default('Save') }}</button>
+             
+                </td>
+
+
+            </tr>
+        </tbody>
+    </table>
+</form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+ 
+</div>
+{{ form_end(form) }}
+<script>
+const inputs = document.querySelectorAll('input[required]');
+const submitBtn = document.querySelector('#submit-button');
+
+function validateInputs() {
+  let allFilled = true;
+  let isValid = true;
+  let isDateValid = true; // add variable to track if date inputs are valid
+
+  inputs.forEach(input => {
+    if (input.value.trim() === '') {
+      allFilled = false;
+    }
+    if (input === document.getElementById('{{ form.nombre_impression.vars.id }}')) {
+      if (!Number.isInteger(Number(input.value))) {
+        isValid = false;
+      }
+    }
+  });
+
+  const dateDebutInput = document.getElementById('{{ form.date_debut.vars.id }}');
+  const dateFinInput = document.getElementById('{{ form.date_fin.vars.id }}');
+
+  const dateDebut = new Date(dateDebutInput.value);
+  const dateFin = new Date(dateFinInput.value);
+  const today = new Date();
+
+  // Check if date_debut is greater than or equal to today
+  if (dateDebut < today) {
+    dateDebutInput.classList.add('invalid');
+    isDateValid = false;
+  } else {
+    dateDebutInput.classList.remove('invalid');
+  }
+
+  // Check if date_debut is greater than date_fin
+  if (dateFinInput.value !== '' && dateDebut > dateFin) {
+    dateFinInput.classList.add('invalid');
+    isDateValid = false;
+  } else {
+    dateFinInput.classList.remove('invalid');
+  }
+
+  // Check if date_fin is greater than date_debut
+  if (dateDebut > dateFin) {
+    dateFinInput.classList.add('invalid');
+    isDateValid = false;
+  } else {
+    dateFinInput.classList.remove('invalid');
+  }
+
+  if (allFilled && isValid && isDateValid) {
+    submitBtn.removeAttribute('disabled');
+  } else {
+    submitBtn.setAttribute('disabled', 'disabled');
+  }
+}
+
+inputs.forEach(input => {
+  input.addEventListener('input', () => {
+    validateInputs();
+  });
+});
+
+const dateDebutInput = document.getElementById('{{ form.date_debut.vars.id }}');
+const dateFinInput = document.getElementById('{{ form.date_fin.vars.id }}');
+
+dateDebutInput.addEventListener('change', () => {
+  validateInputs();
+});
+
+dateFinInput.addEventListener('change', () => {
+  validateInputs();
+});
+
+</script>

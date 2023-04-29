@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="764.0" prefWidth="641.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.frontOffice.Tickets.TicketScanController">
+   <children>
+      <Line endX="240.0" layoutX="314.0" layoutY="288.0" startX="-227.99998474121094" />
+      <Text fill="#758bfd" layoutX="130.0" layoutY="316.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date ">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Text>
+      <Line endX="238.39996337890625" layoutX="317.0" layoutY="400.0" startX="-227.99998474121094" />
+      <Text fill="#758bfd" layoutX="132.0" layoutY="356.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prix:">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Text>
+      <TextField fx:id="datetf" layoutX="235.0" layoutY="299.0" prefHeight="25.0" prefWidth="267.0" style="-fx-background-radius: 20;" />
+      <TextField fx:id="prixtf" layoutX="235.0" layoutY="339.0" prefHeight="25.0" prefWidth="267.0" style="-fx-background-radius: 20;" />
+      <Button fx:id="qrbtn2" disable="true" layoutX="472.0" layoutY="410.0" mnemonicParsing="false" text="Télécharger qr" />
+      <TextField fx:id="titres" layoutX="232.0" layoutY="250.0" prefHeight="25.0" prefWidth="267.0" style="-fx-background-radius: 20;" />
+      <Text fill="#758bfd" layoutX="116.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Titre Event: ">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Text>
+      <ImageView fx:id="qrview" fitHeight="228.0" fitWidth="357.0" layoutX="131.0" layoutY="473.0" pickOnBounds="true" preserveRatio="true" />
+      <Rectangle fx:id="imgE" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" layoutX="182.0" layoutY="29.0" stroke="BLACK" strokeType="INSIDE" width="280.0" />
+      <Label layoutX="101.0" layoutY="413.0" text="Cliquer ici pour Télégarger votre Qr Code" textFill="#ff8600">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>

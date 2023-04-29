@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="568.0" style="-fx-background-radius: 50; -fx-background-color: #fafafa;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.frontOffice.AvisClient.AvisClientController">
+    <children>
+      <Text fx:id="sous_service" fill="#330086" layoutX="392.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="notes : ">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Separator layoutX="375.0" layoutY="5.0" orientation="VERTICAL" prefHeight="71.0" prefWidth="7.0" />
+      <Label fx:id="comment" layoutX="116.0" layoutY="36.0" prefHeight="21.0" prefWidth="86.0" text="Label" />
+      <Label fx:id="note" layoutX="395.0" layoutY="43.0" text="Label" />
+      <Separator layoutX="98.0" layoutY="5.0" orientation="VERTICAL" prefHeight="71.0" prefWidth="7.0" />
+      <ImageView fx:id="imgSS" fitHeight="51.0" fitWidth="71.0" layoutX="19.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
+      <FontAwesomeIconView fill="#f88400" glyphName="STAR" layoutX="433.0" layoutY="59.0" size="20" />
+      <Label fx:id="nomSS" layoutX="117.0" layoutY="15.0" text="Label" textFill="#ffae34">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Button fx:id="modif" layoutX="470.0" layoutY="26.0" mnemonicParsing="false" onAction="#modifier" style="-fx-background-color: orange; -fx-background-radius: 30;" text="modifier" textFill="WHITE" />
+    </children>
+   <styleClass>
+      <String fx:value="shadow" />
+      <String fx:value="pane" />
+   </styleClass>
+</Pane>

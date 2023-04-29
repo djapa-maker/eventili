@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1700.0" style="-fx-background-color: white;" stylesheets="@listeravisclient.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.frontOffice.AvisClient.ListerAvisClientController">
+   <children>
+      <HBox alignment="CENTER" layoutX="381.0" layoutY="20.0" prefHeight="55.0" prefWidth="593.0">
+         <styleClass>
+            <String fx:value="search-box" />
+            <String fx:value="shadow" />
+         </styleClass>
+         <children>
+            <Label text="Mes avis " textFill="#ffbe27">
+               <font>
+                  <Font size="53.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <VBox alignment="TOP_CENTER" layoutX="1349.0" layoutY="-1.0" prefHeight="806.0" prefWidth="352.0" style="-fx-background-color: white;" styleClass="right-bar" stylesheets="@listeravisclient.css">
+         <children>
+            <HBox alignment="CENTER" prefHeight="86.0" prefWidth="507.0">
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+      <ScrollPane fx:id="scroll" layoutX="98.0" layoutY="165.0" prefHeight="614.0" prefWidth="1250.0" style="-fx-background-color: white;">
+         <content>
+            <GridPane fx:id="grid" prefHeight="0.0" prefWidth="0.0" style="-fx-background-color: white;">
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+         </content>
+         <styleClass>
+            <String fx:value="backgrounds" />
+            <String fx:value="scroll-bar" />
+         </styleClass>
+      </ScrollPane>
+      <HBox layoutX="45.0" layoutY="123.0" prefHeight="36.0" prefWidth="261.0">
+         <children>
+            <Text fill="#3a3289" strokeType="OUTSIDE" strokeWidth="0.0" text="Mes Avis :" wrappingWidth="107.4921875">
+               <font>
+                  <Font name="Calibri Bold Italic" size="24.0" />
+               </font>
+            </Text>
+            <Text fx:id="nbravis" fill="#3a3289" strokeType="OUTSIDE" strokeWidth="0.0" text="nbr" wrappingWidth="180.4921875">
+               <font>
+                  <Font name="Calibri Bold Italic" size="24.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" top="2.0" />
+               </HBox.margin>
+            </Text>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

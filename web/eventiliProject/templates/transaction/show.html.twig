@@ -1,0 +1,43 @@
+{% extends 'baseAdmin.html.twig' %}
+{% block title %}Transaction{% endblock %}
+{% block body %}
+ <h1>Transaction</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id_trans</th>
+                <td>{{ transaction.idTrans }}</td>
+            </tr>
+            <tr>
+                <th>Valeur_trans</th>
+                <td>{{ transaction.valeurTrans }}</td>
+            </tr>
+            <tr>
+                <th>Devis</th>
+                <td>{{ transaction.devis }}</td>
+            </tr>
+            <tr>
+                <th>Date_trans</th>
+                <td>{{ transaction.dateTrans ? transaction.dateTrans|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Mode_trans</th>
+                <td>{{ transaction.modeTrans }}</td>
+            </tr>
+            <tr>
+                <th>Montant_tot</th>
+                <td>{{ transaction.montantTot }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_transaction_index') }}">back to list</a>
+
+    <a href="{{ path('app_transaction_edit', {'id_trans': transaction.idTrans}) }}">edit</a>
+
+    {{ include('transaction/_delete_form.html.twig') }}
+</body>
+ 
+
+{% endblock %}

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="481.0" prefWidth="670.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.frontOffice.Tickets.TicketController">
+   <children>
+      <Spinner fx:id="qte" layoutX="211.0" layoutY="230.0" style="-fx-background-radius: 20;" />
+      <Label layoutX="61.0" layoutY="228.0" text="Quantité :" textFill="#ff8600">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="66.0" layoutY="301.0" text="Prix Ticket :" textFill="#ff8600">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Text fill="#758bfd" layoutX="74.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Acheter un Ticket">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Text>
+      <Button fx:id="btnacheter" layoutX="61.0" layoutY="397.0" mnemonicParsing="false" onAction="#acheterTicket" prefHeight="26.0" prefWidth="546.0" style="-fx-background-color: #758bfd;" text="Acheter" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="23.0" />
+         </font></Button>
+      <Label layoutX="61.0" layoutY="113.0" text="Evénement :" textFill="#ff8600">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="60.0" layoutY="167.0" text="Date et Heure : " textFill="#ff8600">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="nomevent" layoutX="225.0" layoutY="119.0" text="db" />
+      <Label fx:id="datehr" layoutX="225.0" layoutY="173.0" text=" db" />
+      <Label fx:id="prix" layoutX="224.0" layoutY="309.0" text="ml db" />
+      <Rectangle fx:id="imgE" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="164.0" layoutX="407.0" layoutY="31.0" stroke="BLACK" strokeType="INSIDE" width="224.0" />
+      <Label layoutX="280.0" layoutY="303.0" text="DT">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

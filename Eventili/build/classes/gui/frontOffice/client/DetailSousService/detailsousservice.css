@@ -1,0 +1,35 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+}
+.button {
+    /*-fx-background-color: #ff8600;
+    -fx-background-radius: 10px;*/
+}
+
+/*.button:hover {
+    -fx-background-color: #ff7f00;
+}*/
+
+/*.button:pressed {
+    -fx-background-color: #ff6f00;
+}*/
+
+.button .text {
+    -fx-fill: white;
+}
+.anchor-pane {
+    -fx-background-color: white;
+}
+.scroll-bar{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-color:transparent;
+}
+.scroll-pane .scroll-bar{
+    -fx-opacity: 0;
+    -fx-background-color: transparent;
+}

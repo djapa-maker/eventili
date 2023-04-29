@@ -1,0 +1,42 @@
+{{ form_start(form, {'attr': {'class': 'was-validated', 'novalidate': 'novalidate'}}) }}
+    	<div class="row g-3">
+		<div class="form-group col-sm">
+			<div style="color:#6B67E9;font-size:20px">
+				{{ form_label(form.img, 'Images(Facultatif)', {'label_attr': {'class': 'form-label'}}) }}
+			</div>
+			<div style="width:65%">
+				{{ form_widget(form.img, {'attr': {'class': 'form-control', 'placeholder': 'nom ...'}}) }}
+			</div>
+			<div style="color:red;border-color:red">
+				{{ form_errors(form.img,{'attr': {'class': 'invalide-feedback'}}) }}
+			</div>
+		</div>
+	</div>
+    	<button id="submit-button"  style="margin-top:27px;
+											width:30%;
+											border-radius:10px;
+											color:white;
+											background-color:#aeb8ff;
+											border-color:#aeb8ff;
+											font-size:19px" type="submit" class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+{{ form_end(form) }}
+<script>
+//     const inputs = document.querySelectorAll('input[required]');
+//     const submitBtn = document.querySelector('#submit-button');
+
+//     inputs.forEach(input => {
+//         input.addEventListener('input', () => {
+//             let allFilled = true;
+//             inputs.forEach(input => {
+//                 if (input.value.trim() === '') {
+//                     allFilled = false;
+//                 }
+//             });
+//             if (allFilled) {
+//                 submitBtn.removeAttribute('disabled');
+//             } else {
+//                 submitBtn.setAttribute('disabled', 'disabled');
+//             }
+//         });
+//     });
+</script>

@@ -1,0 +1,35 @@
+<a class="btn" data-bs-toggle="modal" data-bs-target="#deleteModal" style="
+					margin-left:32%;
+					border-radius:30px;
+					background-color:#ff8601;
+					border-color:#ff8601;
+					height:30px;
+					width:30px;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					color:white">
+	<i style="margin-left:5px" class='bx bx-trash'></i>
+</a>
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header  text-white" style="background-color:#ff8601">
+				<br>
+				<h5 class="modal-title" id="deleteModalLabel" style="color:white">Confirmation de suppression
+				</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				Etes vous sure de vouloir supprimer cet avis ?
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn" data-bs-dismiss="modal">Annuler</button>
+				<form method="post" action="{{ path('app_avis_delete', {'idAv': avis.idAv}) }}">
+					<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ avis.idAv) }}">
+					<button type="submit" style="background-color:#ff8601;color:white" class="btn">Supprimer</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

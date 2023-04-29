@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1700.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.frontOffice.organisationev.MesEvenementsController">
+    <stylesheets>
+        <URL value="@mesevenements.css" />
+    </stylesheets>
+   <children>
+      <HBox alignment="CENTER" layoutX="381.0" layoutY="20.0" prefHeight="55.0" prefWidth="426.0" stylesheets="@mesevenements.css">
+         <children>
+            <TextField fx:id="searchbar" prefHeight="36.0" prefWidth="246.0" promptText="Recherche ..." styleClass="trasparent" stylesheets="@mesevenements.css">
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+               <HBox.margin>
+                  <Insets left="10.0" right="50.0" />
+               </HBox.margin>
+               <font>
+                  <Font name="Cambria" size="18.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets right="2.0" />
+               </opaqueInsets>
+            </TextField>
+            <Button fx:id="searchbtn" mnemonicParsing="false" onAction="#Search" prefHeight="63.0" prefWidth="68.0" styleClass="search-button" stylesheets="@mesevenements.css">
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="SEARCH" size="18" text="" />
+               </graphic>
+               <HBox.margin>
+                  <Insets bottom="2.0" left="50.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+         <styleClass>
+            <String fx:value="search-box" />
+            <String fx:value="shadow" />
+         </styleClass>
+      </HBox>
+      <VBox alignment="TOP_CENTER" layoutX="1229.0" layoutY="-1.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="806.0" prefWidth="462.0" styleClass="right-bar" stylesheets="@mesevenements.css">
+         <children>
+            <HBox alignment="CENTER" prefHeight="86.0" prefWidth="507.0">
+               <children>
+                  <Button fx:id="createbtn" graphicTextGap="20.0" mnemonicParsing="false" onAction="#add" styleClass="button1" stylesheets="@mesevenements.css" text="Créer un événement" textFill="WHITE">
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="PLUS" text="" />
+                     </graphic>
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="30.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </HBox>
+            <VBox fx:id="eventCard" alignment="TOP_CENTER" prefHeight="415.0" prefWidth="350.0" stylesheets="@mesevenements.css">
+               <VBox.margin>
+                  <Insets left="50.0" right="50.0" top="20.0" />
+               </VBox.margin>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Vous avez un événement à organiser et vous ne savez pas par où commencer? " textAlignment="CENTER" wrappingWidth="401.35797119140625">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="eventili vous facilite la  tâche!" textAlignment="CENTER" wrappingWidth="401.35797119140625">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </Text>
+                  <ImageView fitHeight="272.0" fitWidth="239.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/bunting.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </ImageView>
+               </children>
+               <styleClass>
+                  <String fx:value="event-card" />
+                  <String fx:value="shadow" />
+               </styleClass>
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+            </VBox>
+         </children>
+      </VBox>
+      <ScrollPane fx:id="scroll" layoutX="98.0" layoutY="165.0" prefHeight="614.0" prefWidth="1134.0" styleClass="backgrounds" stylesheets="@mesevenements.css">
+         <content>
+            <GridPane fx:id="grid" prefHeight="0.0" prefWidth="0.0">
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+         </content>
+      </ScrollPane>
+      <HBox layoutX="45.0" layoutY="123.0" prefHeight="36.0" prefWidth="261.0">
+         <children>
+            <Text fill="#3a3289" strokeType="OUTSIDE" strokeWidth="0.0" text="Mes événements :" wrappingWidth="180.4921875">
+               <font>
+                  <Font name="Calibri Bold Italic" size="24.0" />
+               </font>
+            </Text>
+            <Text fx:id="nbrevent" fill="#3a3289" strokeType="OUTSIDE" strokeWidth="0.0" text="(0)" wrappingWidth="180.4921875">
+               <font>
+                  <Font name="Calibri Bold Italic" size="24.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+            </Text>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

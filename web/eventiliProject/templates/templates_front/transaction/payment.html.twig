@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Payment Form</title>
+  </head>
+  <body>
+    <h1>Payment Form</h1>
+    {% if error %}
+      <div class="error">{{ error }}</div>
+    {% endif %}
+    <form action="{{ path('handle_payment') }}" method="post">
+      <label for="name">Name on Card:</label>
+      <input type="text" id="name" name="name" required><br><br>
+      <label for="cardnumber">Card Number:</label>
+      <input type="text" id="cardnumber" name="cardnumber" required><br><br>
+      <label for="expirationdate">Expiration Date:</label>
+      <input type="text" id="expirationdate" name="expirationdate" required placeholder="MM/YY"><br><br>
+      <label for="securitycode">Security Code:</label>
+      <input type="text" id="securitycode" name="securitycode" required><br><br>
+      <button type="submit">Pay $10.00</button>
+    </form>
+  </body>
+</html>

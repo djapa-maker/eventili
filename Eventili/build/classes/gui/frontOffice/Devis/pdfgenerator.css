@@ -1,0 +1,29 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+}
+.button1{
+    -fx-background-color: #758bfd;
+    -fx-background-radius: 10px;
+    -fx-text-fill: white;
+    
+}
+
+.button2{
+    -fx-background-color: #c1c2c5;
+    -fx-background-radius: 10px;
+    -fx-text-fill: white;
+}
+
+.button3{
+    -fx-background-color: #ff8600;
+    -fx-background-radius: 10px;
+    -fx-text-fill: white;
+}
+
+.anchor-pane {
+    -fx-background-color: white;
+}
