@@ -12,7 +12,7 @@
 {% endblock %}
 {% block content %}
 	<link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}"/>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -63,120 +63,135 @@
 		</div>
 	</div>
 	<div class="page-content-inner">
-		<div class="columns is-multiline">
-			<section class="articles">
-				{% for event in evenements %}
-					<div class="column is-16">
-						<article>
+		{% if evenements is not empty %}
+			<div class="columns is-multiline">
+				<section class="articles">
+					{% for event in evenements %}
+						<div class="column is-16">
+							<article>
 
-							<a class="h-modal-trigger" data-modal="details-modal-{{ event.idEv }}">
-							
-							{{ include('templates_front/evenement/modals.html.twig') }}
-								<div>
-									<figure>
-										{% if Img[event.idEv]|length > 0 %}
-											<img src="http://localhost/img/{{ asset(Img[event.idEv][0].imagee) }}" alt=""/>
-										{% else %}
-											<img src="https://estuario.org/wp-content/uploads/2019/09/image.png" alt=""/>
-										{% endif %}
-										<div class="figLabel">
-											{% if event.prix == 0 %}
-												{{ event.type }}
+								<a class="h-modal-trigger" data-modal="details-modal-{{ event.idEv }}">
+
+									{{ include('templates_front/evenement/modals.html.twig') }}
+									<div>
+										<figure>
+											{% if Img[event.idEv]|length > 0 %}
+												<img src="http://localhost/img/{{ asset(Img[event.idEv][0].imagee) }}" alt=""/>
 											{% else %}
-												{{ event.prix ~" DT" }}
+												<img src="https://estuario.org/wp-content/uploads/2019/09/image.png" alt=""/>
 											{% endif %}
-										</div>
-										<figcaption>
-											<div class="card">
-												<div class="month-container">
-													<div class="month">{{event.dateDebut | date('F')}}</div>
+											<div class="figLabel">
+												{% if event.prix == 0 %}
+													{{ event.type }}
+												{% else %}
+													{{ event.prix ~" DT" }}
+												{% endif %}
+											</div>
+											<figcaption>
+												<div style=" width: 50px; height: 50px; background-color: rgba(255, 255, 255, 0.5); border: 1px solid black;
+																																																						display: flex; flex-direction: column; justify-content: center; align-items: center;">
+													<div class="month-container">
+														<div class="month">{{event.dateDebut | date('F')}}</div>
+													</div>
+													<div class="day">{{event.dateDebut | date('D')}}</div>
+													<div class="date">{{event.dateDebut | date('d')}}</div>
+													<div class="year">{{event.dateDebut | date('Y')}}</div>
 												</div>
-												<div class="day">{{event.dateDebut | date('D')}}</div>
-												<div class="date">{{event.dateDebut | date('d')}}</div>
-												<div class="year">{{event.dateDebut | date('Y')}}</div>
-											</div>
-										</figcaption>
-									</figure>
-									<div class="article-body">
-										<h2>{{event.titre}}</h2>
-										<p style="font-size: small;">{{ event.descriptionEv|slice(0, 180) ~ (event.descriptionEv|length > 180 ? '...' : '') }}</p>
-									</div>
-								</div>
-							</a>
-							<div class="media-flex Threedots">
-								<div class="flex-end">
-									<div class="dropdown is-spaced is-dots is-right dropdown-trigger end-action">
-										<div class="is-trigger" aria-haspopup="true">
-											<i data-feather="more-vertical"></i>
-										</div>
-										<div class="dropdown-menu" role="menu" style="position: absolute; top: 100%; right: 0;">
-											<div class="dropdown-content">
-												<a href="#" class="dropdown-item is-media">
-													<div class="icon">
-														<i class="lnil lnil-pencil"></i>
-													</div>
-													<div class="meta">
-														<span>Modifier</span>
-													</div>
-												</a>
-												<hr class="dropdown-divider">
-												<a class="dropdown-item is-media h-modal-trigger" data-modal="demo-right-actions-modal-{{ event.idEv }}">
-													<div class="icon">
-														<i class="lnil lnil-trash-can-alt-1"></i>
-													</div>
-													<div class="meta">
-														<span>Supprimer</span>
-													</div>
-												</a>
-												
-											</div>
+											</figcaption>
+										</figure>
+										<div class="article-body">
+											<h2>{{event.titre}}</h2>
+											<p style="font-size: small;">{{ event.descriptionEv|slice(0, 180) ~ (event.descriptionEv|length > 180 ? '...' : '') }}</p>
 										</div>
 									</div>
-								</div>
-							</div>
-							<div class="button-container">
-								<a href="##" class="button h-button is-primary is-rounded">Publier</a>
-							</div>
-						</article>
-					</div>
+								</a>
+								<div class="media-flex Threedots">
+									<div class="flex-end">
+										<div class="dropdown is-spaced is-dots is-right dropdown-trigger end-action">
+											<div class="is-trigger" aria-haspopup="true">
+												<i data-feather="more-vertical"></i>
+											</div>
+											<div class="dropdown-menu" role="menu" style="position: absolute; top: 100%; right: 0;">
+												<div
+													class="dropdown-content">
 
-				{% else %}
-					<!--List Empty Placeholder -->
-					<div class="page-placeholder custom-text-filter-placeholder is-hidden">
-						<div class="placeholder-content">
-							<img class="light-image" src="../assets/img/illustrations/placeholders/search-4.svg" alt=""/>
-							<img class="dark-image" src="../assets/img/illustrations/placeholders/search-4-dark.svg" alt=""/>
-							<h3>Vous n'avez pas encore d'événement.</h3>
-							<p class="is-larger">Commencez par en créer un maintenant.</p>
+													{# <a class="dropdown-item is-media h-modal-trigger" data-modal="demo-right-actions-modal-{{ event.idEv }}"> #}
+													<a href="#" class="dropdown-item is-media" style="pointer-events: none;
+															        opacity: 0.6;">
+														<div class="icon">
+															<i class="lnil lnil-mobile-coin"></i>
+														</div>
+														<div class="meta">
+															<span>Sponsoriser</span>
+														</div>
+													</a>
+													<hr class="dropdown-divider">
+													<a href="#" class="dropdown-item is-media">
+														<div class="icon">
+															<i class="lnil lnil-pencil"></i>
+														</div>
+														<div class="meta">
+															<span>Modifier</span>
+														</div>
+													</a>
+													<hr class="dropdown-divider">
+													<a class="dropdown-item is-media h-modal-trigger" data-modal="demo-right-actions-modal-{{ event.idEv }}">
+														<div class="icon">
+															<i class="lnil lnil-trash-can-alt-1"></i>
+														</div>
+														<div class="meta">
+															<span>Supprimer</span>
+														</div>
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="button-container">
+									<a href="##" class="button h-button is-primary is-rounded h-modal-trigger" data-modal="publish-{{ event.idEv }}">Publier</a>
+								</div>
+							</article>
 						</div>
-					</div>
-				{% endfor %}
-			</section>
-		</div>
+					{% endfor %}
+				</section>
+			</div>
+		{% else %}
+			<!--List Empty Placeholder -->
+			<div class="page-placeholder custom-text-filter-placeholder" >
+				<div class="placeholder-content">
+					<img class="light-image" src="{{asset('../assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/>
+					<img class="dark-image" src="{{asset('../assets/img/illustrations/placeholders/search-4-dark.svg')}}" alt=""/>
+					<h3>Vous n'avez pas encore d'événement.</h3>
+					<p class="is-larger">Commencez par en créer un maintenant.</p>
+				</div>
+			</div>
+		{% endif %}
+
 
 	</div>
 
 
 	<script>
-	$('.owl-carousel').owlCarousel({
-    loop:true,
-    margin:0,
-    nav:true,
-	autoplay:true,
-	autoplayTimeout: 2000,
-	stagePadding: 80,
-    responsive:{
-        0:{
-            items:1
-        },
-        600:{
-            items:1
-        },
-        1000:{
-            items:1
-        }
-    }
+		$('.owl-carousel').owlCarousel({
+loop: true,
+margin: 0,
+nav: true,
+autoplay: true,
+autoplayTimeout: 2000,
+stagePadding: 80,
+responsive: {
+0: {
+items: 1
+},
+600: {
+items: 1
+},
+1000: {
+items: 1
+}
+}
 })
 	</script>
-	
+
 {% endblock %}

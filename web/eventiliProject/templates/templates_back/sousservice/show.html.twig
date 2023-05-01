@@ -28,40 +28,26 @@
 								<div class="carousel-inner">
 									{% for n in firstimg %}
 										{% if n.sousService.id == sousservices.id %}
-											<div
-												class="carousel-item active">
-												{# <div style="color:#241b7c;font-weight: bold;position: absolute;top: 9px; left: 10px;"> #}
-												<img
-												src="http://localhost/img/{{n.img}}" class="d-block" width="500" height="300">
-											{# </div> #}
-
+											<div class="carousel-item active">
+												<img src="http://localhost/img/{{n.img}}" class="d-block" width="500" height="300">
 											</div>
 										{% endif %}
 									{% endfor %}
 									{% for i in imagess %}
 										{% if i.sousService.id == sousservices.id %}
-											{% if not fimg %}
+											{% if not firstimg %}
 												<div class="carousel-item">
 													<img src="http://localhost/img/{{i.img}}" class="d-block "width="500" height="300" alt="...">
 												</div>
 											{% endif %}
-											{% set fimg = false %}
+											{% set firstimg = false %}
 										{% endif %}
 									{% endfor %}
 								</div>
-								{# <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
-																									<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-																									<span class="visually-hidden">Previous</span>
-																									</a>
-																									<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
-																										<span class="carousel-control-next-icon" aria-hidden="true"></span>
-																										<span class="visually-hidden">Next</span>
-																								</a> #}
 							</div>
 						</div>
 					</div>
 				</div>
-				{# <img src="http://localhost/img/{{sousservices.image}}" class="img-fluid" style="width:1500%;height:40%;"/> #}
 				{# ------------------------------------------------------------------------------------------- #}
 				<div class="card-body">
 					<label style="font-size:20px;color:#ff8601">Description :</label>
@@ -112,11 +98,7 @@
 
 						</div>
 					</div>
-					{# ------------------------------------------------------------------------------------------- #}
-				{# </div> #}
-					{# <hr style="transform: rotate(90deg); transform-origin: left top;">#}
 				</div>
-				{# </div></div> #}
 			</div>
 		</div>
 	</div>

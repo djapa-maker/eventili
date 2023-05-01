@@ -26,7 +26,6 @@
 	</div>
 </div>
 {# ---------------------------------------- #}
-
 <div class="row g-3" style="display:inline-flex">
 	<div class="form-group col-sm">
 		<div style="color:#671cc9;font-size:20px;margin-top:10px;margin-bottom:10px">
@@ -87,7 +86,7 @@
 	<div style="color:red;border-color:red">{{ errorMessage1 }}</div>
 {% endif %}
 {# ------------------------------------------------------------------------------------------- #}
-{# </div> #}</div><center>
+</div><center>
 {# ------------------------------------------------------------------------------------------- #}
 <button id="submit-button" style="margin-top:27px;
 			width:30%;
@@ -97,28 +96,14 @@
 			background-color:#671cc9;
 			border-color:#671cc9;
 			font-size:19px" type="submit" class="btn  ">{{ button_label|default('Créer') }}
-</button></center>{{form_errors(form)}}{{ form_end(form) }}<script>// const inputs = document.querySelectorAll('input[required]');
-// const submitBtn = document.querySelector('#submit-button');
-// inputs.forEach(input => {
-// input.addEventListener('input', () => {
-// let allFilled = true;
-// inputs.forEach(input => {
-// if (input.value.trim() === '') {
-// allFilled = false;
-// }
-// });
-// if (allFilled) {
-// submitBtn.classList.remove("is-disabled");
-// } else {
-// submitBtn.classList.add('is_disabled');
-// }
-// });
-// });</script><script>function filterInput(input) {
+</button></center>{{form_errors(form)}}{{ form_end(form) }}
+
+<script>
+function filterInput(input) {
 var regex = /^\d{1,5}(?:\.\d{1,4})?$/;
 // var regex = /^[0-9]+(?:\.[0-9]+)?$/
 var filteredValue1 = '';
 var filteredValue = '';
-
 for (var i = 0; i < input.value.length; i++) {
 var char = input.value.charAt(i);
 filteredValue1 += char + "1";

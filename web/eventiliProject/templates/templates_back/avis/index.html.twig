@@ -1,7 +1,7 @@
 {% extends 'baseAdmin.html.twig'%}
 {# ------------------------------------------------------------------------------------------- #}
 {% block content %}
-	<!--breadcrumb-->
+	{# recherche des avis par nom de personne ------------------------------------------------------------------------------------------- #}
 	<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
 		<div style="color:#758afd;font-size:25px;font-style:bold">Avis</div>
 		<div class="search-bar flex-grow-1" style="margin-left:30%;">
@@ -18,11 +18,11 @@
 			</div>
 		</div>
 	</div>
-	<!--end breadcrumb-->
-	{# ------------------------------------------------------------------------------------------- #}
+	{# les divs d'affichage ------------------------------------------------------------------------------------------- #}
 	<center>
 		<div class="card" style="width:70%;border-radius: 25px;height:550px;background-color:#d2d9fc">
 			<center>
+				{# la div header ------------------------------------------------------------------------------------------- #}
 				<div class="card" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);margin-top:20px;width:95%;border-radius:12px;height:35px;background-color:white">
 					<div style="display: flex;">
 						<label style="color:#241b7c;font-weight: bold;position: absolute;top: 7px; left: 10px;">Personne</label>
@@ -35,6 +35,7 @@
 						<label style="color:#241b7c;position: absolute;top: 7px; left: 92%; font-weight: bold;">Actions</label>
 					</div>
 				</div>
+				{# affichage des avis ------------------------------------------------------------------------------------------- #}
 				{% if avis is not empty %}
 					{% for avis in avis %}
 						<div class="card" style="margin-top:-10px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);width:95%;border-radius:20px;height:50px;background-color:white">
@@ -52,16 +53,16 @@
 							</div>
 						</div>
 					{% endfor %}
+				{# en cas d'abscence d'avis ------------------------------------------------------------------------------------------- #}
 				{% else %}
 					<div class="placeholder-content">
-						<img
-						style="height:250px;width:250px" class="light-image" src="{{asset('assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/>
-						{# <img class="dark-image" src="{{asset('assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/> #}
+						<img style="height:250px;width:250px" class="light-image" src="{{asset('assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/>
 						<h3 class="dark-inverted">Aucun avis' !</h3>
 						<p>il n'existe aucun avis pour le moment 
 						</p>
 					</div>
 				{% endif %}
+				{# paginator ------------------------------------------------------------------------------------------- #}
 				{% if avis.totalItemCount > 0 %}
 					<div class="pagination justify-content-center" style="position: absolute;top: 85%; left: 35%;margin-top:10px;">
 						{{ knp_pagination_render(avis,'bootstrap_v4_pagination.html.twig') }}

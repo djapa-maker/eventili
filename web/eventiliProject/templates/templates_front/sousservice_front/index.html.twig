@@ -22,7 +22,6 @@
 		<form id="annuite_form" class="form" action="{{ path('app_sousservice_front') }}" enctype="multipart/form-data" method="GET">
 			<input
 			name="search1" class="input custom-text-filter" id="search-input" type="text" placeholder="Recherche...">
-		{# <input data-filter-target=".onboarding-card" name="search1" class="input custom-text-filter" id="placeholder1" type="text" placeholder="Recherche..." data-filter-target=".column"> #}
 		</form>
 		<div class="form-icon">
 			<i data-feather="search"></i>
@@ -34,12 +33,6 @@
 			<div class="control">
 				<div
 					class="h-select">
-					{# <div class="select-box">
-																																																															<span>Catégorie sous service</span>
-																																																														</div>
-																																																														<div class="select-icon">
-																																																															<i data-feather="chevron-down"></i>
-																																																														</div> #}
 					<form class="form" action="{{ path('app_sousservice_front')}}" method="GET">
 						<select class="select-box" name="inputfilter" id="filterService">
 							<div class="drop-inner">
@@ -55,10 +48,10 @@
 					<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 					<script>
 						$(document).ready(function () {
-$('#filterService').on('change', function () {
-$(this).closest('form').submit();
-});
-});
+						$('#filterService').on('change', function () {
+						$(this).closest('form').submit();
+						});
+						});
 					</script>
 				</div>
 			</div>
@@ -92,9 +85,7 @@ $(this).closest('form').submit();
 								{% endif %}
 
 							{% endfor %}
-							<div
-								class="onboarding-content">
-								{# <h3 data-filter-match class="dark-inverted">{{i.nom}}</h3> #}
+							<div class="onboarding-content">
 								<h3 data-filter-match class="dark-inverted">{{i.nom}}</h3>
 								<b>
 									<a class=" h-modal-trigger is-rounded" data-modal="demo-right-actions-modal1{{i.id}}" style="color:white;color:#671cc9">Details</a>
@@ -112,9 +103,6 @@ $(this).closest('form').submit();
 												{# -----------------------contenu modal----------------------- #}
 												<div class="modal-card-body">
 													<div class="inner-content">
-														{# <h2 style="font-size:30px;color:#9eadfd;margin-top:-10px">{{s.nom}}</h2> #}
-														{# <div class="section-placeholder"> #}
-														{# <div class="placeholder-content"> #}
 															<div class="image-accordion" style="margin-top:1px;margin-bottom:3px"> <ul>
 																{% for im in imagess %}
 																	{% if im.sousService.id == i.id %}
@@ -175,7 +163,6 @@ $(this).closest('form').submit();
 																{% if avis %}
 																	{% for a in avis %}
 																		{% if a.idService.id == i.id %}
-																			{# <div style="display:inline-flex;margin-bottom:20px;margin-right:20px"> #}
 																			<div style="background-color:white;border-radius:15px;height:60px;width:570px;box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);">
 																				<div style="display:inline-flex;margin-bottom:20px;padding:3px">
 																					<div style="margin-right:10px;width:100px;overflow:hidden">
@@ -207,10 +194,7 @@ $(this).closest('form').submit();
 												{# ----------------les bouttons modif et supprimer------------------------------ #}
 												<div
 													class="modal-card-foot is-end">
-													{# {{ include('templates_front/avis_front/new.html.twig') }} #}
 													{{ include('templates_front/sousservice_front/_delete_form.html.twig') }}
-													{# <a class="button h-button is-rounded h-modal-close">Supprimer</a> #}
-													{# <a class="button h-button is-primary is-raised is-rounded" style="background-color:#671cc9" href="{{ path('app_sousservice_edit_front',{'id':i.id}) }}">Editer</a> #}
 														<a class="btn" href="{{ path('app_sousservice_edit_front',{'id':i.id})}}" style="
 															margin-right:5px;
 															border-radius:5px;
@@ -229,7 +213,6 @@ $(this).closest('form').submit();
 										</div>
 									</div>
 								</b>
-								{# </div> #}
 							</div>
 						</div>
 					</div>
@@ -237,7 +220,8 @@ $(this).closest('form').submit();
 			</div>
 		</div>
 	{% endfor %}
-{% else %}<!--Empty Placeholder--><div class="section-placeholder">
+{% else %}
+<div class="section-placeholder">
 		<div class="placeholder-content">
 			<img class="light-image" src="{{asset('assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/>
 			<img class="dark-image" src="{{asset('assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/>
@@ -246,41 +230,10 @@ $(this).closest('form').submit();
 			</p>
 		</div>
 	</div>
-{% endif %}{# -----------------paginator----------------------------- #}{% if sousservices.totalItemCount > 0 %}
+{% endif %}
+{# -----------------paginator----------------------------- #}
+{% if sousservices.totalItemCount > 0 %}
 	<div class="pagination justify-content-center" style="position: absolute;top: 100%; left: 30%;margin-top:10px;">
 		{{ knp_pagination_render(sousservices,'Custom_pagination.html.twig') }}</div>
-{% endif %}{# ------------------------------------------------------------------------------------------- #}<script>//     var searchInput = document.getElementById('search-input');
-										//     var searchResults = document.getElementById('search-results');
-										
-										//     searchInput.addEventListener('keyup', function() {
-										//         var searchTerm = searchInput.value;
-										
-										//         if (searchTerm.length < 3) {
-										//             searchResults.innerHTML = '';
-										//             return;
-										//         }
-										
-										//         var xhr = new XMLHttpRequest();
-										//         xhr.open('GET', '/searchSS?search=' + encodeURIComponent(searchTerm));
-										//         xhr.onload = function() {
-										//             if (xhr.status === 200) {
-										//                 var response = JSON.parse(xhr.responseText);
-										//                 searchResults.innerHTML = '';
-										
-										//                 if (response.length === 0) {
-										//                     var li = document.createElement('li');
-										//                     li.innerText = 'No results found.';
-										//                     searchResults.appendChild(li);
-										//                 } else {
-										//                     for (var i = 0; i < response.length; i++) {
-										//                         var li = document.createElement('li');
-										//                         li.innerText = response[i].name;
-										//                         searchResults.appendChild(li);
-										//                     }
-										//                 }
-										//             }
-										//         };
-										//         xhr.send();
-										//     });
-										// </script>
-										{% endblock %}
+{% endif %}
+{% endblock %}

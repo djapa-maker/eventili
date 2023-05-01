@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Controller;
-//---------------------------------------------------------------------------------------
 use App\Entity\Sousservice;
 use App\Entity\Imagess;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,11 +20,11 @@ use App\Repository\AvisRepository;
 use App\Repository\ImagePersRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-//---------------------------------------------------------------------------------------
+
 #[Route('/sousserviceFront')]
 class SousserviceFrontController extends AbstractController
 {
-    //---------------------------------------------------------------------------------------    
+//affichage des sousservices -----------------------------------------------------------------------------------------------------------------
     #[Route('/', name: 'app_sousservice_front', methods: ['GET'])]
     public function index(
         SousserviceRepository $SousserviceRepository,
@@ -66,8 +65,8 @@ class SousserviceFrontController extends AbstractController
         foreach ($SousService as $serv) {
             $firstimg = $ImagessRepository->findBySousService($serv);
             if (!empty($firstimg)) {
-                $fimg = $firstimg[0];
-                $listimg[] = $fimg;
+                $listimg[] = $firstimg[0];
+            
             }
         }
 
@@ -88,7 +87,7 @@ class SousserviceFrontController extends AbstractController
         $pagination = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
-            9 // limit per page
+            8 // limit per page
         );
         $av=$AvisRepository->findAll();
         $per=$imagePersRepository->findAll();
@@ -104,7 +103,7 @@ class SousserviceFrontController extends AbstractController
             'persimg'=>$per
         ]);
     }
-    //-------------------------------------------------------------------------------------------------
+//ajout d'un sousservice -----------------------------------------------------------------------------------------------------------------
     #[Route('/new', name: 'app_sousservice_new_front', methods: ['GET', 'POST'])]
     public function new(Request $request, SessionInterface $session, ImagePersRepository $imagePersRepository, CategEventRepository $CategEventRepository, PersonneRepository $PersonneRepository, SousserviceRepository $SousserviceRepository, ImagessRepository $imagessRepository, ServiceRepository $ServiceRepository): Response
     {
@@ -195,7 +194,7 @@ class SousserviceFrontController extends AbstractController
             'errorMessage1' => $errorMessage1,
         ]);
     }
-    //-------------------------------------------------------------------------------------------------
+//modifier sous service -------------------------------------------------------------------------------------------------
     #[Route('/{id}/edit', name: 'app_sousservice_edit_front', methods: ['GET', 'POST'])]
     public function edit1(Request $request, ImagessRepository $ImagessRepository, SessionInterface $session, ImagePersRepository $imagePersRepository, CategEventRepository $CategEventRepository, PersonneRepository $PersonneRepository, Sousservice $sousservice, SousserviceRepository $SousserviceRepository): Response
     {
@@ -259,7 +258,7 @@ class SousserviceFrontController extends AbstractController
                 $catev = $request->get('my-checkbox');
                 $selectedCheckboxes = implode(',', $catev);
                 $sousservice->setIdEventcateg($selectedCheckboxes);
-                $sousservice->setIdPers($PersonneRepository->findOneByIdPers(18));
+                $sousservice->setIdPers($personne);
                 $sousservice->setNote(0);
                 // $sousservice->setImagess($iml[0]->getImg());
                 // $SousserviceRepository->save($sousservice, true);
@@ -287,7 +286,7 @@ class SousserviceFrontController extends AbstractController
             'errorMessage1' => $errorMessage1,
         ]);
     }
-    //---------------------------------------------------------------------------------------
+//suppression sous service-------------------------------------------------------------------------------------------------
     #[Route('/{id}', name: 'app_sousservice_delete_front', methods: ['POST'])]
     public function delete(Request $request, Sousservice $sousservice, SousserviceRepository $SousserviceRepository): Response
     {
@@ -297,7 +296,7 @@ class SousserviceFrontController extends AbstractController
         }
         return $this->redirectToRoute('app_sousservice_front', [], Response::HTTP_SEE_OTHER);
     }
-    //---------------------------------------------------------------------------------------    
+//search ---------------------------------------------------------------------------------------    
     #[Route('/searchSS', name: 'app_sousservice_search_front', methods: ['GET'])]
     public function search(SousserviceRepository $SousserviceRepository, Request $request)
     {
@@ -314,5 +313,4 @@ class SousserviceFrontController extends AbstractController
 
         return new JsonResponse($response);
     }
-    //---------------------------------------------------------------------------------------    
 }

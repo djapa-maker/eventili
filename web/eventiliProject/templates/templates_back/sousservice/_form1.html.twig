@@ -1,7 +1,7 @@
+{# formulaire de modification ------------------------------------------------------------------------------------------- #}
 {{ form_start(form, {'attr': {'class': 'was-validated', 'novalidate': 'novalidate'}}) }}
 {# ------------------------------------------------------------------------------------------- #}
-<div
-	style="margin-left:27%;">
+<div style="margin-left:27%;">
 	{# ---------------------------------------- #}
 	<div class="row g-3">
 		<div class="form-group col-sm">
@@ -85,12 +85,8 @@
 	{# ------------------------------------------------------------------------------------------- #}
 	<div class="form-group col-sm">
 		<label style="color:#6B67E9;font-size:20px">All images</label>
-		{# <a style="margin-top:2px" href="{{path('app_imagess_new1',{'id':sousservice.id})}}">
-			<i class='bx bx-upload' style="font-size:12px;margin-left:4px;font-size:20px;color:#6B67E9;"></i>
-		</a> #}
 		{# ------------------------------------------------------------------------------------------- #}
 		<div class="grid-container" style="grid-column-gap: 10px;grid-row-gap: 10px;display: grid;grid-template-columns: 100px 100px 100px 100px 100px  ;padding: 10px;">
-
 			{% for l in imglist %}
 			{% if imglist|length ==1 %}
 				<div style="position: relative;">

@@ -1,0 +1,97 @@
+{# --------- #}
+{% set servicesTotal = 0 %}
+<div style="font-family: " comic sans ms", cursive, sans-serif;
+					font-size: 16px;
+					line-height: 1.5;
+					color: #333; max-width: 800px;
+				    margin: 0 auto;
+				    padding: 20px;">
+	<header style="display: flex;">
+		<img src="{{asset('assets/img/App-logo-dark.png')}}" alt="Logo Eventili" style="width: 100px;
+			    height: 100px;
+			    margin-right: 0px;">
+		<div style="color: #666;
+				      font-size: 12px;
+				      text-align: left;
+				      margin-left: 22px;">
+			<h2 style ="font-size: 2em;
+              font-weight: bold;
+              align-items: left;">Enventili</h2>
+			<p>123 Rue Principale</p>
+			<p>Ville, Province Code Postal</p>
+			<p>Téléphone : (+216) 71-456-789</p>
+			<p>Email : info@eventili.com</p>
+		</div>
+	</header>
+	<hr>
+	<main>
+		<div style=" margin-bottom: 20px;
+    margin-top: 20px;
+    text-align: left;">
+	{# {% for pers in app.session.get('id') %} #}
+			<div >
+				<h3>Nom d'utilisateur :
+					{{app.session.get('id').prenomPers}}
+					{{app.session.get('id').nomPers}}
+				</h3>
+				<h3>Numéro de téléphone :
+					{{app.session.get('id').numTel}}
+				</h3>
+				<h3>Email :
+					{{app.session.get('id').email}}
+				</h3>
+			</div>
+		{# {% endfor %} #}
+		</div>
+		<table style=" width: 100%;
+				    border-collapse: separate;
+				    border-spacing: 0;
+				    margin-bottom: 20px;
+				    background-color: #fff;
+				    border-radius: 10px;
+				    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);">
+			<tr>
+				<th style=" background-color: #dfd0f4;
+					    font-weight: bold;
+					    color : #ffff;padding: 10px;
+					    text-align: left;
+					    border: none;">Produit</th>
+				<th style=" background-color: #dfd0f4;
+					    font-weight: bold;
+					    color : #ffff;padding: 10px;
+					    text-align: center;
+					    border: none;">Prix</th>
+			</tr>
+			{% for service in app.session.get('services') %}
+				<tr>
+					<td style="border-bottom: 1px solid #e6e6e6;padding: 10px;
+						    text-align: left;
+						    border: none;">{{service.nom}}</td>
+					<td style="border-bottom: 1px solid #e6e6e6;padding: 10px;
+						    text-align: center;
+						    border: none;">{{service.prix}}
+						DT</td>
+				</tr>
+				{% set servicesTotal = servicesTotal + service.prix %}
+			{% endfor %}
+			<tr>
+				<td colspan="1" style="font-weight: bold;border-bottom: 1px solid #e6e6e6;padding: 10px;
+						    text-align: left;
+						    border: none;">Total</td>
+				<td style="font-weight: bold;border-bottom: 1px solid #e6e6e6;padding: 10px;
+						    text-align: center;
+						    border: none;">{{servicesTotal}}
+					DT</td>
+			</tr>
+
+		</table>
+	</main>
+	{# <hr>
+												<footer>
+													<p>Conditions générales de vente</p>
+													<p>Droit d'auteur © Enventili</p>
+													<p>Téléphone : (+216) 71-456-789</p>
+													<p>Email : info@eventili.com</p>
+												</footer> #}
+</div>
+{# ========== #}

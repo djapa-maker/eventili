@@ -50,7 +50,7 @@ class Sousservice
     private ?String $idEventcateg=null;
 //---------------------------------------------------------------------------------------    
     // #[ORM\ManyToOne(inversedBy:'Sousservice')]
-    #[ORM\ManyToOne(targetEntity: Personne::class, cascade: ["remove"])]
+    #[ORM\ManyToOne(targetEntity: Personne::class,cascade: ['persist'])]
     #[ORM\JoinColumn(name: "id_pers", referencedColumnName: "id_pers")]
     private ?Personne $idPers=null;
 //---------------------------------------------------------------------------------------

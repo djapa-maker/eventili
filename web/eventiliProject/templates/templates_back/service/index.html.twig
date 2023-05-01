@@ -1,9 +1,8 @@
 {% extends 'baseAdmin.html.twig'%}
 {# ------------------------------------------------------------------------------------------- #}
 {% block content %}
-	<div
-		class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-		{# -------------------------------------------------------------------------- #}
+	<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+		{# search-------------------------------------------------------------------------- #}
 		<div style="color:#758afd;font-size:25px;font-style:bold">Service</div>
 		<div class="search-bar flex-grow-1" style="margin-left:33%;">
 			<div class="position-relative search-bar-box">
@@ -22,7 +21,7 @@
 		<div class="ms-auto">
 			<div
 				class="btn-group">
-				{# -------------------------------------------------------------------------- #}
+				{# ajout d'un service -------------------------------------------------------------------------- #}
 
 				<a href="{{ path('app_service_new') }}" class="btn btn-info" style="border-radius:10px;color:white;background-color:#aeb8ff;border-color:#aeb8ff;font-size:19px">Créer un service</a>
 
@@ -30,7 +29,7 @@
 			</div>
 		</div>
 	</div>
-	{# -------------------------------------------------------------------------- #}
+	{# card superieur de l'affichage -------------------------------------------------------------------------- #}
 	<center>
 		<div id="nom" class="card" style="width:50%;border-radius: 25px;height:580px;background-color:#d2d9fc">
 			<center>
@@ -40,7 +39,7 @@
 						<label style="color:#241b7c;position: absolute;top: 7px; left: 85%; font-weight: bold;">Actions</label>
 					</div>
 				</div>
-				{# ------------------------------------------------------------------------------------------- #}
+				{# les cards d'affichage des services ------------------------------------------------------------------------------------------- #}
 				{% if  services is not empty %}
 					<div id="search-results">
 						{% for service in services %}
@@ -50,16 +49,16 @@
 									<div style="display: flex;color:#241b7c;position: absolute;top: 10px; left: 85%; ">
 										{{ include('templates_back/service/_delete_form.html.twig') }}
 										<a href="{{ path('app_service_edit',{'idService':service.idService})}}" style="
-																																																	margin-right:5px;
-																																																	border-radius:30px;
-																																																	background-color:#241b7c;
-																																																	border-color:#241b7c;
-																																																	height:30px;
-																																																	width:30px;
-																																																	display: flex;
-																																																	justify-content: center;
-																																																	align-items: center;
-																																																	color:white">
+													margin-right:5px;
+													border-radius:30px;
+													background-color:#241b7c;
+													border-color:#241b7c;
+													height:30px;
+													width:30px;
+													display: flex;
+													justify-content: center;
+													align-items: center;
+													color:white">
 											<i class='bx bx-edit' style="font-size:20px"></i>
 										</a>
 									</div>
@@ -67,6 +66,7 @@
 							</div>
 						{% endfor %}
 					</div>
+				{# on cas d'abscence de sous service ------------------------------------------------------------------------------------------- #}
 				{% else %}
 					<div class="placeholder-content">
 						<img
@@ -77,22 +77,16 @@
 						</p>
 					</div>
 				{% endif %}
-
-				{# ------------------------------------------------------------------------------------------- #}
+				{# pagination ------------------------------------------------------------------------------------------- #}
 				{% if services.totalItemCount > 0 %}
 					<div class="pagination justify-content-center" style="position: absolute;top: 90%; left: 30%;margin-top:10px;">
 						{{ knp_pagination_render(services,'bootstrap_v4_pagination.html.twig') }}
 					</div>
 				{% endif %}
 				<br>
-
 			</center>
 		</div>
-
-
-		<ul id="search-results"></ul>
-		{# <a href='{{path('app_service_index1')}}'>fdghjklmù</a> #}
-
+		{# <ul id="search-results"></ul> #}
 	</center>
 	{# -------------------------------------------------------------------------- #}
 	<!-- jQuery -->
@@ -103,29 +97,49 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<!-- Modal -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script>
-		$(document).ready(function () {
-$('#search-term').keyup(function () {
-var searchTerm = $(this).val();
-
-$.ajax({
-type: 'POST',
-url: '{{ path('app_service_search') }}',
-data: {
-searchTerm: searchTerm
-},
-success: function (data) {
-var results = '';
-
-$.each(data, function (index, value) {
-results += '<div class="card" style="margin-top:-10px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);width:90%;border-radius:14px;height:50px;background-color:white">' + '<div style="display: flex;">' + '<label style="color:#241b7c;margin-right: 30%;margin-left: 20px;margin-top: 15px;">' + value.nom + '</label>' + '<div style="display: flex;color:#241b7c;position: absolute;top: 10px; left: 85%;">' + '</div>' + '</div>' + '</div>';
-
-});
-
-$('#search-results').html(results);
-}
-});
-});
-});
-	</script>
+				<script>
+					$(document).ready(function () {
+					$('#search-term').keyup(function () {
+						var searchTerm = $(this).val();
+						$.ajax({
+							type: 'POST',
+							url: '{{ path('app_service_search') }}',
+							data: {searchTerm: searchTerm},
+							success: function (data) {
+							var results = '';
+						$.each(data, function (index, value) {
+						results += 
+						'<div class="card" style="margin-top:-10px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);width:90%;border-radius:14px;height:50px;background-color:white">' +
+						'<div style="display: flex;">' +
+						'<label style="color:#241b7c;margin-right: 30%;margin-left: 20px;margin-top: 15px;">' + value.nom + '</label>' +
+						'<div style="display: flex;color:#241b7c;position: absolute;top: 10px; left: 85%;">' +
+						'<a class="btn" data-bs-toggle="modal" data-bs-target="#deleteModal'+value.idService+'" style="margin-right:5px;border-radius:30px;background-color:#ff8601;border-color:#ff8601;height:30px;width:30px;display: flex; justify-content: center; align-items: center;color:white"><i style="margin-left:5px" class="bx bx-trash"></i></a>'+
+						'<div class="modal fade" id="deleteModal'+value.idService+'" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">'+
+						'<div class="modal-dialog">'+
+						'<div class="modal-content">'+
+						'<div class="modal-header  text-white" style="background-color:#ff8601">'+
+						'<br>'+
+						'<h5 class="modal-title" id="deleteModalLabel" style="color:white">Confirmation de suppression </h5>'+
+						'<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>'+
+						'</div>'+
+						'<div class="modal-body">Etes vous sure de vouloir supprimer ce service ? </div>'+
+						'<div class="modal-footer">'+
+						'<button type="button" class="btn" data-bs-dismiss="modal">Annuler</button>'+
+						'<form method="post" action="/service/'+value.idService+'">'+
+						'<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ '+value.idService+') }}">'+
+						'<button type="submit" style="background-color:#ff8601;color:white"class="btn">Supprimer</button>'+
+						'</form>'+
+						'</div>'+
+						'</div>'+
+						'</div>'+
+						'</div>'+
+						'<a href="/service/'+value.idService+'/edit" style="margin-right:5px;border-radius:30px;background-color:#241b7c;border-color:#241b7c;height:30px;width:30px;display: flex;justify-content: center;align-items: center;color:white"><i class="bx bx-edit" style="font-size:20px"></i></a>'+
+						'</div>' +
+						'</div>' +
+						'</div>';
+						});
+						$('#search-results').html(results);}});
+						});
+					});
+				</script>
 {% endblock %}

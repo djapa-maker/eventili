@@ -1,7 +1,6 @@
 {% extends 'baseAdmin.html.twig'%}
 {# ------------------------------------------------------------------------------------------- #}
 {% block content %}
-	<!--breadcrumb-->
 	<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
 		<div style="color:#758afd;font-size:25px;font-style:bold">Avis</div>
 		<div class="search-bar flex-grow-1" style="margin-left:30%;">
@@ -18,7 +17,6 @@
 			</div>
 		</div>
 	</div>
-	<!--end breadcrumb-->
 	{# ------------------------------------------------------------------------------------------- #}
 	<center>
 		<div class="card" style="width:70%;border-radius: 25px;height:550px;background-color:#d2d9fc">
@@ -47,16 +45,13 @@
 								<label style="color:#241b7c;position: absolute;top: 15px; left: 500px">{{avis.date|date('Y-m-d H:i:s')}}</label>
 								<div style="display: flex; align-items:center;text-align:center;color:#241b7c;position: absolute;top: 10px; left: 92%; font-weight: bold;">
 									{{ include('templates_back/avis/_delete_form.html.twig') }}
-
 								</div>
 							</div>
 						</div>
 					{% endfor %}
 				{% else %}
 					<div class="placeholder-content">
-						<img
-						style="height:250px;width:250px" class="light-image" src="{{asset('assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/>
-						{# <img class="dark-image" src="{{asset('assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/> #}
+						<img style="height:250px;width:250px" class="light-image" src="{{asset('assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/>
 						<h3 class="dark-inverted">Aucun avis' !</h3>
 						<p>il n'existe aucun avis pour le moment 
 						</p>

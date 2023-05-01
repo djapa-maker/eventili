@@ -14,13 +14,7 @@
 	{% if errorMessage is not null %}
 		<div style="color:red;border-color:red">{{ errorMessage }}</div>
 	{% endif %}
-	<button id="submit-button" style="margin-top:27px;
-																width:30%;
-																border-radius:10px;
-																color:white;
-																background-color:#ff8601;
-																border-color:#ff8601;
-																font-size:19px" type="submit" class="btn btn-primary is-disabled">{{ button_label|default('Enregistrer') }}</button>
+	<button id="submit-button" style="margin-top:27px;width:30%;border-radius:10px;color:white;background-color:#ff8601;border-color:#ff8601;font-size:19px" type="submit" class="btn btn-primary is-disabled">{{ button_label|default('Enregistrer') }}</button>
 </div>
 {# ------------------------------------------------------------------------------------------- #}
 {{ form_end(form) }}

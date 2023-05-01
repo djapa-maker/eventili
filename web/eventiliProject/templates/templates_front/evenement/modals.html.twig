@@ -1,4 +1,5 @@
 <div id="demo-right-actions-modal-{{ event.idEv }}" class="modal h-modal is-small">
+
 	<div class="modal-background  h-modal-close"></div>
 	<div class="modal-content">
 		<div class="modal-card">
@@ -30,6 +31,39 @@
 		</div>
 	</div>
 </div>
+{# ------------------------------------------ #}
+<div id="publish-{{ event.idEv }}" class="modal h-modal is-medium">
+	<div class="modal-background  h-modal-close"></div>
+	<div class="modal-content">
+		<div class="modal-card">
+			<header class="modal-card-head">
+				<h3>Attention!</h3>
+				<button class="h-modal-close ml-auto" aria-label="close">
+					<i data-feather="x"></i>
+				</button>
+			</header>
+			<div class="modal-card-body">
+				<div class="inner-content">
+					<div class="section-placeholder">
+						<div class="placeholder-content">
+							<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+							<lottie-player src="https://assets8.lottiefiles.com/packages/lf20_si7bhkv8.json" background="transparent" speed="1" style="width: 200px; height: 200px; margin:auto;" loop autoplay></lottie-player>
+							<h3 class="dark-inverted" style="margin-top:10px;">Êtes-vous sûr de vouloir publier cet événement ?</h3>
+							<p>Si vous confirmer, votre événement sera public est les utilisateurs de cette application pourront y participer.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-card-foot is-centered">
+				<a class="button h-button is-rounded h-modal-close">Annuler</a>
+				{# <form method="post" action="{{ path('app_evenement_delete', {'idEv': event.idEv}) }}" class="dropdown-item is-media">
+													<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ event.idEv) }}">
+													<button type="submit" style="background-color:#ff8601;color:white" class="button h-button is-raised is-rounded">Confirmer</button>
+												</form> #}
+			</div>
+		</div>
+	</div>
+</div>
 
 {# ------------------------------------------ #}
 <div id="details-modal-{{ event.idEv }}" class="modal h-modal is-big">
@@ -37,7 +71,8 @@
 	<div class="modal-content">
 		<div class="modal-card">
 			<header class="modal-card-head">
-				<h2 style="font-weight: bold; color: #37105ff; font-size: 18px;">Detail de
+				<h2 style="font-weight: bold; color: #37105ff; font-size: 18px;">{{ 	event.idEv }}
+					Detail de
 					{{event.titre}}</h2>
 				<button class="h-modal-close ml-auto" aria-label="close">
 					<i data-feather="x"></i>
@@ -68,17 +103,18 @@
 						<p style="font-size: small;">{{ event.descriptionEv }}</p>
 					</div>
 					<div class="article-body">
-					<h1 style="font-weight: bold; color: #797bf2; font-size: 16px;">Sous services réservés</h1>
+						<h1 style="font-weight: bold; color: #797bf2; font-size: 16px;">Sous services réservés</h1>
 					</div>
-					{% if sous is not empty  %}
-						{% for s in sous %}
+					{% if sous[event.idEv] is not empty %}
+						{% for s in sous[event.idEv] %}
 							{% if loop.index % 2 == 1 %}
 								<div style="display: flex; justify-content: left;">
 								{% endif %}
 
-								<div style="width:370px;height:60px;margin-bottom:20px;margin-left:10px;box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);border-radius:15px">
+								<div
+									style="width:370px;height:60px;margin-bottom:20px;margin-left:10px;box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);border-radius:15px">
 									<!-- Your card code goes here -->
-										<div class="media-flex-center"> 
+									<div class="media-flex-center">
 										{% for n in firstimg %}
 											{% if n.sousService.id == s.id %}
 												<div class="h-avatar" style="margin-top:10px;margin-left:10px;">
@@ -89,7 +125,8 @@
 										{% endfor %}
 										<div class="flex-meta">
 											<span>{{s.nom}}</span>
-											<span>{{s.idPers.prenomPers}} {{s.idPers.nomPers}}</span>
+											<span>{{s.idPers.prenomPers}}
+												{{s.idPers.nomPers}}</span>
 										</div>
 										<div class="button" style="margin-left:30px;margin-top:12px;border:none;width:60px">
 											<span class="icon is-medium" style="font-weight:bold;color:#ff8601">
@@ -115,20 +152,14 @@
 								</div>
 							{% endif %}
 						{% endfor %}
-						{% else %}
+					{% else %}
 						<p>wxcvbnh</p>
 						<!-- Code to handle when there are no cards to display -->
 					{% endif %}
-
-					{# </h1>
-																																								</div> #}
 				</div>
 			</div>
-			<div
-				class="modal-card-foot is-end">{# <a class="button h-button is-rounded h-modal-close">Cancel</a>
-																																																												<a class="button h-button is-primary is-raised is-rounded">Confirm</a> #}
-			</div>
-
 		</div>
+		<div class="modal-card-foot is-end"></div>
 	</div>
 </div>
+

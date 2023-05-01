@@ -2,9 +2,8 @@
 {# ------------------------------------------------------------------------------------------- #}
 {% block content %}
 	{# ------------------------------------------------------------------------------------------- #}
-	<!--breadcrumb-->
-		<div
-		class="page-breadcrumb d-none d-sm-flex align-items-center mb-3"> {# -------------------------------------------------------------------------- #}
+		<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3"> 
+		{# -------------------------------------------------------------------------- #}
 		<div style="color:#758afd;font-size:25px;font-style:bold">Sous Service</div>
 		<div class="search-bar flex-grow-1" style="margin-left:20%;">
 			<div class="position-relative search-bar-box">
@@ -43,10 +42,10 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
 		$(document).ready(function () {
-$('#filterService').on('change', function () {
-$(this).closest('form').submit();
-});
-});
+		$('#filterService').on('change', function () {
+		$(this).closest('form').submit();
+		});
+		});
 	</script>
 	{# -------------------------------------------------------------------------- #}
 	<div class="card" style="width:100%;border-radius: 25px;height:550px;background-color:#d2d9fc">
@@ -99,15 +98,15 @@ $(this).closest('form').submit();
 			{% endfor %}
 			{% else %}
 			<div class="section-placeholder">
-		<div class="placeholder-content">
-			<img style="height:250px;width:250px"class="light-image" src="{{asset('assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/>
-			{# <img class="dark-image" src="{{asset('assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/> #}
-			<h3 class="dark-inverted">Pas de sous services !</h3>
-			<p>Veillez ajouter des sous services pour pouvoir les visualiser ici </p>
+			<div class="placeholder-content">
+				<img style="height:250px;width:250px"class="light-image" src="{{asset('assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/>
+				{# <img class="dark-image" src="{{asset('assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/> #}
+				<h3 class="dark-inverted">Pas de sous services !</h3>
+				<p>Veillez ajouter des sous services pour pouvoir les visualiser ici </p>
+			</div>
 		</div>
-	</div>
-			{% endif %}
-			{# ------------------------------------------------------------------------------------------- #}
+		{% endif %}
+		{# ------------------------------------------------------------------------------------------- #}
 		</center>
 		{# ------------------------------------------------------------------------------------------- #}
 	</div>

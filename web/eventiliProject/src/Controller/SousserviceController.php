@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Controller;
-//---------------------------------------------------------------------------------------
 use App\Entity\CategEvent;
 use App\Entity\Sousservice;
 use App\Entity\Service;
 use App\Entity\Imagess;
 use App\Entity\Personne;
+use App\Repository\AvisRepository;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Repository\ImagePersRepository;
 use App\Form\SousserviceType;
@@ -23,11 +23,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
-//---------------------------------------------------------------------------------------
+
 #[Route('/sousservice')]
 class SousserviceController extends AbstractController
 {
-
+//affichage des sousservices -----------------------------------------------------------------------------------------------------------------
     #[Route('/', name: 'app_sousservice_index', methods: ['GET'])]
     public function index(
         SousserviceRepository $SousserviceRepository,
@@ -67,10 +67,12 @@ class SousserviceController extends AbstractController
         foreach ($SousService as $serv) {
             $firstimg = $ImagessRepository->findBySousService($serv);
             if (!empty($firstimg)) {
-                $fimg = $firstimg[0];
-                $listimg[] = $fimg;
+                $listimg[]  = $firstimg[0];
+               // $listimg[] = $fimg;
+                
             }
         }
+        
         $imagess = $ImagessRepository->findAll();
         foreach ($SousService as $s) {
             $checkboxes = explode(',', $s->getIdEventcateg());
@@ -96,10 +98,10 @@ class SousserviceController extends AbstractController
             'eventCat' => $CategEventRepository->findAll(),
             'last' => $last,
             'firstimg' =>  $listimg,
-            'fimg'=>$fimg
+           // 'fimg'=>$fimg
         ]);
     }
-    //-------------------------------------------------------------------------------------------------
+//ajout d'un sousservice -----------------------------------------------------------------------------------------------------------------
     #[Route('/new', name: 'app_sousservice_new', methods: ['GET', 'POST'])]
     public function new(Request $request, SessionInterface $session, ImagePersRepository $imagePersRepository, CategEventRepository $CategEventRepository, PersonneRepository $PersonneRepository, SousserviceRepository $SousserviceRepository, ImagessRepository $imagessRepository, ServiceRepository $ServiceRepository): Response
     {
@@ -189,7 +191,7 @@ class SousserviceController extends AbstractController
             'errorMessage1' => $errorMessage1,
         ]);
     }
-    //-------------------------------------------------------------------------------------------------
+//detail du sous service -------------------------------------------------------------------------------------------------
     #[Route('/{id}', name: 'app_sousservice_show', methods: ['GET'])]
     public function show(CategEventRepository $CategEventRepository, Sousservice $sousservice, SessionInterface $session, ImagePersRepository $imagePersRepository): Response
     {
@@ -213,7 +215,7 @@ class SousserviceController extends AbstractController
             'last' => $last,
         ]);
     }
-    //-------------------------------------------------------------------------------------------------
+//modifier sous service -------------------------------------------------------------------------------------------------
     #[Route('/{id}/edit', name: 'app_sousservice_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, ImagessRepository $ImagessRepository, SessionInterface $session, ImagePersRepository $imagePersRepository, CategEventRepository $CategEventRepository, PersonneRepository $PersonneRepository, Sousservice $sousservice, SousserviceRepository $SousserviceRepository): Response
     {
@@ -275,7 +277,7 @@ class SousserviceController extends AbstractController
                 $catev = $request->get('my-checkbox');
                 $selectedCheckboxes = implode(',', $catev);
                 $sousservice->setIdEventcateg($selectedCheckboxes);
-                $sousservice->setIdPers($PersonneRepository->findOneByIdPers(18));
+                $sousservice->setIdPers($personne);
                 $sousservice->setNote(0);
                 // $sousservice->setImagess($iml[0]->getImg());
                 $entityManager = $this->getDoctrine()->getManager();
@@ -296,7 +298,7 @@ class SousserviceController extends AbstractController
             'errorMessage1' => $errorMessage1,
         ]);
     }
-    //-------------------------------------------------------------------------------------------------
+//suppression sous service-------------------------------------------------------------------------------------------------
     #[Route('/{id}', name: 'app_sousservice_delete', methods: ['POST'])]
     public function delete(Request $request, Sousservice $sousservice, SousserviceRepository $SousserviceRepository): Response
     {
@@ -306,122 +308,7 @@ class SousserviceController extends AbstractController
 
         return $this->redirectToRoute('app_sousservice_index', [], Response::HTTP_SEE_OTHER);
     }
-    //-------------------------------------------------------------------------------------------------
-    #[Route('/findSSById/{id}', name: 'app_sousservice_findSSById', methods: ['GET'])]
-    public function findSSById(SessionInterface $session, ImagePersRepository $imagePersRepository, SousserviceRepository $SousserviceRepository, $id): Response
-    {
-        $personne = $session->get('id');
-        $idPerss = $session->get('personne');
-        $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
-        $images = array_reverse($images);
-
-        if (!empty($images)) {
-            $i = $images[0];
-            $last = $i->getLast();
-        } else {
-            $last = "account (1).png";
-        }
-        $session->set('last', $last);
-        $last = $session->get('last');
-        return $this->render('templates_back/sousservice/index.html.twig', [
-            'sousservices' => $SousserviceRepository->findby(array('id' => $id)),
-            'personne' => $personne,
-            'last' => $last,
-        ]);
-    }
-    //-------------------------------------------------------------------------------------------------    
-    #[Route('/findSSByName/{name}', name: 'app_sousservice_findSSByName', methods: ['GET'])]
-    public function findSSByName(SousserviceRepository $SousserviceRepository, $name, SessionInterface $session, ImagePersRepository $imagePersRepository): Response
-    {
-        $personne = $session->get('id');
-        $idPerss = $session->get('personne');
-        $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
-        $images = array_reverse($images);
-
-        if (!empty($images)) {
-            $i = $images[0];
-            $last = $i->getLast();
-        } else {
-            $last = "account (1).png";
-        }
-        $session->set('last', $last);
-        $last = $session->get('last');
-        return $this->render('templates_back/sousservice/index.html.twig', [
-            'sousservices' => $SousserviceRepository->findOneByName($name),
-            'personne' => $personne,
-            'last' => $last,
-        ]);
-    }
-    //-------------------------------------------------------------------------------------------------    
-    #[Route('/findListByNames/{name}', name: 'app_sousservice_findListByNames', methods: ['GET'])]
-    public function findListByNames(SousserviceRepository $SousserviceRepository, $name, SessionInterface $session, ImagePersRepository $imagePersRepository): Response
-    {
-        $personne = $session->get('id');
-        $idPerss = $session->get('personne');
-        $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
-        $images = array_reverse($images);
-
-        if (!empty($images)) {
-            $i = $images[0];
-            $last = $i->getLast();
-        } else {
-            $last = "account (1).png";
-        }
-        $session->set('last', $last);
-        $last = $session->get('last');
-        return $this->render('templates_back/sousservice/index.html.twig', [
-            'sousservices' => $SousserviceRepository->findListByNames($name),
-            'personne' => $personne,
-            'last' => $last,
-        ]);
-    }
-    //-------------------------------------------------------------------------------------------------    
-    #[Route('/findSSByServiceId/{idService}', name: 'app_sousservice_findSSByServiceId', methods: ['GET'])]
-    public function findSSByServiceId(SousserviceRepository $SousserviceRepository, $idService, SessionInterface $session, ImagePersRepository $imagePersRepository): Response
-    {
-        $personne = $session->get('id');
-        $idPerss = $session->get('personne');
-        $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
-        $images = array_reverse($images);
-
-        if (!empty($images)) {
-            $i = $images[0];
-            $last = $i->getLast();
-        } else {
-            $last = "account (1).png";
-        }
-        $session->set('last', $last);
-        $last = $session->get('last');
-        return $this->render('templates_back/sousservice/index.html.twig', [
-            'sousservices' => $SousserviceRepository->findby(array('idService' => $idService)),
-            'personne' => $personne,
-            'last' => $last,
-        ]);
-    }
-    //-------------------------------------------------------------------------------------------------    
-    #[Route('/findSSByServiceIdAndName/{idService}/{nom}', name: 'app_sousservice_findSSByServiceIdAndName', methods: ['GET'])]
-    public function findSSByServiceIdAndName(SousserviceRepository $SousserviceRepository, $idService, $nom, SessionInterface $session, ImagePersRepository $imagePersRepository): Response
-    {
-        $personne = $session->get('id');
-        $idPerss = $session->get('personne');
-        $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
-        $images = array_reverse($images);
-
-        if (!empty($images)) {
-            $i = $images[0];
-            $last = $i->getLast();
-        } else {
-            $last = "account (1).png";
-        }
-        $session->set('last', $last);
-        $last = $session->get('last');
-        return $this->render('templates_back/sousservice/index.html.twig', [
-            'sousservices' => $SousserviceRepository->findSSByServiceIdAndName($idService, $nom),
-            'personne' => $personne,
-            'last' => $last,
-        ]);
-    }
-    //-------------------------------------------------------------------------------------------------    
+//affichage des sousservices par service  -----------------------------------------------------------------------------------------------------------------     
     #[Route('/getAllByServiceName/{nom}', name: 'app_sousservice_getAllByServiceName', methods: ['GET'])]
     public function getAllByServiceName(SousserviceRepository $SousserviceRepository, $nom, SessionInterface $session, ImagePersRepository $imagePersRepository): Response
     {
@@ -446,5 +333,4 @@ class SousserviceController extends AbstractController
             'last' => $last,
         ]);
     }
-    //---------------------------------------------------------------------------------------    
 }
