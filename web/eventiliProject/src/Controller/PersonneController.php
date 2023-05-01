@@ -192,15 +192,15 @@ $pagination = $paginator->paginate(
 
             // Create the Transport
             $transport = (new Swift_SmtpTransport('smtp.gmail.com', 465, 'ssl'))
-                ->setUsername('djaguo12@gmail.com')
-                ->setPassword('BACMATH2K20');
+                ->setUsername('yesmineguesmi@gmail.com')
+                ->setPassword('oyjdjatabndjaaxg');
 
             // Create the Mailer using your created Transport
             $mailer = new Swift_Mailer($transport);
 
             // Create a message
             $message = (new Swift_Message('Activation de Compte'))
-                ->setFrom(['djaguo12@gmail.com' => 'Evëntili'])
+                ->setFrom(['yesmineguesmi@gmail.com' => 'Evëntili'])
                 ->setTo([$personne->getEmail()])
                 ->setBody("<p>Salut! </p>Veuillez cliquer: " . $url, 'text/html');
 
@@ -210,8 +210,8 @@ $image1 = Swift_Image::fromPath('C:\xampp\htdocs\img\logo.png');
 $body = '<img src="' . $message->embed($image1) . '" style="max-width:29%;height:auto;">';
 $body .= '<img src="' . $message->embed($image) . '" style="max-width:100%;height:auto;">';
 $body .= '<br><br><br>';
-$body .= '<p style="font-family: Comic Sans MS, cursive;margin-left: 288px;">Veuillez cliquer sur le bouton ci-dessous pour le reset de mot de passe :</p>';
-$body .= '<a href="' . $url . '" style="display:inline-block;background-color:#f58922;margin-left: 398px;color:#fff;padding:19px 35px;text-decoration:none;border-radius:5px;">Reset pass</a>';
+$body .= '<p style="font-family: Comic Sans MS, cursive;margin-left: 288px;">Veuillez cliquer sur le bouton ci-dessous pour l"activation de compte :</p>';
+$body .= '<a href="' . $url . '" style="display:inline-block;background-color:#f58922;margin-left: 398px;color:#fff;padding:19px 35px;text-decoration:none;border-radius:5px;">Activer</a>';
 
 // Ajouter l'image au contenu du message
 $message->setBody($body, 'text/html');

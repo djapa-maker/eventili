@@ -3,6 +3,6 @@ swiftmailer:
     host: 'localhost'
     port: 587
     encryption: tls
-    username: 'guesdji@gmail.com'
-    password: 'BACMATH2K20'
+    username: 'yesmineguesmi@gmail.com'
+    password: 'oyjdjatabndjaaxg'
     spool: { type: memory }

@@ -178,7 +178,7 @@ class ResetPasswordController extends AbstractController
         ], UrlGeneratorInterface::ABSOLUTE_URL);
         // Create the Transport
 $email = (new TemplatedEmail())
-        ->from(new Address('djaguo12@gmail.com', 'Evëntili'))
+        ->from(new Address('yesmineguesmi@gmail.com', 'Evëntili'))
         ->to($user->getEmail())
         ->subject('Your password reset request')
         ->htmlTemplate('reset_password/email.html.twig')
@@ -186,8 +186,8 @@ $email = (new TemplatedEmail())
             'resetToken' => $resetToken,
         ]);
 $transport = (new Swift_SmtpTransport('smtp.gmail.com', 465, 'ssl'))
-->setUsername('djaguo12@gmail.com')
-->setPassword('BACMATH2K20');
+->setUsername('yesmineguesmi@gmail.com')
+->setPassword('oyjdjatabndjaaxg');
 
 // Create the Mailer using your created Transport
 $mailer = new Swift_Mailer($transport);
