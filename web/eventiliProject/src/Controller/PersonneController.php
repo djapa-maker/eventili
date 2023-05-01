@@ -192,15 +192,15 @@ $pagination = $paginator->paginate(
 
             // Create the Transport
             $transport = (new Swift_SmtpTransport('smtp.gmail.com', 465, 'ssl'))
-                ->setUsername('yesmine.guesmi@esprit.tn')
-                ->setPassword('Bigadroug78910*');
+                ->setUsername('djaguo12@gmail.com')
+                ->setPassword('BACMATH2K20');
 
             // Create the Mailer using your created Transport
             $mailer = new Swift_Mailer($transport);
 
             // Create a message
             $message = (new Swift_Message('Activation de Compte'))
-                ->setFrom(['yesmine.guesmi@esprit.tn' => 'Evëntili'])
+                ->setFrom(['djaguo12@gmail.com' => 'Evëntili'])
                 ->setTo([$personne->getEmail()])
                 ->setBody("<p>Salut! </p>Veuillez cliquer: " . $url, 'text/html');
 
