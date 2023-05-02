@@ -116,15 +116,26 @@
 													class="dropdown-content">
 
 													{# <a class="dropdown-item is-media h-modal-trigger" data-modal="demo-right-actions-modal-{{ event.idEv }}"> #}
-													<a href="#" class="dropdown-item is-media" style="pointer-events: none;
-															        opacity: 0.6;">
-														<div class="icon">
-															<i class="lnil lnil-mobile-coin"></i>
-														</div>
-														<div class="meta">
-															<span>Sponsoriser</span>
-														</div>
-													</a>
+													{% if event.visibilite == "Public" and 'now'| date('Y-m-d H:i:s') < event.dateFin| date('Y-m-d H:i:s')%}
+														<a href="#" class="dropdown-item is-media" >
+															<div class="icon">
+																<i class="lnil lnil-mobile-coin"></i>
+															</div>
+															<div class="meta">
+																<span>Sponsoriser</span>
+															</div>
+														</a>
+													{% else %}
+														<a href="#" class="dropdown-item is-media" style="pointer-events: none;
+																															        opacity: 0.6;">
+															<div class="icon">
+																<i class="lnil lnil-mobile-coin"></i>
+															</div>
+															<div class="meta">
+																<span>Sponsoriser</span>
+															</div>
+														</a>
+													{% endif %}
 													<hr class="dropdown-divider">
 													<a href="#" class="dropdown-item is-media">
 														<div class="icon">
@@ -149,7 +160,17 @@
 									</div>
 								</div>
 								<div class="button-container">
-									<a href="##" class="button h-button is-primary is-rounded h-modal-trigger" data-modal="publish-{{ event.idEv }}">Publier</a>
+								{% if event.dateFin| date('Y-m-d H:i:s') < 'now'| date('Y-m-d H:i:s')  %}
+								<h1>Ended</h1>
+								{% elseif  event.datedebut| date('Y-m-d H:i:s') < 'now'| date('Y-m-d H:i:s') and 'now'| date('Y-m-d H:i:s') > event.dateFin| date('Y-m-d H:i:s')%}
+								<h1>En cours </h1>
+								{% else %}
+									{% if event.visibilite == "Public" %}
+										<a href="##" class="button h-button is-primary is-rounded h-modal-trigger is-disabled" data-modal="publish-{{ event.idEv }}">Publié</a>
+									{% else %}
+										<a href="##" class="button h-button is-primary is-rounded h-modal-trigger" data-modal="publish-{{ event.idEv }}">Publier</a>
+									{% endif %}
+								{% endif %}
 								</div>
 							</article>
 						</div>

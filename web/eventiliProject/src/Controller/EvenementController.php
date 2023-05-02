@@ -112,6 +112,7 @@ class EvenementController extends AbstractController
             'personne' => $personne,
             'sous' => $listSS,
             'firstimg' =>  $listimg,
+            'last' => $last,
         ]);
     }
 //ajout-----------------------------------------------------------------------------------------------
@@ -228,6 +229,7 @@ public function new(SessionInterface $session, ImagePersRepository $imagePersRep
         'errorMessage4' => $errorMessage4,
         'errorMessage5' => $errorMessage5,
         'personne' => $personne,
+        'last' => $last,
     ]);
 }
 
@@ -245,7 +247,18 @@ public function delete(FlashyNotifier $flashy, Request $request, Evenement $even
 
     return $this->redirectToRoute('app_evenement_index', [], Response::HTTP_SEE_OTHER);
 }
+//editVisibility----------------------------------------------------------------------------
+#[Route('/editVis/{id}', name: 'app_evenement_editVis', methods: ['GET', 'POST'])]
+public function editVisibility(Request $request, EvenementRepository $evenementRepository, $id): Response
+{
+    
+    $event = $evenementRepository->findOneBy(['idEv' =>$id]);
+    $event->setVisibilite("Public");
+    $evenementRepository->save($event, true);
 
+    return $this->redirectToRoute('app_evenement_index', [], Response::HTTP_SEE_OTHER);
+
+}
 //----------------------------------------------------------------------------
     #[Route('/{idEv}/edit', name: 'app_evenement_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Evenement $evenement, EvenementRepository $evenementRepository): Response
