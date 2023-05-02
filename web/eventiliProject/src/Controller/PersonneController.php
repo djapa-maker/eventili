@@ -264,7 +264,7 @@ $message->setBody($body, 'text/html');
         }
     }
     #[Route('/changep', name: 'app_personne_change', methods: ['GET', 'POST'])]
-    public function change(Request $request, ImagePersRepository $imagePersRepository, PersonneRepository $personneRepository, SessionInterface $session): Response
+    public function change(Request $request, ImagePersRepository $imagePersRepository, UserPasswordEncoderInterface $PasswordEncoder, PersonneRepository $personneRepository, SessionInterface $session): Response
     {
         $user = $session->get('id');
         $idPerss = $session->get('personne');
@@ -277,13 +277,19 @@ $message->setBody($body, 'text/html');
             $last = "account (1).png";
         }
         $mdp1 = $request->request->get('new_password');
-
+        
         $user1 = $personneRepository->findemm($user->getEmail(), $user->getMdp());
         if (!empty($mdp1)) {
             if ($user1 != null) {
 
-                $user->setMdp($mdp1);
-                $user1->setMdp($mdp1);
+                $user->setMdp($PasswordEncoder->encodePassword(
+                    $user,
+                    $mdp1
+                ));
+                $user1->setMdp($PasswordEncoder->encodePassword(
+                    $user1,
+                    $mdp1
+                ));
                 $session->set('id', $user1);
                 $personneRepository->update($user, true);
 
@@ -318,9 +324,7 @@ $message->setBody($body, 'text/html');
         if ($request->isMethod('POST')) {
             if (isset($_POST['g-recaptcha-response'])) {
                 $recaptcha = $_POST['g-recaptcha-response'];
-                if (!$recaptcha) {
-                    return $this->renderForm('templates_Front/personne/login.html.twig');
-                }
+                
                 $mdp = $request->request->get('mdp');
                 $email = $request->request->get('email');
                 $personne = new Personne();
@@ -337,13 +341,17 @@ $message->setBody($body, 'text/html');
                     $flashy->warning('email non vérifié');
                     return $this->renderForm('templates_front/personne/login.html.twig');
                 }
+                if (!$recaptcha) {
+                    $flashy->error('Cocher le reCAPTCHA');
+                    return $this->renderForm('templates_Front/personne/login.html.twig');
+                }
                 $date = new DateTime();
                 $personne->setDate($date);
                 $personneRepository->update($personne, true);
                 $session->set('id', $personne);
                 $session->set('personne', $personne->getIdPers());
                 if ($personne->getRole() != "admin")
-                    return $this->redirectToRoute('app_imagepers_affich', [], Response::HTTP_SEE_OTHER);
+                    return $this->redirectToRoute('app_event_affich', [], Response::HTTP_SEE_OTHER);
                 else
                     return $this->redirectToRoute('app_personne_index', [], Response::HTTP_SEE_OTHER);
             }

@@ -37,11 +37,11 @@ class ChangePasswordFormType extends AbstractType
                             
                         ]),
                     ],
-                    'label' => 'New password',
+                    'label' => 'Nouveau mot de passe',
                     
                 ],
                 'second_options' => [
-                    'label' => 'Repeat Password',
+                    'label' => 'Répéter le mot de passe',
                 ],
                 'invalid_message' => 'Les 2 mots de passe ne sont pas identiques.',
                 // Instead of being set onto the object directly,

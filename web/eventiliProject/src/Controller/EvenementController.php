@@ -24,6 +24,30 @@ use App\Repository\ImagessRepository;
 class EvenementController extends AbstractController
 {
 
+    #[Route('/event', name: 'app_event_affich', methods: ['GET'])]
+    public function affich(ImagePersRepository $imagePersRepository, SessionInterface $session): Response
+    {
+        $idPerss = $session->get('personne'); 
+        $personne = $session->get('id'); 
+        $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
+        $images = array_reverse($images);
+        if(!empty($images)){
+            $i= $images[0];
+            $last=$i->getLast();
+        }
+        else{
+            $last="account (1).png";
+        }
+        
+        return $this->render('templates_front/personne/eventsprofil.html.twig', [
+                'images' => $images,
+                'last' => $last,
+                'personne' => $personne,
+            ]);
+        
+
+       
+    }
 //affichage------------------------------------------------------------------------------------------------
     #[Route('/', name: 'app_evenement_index', methods: ['GET'])]
     public function index(

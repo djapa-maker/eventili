@@ -115,9 +115,7 @@
 
 	<!--Fieldset-->
 	<div class="fieldset">
-		<div class="fieldset-heading">
-			<h4>Role</h4>
-		</div>
+		<br>
 		<div
 			class="columns is-multiline">
 
@@ -126,7 +124,7 @@
 				<div class="field">
 					<div class="control">
 						<div class="h-select">
-							{{ form_widget(form.role, {'attr': {'class': 'select-box', 'placeholder': 'Mot de passe'}}) }}
+							{{ form_widget(form.role, {'attr': {'class': 'select-box', 'style': 'width: 337px;', 'placeholder': 'Mot de passe'}}) }}
 
 						</div>
 					</div>
@@ -143,11 +141,12 @@
 <div class="button-wrap has-help">
 											<div class="buttons">
 												<button style="height: 46px;
-    width: 140px;
-    margin-left: 6px;padding: 8px 22px;border-radius: 9999px;margin-left:21px;margin-top:-44px;margin-bottom:-93px;" id="save-button" type="submit" class="button h-button is-primary is-raised">{{ button_label|default('Suivant') }}</button>
+    width: 355px;
+    margin-left: 6px;padding: 8px 22px;margin-left:-4px;margin-top:-44px;margin-bottom:-93px;" id="save-button" type="submit" class="button h-button is-primary is-raised">{{ button_label|default('Suivant') }}</button>
 </div>
-<span style="margin-left:188px;">Ou
+<div style="margin-top: 60px;">
+<span style="margin-left:125px;">Ou
 												<a href="{{ path('app_personne_verif') }}">se connecter</a></span>
-
+</div>
 										</div>
 {{ form_end(form) }}

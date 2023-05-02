@@ -8,10 +8,9 @@
 		<meta http-equiv="x-ua-compatible" content="ie=edge">
 
 		<title>
-			Huro :: Login</title>
-		<link
-		rel="icon" type="image/png" href="../assets/img/favicon.png"/>
-
+			Evëntili :: Réinitialisation</title>
+ <link rel="icon" type="image/png" href="{{asset('assets/img/App-logo-dark.png')}}"/>
+	
 		<!--Core CSS -->
 		<link rel="stylesheet" href="../assets/css/app.css">
 		<link
@@ -54,8 +53,10 @@
 								<div class="hero-body">
 									<div class="container">
 										<div class="columns">
-											<div class="column">
-												<img class="hero-image" src="../assets/img/illustrations/login/station.svg" alt="">
+											<div style="    width: 529px;
+												    " class="column">
+												<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+												<lottie-player src="https://assets8.lottiefiles.com/packages/lf20_xlmz9xwm.json" background="transparent" speed="1" style="width: 529px;margin-left: 297px;" loop autoplay></lottie-player>
 											</div>
 										</div>
 									</div>
@@ -64,18 +65,18 @@
 						</div>
 						<div class="column is-4 is-relative">
 							<a class="top-logo" href="/">
-								<img class="light-image" src="../assets/img/logos/logo/logo.svg" alt="">
-								<img class="dark-image" src="../assets/img/logos/logo/logo-light.svg" alt="">
+							<img style="max-width: 136px;"class="light-image" src="../assets/img/logos/logo/logo.png" alt="">
+								<img style="max-width: 136px;" class="dark-image" src="../assets/img/logos/logo/logo.png" alt="">
 							</a>
 							<label class="dark-mode ml-auto">
 								<input type="checkbox" checked>
 								<span></span>
 							</label>
 							<div class="is-form">
-								<div class="hero-body">
+								<div style="padding: 7rem 1rem;" class="hero-body">
 									<div class="form-text">
-										<h2>Recover Account</h2>
-										<p>Reset le mot de passe.</p>
+										<h2>récupérer votre compte</h2>
+										<p>Réinitialiser le mot de passe.</p>
 									</div>
 
 {{ form_start(requestForm) }}

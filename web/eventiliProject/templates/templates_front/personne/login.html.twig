@@ -8,10 +8,9 @@
 		<meta http-equiv="x-ua-compatible" content="ie=edge">
 
 		<title>
-			Huro :: Login</title>
+			Evëntili :: Connexion</title>
 		<link
-		rel="icon" type="image/png" href="../assets/img/favicon.png"/>
-
+		rel="icon" type="image/png" href="{{asset('assets/img/App-logo-dark.png')}}"/>
 		<!--Core CSS -->
 		<link rel="stylesheet" href="../assets/css/app.css">
 		<link
@@ -24,9 +23,7 @@
 		<!--flashy!-->
 		<link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
 		<link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-		<link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet'>
-
-		<!--flashy!-->
+		<link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet'><!--flashy!-->
 		<!-- Fonts --><script src="//code.jquery.com/jquery.js"> </script>
 		<!-- Load Flashy default JavaScript -->
 		<script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
@@ -54,8 +51,10 @@
 								<div class="hero-body">
 									<div class="container">
 										<div class="columns">
-											<div class="column">
-												<img class="hero-image" src="../assets/img/illustrations/login/station.svg" alt="">
+											<div style="    width: 529px;
+												    " class="column">
+												<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+												<lottie-player src="https://assets8.lottiefiles.com/packages/lf20_xlmz9xwm.json" background="transparent" speed="1" style="width: 529px;margin-left: 297px;" loop autoplay></lottie-player>
 											</div>
 										</div>
 									</div>
@@ -64,8 +63,8 @@
 						</div>
 						<div class="column is-4 is-relative">
 							<a class="top-logo" href="/">
-								<img class="light-image" src="../assets/img/logos/logo/logo.svg" alt="">
-								<img class="dark-image" src="../assets/img/logos/logo/logo-light.svg" alt="">
+								<img style="max-width: 136px;" class="light-image" src="../assets/img/logos/logo/logo.png" alt="">
+								<img style="max-width: 136px;" class="dark-image" src="../assets/img/logos/logo/logo.png" alt="">
 							</a>
 							<label class="dark-mode ml-auto">
 								<input type="checkbox" checked>
@@ -81,7 +80,7 @@
 										<h2>Recover Account</h2>
 										<p>Reset your account password.</p>
 									</div>
-									<form id="login-form" method="POST" class="login-wrapper" action="{{ path('app_personne_verif') }}">
+									<form id="login-form" method="POST" style="padding: 30px 6px;" class="login-wrapper" action="{{ path('app_personne_verif') }}">
 										<div class="control has-validation">
 											<input name="email" type="text" class="input" placeholder="">
 											<small class="error-text">This is a required field</small>
@@ -108,7 +107,7 @@
 											</div>
 										</div>
 
-										<div class="control is-flex">
+										<div style="margin-left: -8px;" class="control is-flex">
 											<label class="remember-toggle">
 												<input type="checkbox">
 												<span class="toggler">
@@ -128,15 +127,18 @@
 										{{ include('@MercurySeriesFlashy/flashy.html.twig') }}
 										<div class="button-wrap has-help">
 											<div class="buttons">
-												<button style="margin-left:21px;margin-top:-74px;margin-bottom:-93px;" class="button h-button is-primary is-raised" onclick="window.location.href = '{{ path('app_personne_verif') }}';">Se connecter</button>
+												<button style=" width: 304px;margin-left: 2px;margin-top:-74px;margin-bottom:-93px;" class="button h-button is-primary is-raised" onclick="window.location.href = '{{ path('app_personne_verif') }}';">Se connecter</button>
 											</div>
-											<span>Ou
+										</div>
+										<div>
+											<span style="margin-left:97px;">
+												Ou
 												<a href="{{ path('app_personne_signin') }}">Créer</a>
 												un compte.</span>
 										</div>
 									</form>
 
-									
+
 								</div>
 							</div>
 						</div>
