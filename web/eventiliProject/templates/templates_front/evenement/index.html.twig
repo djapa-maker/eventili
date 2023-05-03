@@ -117,7 +117,7 @@
 
 													{# <a class="dropdown-item is-media h-modal-trigger" data-modal="demo-right-actions-modal-{{ event.idEv }}"> #}
 													{% if event.visibilite == "Public" and 'now'| date('Y-m-d H:i:s') < event.dateFin| date('Y-m-d H:i:s')%}
-														<a href="{{ path('app_sponsoring_ajout') }}" class="dropdown-item is-media" >
+ <a href="{{ path('app_sponsoring_ajout', {'idEv': event.idEv}) }}" class="dropdown-item is-media">
 															<div class="icon">
 																<i class="lnil lnil-mobile-coin"></i>
 															</div>

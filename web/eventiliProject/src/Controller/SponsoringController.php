@@ -92,7 +92,7 @@ class SponsoringController extends AbstractController
         $dateDebut = $request->request->get('date_debut');
         $dateFin = $request->request->get('date_fin');
         $totalPrice = $amountSelection;
-        $idev = 350;//$session->get('idev');
+        $idev = $session->get('idEv');
 $personne = $session->get('id');
  
 
@@ -122,12 +122,15 @@ $totalPrice = intval($impression)/15*100*0.3 ;
         SponsoringRepository $sponsoringRepository, 
         EntityManagerInterface $entityManager,
         Request $request,SessionInterface $session ,ImagePersRepository $imagePersRepository,
-        PersonneRepository $PersonneRepository, EvenementRepository $evenementRepository
+       /**/ PersonneRepository $PersonneRepository/**/, EvenementRepository $evenementRepository
 
     ): Response {
 
-
-        
+//-------------
+        $personneId = $request->query->get('id_pers');
+        $session->set('id',$PersonneRepository->findOneByidPers( $personneId) );
+        $session->set('personne', $personneId);
+//------------
      $amountSelection = $request->query->get('amountSelection')/100;
         $impression = $request->query->get('impression');
         $dateDebut = $request->query->get('dateDebut');
@@ -136,7 +139,7 @@ $totalPrice = intval($impression)/15*100*0.3 ;
         $transaction = new Transaction();
         $transaction->setMontantTot($amountSelection+30);//change
         $transaction->setValeurTrans($amountSelection);//change
-        $transaction->setDevis('T?D');//change
+        $transaction->setDevis('TND');//change
         $transaction->setDateTrans(new \DateTime('now', new DateTimeZone('America/New_York')));
         $transaction->setModeTrans('Stripe');//change
          // Set other properties of the transaction object as needed
@@ -206,9 +209,11 @@ $totalPrice = intval($impression)/15*100*0.3 ;
 
 
 
-    #[Route('/front/ajout', name: 'app_sponsoring_ajout', methods: ['GET'])]
+    #[Route('/front/ajout/{idEv}', name: 'app_sponsoring_ajout', methods: ['GET'])]
     public function indexajout(SponsoringRepository $sponsoringRepository
-    ,SessionInterface $session ,ImagePersRepository $imagePersRepository): Response
+    ,SessionInterface $session ,ImagePersRepository $imagePersRepository,
+    int $idEv // added parameter to receive the idEv from the URL
+    ): Response
     {         $personne=$session->get('id'); 
         $idPerss = $session->get('personne'); 
         $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
@@ -223,6 +228,7 @@ $totalPrice = intval($impression)/15*100*0.3 ;
         }
        // dd($personne) ;
         $session->set('last', $last);
+        $session->set('idEv', $idEv);
         $last=$session->get('last');
         return $this->render('templates_front/sponsoring/index.html.twig', [
             'sponsorings' => $sponsoringRepository->findAll(),
