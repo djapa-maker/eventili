@@ -22,45 +22,83 @@
     history.scrollRestoration = "manual";
     window.onload = scrollToBottom;
 </script>
-    <div class="columns is-multiline">
+    {% if reclamation.status == "cloturer" %}
+        <a class="button h-button is-primary is-outlined" href="{{ path('app_reclamation_user_index') }}">Retour</a>
+        <a class="button h-button is-dark is-outlined is-pulled-right is-disabled">Cloturé la Réclamation</a>
+    {% else %}
+        <form method="post" action="{{ path('app_reclamation_user_cloturer', {'idRec': reclamation.idRec}) }}">
+            <a class="button h-button is-primary is-outlined" href="{{ path('app_reclamation_user_index') }}">Retour</a>
+            <input type="hidden" name="_token" value="{{ csrf_token('cloturer' ~ reclamation.idRec) }}" />
+            <button class="button h-button is-dark is-outlined is-pulled-right" href="#">Cloturé la Réclamation</button>
+        </form>
+        {% endif %}
+    <div class="columns is-multiline mt-2">
         <div class="s-card-advanced column is-12">
-            <div class="card-head has-text-centered is-align-content-center text-center">
+            <div class="card-head has-text-centered is-align-content-center text-center is-justify-content-center">
                 <p class="title is-center text-center">{{ reclamation.titre }}</p>
             </div>
             <div class="card-body">
                 <div class="s-card-advanced">
                     <div class="card-body">
-                        <div class="columns is-multiline">
-                            <div class="column is-3">
-
+                        <div class="columns is-multiline is-row">
+                            <div class="column is-2">
+                                <img src="{{ asset('images/' ~ last) }}" class="is-rounded" width="80" height="80"/>
+                                <h5><h6 class="is-text is-dark is-pulled-left">{{ reclamation.userid.nomPers }} {{ reclamation.userid.prenomPers }}</h6></h5>
+                                <p class="is-pulled-right">{{ date }}</p>
+                            </div>
+                            <div class="column is-1" style="background-color: grey; width: 1px; padding: 0;"></div>
+                            <div class="column is-9">
+                                <h6>{{ reclamation.description }}</h6>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="card-foot">
+                {% for rep in reps %}
+                <div class="s-card-advanced mt-1 mb-1">
+                    <div class="card-body">
+                        <a class="button h-button is-rounded is-outlined is-info is-pulled-right" href="{{ path('app_reclamation_modifierMessage_user', {'idRep': rep.idRep}) }}">...</a>
+                        <div class="columns is-multiline is-row">
+                            <div class="column is-2">
+                                {% if rep.senderid.idPers == uid %}
+                                    <img src="{{ asset('images/' ~ last) }}" class="is-rounded" width="80" height="80"/>
+                                {% else %}
+                                    <img src="{{ asset('images/' ~ clientImg) }}" class="is-rounded" width="80" height="80" />
+                                {% endif %}
+                                <h5><h6 class="is-text is-dark is-pulled-left">{{ rep.senderid.nomPers }} {{ rep.senderid.prenomPers }}</h6></h5>
+                                <p class="is-pulled-right">{{ rep.timestamp|date('d/m/y H:i') }}</p>
+                            </div>
+                            <div class="column is-1" style="background-color: grey; width: 1px; padding: 0;"></div>
+                            <div class="column is-9">
+                                <h6>{{ rep.message }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            <div class="card-foot columns">
                 {% if reclamation.status == "cloturer" %}
                     <form method="post" class="row gap-1">
                         <div class="col-9">
-                            <input type="text" class="control input is-12 is-rounded is-disabled" style="width: 75%" disabled/>
+                            <input type="text" class="control input is-12 is-rounded is-disabled" style="width: 90vh;" value="Send Message" disabled/>
                         </div>
                         <div class="col-2">
                             <button class="button h-button is-success is-outlined is-disabled">Envoyé</button>
                         </div>
                     </form>
                 {% else %}
-                    <div class="is-flex i">
-                    {{ form_start(form) }}
-                    {{ form_widget(form._token) }}
-                    <div class="column is-9">
-                        {{ form_row(form.message,{ 'attr' : { 'class' : 'control input is-12 is-rounded' }}) }}
-                    </div>
-                    <div class="column is-2">
-                        <button class="button h-button is-success is-outlined is-pulled-left">Envoyé</button>
-                    </div>
+                    {{ form_start(form, {'attr' : {'class' : 'is-row columns'} })}}
+                        <div class="field column is-9">
+                            <div class="control">
+                                {{ form_row(form.message,{ 'attr' : { 'class' : 'input is-rounded', 'style' : 'width: 90vh;' }}) }}
+                            </div>
+                        </div>
+                        <div class="field column is-2">
+                            <div class="control">
+                            <button class="button h-button is-success is-outlined">Envoyé</button>
+                            </div>
+                        </div>
                     {{ form_widget(form.captcha) }}
                     {{ form_end(form) }}
-                    </div>
                 {% endif %}
             </div>
         </div>

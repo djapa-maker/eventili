@@ -1,8 +1,8 @@
 {% extends 'baseFront.html.twig'%}
 {% block content %}
     <a class="button h-button is-success is-bold is-outlined m-2" href="{{ path('app_reclamation_ajouter') }}">Nouvelle Réclamation</a>
-    <div class="page-content-inner" style="margin-top: 2%;">
-            <div class="columns is-multiline is-grouped-multiline">
+    <div class="s-card-advanced" style="margin-top: 2%;">
+            <div class="card-body columns is-multiline is-grouped-multiline">
                 {% for reclamation in reclamations %}
                 {% if reclamation.userid.idPers == uid %}
             <div class="s-card-advanced column is-3">
