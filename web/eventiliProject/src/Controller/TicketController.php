@@ -6,6 +6,8 @@ use App\Entity\Ticket;
 use App\Form\TicketType;
 
 use App\Repository\EvenementRepository;
+use App\Repository\ImagePersRepository;
+use App\Repository\PersonneRepository;
 use App\Repository\TicketRepository;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -17,8 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
-
-
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 #[Route('/ticket')]
 class TicketController extends AbstractController
@@ -26,6 +27,7 @@ class TicketController extends AbstractController
     private $tabserv;
     public function __construct(TicketRepository $ticketRepository)
     {
+        
         $tikets=$ticketRepository->findAll();
         $tiketsArray = array_map(function ($tikets) {
             return [
@@ -66,11 +68,23 @@ class TicketController extends AbstractController
     } 
 */
     #[Route('/statistic',name: 'app_ticket_statistic_index')]
-public function statAdmin(Request $request,TicketRepository $repo){
+public function statAdmin(Request $request,TicketRepository $repo  ,
+ImagePersRepository $imagePersRepository, PersonneRepository $personneRepository, SessionInterface $session){
+    $personne = $session->get('id');
+    $idPerss = $session->get('personne');
+    $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
+    $images = array_reverse($images);
+
+    if (!empty($images)) {
+        $i = $images[0];
+        $last = $i->getLast();
+    } else {
+        $last = "account (1).png";
+    }
+    $session->set('last', $last);
+    $last = $session->get('last');
+    
     $nboffre[]=Array();
-
-
-
 
     $e2=$repo->findByStatuss("Active");
     dump($e2);
@@ -94,14 +108,32 @@ public function statAdmin(Request $request,TicketRepository $repo){
 
 return $this->render('templates_back/ticket/statistic.html.twig',[
     'nboffre' => json_encode($nbrss),
+    'personne' => $personne,
+                    'last' => $last,
  
  
 
 ]);
 }
 #[Route('/', name: 'app_ticket_index', methods: ['GET','POST'])]
-public function index(EntityManagerInterface $entityManager,Request $request, TicketRepository $ticketRepository): Response
-{ $tickets = $entityManager
+public function index(EntityManagerInterface $entityManager,Request $request, TicketRepository $ticketRepository ,
+ImagePersRepository $imagePersRepository, PersonneRepository $personneRepository, SessionInterface $session): Response
+{ 
+    $personne = $session->get('id');
+    $idPerss = $session->get('personne');
+    $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
+    $images = array_reverse($images);
+
+    if (!empty($images)) {
+        $i = $images[0];
+        $last = $i->getLast();
+    } else {
+        $last = "account (1).png";
+    }
+    $session->set('last', $last);
+    $last = $session->get('last');
+    
+    $tickets = $entityManager
     ->getRepository(Ticket::class)
     ->findAll();
       /////////
@@ -149,6 +181,9 @@ public function index(EntityManagerInterface $entityManager,Request $request, Ti
       }
       return $this->render('templates_back/ticket/index.html.twig', [
         'tickets' => $tickets,
+       
+                    'personne' => $personne,
+                    'last' => $last,
     ]);
 }
 
@@ -195,8 +230,23 @@ public function search(Request $request): JsonResponse
 
 /******************************************************************************************** */
         #[Route('/new', name: 'app_ticket_new', methods: ['GET', 'POST'])]
-        public function new(Request $request, EntityManagerInterface $entityManager): Response
+        public function new(Request $request, EntityManagerInterface $entityManager ,
+        ImagePersRepository $imagePersRepository, PersonneRepository $personneRepository, SessionInterface $session): Response
         {
+            $personne = $session->get('id');
+            $idPerss = $session->get('personne');
+            $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
+            $images = array_reverse($images);
+        
+            if (!empty($images)) {
+                $i = $images[0];
+                $last = $i->getLast();
+            } else {
+                $last = "account (1).png";
+            }
+            $session->set('last', $last);
+            $last = $session->get('last');
+
             $ticket = new Ticket();
             $form = $this->createForm(TicketType::class, $ticket);
             $form->handleRequest($request);
@@ -211,20 +261,56 @@ public function search(Request $request): JsonResponse
             return $this->renderForm('templates_back/ticket/new.html.twig', [
                 'ticket' => $ticket,
                 'form' => $form,
+                'personne' => $personne,
+                    'last' => $last,
             ]);
         }
     
         #[Route('/{idTick}', name: 'app_ticket_show', methods: ['GET'])]
-        public function show(Ticket $ticket): Response
+        public function show(Ticket $ticket ,
+        ImagePersRepository $imagePersRepository, PersonneRepository $personneRepository, SessionInterface $session): Response
         {
+            $personne = $session->get('id');
+            $idPerss = $session->get('personne');
+            $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
+            $images = array_reverse($images);
+        
+            if (!empty($images)) {
+                $i = $images[0];
+                $last = $i->getLast();
+            } else {
+                $last = "account (1).png";
+            }
+            $session->set('last', $last);
+            $last = $session->get('last');
+
             return $this->render('templates_back/ticket/show.html.twig', [
                 'ticket' => $ticket,
+                'personne' => $personne,
+                'last' => $last,
             ]);
         }
     
         #[Route('/{idTick}/edit', name: 'app_ticket_edit', methods: ['GET', 'POST'])]
-        public function edit(Request $request, Ticket $ticket, EntityManagerInterface $entityManager): Response
+        public function edit(Request $request, Ticket $ticket, EntityManagerInterface $entityManager ,
+        ImagePersRepository $imagePersRepository, PersonneRepository $personneRepository, SessionInterface $session): Response
         {
+
+            $personne = $session->get('id');
+            $idPerss = $session->get('personne');
+            $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
+            $images = array_reverse($images);
+        
+            if (!empty($images)) {
+                $i = $images[0];
+                $last = $i->getLast();
+            } else {
+                $last = "account (1).png";
+            }
+            $session->set('last', $last);
+            $last = $session->get('last');
+
+            
             $form = $this->createForm(TicketType::class, $ticket);
             $form->handleRequest($request);
     
@@ -237,6 +323,8 @@ public function search(Request $request): JsonResponse
             return $this->renderForm('templates_back/ticket/edit.html.twig', [
                 'ticket' => $ticket,
                 'form' => $form,
+                'personne' => $personne,
+                'last' => $last,
             ]);
         }
     
