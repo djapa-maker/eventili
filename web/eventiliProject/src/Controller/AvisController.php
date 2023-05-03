@@ -86,6 +86,16 @@ class AvisController extends AbstractController
         $avi->setDate(new DateTime());
         if ($form->isSubmitted() && $form->isValid()) {
             $avisRepository->save($avi, true);
+            $AviSS = $avisRepository->findByIdService($idService);
+            $ToutAvis = $avisRepository->findAll();
+            $ratingsum = 0;
+            foreach ($AviSS as $a) {
+                $ratingsum += $a->getRating();
+                $res = $ratingsum / count($ToutAvis);
+                $ss = $SousserviceRepository->findOneById($idService);
+                $ss->setNote($res);
+                $SousserviceRepository->save($ss,true);
+            }
 
             return $this->redirectToRoute('app_evenement_index', [], Response::HTTP_SEE_OTHER);
         }
