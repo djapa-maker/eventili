@@ -55,25 +55,25 @@
 											<div class="radio-pill">
 												<input type="radio" name="amount_selection" checked>
 												<div class="radio-pill-inner">
-													<span>$20</span>
+													<span>20 DT</span>
 												</div>
 											</div>
 											<div class="radio-pill">
 												<input type="radio" name="amount_selection">
 												<div class="radio-pill-inner">
-													<span>$40</span>
+													<span>40 DT</span>
 												</div>
 											</div>
 											<div class="radio-pill">
 												<input type="radio" name="amount_selection">
 												<div class="radio-pill-inner">
-													<span>$60</span>
+													<span>60  DT</span>
 												</div>
 											</div>
 											<div class="radio-pill">
 												<input type="radio" name="amount_selection">
 												<div class="radio-pill-inner">
-													<span>$100</span>
+													<span>100 DT</span>
 												</div>
 											</div>
 										</div>
@@ -164,7 +164,7 @@ const amountLabel = document.getElementById('amount-label'); // add this line
 
 radioPills.forEach((radio, index) => {
 radio.addEventListener('change', () => {
-let amount = amountSpans[index].textContent.replace('$', '');
+let amount = amountSpans[index].textContent.replace('DT', '');
 customAmountInput.value = amount * 15;
 amountLabel.value = amount; // add this line
 });
