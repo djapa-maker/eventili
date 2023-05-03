@@ -15,9 +15,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Evenement
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
+    #[ORM\Column(name: "id_ev", type: "integer")]
     private ?int $idEv = null;
+ 
 
 
     #[ORM\Column]

@@ -81,6 +81,9 @@
 				<td style="font-weight: bold;border-bottom: 1px solid #e6e6e6;padding: 10px;
 						    text-align: center;
 						    border: none;">{{servicesTotal}}
+						    {% set session = app.session %}
+    {% set _ = session.set('totalPrice', servicesTotal) %}
+ 
 					DT</td>
 			</tr>
 

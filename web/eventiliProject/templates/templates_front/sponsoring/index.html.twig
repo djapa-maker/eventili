@@ -1,0 +1,192 @@
+
+{% extends 'baseFront.html.twig'%}
+{% block title %}
+	<title>Mes événements</title>
+{% endblock %}
+{% block naver %}
+	<div class="naver" style="top:-90px;"></div>
+{% endblock %}
+{% block PageTitle %}
+	<div class="title-wrap">
+		<h1 class="title is-4">Mes événements</h1>
+	</div>
+{% endblock %}
+{% block content %}
+<div class="page-content is-relative">
+
+ 
+	<form method="POST" action="{{ path('ssssssss') }}">
+
+		<div
+			class="page-content-inner">
+
+			<!--Form Layout 2-->
+			<div class="form-layout is-split">
+				<div class="form-outer">
+					<div class="form-header stuck-header">
+						<div class="form-header-inner">
+							<div class="left">
+								<h3>Sponsorisation</h3>
+							</div>
+							<div class="right">
+								<div class="buttons">
+									<a href="#" class="button h-button is-light is-dark-outlined">
+										<span class="icon">
+											<i class="lnir lnir-arrow-left rem-100"></i>
+										</span>
+										<span>Annuler</span>
+									</a>
+
+									<button id="save-button" class="button h-button is-primary is-raised" disabled>payement</button>
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-body">
+						<div class="form-section">
+							<div class="left">
+								<h3 class="has-text-centered">Choisissez un montant</h3>
+
+								<div class="field">
+									<div class="control">
+										<div class="radio-pills">
+											<div class="radio-pill">
+												<input type="radio" name="amount_selection" checked>
+												<div class="radio-pill-inner">
+													<span>$20</span>
+												</div>
+											</div>
+											<div class="radio-pill">
+												<input type="radio" name="amount_selection">
+												<div class="radio-pill-inner">
+													<span>$40</span>
+												</div>
+											</div>
+											<div class="radio-pill">
+												<input type="radio" name="amount_selection">
+												<div class="radio-pill-inner">
+													<span>$60</span>
+												</div>
+											</div>
+											<div class="radio-pill">
+												<input type="radio" name="amount_selection">
+												<div class="radio-pill-inner">
+													<span>$100</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="right">
+								<h3 class="has-text-centered">nombre d'impression</h3>
+								<div class="field">
+									<div class="control has-icon">
+<input type="hidden" name="amount-label" id="amount-label" value="50">
+
+										<input name="impression" id="custom-amount-input" class="input custom-amount-input" placeholder="Amount..." value="50">
+										<div class="form-icon">
+											<i data-feather=""></i>
+										</div>
+									</div>
+								</div>
+							</div>
+							<style>
+								.form-section {
+									display: flex;
+									justify-content: center;
+									align-items: center;
+									border-right: none;
+									margin: 0;
+									padding: 0;
+								}
+								.title {
+									display: flex;
+									justify-content: center;
+									align-items: center;
+									height: -10px; /* set a fixed height to center the text vertically */
+								}
+								.title h3 {
+									margin: 0; /* remove any margin */
+								}
+							</style>
+
+						</div>
+						<div class="form-section is-grey">
+							<div class=" ">
+								<div class="title">
+									<h3>Choisissez la durée</h3>
+								</div>
+
+								<div class="field">
+									<div class="field">
+										<div class="control has-icon">
+											<input id="date-debut-input" name="date_debut" class="input" type="date" placeholder="Date debut *">
+											<div class="form-icon">
+												<i data-feather="user"></i>
+											</div>
+										</div>
+									</div>
+									<div class="field">
+										<div class="control has-icon">
+											<input id="date-fin-input" name="date_fin" class="input" type="date" placeholder="Date fin *">
+											<div class="form-icon">
+												<i data-feather="user"></i>
+											</div>
+										</div>
+									</div>
+									<p id="warning-message" style="display: none; color: red;">Please select a valid date range</p>
+
+								</div>
+
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</form>
+ <style>
+.custom-amount-input {
+	text-align: center;
+}</style><!-- Charts js --><!--Forms--><!--Wizard--><!-- Layouts js --></body></html><script>
+const customAmountInput = document.getElementById('custom-amount-input');
+const radioPills = document.querySelectorAll('.radio-pill');
+const amountSpans = document.querySelectorAll('.radio-pill-inner span');
+const amountLabel = document.getElementById('amount-label'); // add this line
+
+radioPills.forEach((radio, index) => {
+radio.addEventListener('change', () => {
+let amount = amountSpans[index].textContent.replace('$', '');
+customAmountInput.value = amount * 15;
+amountLabel.value = amount; // add this line
+});
+});
+const debutInput = document.getElementById("date-debut-input");
+const finInput = document.getElementById("date-fin-input");
+const saveButton = document.getElementById("save-button");
+const warningMessage = document.getElementById("warning-message");
+
+debutInput.addEventListener("change", validateDates);
+finInput.addEventListener("change", validateDates);
+
+function validateDates() {
+const debutDate = new Date(debutInput.value);
+const finDate = new Date(finInput.value);
+
+if (debutDate >= new Date() && debutDate <= finDate) {
+saveButton.disabled = false;
+warningMessage.style.display = "none";
+} else {
+saveButton.disabled = true;
+warningMessage.style.display = "block";
+}
+}</script>
+{% endblock %}

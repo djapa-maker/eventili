@@ -1,0 +1,143 @@
+<style>
+
+ 
+ 
+     .btn-danger, .btn-secondary {
+        background-color: green;
+    }
+ 
+ 
+.custom-datepicker {
+background-color: #f7f7f7;
+border: 1px solid #e8e8e8;
+border-radius: 4px;
+padding: 10px;
+font-size: 14px;
+color: #555;
+box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+}
+ 
+
+ 
+
+</style>
+{{ form_start(form, {'attr': {'class': 'was-validated', 'novalidate': 'novalidate'}}) }}
+<div style="display: flex; justify-content: center;">
+    <table style="width: 50%; margin-top: 50px; border-collapse: collapse; box-shadow: 0 0 10px rgba(0,0,0,0.3);">
+        <tbody>
+            <tr>
+                <td style="padding: 10px; text-align: left;">Valeur:</td>
+                <td style="padding: 10px;">
+                    {{ form_row(form.valeur_trans, {
+                        'attr': {
+                            'class': 'form-control',
+                            'placeholder': 'Enter the value of the transaction'
+                        },
+                    }) }}
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; text-align: left;">Devise:</td>
+                <td style="padding: 10px;">
+                    {{ form_widget(form.devis, {
+                        'attr': {
+                            'class': 'form-control'
+                        }
+                    }) }}
+                </td>
+            </tr>
+<tr>
+    <td style="padding: 10px; text-align: left;">Date :</td>
+    <td style="padding: 10px;">
+        {{ form_widget(form.date_trans, {
+            'attr': {
+                'class': 'form-control custom-datepicker',
+                'data-provide': 'datepicker'
+            }
+        }) }} 
+    </td>
+</tr>
+            <tr>
+                <td style="padding: 10px; text-align: left;">Méthode de paiement:</td>
+                <td style="padding: 10px;">
+                    {{ form_widget(form.mode_trans, {
+                        'attr': {
+                            'class': 'form-control'
+                        }
+                    }) }}
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; text-align: left;">Montant total:</td>
+                <td style="padding: 10px;">
+                    {{ form_row(form.montant_tot, {
+                        'attr': {
+                            'class': 'form-control',
+                            'placeholder': 'Enter the total amount'
+                        }
+                    }) }}
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; text-align: left;">ID:</td>
+                <td style="padding: 10px;">
+                    {{ form_row(form.user_id, {
+                        'attr': {
+                            'class': 'form-control',
+                            'placeholder': 'Enter the user ID'
+                        }
+                    }) }}
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 10px;"></td>
+                <td style="padding: 10px;">
+<form method="post" action="{{ path('app_transaction_new') }}">
+    <table style="width: 50%; margin-top: 50px; border-collapse: collapse; box-shadow: 0 0 10px rgba(0,0,0,0.3);">
+        <tbody>
+           
+            <tr>
+                <td style="padding: 10px;">
+   <button type="submit" id="submit-button" disabled style="border-radius:10px;color:white;background-color:#aeb8ff;border-color:#aeb8ff;font-size:19px; display: block; margin: 20px auto;" class="btn btn-danger btn-secondary">{{ button_label|default('sauvgarde') }}</button>
+             
+                </td>
+
+
+            </tr>
+        </tbody>
+    </table>
+</form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+ 
+</div>
+{{ form_end(form) }}
+<script>
+const inputs = document.querySelectorAll('input[required]');
+const submitBtn = document.querySelector('#submit-button');
+
+inputs.forEach(input => {
+  input.addEventListener('input', () => {
+    let allFilled = true;
+    let isValid = true; // add this variable to track if input is valid
+    inputs.forEach(input => {
+      if (input.value.trim() === '') {
+        allFilled = false;
+      }
+      if (input === document.getElementById('{{ form.valeur_trans.vars.id }}') || input === document.getElementById('{{ form.montant_tot.vars.id }}')) {
+        if (!Number.isInteger(Number(input.value))) {
+          isValid = false;
+        }
+      }
+    });
+    if (allFilled && isValid) { // check if all fields are filled and valid
+      submitBtn.removeAttribute('disabled');
+    } else {
+      submitBtn.setAttribute('disabled', 'disabled');
+    }
+  });
+});
+
+</script>

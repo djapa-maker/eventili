@@ -2,128 +2,124 @@
 
 namespace App\Entity;
 
+use App\Entity\Transaction;
+use App\Repository\SponsoringRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * Sponsoring
- *
- * @ORM\Table(name="sponsoring", indexes={@ORM\Index(name="fk_sponso", columns={"id_trans"}), @ORM\Index(name="fk_eve", columns={"id_event"})})
- * @ORM\Entity
- */
+#[ORM\Entity(repositoryClass: SponsoringRepository::class)]
 class Sponsoring
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_sponso", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idSponso;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(name:'id_sponso')]  
+    private ?int $id_sponso  = null;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="date_debut", type="date", nullable=false)
-     */
-    private $dateDebut;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $date_debut = null;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="date_fin", type="date", nullable=false)
-     */
-    private $dateFin;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $date_fin = null;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="nombre_impression", type="integer", nullable=false)
-     */
-    private $nombreImpression;
+    #[ORM\Column]
+    private ?int $nombre_impression = null;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_trans", type="integer", nullable=false)
-     */
-    private $idTrans;
+ 
+    #[ORM\ManyToOne(targetEntity: Transaction::class)]
+    #[ORM\JoinColumn(name: 'id_trans', referencedColumnName: 'id_trans', nullable: false)]
+    private ?Transaction $id_trans = null;
 
-    /**
-     * @var \Evenement
-     *
-     * @ORM\ManyToOne(targetEntity="Evenement")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_event", referencedColumnName="id_ev")
-     * })
-     */
-    private $idEvent;
+    #[ORM\ManyToOne(targetEntity: Evenement::class)]
+    #[ORM\JoinColumn(name: 'id_event', referencedColumnName: 'id_ev', nullable: false)] 
+    private ?Evenement $id_event = null;
 
-    public function getIdSponso(): ?int
-    {
-        return $this->idSponso;
-    }
+ 
 
     public function getDateDebut(): ?\DateTimeInterface
     {
-        return $this->dateDebut;
+        return $this->date_debut;
     }
 
-    public function setDateDebut(\DateTimeInterface $dateDebut): self
+    public function setDateDebut(\DateTimeInterface $date_debut): self
     {
-        $this->dateDebut = $dateDebut;
+        $this->date_debut = $date_debut;
 
         return $this;
     }
 
     public function getDateFin(): ?\DateTimeInterface
     {
-        return $this->dateFin;
+        return $this->date_fin;
     }
 
-    public function setDateFin(\DateTimeInterface $dateFin): self
+    public function setDateFin(\DateTimeInterface $date_fin): self
     {
-        $this->dateFin = $dateFin;
+        $this->date_fin = $date_fin;
 
         return $this;
     }
 
     public function getNombreImpression(): ?int
     {
-        return $this->nombreImpression;
+        return $this->nombre_impression;
     }
 
-    public function setNombreImpression(int $nombreImpression): self
+    public function setNombreImpression(int $nombre_impression): self
     {
-        $this->nombreImpression = $nombreImpression;
+        $this->nombre_impression = $nombre_impression;
 
         return $this;
     }
-
-    public function getIdTrans(): ?int
-    {
-        return $this->idTrans;
-    }
-
-    public function setIdTrans(int $idTrans): self
-    {
-        $this->idTrans = $idTrans;
-
-        return $this;
-    }
+ 
+ 
 
     public function getIdEvent(): ?Evenement
     {
-        return $this->idEvent;
+        return $this->id_event;
     }
 
-    public function setIdEvent(?Evenement $idEvent): self
+    public function setIdEvent(Evenement $id_event): self
     {
-        $this->idEvent = $idEvent;
+        $this->id_event = $id_event;
 
         return $this;
     }
 
+ 
+ 
 
+	/**
+	 * @return Transaction|null
+	 */
+	public function getId_trans(): ?Transaction {
+         		return $this->id_trans;
+         	}
+	
+	/**
+	 * @param Transaction|null $id_trans 
+	 * @return self
+	 */
+	public function setId_trans(? Transaction $id_trans): self {
+         		$this->id_trans = $id_trans;
+         		return $this;
+         	}
+
+ 
+    public function getIdSponso(): ?int
+{
+    return $this->id_sponso;
+}
+
+
+    public function getIdTrans(): ?Transaction
+    {
+        return $this->id_trans;
+    }
+
+    public function setIdTrans(?Transaction $id_trans): self
+    {
+        $this->id_trans = $id_trans;
+
+        return $this;
+    }
 }

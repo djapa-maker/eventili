@@ -56,10 +56,10 @@
 			</div>
 			<div class="modal-card-foot is-centered">
 				<a class="button h-button is-rounded h-modal-close">Annuler</a>
-				{# <form method="post" action="{{ path('app_evenement_delete', {'idEv': event.idEv}) }}" class="dropdown-item is-media">
-													<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ event.idEv) }}">
-													<button type="submit" style="background-color:#ff8601;color:white" class="button h-button is-raised is-rounded">Confirmer</button>
-												</form> #}
+<form method="post" action="{{ path('app_evenement_editVis', {'id': event.idEv}) }}" class="dropdown-item is-media">
+					{# <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ event.idEv) }}"> #}
+					<button type="submit" style="background-color:#ff8601;color:white" class="button h-button is-raised is-rounded">Confirmer</button>
+				</form>
 			</div>
 		</div>
 	</div>

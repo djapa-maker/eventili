@@ -1,0 +1,17 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block title %}Nouveaux Sponsoring{% endblock %}
+
+{% block content %}
+    <h1 style="color:#aeb8ff">Creation nouvelle Sponsorisation</h1>
+
+    {{ include('/templates_back/sponsoring/_form.html.twig') }}
+<br>
+        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js">
+        </script>
+		<lottie-player src="https://assets1.lottiefiles.com/packages/lf20_ud6csclv.json" background="transparent" speed="1" style="width: 400px; height: 400px;" loop autoplay>
+    </lottie-player>
+		
+    <a style="margin-left: 200%;color:grey;margin-top:10%" href="{{ path('app_sponsoring_index') }}">Retour</a>
+{% endblock %}
+ 

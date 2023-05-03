@@ -2,84 +2,63 @@
 
 namespace App\Entity;
 
+use App\Repository\TransactionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * Transaction
- *
- * @ORM\Table(name="transaction", indexes={@ORM\Index(name="fk_trans", columns={"userID"})})
- * @ORM\Entity
- */
+#[ORM\Entity(repositoryClass: TransactionRepository::class)]
 class Transaction
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_trans", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idTrans;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(name: 'id_trans', type: 'integer')]
+    private ?int $id_trans = null;
+    #[ORM\Column]
+    #[Assert\NotBlank(message: 'Merci de remplir la valeur du transaction')]
+    #[Assert\NotNull(message: 'Merci de remplir la valeur du transaction')]
+    private ?float $valeur_trans = null;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="valeur_trans", type="float", precision=10, scale=0, nullable=false)
-     */
-    private $valeurTrans;
+    #[ORM\Column(columnDefinition: "ENUM('USD', 'EUR', 'JPY', 'GBP', 'CHF', 'CAD', 'AUD', 'NZD')", nullable: true)]
+    private ?string $devis = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="devis", type="string", length=0, nullable=false)
-     */
-    private $devis;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $date_trans = null;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="date_trans", type="date", nullable=false)
-     */
-    private $dateTrans;
+    #[ORM\Column(columnDefinition: "ENUM('Square', 'Stripe', 'Amazon Pay', 'Google Pay')", nullable: true)]
+    private ?string $mode_trans = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="mode_trans", type="string", length=0, nullable=false)
-     */
-    private $modeTrans;
+    #[ORM\Column]
+    private ?float $montant_tot = null;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="montant_tot", type="float", precision=10, scale=0, nullable=false)
-     */
-    private $montantTot;
-
-    /**
-     * @var \Personne
-     *
-     * @ORM\ManyToOne(targetEntity="Personne")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="userID", referencedColumnName="id_pers")
-     * })
-     */
-    private $userid;
-
+  //  #[ORM\ManyToOne(targetEntity: Personne::class)]
+   // #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id_pers', nullable: false)]
+   // private ?Personne $user_id = null;
+  
+   #[ORM\ManyToOne(targetEntity: Personne::class)]
+   #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id_pers', nullable: false)]
+   private ?Personne $user_id = null;
+ 
     public function getIdTrans(): ?int
     {
-        return $this->idTrans;
+        return $this->id_trans;
+    }
+
+    public function setIdTrans(int $id_trans): self
+    {
+        $this->id_trans = $id_trans;
+
+        return $this;
     }
 
     public function getValeurTrans(): ?float
     {
-        return $this->valeurTrans;
+        return $this->valeur_trans;
     }
 
-    public function setValeurTrans(float $valeurTrans): self
+    public function setValeurTrans(float $valeur_trans): self
     {
-        $this->valeurTrans = $valeurTrans;
+        $this->valeur_trans = $valeur_trans;
 
         return $this;
     }
@@ -98,51 +77,88 @@ class Transaction
 
     public function getDateTrans(): ?\DateTimeInterface
     {
-        return $this->dateTrans;
+        return $this->date_trans;
     }
 
-    public function setDateTrans(\DateTimeInterface $dateTrans): self
+    public function setDateTrans(\DateTimeInterface $date_trans): self
     {
-        $this->dateTrans = $dateTrans;
+        $this->date_trans = $date_trans;
 
         return $this;
     }
 
     public function getModeTrans(): ?string
     {
-        return $this->modeTrans;
+        return $this->mode_trans;
     }
 
-    public function setModeTrans(string $modeTrans): self
+    public function setModeTrans(string $mode_trans): self
     {
-        $this->modeTrans = $modeTrans;
+        $this->mode_trans = $mode_trans;
 
         return $this;
     }
 
     public function getMontantTot(): ?float
     {
-        return $this->montantTot;
+        return $this->montant_tot;
     }
 
-    public function setMontantTot(float $montantTot): self
+    public function setMontantTot(float $montant_tot): self
     {
-        $this->montantTot = $montantTot;
-
-        return $this;
-    }
-
-    public function getUserid(): ?Personne
-    {
-        return $this->userid;
-    }
-
-    public function setUserid(?Personne $userid): self
-    {
-        $this->userid = $userid;
+        $this->montant_tot = $montant_tot;
 
         return $this;
     }
 
 
+
+    /**
+     * @return float|null
+     */
+    public function getMontant_tot(): ?float
+    {
+        return $this->montant_tot;
+    }
+
+    /**
+     * @param float|null $montant_tot 
+     * @return self
+     */
+    public function setMontant_tot(?float $montant_tot): self
+    {
+        $this->montant_tot = $montant_tot;
+        return $this;
+    }
+public function __toString(): string
+{
+    return (string) $this->getIdTrans();
 }
+
+    
+
+	/**
+	 * @return int|null
+	 */
+	public function getId_trans(): ?int {
+		return $this->id_trans;
+	}
+	
+ 
+
+  
+ 
+
+    public function getUserId(): ?Personne
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(?Personne $user_id): self
+    {
+        $this->user_id = $user_id;
+
+        return $this;
+    }
+}
+?>

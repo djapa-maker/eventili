@@ -1,0 +1,366 @@
+
+{% extends 'baseAdmin.html.twig'%}
+
+{% block content %}
+
+	{# {% include 'baseAdmin.html.twig' %} #}
+
+	<!--breadcrumb-->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js%22%3E"</script>
+<script>
+$(document).ready(function() {
+  $('th').click(function() {
+    var table = $(this).parents('table').eq(0)
+    var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+    this.asc = !this.asc
+    if (!this.asc) { rows = rows.reverse() }
+    for (var i = 0; i < rows.length; i++) { table.append(rows[i]) }
+  })
+})
+
+function comparer(index) {
+  return function(a, b) {
+    var valA = getCellValue(a, index), valB = getCellValue(b, index)
+    return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB)
+  }
+}
+
+function getCellValue(row, index){ return $(row).children('td').eq(index).text() }
+</script>
+<script>
+$(document).ready(function() {
+  $('#searchInput').keyup(function() {
+    var searchText = $(this).val().toLowerCase();
+    $('table tbody tr').each(function() {
+      var rowText = $(this).text().toLowerCase();
+
+      if (rowText.includes(searchText)) {
+        $(this).show();
+      } else {
+        $(this).hide();
+      }
+    });
+  });
+});
+</script>
+<div class="   ">
+  <div class="breadcrumb-title pe-3">Tableaux du transaction</div>
+</div>
+
+	
+		<div class="ps-3">
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb mb-0 p-0">
+					<li class="breadcrumb-item">
+						<a href="javascript:;">
+						 
+						</a>
+					</li>
+					 
+				</ol>
+			</nav>
+		</div>
+		<div class="ms-auto">
+			<div
+				class="btn-group">
+				{# <button type="button" class="btn btn-primary">Settings</button>
+															<button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">	<span class="visually-hidden">Toggle Dropdown</span>
+															</button> #}
+				<div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">
+					<a class="dropdown-item" href="javascript:;">Action</a>
+					<a class="dropdown-item" href="javascript:;">Another action</a>
+					<a class="dropdown-item" href="javascript:;">Something else here</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="javascript:;">Separated link</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<style>
+.share-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.share-buttons a {
+  display: inline-block;
+  text-align: center;
+  margin-right: 10px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #1da1f2;
+  border-radius: 4px;
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+}
+
+.share-buttons a:hover {
+  background-color: #0c8dda;
+  transform: translateY(-2px);
+}
+
+.share-buttons a i {
+  margin-right: 10px;
+}
+
+.share-buttons a.twitter {
+  background-color: #1da1f2;
+}
+
+.share-buttons a.facebook {
+  background-color: #3b5998;
+}
+
+.share-buttons a.twitter:hover {
+  background-color: #0c8dda;
+}
+
+.share-buttons a.facebook:hover {
+  background-color: #4c69ba;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.btn-group .btn {
+  width: 50%;
+  margin-right: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.btn-group .btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-group .btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-group .btn-danger:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+
+.btn-group .btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-group .btn-primary:hover {
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+
+</style>
+	<!--end breadcrumb-->
+<!-- Share buttons -->
+ 
+
+<!-- Buttons group -->
+<div class="btn-group">
+  <a href="{{ path('app_trans_stat') }}" class="btn btn-danger"><i class="fas fa-chart-bar"></i> Statistics</a>
+  <a href="{{ path('app_transaction_new') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Ajout Transaction</a>
+</div>
+
+
+
+ 
+	<hr/>
+<center>
+
+
+
+  <form action="{{ path('app_transaction_index') }}" method="GET">
+  
+<style>
+  label {
+    font-weight: bold;
+    font-size: 16px;
+    margin-right: 10px;
+  }
+  select {
+    font-size: 14px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+</style>
+
+<style>
+    #criteria-label {
+        font-size: 16px;
+        font-weight: bold;
+        display: inline-block;
+        margin-right: 10px;
+        margin-top: 10px;
+    }
+
+    #criteria {
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #f1f1f1;
+        font-size: 16px;
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    #search-term {
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #f1f1f1;
+        font-size: 16px;
+        width: 100%;
+        margin: 10px 0;
+    }
+</style>
+
+<label for="criteria" id="criteria-label">Critère de recherche:</label>
+<select id="criteria" name="criteria">
+    <option value="devis" {% if app.request.query.get('criteria') == 'devis' %}selected{% endif %}>Devis</option>
+    <option value="mode_trans" {% if app.request.query.get('criteria') == 'mode_trans' %}selected{% endif %}>Mode de transaction</option>
+    <option value="valeur_trans" {% if app.request.query.get('criteria') == 'valeur_trans' %}selected{% endif %}>Valeur de transaction</option>
+</select>
+
+ 
+    <input type="text" id="search-term" name="q" class="form-control" value="{{ searchTerm }}" placeholder="Recherche par critère">
+
+  </form>
+</center>
+	<div class="card">
+		<div class="card-body">
+			<div class="table-responsive">
+			<div class="table-container">
+
+				<table id="example" class="table table-striped table-bordered" style="width:100%">
+					<thead>
+						<tr>
+
+<th>ID</th>
+<th>Valeur</th>
+<th>Devise</th>
+<th>Date</th>
+<th>Méthode de paiement</th>
+<th>Montant total</th>
+<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for transaction in transactions %}
+
+							<tr>
+               <td>{{ transaction.idTrans }}</td>
+				<td>{{ transaction.valeurTrans }}</td>
+				<td>{{ transaction.devis }}</td>
+				<td>{{ transaction.dateTrans ? transaction.dateTrans|date('Y-m-d') : '' }}</td>
+				<td>{{ transaction.modeTrans }}</td>
+				<td>{{ transaction.montantTot }}</td>
+				<style>.btn-delete, .btn-modifier {
+  width: 120px;
+}
+</style>
+<td class="col-4 col-md-3">
+  {{ include('/templates_back/transaction/_delete_form.html.twig', {'button_label': 'Supprimer', 'button_class': 'btn-delete'}) }}
+       <button type="button" class="btn btn-success btn-modifier" onclick="window.location.href='{{ path('app_transaction_edit', {'id_trans': transaction.idTrans}) }}'">
+              Modifier
+            </button>
+</td>
+
+
+
+
+
+
+							</tr>
+						{% else %}
+							<tr>
+								<td colszpan="11">no records found</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+
+				</table>
+
+ 	 
+{{ knp_pagination_render(transactions)|raw('<div style="text-align: center; margin-top: 20px;">') }}
+{% set maxWeight = 0 %}
+{% set minWeight = 1000000 %}
+{% set totalWeight = 0 %}
+{% set maxWeightProduct = '' %}
+{% set minWeightProduct = '' %}
+
+{% for weightSum in weightSums %}
+    {% if weightSum['montan_totale'] > maxWeight %}
+        {% set maxWeight = weightSum['montan_totale'] %}
+        {% set maxWeightProduct = weightSum['material'] %}
+    {% endif %}
+
+    {% if weightSum['montan_totale'] < minWeight %}
+        {% set minWeight = weightSum['montan_totale'] %}
+        {% set minWeightProduct = weightSum['material'] %}
+    {% endif %}
+
+    {% set totalWeight = totalWeight + weightSum['montan_totale'] %}
+{% endfor %}
+
+
+		
+	</div>
+
+</div></div></div> 
+ <style>
+#searchInput {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f1f1f1;
+  font-size: 16px;
+  width: 98%;
+  margin: 10px;
+}
+
+</style>
+
+<input type="text" id="searchInput" placeholder="recherche dynamic">
+<div class="container">
+  <ul>
+    <li>Le devis <strong>"{{ maxWeightProduct }}"</strong> a la plus grande somme totale avec une valeur de <strong>{{ maxWeight }}</strong></li>
+    <li>Le devis <strong>"{{ minWeightProduct }}"</strong> a la plus petite somme totale avec une valeur de <strong>{{ minWeight }}</strong></li>
+    <li>La somme totale de toutes les transactions est <strong>{{ totalWeight }}</strong></li>
+  </ul>
+</div>
+<style>
+.container {
+  margin: 20px auto;
+  /* définir les marges gauche et droite à "auto" pour centrer l'élément horizontalement */
+  padding: 10px;
+  border: 2px solid black;
+  border-radius: 5px;
+  text-align: center; /* centrer le contenu à l'intérieur du conteneur */
+}
+ul {
+list-style-type: none;
+padding: 0;
+}
+
+li {
+margin-bottom: 10px;
+text-align: left; /* aligner les éléments de la liste à gauche */
+}
+
+</style>
+
+
+
+{% endblock %}
+ 

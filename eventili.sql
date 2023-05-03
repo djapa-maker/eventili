@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1
--- Généré le : dim. 23 avr. 2023 à 01:38
--- Version du serveur : 10.4.27-MariaDB
--- Version de PHP : 8.2.0
+-- Host: 127.0.0.1
+-- Generation Time: May 03, 2023 at 10:28 AM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.1.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `eventili`
+-- Database: `eventili`
 --
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `avis`
+-- Table structure for table `avis`
 --
 
 CREATE TABLE `avis` (
@@ -36,10 +36,18 @@ CREATE TABLE `avis` (
   `Date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Dumping data for table `avis`
+--
+
+INSERT INTO `avis` (`id_av`, `rating`, `comment`, `id_service`, `pers`, `Date`) VALUES
+(57, 2, 'vhbj', 283, 39, '2023-05-02 00:37:49'),
+(58, 4, 'jjj', 283, 39, '2023-05-02 00:38:02');
+
 -- --------------------------------------------------------
 
 --
--- Structure de la table `categ_event`
+-- Table structure for table `categ_event`
 --
 
 CREATE TABLE `categ_event` (
@@ -48,7 +56,7 @@ CREATE TABLE `categ_event` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Déchargement des données de la table `categ_event`
+-- Dumping data for table `categ_event`
 --
 
 INSERT INTO `categ_event` (`id_categ`, `type`) VALUES
@@ -61,7 +69,7 @@ INSERT INTO `categ_event` (`id_categ`, `type`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `chat`
+-- Table structure for table `chat`
 --
 
 CREATE TABLE `chat` (
@@ -75,7 +83,7 @@ CREATE TABLE `chat` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `evenement`
+-- Table structure for table `evenement`
 --
 
 CREATE TABLE `evenement` (
@@ -93,35 +101,24 @@ CREATE TABLE `evenement` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Déchargement des données de la table `evenement`
+-- Dumping data for table `evenement`
 --
 
 INSERT INTO `evenement` (`id_ev`, `titre`, `date_debut`, `date_fin`, `description_ev`, `type`, `visibilite`, `limiteParticipant`, `prix`, `id_categ`, `id_pers`) VALUES
-(263, 'fvgbnm', '2023-03-29 09:00:00', '2023-03-29 18:00:00', 'cvbn', 'Gratuit', 'Privé', 0, 0, 19, 33),
-(280, 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', '2023-04-12 00:00:00', '2023-04-12 23:59:00', 'jjjhjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj', 'Payant', 'Privé', 5, 5, 19, 19),
-(281, 'drftghjkl', '2023-04-12 00:00:00', '2023-04-12 23:59:00', 'dxcfvgbhnjk,;', 'Payant', 'Privé', 4, 5, 19, 19),
-(282, 'wxdcfgvbhjkl', '2023-04-12 00:00:00', '2023-04-12 23:59:00', 'sxdcfvgbhnj,k;', 'Payant', 'Privé', 5, 55, 19, 19),
-(283, 'xdcfvgbhn,', '2024-10-31 00:00:00', '2024-10-31 23:59:00', 'dxcfvgbhnj,k;', 'Payant', 'Privé', 8, 44, 19, 19),
-(284, 'dfghjkl', '2023-04-12 00:00:00', '2023-04-12 23:59:00', 'xfcgvhbnj,;:', 'Gratuit', 'Privé', 0, 0, 19, 19),
-(285, 'fghjk', '2023-04-12 00:00:00', '2023-04-12 23:59:00', 'gfhjklm', 'Gratuit', 'Privé', 0, 0, 19, 19),
-(286, 'dfghjk,;', '2023-04-12 00:00:00', '2023-04-12 23:59:00', 'cfgvbhjn,;:', 'Gratuit', 'Privé', 0, 0, 19, 19),
-(287, 'cgvhbjn,;:', '2023-04-12 00:00:00', '2023-04-12 23:59:00', 'fcgbhjn,;', 'Gratuit', 'Privé', 0, 0, 19, 19),
-(288, 'dxfcgvhbjn,;:', '2023-04-12 00:25:00', '2023-04-12 23:59:00', 'xfcgvhbjnk,;', 'Gratuit', 'Privé', 0, 0, 19, 19),
-(289, 'fdghjk', '2023-04-12 00:00:00', '2023-04-12 23:59:00', 'cgvhbjnk,;', 'Gratuit', 'Privé', 0, 0, 19, 19),
-(290, 'fdghjk', '2023-04-12 00:00:00', '2023-04-12 23:59:00', 'cgvhbjnk,;', 'Gratuit', 'Privé', 0, 0, 19, 19),
-(291, 'vgbhnj,', '2023-04-12 00:00:00', '2023-04-12 23:59:00', 'vhbn,', 'Gratuit', 'Privé', 0, 0, 19, 19),
-(292, 'vgbhnj,', '2023-04-12 00:00:00', '2023-04-12 23:59:00', 'kkkk', 'Gratuit', 'Privé', 0, 0, 19, 19),
-(294, 'bjn', '2023-04-23 00:00:00', '2023-04-23 23:59:00', 'hvb', 'Gratuit', 'Privé', 0, 0, 19, 19),
-(295, 'bjn', '2023-04-23 00:00:00', '2023-04-23 23:59:00', 'hvb', 'Gratuit', 'Privé', 0, 0, 19, 19),
-(296, 'bjn', '2023-05-24 00:00:00', '2023-05-24 23:59:00', 'hvb', 'Gratuit', 'Privé', 0, 0, 19, 19),
-(299, 'fxcgvhb', '2023-04-26 00:00:00', '2023-04-26 23:59:00', 'fghjk', 'Gratuit', 'Privé', 0, 0, 19, 19),
-(301, 'vbn', '2023-04-28 00:00:00', '2023-04-28 23:59:00', 'vhbjnk,', 'Gratuit', 'Privé', 0, 0, 19, 19),
-(302, 'sdfghjk', '2023-04-25 00:00:00', '2023-04-25 23:59:00', 'wdxfcgvbn,', 'Gratuit', 'Privé', 0, 0, 19, 19);
+(350, 'gfhjj', '2023-05-30 00:00:00', '2023-05-30 23:59:00', 'fdgh', 'Gratuit', 'Public', 0, 0, 19, 39),
+(351, 'dgfhh', '2023-05-30 00:00:00', '2023-05-30 23:59:00', 'fgjh', 'Gratuit', 'Public', 0, 0, 19, 39),
+(357, 'zazerz', '2023-05-25 00:00:00', '2023-05-25 23:59:00', 'zaeezrza', 'Gratuit', 'Public', 0, 0, 19, 39),
+(358, 'zzae', '2023-05-31 00:00:00', '2023-05-31 23:59:00', 'zae', 'Gratuit', 'Privé', 0, 0, 19, 39),
+(360, 'zzae', '2023-05-25 00:00:00', '2023-05-25 23:59:00', 'aze', 'Gratuit', 'Public', 0, 0, 19, 39),
+(361, 'zae', '2023-05-24 00:00:00', '2023-05-24 23:59:00', 'zae', 'Gratuit', 'Privé', 0, 0, 19, 39),
+(362, 'zae', '2023-05-31 00:00:00', '2023-05-31 23:59:00', 'zae', 'Gratuit', 'Privé', 0, 0, 19, 39),
+(363, 'zae', '2023-05-26 00:00:00', '2023-05-26 23:59:00', 'aze', 'Payant', 'Privé', 0, 50, 19, 39),
+(364, '12354', '2023-05-31 00:00:00', '2023-05-31 23:59:00', 'zzae', 'Gratuit', 'Privé', 0, 0, 19, 39);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `imagepers`
+-- Table structure for table `imagepers`
 --
 
 CREATE TABLE `imagepers` (
@@ -131,35 +128,10 @@ CREATE TABLE `imagepers` (
   `id_pers` int(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Déchargement des données de la table `imagepers`
---
-
-INSERT INTO `imagepers` (`id_imp`, `imageP`, `last`, `id_pers`) VALUES
-(6, 'camera.png', '1656681710445.jpg', 31),
-(15, '1656681710445.jpg', '1656681710445.jpg', 31),
-(16, 'bunting.png', '1656681710445.jpg', 31),
-(17, '1656681710445.jpg', '333604147_210512748291976_7877968719684014449_n.png', 18),
-(18, '1656681710445.jpg', 'camera.png', 19),
-(19, '332878947_227756396315016_3856732524844157218_n.png', '1656681710445.jpg', 31),
-(20, '1656681710445.jpg', '1656681710445.jpg', 31),
-(21, '1656681710445.jpg', '333604147_210512748291976_7877968719684014449_n.png', 18),
-(22, '1656681710445.jpg', '333604147_210512748291976_7877968719684014449_n.png', 18),
-(23, '333604147_210512748291976_7877968719684014449_n.png', '333604147_210512748291976_7877968719684014449_n.png', 18),
-(24, 'camera.png', 'camera.png', 19),
-(25, 'profile.jpg', '1656681710445.jpg', 31),
-(26, '1656681710445.jpg', '1656681710445.jpg', 31),
-(27, 'b41e344ac65be32808603451ec2cb60e17e0de95_eventdecordesignlightingnjnyceggsoticeventsnjsbesteventdecoratoreventlightingeventdesignweddingbarmitzvahbatmitzvahgalafundraiser09.jpg', '1656681710445.jpg', 31),
-(28, 'b41e344ac65be32808603451ec2cb60e17e0de95_eventdecordesignlightingnjnyceggsoticeventsnjsbesteventdecoratoreventlightingeventdesignweddingbarmitzvahbatmitzvahgalafundraiser09.jpg', '1656681710445.jpg', 31),
-(29, '1656681710445.jpg', '1656681710445.jpg', 31),
-(32, '1656681710445.jpg', '1656681710445.jpg', 33),
-(33, 'profile.jpg', 'profile.jpg', 34),
-(34, '93156_w1024h1024c1cx2343cy1728.jpg', '93156_w1024h1024c1cx2343cy1728.jpg', 35);
-
 -- --------------------------------------------------------
 
 --
--- Structure de la table `imagess`
+-- Table structure for table `imagess`
 --
 
 CREATE TABLE `imagess` (
@@ -169,41 +141,18 @@ CREATE TABLE `imagess` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `imagess`
+-- Dumping data for table `imagess`
 --
 
 INSERT INTO `imagess` (`idimgss`, `img`, `sous_service`) VALUES
-(218, '64441f91c234e.jpg', 264),
-(225, '64443223b9ed9.png', 266),
-(232, '92c1691315ead932d35309cfe1b0edb5.png', 266),
-(233, '05c70c32b4204c5eab5f198ef8af1754.jpg', 266),
-(234, 'e0c1489b34261a1a48624cd9aa6e902f.jpg', 266),
-(235, 'bd30ee739d43e1d0acfd86c928a8e8e5.jpg', 266),
-(236, '32c160f46e65ba7e9fc0072c05f0bd88.jpg', 266),
-(237, '466e9e76cae6297ea0428584b06d9b07.jpg', 266),
-(238, 'bfed279f251d5ebfda4c3824e77e0795.jpg', 266),
-(241, '644428486db57.jpg', 266),
-(246, '6444431628678.jpg', 264),
-(250, 'e7cb231c5278bd0e55869dca6d06c453.png', 267),
-(251, 'eb829559bba199ccc22cd0b39362b2e7.png', 267),
-(252, '0fe057eac0d7853c5d6e7744e7fec514.jpg', 267),
-(253, '6acfbe1c5f7e4329cb337188c9b1f4fe.jpg', 268),
-(254, '32a4e7ca68050cc4d8e4579c303e5348.jpg', 268),
-(255, '8ef3e8ba381c22d7fc0a1cc4da3ebbee.png', 268),
-(256, 'dce3d5f3a8f8a614e35c6cb18dfe4abb.jpg', 269),
-(257, '1c3eb031f9e9971094e86085fd6c2915.jpg', 269),
-(258, '40a8d21ec309eaffc40f5abccae68335.jpg', 269),
-(259, '728e9badf03dffc5d7faf92a8e2c10dd.jpg', 269),
-(260, '7809a26eaf7e658088f0e57e1f258d4f.png', 269),
-(261, '86e0504414bba61e7c063cb1de183a57.png', 269),
-(262, 'd5eb6bd53c1d13ba170daf19adec564d.png', 269),
-(263, '1ecd5b98e30a5b729fc5f6d61f8468af.jpg', 269),
-(264, 'd197c6d88eebfd9bba72b93287369567.jpg', 264);
+(295, '9a2f9a14bf59c535a86516bb46c9433a.png', 283),
+(296, '5d986ffd13886f99a739ba9614257862.png', 283),
+(298, 'f57b0b2858d376958b2b5e88e32b931b.png', 283);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `imgev`
+-- Table structure for table `imgev`
 --
 
 CREATE TABLE `imgev` (
@@ -213,22 +162,24 @@ CREATE TABLE `imgev` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `imgev`
+-- Dumping data for table `imgev`
 --
 
 INSERT INTO `imgev` (`id_imgev`, `imageE`, `id_even`) VALUES
-(30, 'Marriage.jpg', 263),
-(47, '62376dfb39b3508e6fc55ca125ff8f9d.jpg', 294),
-(48, '847c95a2ae9bca885119478ac2e00f61.jpg', 295),
-(49, '05c15e08b5df78f7018205e5720ecf7b.jpg', 296),
-(52, '49f37e7abbcdc6d292c3ac816e04bbad.jpg', 299),
-(54, 'b3ee73df902568c2d938a5076a8794d2.jpg', 301),
-(55, 'ec486af2d67def31ca1088c847abfc3c.jpg', 302);
+(121, '87e06eeeea0e1693cd95fec10e9a796e.png', 350),
+(122, '2694b703c6c82e13985482bfb7aad238.png', 351),
+(128, 'a820876679bcd9b882f611bd9c96451a.gif', 357),
+(129, '5321397f4773630a330e872d7b0e390e.gif', 358),
+(131, '57bbadd00136b1eb5f01170a38692e7a.gif', 360),
+(132, '2e1def1cbd1492bb6ef55dd8cf490118.gif', 361),
+(133, 'd60390b10f4eaaeace3785b935922803.gif', 362),
+(134, 'c4daf060379801abc3fc8086af262638.jpg', 363),
+(135, '24978740e79cf999647a571308fae420.gif', 364);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `personne`
+-- Table structure for table `personne`
 --
 
 CREATE TABLE `personne` (
@@ -242,25 +193,23 @@ CREATE TABLE `personne` (
   `rib` text NOT NULL,
   `role` enum('organisateur','partenaire','admin') NOT NULL,
   `token` varchar(30) NOT NULL,
-  `is_verified` tinyint(1) NOT NULL
+  `is_verified` tinyint(1) NOT NULL,
+  `date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Déchargement des données de la table `personne`
+-- Dumping data for table `personne`
 --
 
-INSERT INTO `personne` (`id_pers`, `nom_pers`, `prenom_pers`, `num_tel`, `email`, `mdp`, `adresse`, `rib`, `role`, `token`, `is_verified`) VALUES
-(18, 'bhy', 'rabeb', '28899807', 'rabeb.benhajyhaia@esprit.tn', '$2a$10$zpbHApcZ.ZsG2BkMZwC4.eSPST5fDOc5VTx6IHiwWlfqAtFl1v./.', 'tunis', '22222222222222222222', 'admin', '', 1),
-(19, 'tlili', 'chaima', '28899807', 'chaima.tli10@gmail.com', '$2a$10$l6pEkSQe4hD2i/5sSCbejej2BOHp12765/fE2JqbsksNy7Qpv6kVO', 'ezzahra', '33333333333333333333', 'organisateur', '', 1),
-(31, 'aaaa', 'aaa', '11111111', 'yesmine.guesmi@esprit.tn', '$2a$10$8JJBt6xrEsOf.p8r8EY0KeGUwZ/4M7cBPDAdposSKaywTd5QI2/Eq', 'aaaaaaaaa', '11111111111111111111', 'admin', 'JfbisNII', 0),
-(33, 'ben mohamed', 'ali', '99339684', 'tlili.chaima@esprit.tn', '$2a$10$zt3t59O4f3yuSRIcU7S7a.apBpLwS06QK.hSz0yBPgV7He0OhecUS', 'ezzahra', '11111111111111111112', 'admin', '', 0),
-(34, 'asida', 'asma', '53698741', 'asma@gmail.com', '123456789a', 'tunis', '11111111111111111111', 'organisateur', '', 0),
-(35, 'j', 'j', '11111111', 'rabebbenhajyahia14@gmail.com', '$2y$13$75p1bnqJ/EzopCDCQYIkNujvaFlJtDyQQ88./8dOLVfAP500N9Yea', 'j', '11111111111111111111', 'admin', '5E8fSjZbUjMqce_brBtJzBQjXxjBOG', 1);
+INSERT INTO `personne` (`id_pers`, `nom_pers`, `prenom_pers`, `num_tel`, `email`, `mdp`, `adresse`, `rib`, `role`, `token`, `is_verified`, `date`) VALUES
+(36, 'Tlili', 'Chaima', '99339684', 'tlili.chaima@esprit.tn', '$2y$13$pyE5L42ZSM51AVv6u4hDieQNL4wQ467r/kVdM6CK994FcY52t5zxO', 'hjkl', '11111111111111111111', 'organisateur', 'BlcW1UQDvM5sjcF7daWxA1ytN6qqla', 0, '2023-05-01 23:40:13'),
+(39, 'Tlili', 'Chaima', '99339684', 'chaima.tli10@gmail.com', '$2y$13$sAtQ3XpQBuacRMJHpgf10e9MsUa8T1ZZB46j5ood4pVGyVZigDs1u', 'hjkl', '11111111111111111111', 'admin', 'Na9Id4skeLnkvOAla8yJATaaAWBz9d', 1, '2023-05-03 10:14:13'),
+(40, 'Tlili', 'Chaima', '99339684', 'chaima.tli10@gmail.com', '$2y$13$sAtQ3XpQBuacRMJHpgf10e9MsUa8T1ZZB46j5ood4pVGyVZigDs1u', 'hjkl', '11111111111111111111', 'organisateur', 'Na9Id4skeLnkvOAla8yJATaaAWBz9d', 1, '2023-05-02 01:22:14');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `reclamation`
+-- Table structure for table `reclamation`
 --
 
 CREATE TABLE `reclamation` (
@@ -271,18 +220,10 @@ CREATE TABLE `reclamation` (
   `dateheure` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- Déchargement des données de la table `reclamation`
---
-
-INSERT INTO `reclamation` (`id_rec`, `description`, `titre`, `userId`, `dateheure`) VALUES
-(3, 'pidev2023', 'titre', 18, '2023-03-07 13:13:54'),
-(4, 'pidev2023', 'titre', 18, '2023-03-07 13:13:57');
-
 -- --------------------------------------------------------
 
 --
--- Structure de la table `reponse`
+-- Table structure for table `reponse`
 --
 
 CREATE TABLE `reponse` (
@@ -297,7 +238,7 @@ CREATE TABLE `reponse` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `reservation`
+-- Table structure for table `reservation`
 --
 
 CREATE TABLE `reservation` (
@@ -307,10 +248,29 @@ CREATE TABLE `reservation` (
   `status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Dumping data for table `reservation`
+--
+
+INSERT INTO `reservation` (`id_res`, `id_ss`, `id_ev`, `status`) VALUES
+(71, '283', 350, 0),
+(72, '283', 351, 0),
+(73, '', NULL, 0),
+(74, '', NULL, 0),
+(75, '', NULL, 0),
+(76, '', NULL, 0),
+(77, '283', 357, 0),
+(78, '283', 358, 0),
+(79, '283', 360, 0),
+(80, '283', 361, 0),
+(81, '283', 362, 0),
+(82, '283', 363, 0),
+(83, '283', 364, 0);
+
 -- --------------------------------------------------------
 
 --
--- Structure de la table `service`
+-- Table structure for table `service`
 --
 
 CREATE TABLE `service` (
@@ -319,19 +279,24 @@ CREATE TABLE `service` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Déchargement des données de la table `service`
+-- Dumping data for table `service`
 --
 
 INSERT INTO `service` (`id_service`, `nom`) VALUES
 (117, 'musique'),
 (118, 'gateaux'),
 (119, 'lieu'),
-(120, 'Décoration');
+(120, 'Décoration'),
+(128, 'fourniture'),
+(130, 'sucré'),
+(131, 'sushi'),
+(133, 'coiffure'),
+(134, 'wed');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `sousservice`
+-- Table structure for table `sousservice`
 --
 
 CREATE TABLE `sousservice` (
@@ -346,20 +311,16 @@ CREATE TABLE `sousservice` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Déchargement des données de la table `sousservice`
+-- Dumping data for table `sousservice`
 --
 
 INSERT INTO `sousservice` (`id`, `nom`, `description`, `prix`, `note`, `id_eventCateg`, `id_service`, `id_Pers`) VALUES
-(264, 'lm', 'n', 6, 0, '20,21', 119, 18),
-(266, 'j', 'gjh', 5, 0, '21,22', 118, 18),
-(267, 'hh', 'jj', 5, 0, '20', 117, 18),
-(268, 'dxfcgvhbjn', 'dxfcgvhbjn,', 9, 0, '20', 117, 18),
-(269, 'fdghjkl', 'dsxfgvbhnj,k;', 85, 0, '19,20', 117, 18);
+(283, 'hj', 'kl', 5, 0, '19,20', 117, 40);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `sponsoring`
+-- Table structure for table `sponsoring`
 --
 
 CREATE TABLE `sponsoring` (
@@ -371,10 +332,22 @@ CREATE TABLE `sponsoring` (
   `id_event` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Dumping data for table `sponsoring`
+--
+
+INSERT INTO `sponsoring` (`id_sponso`, `date_debut`, `date_fin`, `nombre_impression`, `id_trans`, `id_event`) VALUES
+(13, '2026-01-01', '2028-01-01', 40, 9, 358),
+(14, '2025-01-01', '2027-01-01', 15, 9, 357),
+(15, '2025-01-01', '2027-01-01', 123, 9, 361),
+(16, '2024-01-01', '2027-01-01', 123, 31, 350),
+(17, '2023-05-31', '2023-06-08', 900, 36, 350),
+(18, '2025-01-01', '2027-01-01', 14, 9, 350);
+
 -- --------------------------------------------------------
 
 --
--- Structure de la table `ticket`
+-- Table structure for table `ticket`
 --
 
 CREATE TABLE `ticket` (
@@ -389,25 +362,39 @@ CREATE TABLE `ticket` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `transaction`
+-- Table structure for table `transaction`
 --
 
 CREATE TABLE `transaction` (
   `id_trans` int(11) NOT NULL,
   `valeur_trans` float NOT NULL,
-  `devis` enum('USD','EUR','JPY','GBP','CHF','CAD','AUD','CNY','HKD','INR') NOT NULL,
-  `userID` int(11) NOT NULL,
+  `devis` enum('USD','EUR','JPY','GBP','CHF','CAD','AUD','CNY','HKD','INR','TND') NOT NULL,
+  `user_id` int(11) NOT NULL,
   `date_trans` date NOT NULL,
   `mode_trans` enum('Square','Stripe','Amazon Pay','Google Pay','Apple Pay') NOT NULL,
   `montant_tot` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Index pour les tables déchargées
+-- Dumping data for table `transaction`
+--
+
+INSERT INTO `transaction` (`id_trans`, `valeur_trans`, `devis`, `user_id`, `date_trans`, `mode_trans`, `montant_tot`) VALUES
+(9, 240, 'USD', 36, '2026-05-02', 'Stripe', 300),
+(31, 12, 'USD', 36, '2026-01-01', 'Square', 145),
+(32, 123, 'USD', 40, '2026-01-01', 'Square', 233),
+(33, 1575, 'USD', 39, '2023-05-03', 'Stripe', 1605),
+(34, 1575, 'USD', 39, '2023-05-03', 'Stripe', 1605),
+(35, 15.75, 'TND', 39, '2023-05-03', 'Stripe', 45.75),
+(36, 18, '', 39, '2023-05-03', 'Stripe', 48),
+(37, 123, 'USD', 36, '2025-01-01', 'Square', 10000000);
+
+--
+-- Indexes for dumped tables
 --
 
 --
--- Index pour la table `avis`
+-- Indexes for table `avis`
 --
 ALTER TABLE `avis`
   ADD PRIMARY KEY (`id_av`),
@@ -415,13 +402,13 @@ ALTER TABLE `avis`
   ADD KEY `gggggggg` (`pers`);
 
 --
--- Index pour la table `categ_event`
+-- Indexes for table `categ_event`
 --
 ALTER TABLE `categ_event`
   ADD PRIMARY KEY (`id_categ`);
 
 --
--- Index pour la table `chat`
+-- Indexes for table `chat`
 --
 ALTER TABLE `chat`
   ADD PRIMARY KEY (`id_chat`),
@@ -429,7 +416,7 @@ ALTER TABLE `chat`
   ADD KEY `fk_eventchat` (`event_id`);
 
 --
--- Index pour la table `evenement`
+-- Indexes for table `evenement`
 --
 ALTER TABLE `evenement`
   ADD PRIMARY KEY (`id_ev`),
@@ -437,41 +424,41 @@ ALTER TABLE `evenement`
   ADD KEY `fk_p` (`id_pers`);
 
 --
--- Index pour la table `imagepers`
+-- Indexes for table `imagepers`
 --
 ALTER TABLE `imagepers`
   ADD PRIMARY KEY (`id_imp`),
   ADD KEY `fk_perI` (`id_pers`);
 
 --
--- Index pour la table `imagess`
+-- Indexes for table `imagess`
 --
 ALTER TABLE `imagess`
   ADD PRIMARY KEY (`idimgss`),
   ADD KEY `fk_image_ss` (`sous_service`);
 
 --
--- Index pour la table `imgev`
+-- Indexes for table `imgev`
 --
 ALTER TABLE `imgev`
   ADD PRIMARY KEY (`id_imgev`),
   ADD KEY `fk_even` (`id_even`);
 
 --
--- Index pour la table `personne`
+-- Indexes for table `personne`
 --
 ALTER TABLE `personne`
   ADD PRIMARY KEY (`id_pers`);
 
 --
--- Index pour la table `reclamation`
+-- Indexes for table `reclamation`
 --
 ALTER TABLE `reclamation`
   ADD PRIMARY KEY (`id_rec`),
   ADD KEY `fk_personne` (`userId`);
 
 --
--- Index pour la table `reponse`
+-- Indexes for table `reponse`
 --
 ALTER TABLE `reponse`
   ADD PRIMARY KEY (`id_rep`),
@@ -479,20 +466,20 @@ ALTER TABLE `reponse`
   ADD KEY `fk_sender` (`senderId`);
 
 --
--- Index pour la table `reservation`
+-- Indexes for table `reservation`
 --
 ALTER TABLE `reservation`
   ADD PRIMARY KEY (`id_res`),
   ADD KEY `fk_event` (`id_ev`);
 
 --
--- Index pour la table `service`
+-- Indexes for table `service`
 --
 ALTER TABLE `service`
   ADD PRIMARY KEY (`id_service`);
 
 --
--- Index pour la table `sousservice`
+-- Indexes for table `sousservice`
 --
 ALTER TABLE `sousservice`
   ADD PRIMARY KEY (`id`),
@@ -500,7 +487,7 @@ ALTER TABLE `sousservice`
   ADD KEY `fk_pers` (`id_Pers`);
 
 --
--- Index pour la table `sponsoring`
+-- Indexes for table `sponsoring`
 --
 ALTER TABLE `sponsoring`
   ADD PRIMARY KEY (`id_sponso`),
@@ -508,7 +495,7 @@ ALTER TABLE `sponsoring`
   ADD KEY `fk_sponso` (`id_trans`);
 
 --
--- Index pour la table `ticket`
+-- Indexes for table `ticket`
 --
 ALTER TABLE `ticket`
   ADD PRIMARY KEY (`id_tick`),
@@ -516,199 +503,199 @@ ALTER TABLE `ticket`
   ADD KEY `fk_tick` (`id_tran`);
 
 --
--- Index pour la table `transaction`
+-- Indexes for table `transaction`
 --
 ALTER TABLE `transaction`
   ADD PRIMARY KEY (`id_trans`),
-  ADD KEY `fk_trans` (`userID`);
+  ADD KEY `fk_trans` (`user_id`);
 
 --
--- AUTO_INCREMENT pour les tables déchargées
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT pour la table `avis`
+-- AUTO_INCREMENT for table `avis`
 --
 ALTER TABLE `avis`
-  MODIFY `id_av` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id_av` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
--- AUTO_INCREMENT pour la table `categ_event`
+-- AUTO_INCREMENT for table `categ_event`
 --
 ALTER TABLE `categ_event`
   MODIFY `id_categ` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
--- AUTO_INCREMENT pour la table `chat`
+-- AUTO_INCREMENT for table `chat`
 --
 ALTER TABLE `chat`
   MODIFY `id_chat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT pour la table `evenement`
+-- AUTO_INCREMENT for table `evenement`
 --
 ALTER TABLE `evenement`
-  MODIFY `id_ev` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=303;
+  MODIFY `id_ev` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=365;
 
 --
--- AUTO_INCREMENT pour la table `imagepers`
+-- AUTO_INCREMENT for table `imagepers`
 --
 ALTER TABLE `imagepers`
   MODIFY `id_imp` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
--- AUTO_INCREMENT pour la table `imagess`
+-- AUTO_INCREMENT for table `imagess`
 --
 ALTER TABLE `imagess`
-  MODIFY `idimgss` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=265;
+  MODIFY `idimgss` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=301;
 
 --
--- AUTO_INCREMENT pour la table `imgev`
+-- AUTO_INCREMENT for table `imgev`
 --
 ALTER TABLE `imgev`
-  MODIFY `id_imgev` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id_imgev` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=136;
 
 --
--- AUTO_INCREMENT pour la table `personne`
+-- AUTO_INCREMENT for table `personne`
 --
 ALTER TABLE `personne`
-  MODIFY `id_pers` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id_pers` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
--- AUTO_INCREMENT pour la table `reclamation`
+-- AUTO_INCREMENT for table `reclamation`
 --
 ALTER TABLE `reclamation`
   MODIFY `id_rec` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT pour la table `reponse`
+-- AUTO_INCREMENT for table `reponse`
 --
 ALTER TABLE `reponse`
   MODIFY `id_rep` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `reservation`
+-- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `id_res` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id_res` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
--- AUTO_INCREMENT pour la table `service`
+-- AUTO_INCREMENT for table `service`
 --
 ALTER TABLE `service`
-  MODIFY `id_service` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
+  MODIFY `id_service` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
 
 --
--- AUTO_INCREMENT pour la table `sousservice`
+-- AUTO_INCREMENT for table `sousservice`
 --
 ALTER TABLE `sousservice`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=270;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=285;
 
 --
--- AUTO_INCREMENT pour la table `sponsoring`
+-- AUTO_INCREMENT for table `sponsoring`
 --
 ALTER TABLE `sponsoring`
-  MODIFY `id_sponso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_sponso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
--- AUTO_INCREMENT pour la table `ticket`
+-- AUTO_INCREMENT for table `ticket`
 --
 ALTER TABLE `ticket`
   MODIFY `id_tick` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT pour la table `transaction`
+-- AUTO_INCREMENT for table `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `id_trans` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_trans` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
--- Contraintes pour les tables déchargées
+-- Constraints for dumped tables
 --
 
 --
--- Contraintes pour la table `avis`
+-- Constraints for table `avis`
 --
 ALTER TABLE `avis`
   ADD CONSTRAINT `fk_serv` FOREIGN KEY (`id_service`) REFERENCES `sousservice` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `gggggggg` FOREIGN KEY (`pers`) REFERENCES `personne` (`id_pers`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `chat`
+-- Constraints for table `chat`
 --
 ALTER TABLE `chat`
   ADD CONSTRAINT `fk_chat` FOREIGN KEY (`userId`) REFERENCES `personne` (`id_pers`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_eventchat` FOREIGN KEY (`event_id`) REFERENCES `evenement` (`id_ev`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `evenement`
+-- Constraints for table `evenement`
 --
 ALTER TABLE `evenement`
   ADD CONSTRAINT `fk_categ` FOREIGN KEY (`id_categ`) REFERENCES `categ_event` (`id_categ`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_p` FOREIGN KEY (`id_pers`) REFERENCES `personne` (`id_pers`);
 
 --
--- Contraintes pour la table `imagepers`
+-- Constraints for table `imagepers`
 --
 ALTER TABLE `imagepers`
   ADD CONSTRAINT `fk_perI` FOREIGN KEY (`id_pers`) REFERENCES `personne` (`id_pers`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `imagess`
+-- Constraints for table `imagess`
 --
 ALTER TABLE `imagess`
   ADD CONSTRAINT `fk_image_ss` FOREIGN KEY (`sous_service`) REFERENCES `sousservice` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `imgev`
+-- Constraints for table `imgev`
 --
 ALTER TABLE `imgev`
   ADD CONSTRAINT `fk_even` FOREIGN KEY (`id_even`) REFERENCES `evenement` (`id_ev`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `reclamation`
+-- Constraints for table `reclamation`
 --
 ALTER TABLE `reclamation`
   ADD CONSTRAINT `fk_personne` FOREIGN KEY (`userId`) REFERENCES `personne` (`id_pers`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `reponse`
+-- Constraints for table `reponse`
 --
 ALTER TABLE `reponse`
   ADD CONSTRAINT `fk_rec` FOREIGN KEY (`rec_id`) REFERENCES `reclamation` (`id_rec`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_sender` FOREIGN KEY (`senderId`) REFERENCES `personne` (`id_pers`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `reservation`
+-- Constraints for table `reservation`
 --
 ALTER TABLE `reservation`
   ADD CONSTRAINT `fk_event` FOREIGN KEY (`id_ev`) REFERENCES `evenement` (`id_ev`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `sousservice`
+-- Constraints for table `sousservice`
 --
 ALTER TABLE `sousservice`
   ADD CONSTRAINT `fk_pers` FOREIGN KEY (`id_Pers`) REFERENCES `personne` (`id_pers`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_service` FOREIGN KEY (`id_service`) REFERENCES `service` (`id_service`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `sponsoring`
+-- Constraints for table `sponsoring`
 --
 ALTER TABLE `sponsoring`
   ADD CONSTRAINT `fk_eve` FOREIGN KEY (`id_event`) REFERENCES `evenement` (`id_ev`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `ticket`
+-- Constraints for table `ticket`
 --
 ALTER TABLE `ticket`
   ADD CONSTRAINT `fk_ev` FOREIGN KEY (`idEvent`) REFERENCES `evenement` (`id_ev`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_tick` FOREIGN KEY (`id_tran`) REFERENCES `transaction` (`id_trans`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `transaction`
+-- Constraints for table `transaction`
 --
 ALTER TABLE `transaction`
-  ADD CONSTRAINT `fk_trans` FOREIGN KEY (`userID`) REFERENCES `personne` (`id_pers`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_trans` FOREIGN KEY (`user_id`) REFERENCES `personne` (`id_pers`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
