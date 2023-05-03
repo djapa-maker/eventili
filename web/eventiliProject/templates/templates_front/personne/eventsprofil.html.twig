@@ -1,41 +1,249 @@
 {% extends 'baseFront.html.twig'%}
+{# ------------------------------------------------------------------------------------------- #}
 {% block title %}
-	<title>Mes événements</title>
+	<title>Home Page
+	</title>
 {% endblock %}
+{# ------------------------------------------------------------------------------------------- #}
 {% block naver %}
-	<div class="naver" style="top:-90px;"></div>
+	<div class="naver" style="top:-25px;"></div>
 {% endblock %}
+{# ------------------------------------------------------------------------------------------- #}
 {% block PageTitle %}
 	<div class="title-wrap">
-		<h1 class="title is-4">Mes événements</h1>
+		<h1 class="title is-4">Home Page </h1>
 	</div>
 {% endblock %}
+{# ------------------------------------------------------------------------------------------- #}
 {% block content %}
-	<link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}"/>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
-
-	{{ include('@MercurySeriesFlashy/flashy.html.twig') }}
-	<div class="card-grid-toolbar">
-		<div class="control has-icon">
-			<input class="input custom-text-filter" placeholder="Recherche..." data-filter-target=".column">
-			<div class="form-icon">
-				<i data-feather="search"></i>
+{# -----------------search----------------------------- #}
+<div class="card-grid-toolbar">
+	<div class="control has-icon">
+		<form id="annuite_form" class="form" action="{{ path('app_home_ticket_front') }}" enctype="multipart/form-data" method="GET">
+			<input
+			name="search1" class="input custom-text-filter" id="search-input" type="text" placeholder="Recherche...">
+		{# <input data-filter-target=".onboarding-card" name="search1" class="input custom-text-filter" id="placeholder1" type="text" placeholder="Recherche..." data-filter-target=".column"> #}
+		</form>
+		<div class="form-icon">
+			<i data-feather="search"></i>
+		</div>
+	</div>
+	{# -------------------filter--------------------------- #}
+	<div class="buttons">
+		<div class="field h-hidden-mobile">
+			<div class="control">
+				<div
+					class="h-select">
+					{# <div class="select-box">
+																																																															<span>Catégorie sous service</span>
+																																																														</div>
+																																																														<div class="select-icon">
+																																																															<i data-feather="chevron-down"></i>
+																																																														</div> #}
+					<form class="form" action="{{ path('app_home_ticket_front')}}" method="GET">
+						<select class="select-box" name="inputfilter" id="filterService">
+							<div class="drop-inner">
+								<div class="option-row">
+									<option value="" name="choose" class="option-meta">choisissez</option>
+									{% for ticket in tickets %}
+										<option value="{{ticket.nbTick}}" class="option-meta" name="inputfilter">{{ ticket.nbTick }}</option>
+									{% endfor %}
+								</div>
+							</div>
+						</select>
+					</form>
+					<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+					<script>
+						$(document).ready(function () {
+$('#filterService').on('change', function () {
+$(this).closest('form').submit();
+});
+});
+					</script>
+				</div>
 			</div>
 		</div>
-
-		
-	</div>
-	<div class="page-content-inner">
-		
-
-
-	</div>
-
-
+		{# -----------------create ----------------------------- #}
 	
+{# -------------affichage cards--------------------------------- #}
+{% if tickets is not empty %}
+	{% for i in tickets %}
+		<div
+			id="search-results" class="page-content-inner" style="flex-wrap: wrap; display:inline-flex;">
+			<!--Onboarding V1-->
+			<div class="onboarding-wrapper onboarding-v1" style="width:270px;height:320px;">
+				<div class="onboarding-wrap">
+					<div
+						class="onboarding-wrap-inner">
+						<!--Card-->
+						<div class="onboarding-card" style=" box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">
+				{#	{% for n in firstimg %}
+								{% if n.sousService.id == i.id %}
+									<img class="light-image" src="http://localhost/img/{{n.img}}" style="height:200px;width:300px" alt="">
+									<img class="dark-image" src="http://localhost/img/{{n.img}}" alt="">
+								{% endif %}
 
-{% endblock %}
+							{% endfor %} #}
+							<div
+								class="onboarding-content">
+								{# <h3 data-filter-match class="dark-inverted">{{i.nom}}</h3> #}
+                                {% for index in tickets %}
+                                {% for j in event %}
+								{% for n in imgev %}
+                                {% if index.idevent.idEv == j.idEv %}
+								
+
+
+        {{ index.prixTick }}
+  
+                                 
+								{% if index.idevent.idEv == n.idImgev %}
+									<img class="light-image" src="http://localhost/img/{{index.j.n.imagee}}" style="height:200px;width:300px" alt="">
+									<img class="dark-image" src="http://localhost/img/{{index.j.n.imagee}}" alt="heloooo">
+							
+								<h3 data-filter-match class="dark-inverted">{{ index.prixTick}}</h3>
+                                <h3 data-filter-match class="dark-inverted">{{ j.titre}}</h3>
+
+									{% endif %}
+									{% endif %}
+									 
+
+							{% endfor %}
+                                
+                                                              
+
+                                {% endfor %}
+                                                                {% endfor %}
+
+								<b>
+									{#<a class=" h-modal-trigger is-rounded" data-modal="demo-right-actions-modal1{{j.idEv}}" style="color:white;color:#671cc9">Details</a>
+									 -------------------detail modal--------------------------- 
+									<div id="demo-right-actions-modal1{{j.idEv}}" class="modal h-modal is-medium">
+										<div class="modal-background h-modal-close"></div>
+										<div class="modal-content">
+											<div class="modal-card">
+												<header class="modal-card-head" style="background-color:#671cc9;">
+													<h3 style='color:white;font-size:20px;'>{{j.title}}</h3>
+													<button class="h-modal-close ml-auto" style="color:white" aria-label="close">
+														<i data-feather="x"></i>
+													</button>
+												</header>
+												{# -----------------------contenu modal----------------------- 
+												<div class="modal-card-body">
+													<div class="inner-content">
+														{# <h2 style="font-size:30px;color:#9eadfd;margin-top:-10px">{{s.nom}}</h2> #}
+														{# <div class="section-placeholder"> #}
+														{# <div class="placeholder-content"> #}
+															{#<div class="image-accordion" style="margin-top:1px;margin-bottom:3px"> <ul>
+																{% for im in imagess %}
+																	{% if im.sousService.id == i.id %}
+																		{% if loop.index > 0 %}
+																			<li class="has-background-image" tabindex="{{loop.index}}" data-background="http://localhost/img/{{im.img}}"></li>
+																		{% endif %}
+																	{% endif %}
+																{% endfor %}
+															</ul>
+														</div>
+														<div class="row" style="display:inline-flex;margin-left:-75px;margin-top:20px">
+															<div class="col text-center" style="margin-left:70px;">
+																<div style="color:#ff8601;font-size:20px">
+																	<i style="color:#9eadfd" class="fas fa-user" style="margin-bottom:2px"></i>
+																</div>
+																<div style="font-weight:normal">{{i.idPers.prenomPers}}
+																	{{i.idPers.nomPers}}
+																</div>
+															</div>
+															<div class="col text-center" style="margin-left:20px;">
+																<div style="color:#ff8601;font-size:20px">
+																	<i style="color:#ffb25c" class="fas fa-money-bill" style="margin-bottom:2px"></i>
+																</div>
+																<div style="font-weight:normal">{{i.prix}}
+																	Dt
+																</div>
+															</div>
+															<div class="col text-center" style="margin-left:20px;">
+																<div style="color:#ff8601;font-size:20px;font-weight:normal">
+																	<i style="color:#241b7c" class="fas fa-toolbox" style="margin-bottom:2px"></i>
+																</div>
+																<div style="font-weight:normal">{{i.idService.nom}}
+																</div>
+															</div>
+														</div>
+
+														<hr>
+														<div class="row">
+															<label style="font-size:20px;color:#9eadfd">Description :</label>
+															<table style="width : 150px">
+																<tr>
+																	<p style="font-size:15px;color:black;word-break: break-all;word-break: break-word;white-space: pre-line;">{{ i.description}}</p>
+																</tr>
+															</table>
+														</div>
+														<hr>
+														<div class="row" style="margin-bottom:20px">
+															<div class="col text-center">
+																<div style="font-size:20px;color:#9eadfd;">Catégories d'événement:
+																</div>
+																<div style="font-weight:normal">{{i.idEventcateg}}
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col text-center">
+
+																{% if avis %}
+																	{% for a in avis %}
+																		{% if a.idService.id == i.id %}
+																			{# <div style="display:inline-flex;margin-bottom:20px;margin-right:20px"> 
+																			<div style="background-color:white;border-radius:15px;height:60px;width:570px;box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);">
+																				<div style="display:inline-flex;margin-bottom:20px;padding:3px">
+																					<div style="margin-right:10px;width:100px;overflow:hidden">
+																						<div style="font-weight:bold;margin-top:5px;color:#641ccc">{{a.pers.prenomPers}}
+																							{{a.pers.nomPers}}</div>
+																						<div style="margin-top:-1px">
+																							{% for i in range(1,a.rating) %}
+																								<i class="fas fa-star" style="color:#ff8601;font-size:10px;margin-top:0.5px;"></i>
+																							{% endfor %}
+																						</div>
+																					</div>
+																					<div style="margin-top:5px;font-weight:normal;margin-right:200px;width:200px;overflow:hidden">{{a.comment}}</div>
+																				</div>
+																			</div>
+
+																			<br>
+																		{% endif %}
+																	{% endfor %}
+																{% else %} 
+																	<p>
+																		aucun avis pour ce sousservice
+																	</p>
+																{% endif %}
+
+															</div>
+														</div>
+													</div>
+												</div>
+										
+											</div>
+										</div>
+									</div>
+								</b>
+								{# </div> #}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+{% else %}<!--Empty Placeholder--><div class="section-placeholder">
+		<div class="placeholder-content">
+			<img class="light-image" src="{{asset('assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/>
+			<img class="dark-image" src="{{asset('assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/>
+			<h3 class="dark-inverted">Pas de sous services !</h3>
+			<p>Veillez ajouter des sous services pour pouvoir les visualiser ici
+			</p>
+		</div>
+	</div>
+{% endif %}
+										{% endblock %}

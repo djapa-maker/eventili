@@ -1,0 +1,205 @@
+{% extends 'baseAdmin.html.twig'%}
+
+{% block content %}
+	<div
+		class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+		{# -------------------------------------------------------------------------- #}
+		<div style="color:#758afd;font-size:25px;font-style:bold"> <h1 style="color:#aeb8ff; margin-right:250px" >Liste des Tickets</h1></div>
+		<form name="Search-method" id="Search-method"method="post" class="forms-sample" style="display: flex">
+                                    <select name="optionsearch" class="js-example-basic-single" style="width: 250px ;height: 50px; border-radius:15px;color:white;background-color:#aeb8ff;border-color:#aeb8ff;font-size:19px;margin-left: 20px; margin-right: 1px;">
+                                        <option value="">Choisir un Critére</option>
+                                        <option value="status">Status</option>
+                                        <option value="nbtick">Nombre de Ticket</option>
+										<option value="prixTick">Prix Ticket</option>
+                                      <div class="form-group col-md-7">
+                                    <div class="input-group">
+                                        <input name="Search" type="text" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2"
+										style="width:200px ;height: 50px; border-radius:15px;color:white;border-color:#aeb8ff;font-size:19px;margin-left: 10px; margin-right: 20px;>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-info" style="border-radius:15px;color:white;background-color:#aeb8ff;border-color:#aeb8ff;font-size:19px;margin-left: 10px;" type="Submit">Search</button>
+                                        </div>
+                                    </div>
+                             
+                                    </select>
+                                </div>
+			</div>
+		</div>
+		<div class="search-bar flex-grow-1" style="margin-left:20%; margin-right:20%">
+			<div class="position-relative search-bar-box">
+				{#<form id="search-form" class="form" action="{{ path('app_ticket_search') }}" enctype="multipart/form-data" method="GET">
+					<input type="text" id="search-term" name="searchTerm" style="border-radius:20px;border: 2px solid #aeb8ff  " class="form-control search-control" placeholder="Rechercher...">
+				</form>
+				<span class="position-absolute top-50 search-show translate-middle-y">
+					<i class='bx bx-search' style="color:#aeb8ff"></i>
+				</span>
+				<span class="position-absolute top-50 search-close translate-middle-y">
+					<i class='bx bx-x' style="color:white"></i>
+				</span>
+				#}
+
+
+				
+		{# -------------------------------------------------------------------------- #}
+
+	{# -------------------------------------------------------------------------- 
+	<div class="card"  style="margin-top:5%">
+		<div class="card-body">
+			<div
+				class="table-responsive">
+				<table
+					id="example" class="table table-bordered" style="
+						width:100%;
+						border-color:#aeb8ff;
+						border-radius:30px">
+					
+					<thead>
+						<tr style="color:#27187f">
+							
+							   <th  style="color:#27187f">NbTick</th>
+                                <th  style="color:#27187f">PrixTick</th>
+                                <th  style="color:#27187f">Status</th>
+                                <th  style="color:#27187f">actions</th>
+						</tr>
+					</thead>
+
+        </tbody>
+					<tbody>
+						  {% for ticket in tickets %}
+							<tr style="color:#27187f">
+								
+								<td>{{ ticket.nbTick }}</td>
+                                <td>{{ ticket.prixTick }}</td>
+                                <td>{{ ticket.status }}</td>
+								<td>
+									<div style="display: flex; align-items: center;">
+										{{ include('/templates_back/ticket/_delete_form.html.twig') }}
+										<a  href="{{ path('app_ticket_edit',{'idTick':ticket.idTick}) }}" style="
+																								border-radius:40px;
+																								background-color:#758afd;
+																								border-color:#758afd;
+																								height:30px;
+																								width:30px;
+																								display: flex; justify-content: center; align-items: center;
+																								color:white"><i class='bx bx-edit' style="font-size:20px"></i></a>
+									</td>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+					<tfoot>
+						<tr>
+						
+
+							    <th  style="color:#27187f">NbTick</th>
+                                <th  style="color:#27187f">PrixTick</th>
+                                <th  style="color:#27187f">Status</th>
+                                <th  style="color:#27187f">actions</th>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+	 --------------------------------------------------------------------------#}
+<center>
+
+		<div class="ms-auto">
+			<div
+				class="btn-group" >
+				{# -------------------------------------------------------------------------- #}
+                
+				<a href="{{ path('app_ticket_new') }}" class="btn btn-info" style="border-radius:15px;color:white;background-color:#aeb8ff;border-color:#aeb8ff;font-size:19px;margin-right: 50px;">Créer un Ticket</a>
+
+				<a href="{{ path('app_ticket_statistic_index') }}" class="btn btn-info" style="border-radius:15px;color:white;background-color:#aeb8ff;border-color:#aeb8ff;font-size:19px;">Statistique Ticket</a>
+                
+				{# -------------------------------------------------------------------------- #}
+			</div>
+		</div>
+	</div>
+		<div>
+			<center>
+				<div class="card" style="box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);margin-top:20px;width:100%;border-radius:12px;height:35px;background-color:white">
+					<div style="display: flex;">
+						<label style="color:#241b7c;margin-right: 10%;margin-left: 20px;margin-top: 7px;font-weight: bold;">Nombre de Ticket</label>
+						<label style="color:#241b7c;margin-right: 10%;margin-left: 20px;margin-top: 7px;font-weight: bold;">Prix de Ticket</label>
+						<label style="color:#241b7c;margin-right: 10%;margin-left: 20px;margin-top: 7px;font-weight: bold;">Status</label>
+						<label style="color:#241b7c;position: absolute;top: 7px; left: 85%; font-weight: bold;">Actions</label>
+					</div>
+				</div>
+				{# ------------------------------------------------------------------------------------------- #}
+				{% if  tickets is not empty %}
+					<div id="search-results">
+						{% for ticket in tickets %}
+							<div class="card" style="margin-top:-10px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);width:%;border-radius:14px;height:50px;background-color:white">
+								<div style="display: flex; widht : 20px">
+								
+								       
+									<label style="color:#241b7c;margin-right: 25%;margin-left: 20px;margin-top: 15px;">{{ticket.nbTick}}</label>
+									<label style="color:#241b7c;margin-right: 25%;margin-left: 20px;margin-top: 15px;">{{ticket.prixTick}}</label>
+									<label style="color:#241b7c;margin-right: 25%;margin-left: 20px;margin-top: 15px;">{{ticket.status}}</label>
+								
+								
+									<div style="display: flex;color:#241b7c;position: absolute;top: 10px; left: 85%; ">
+										{{ include('templates_back/ticket/_delete_form.html.twig') }}
+										<a href="{{ path('app_ticket_edit',{'idTick':ticket.idTick})}}" style="
+																																					margin-right:10px;
+																																					border-radius:30px;
+																																					background-color:#aeb8ff;;
+																																					border-color:#241b7c;
+																																					height:30px;
+																																					width:30px;
+																																					display: flex;
+																																					justify-content: center;
+																																		            align-items: center;
+																																					color:white">
+											<i class='bx bx-edit' style="font-size:20px"></i>
+										</a>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				{% else %}
+					<div class="placeholder-content">
+						<img
+						style="height:250px;width:250px" class="light-image" src="{{asset('assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/>
+						<img class="dark-image" src="{{asset('assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/> 
+						<h3 class="dark-inverted">Pas de tickets !</h3>
+						<p>Veillez ajouter des Tickets a pouvoir les visualiser
+						</p>
+					</div>
+				{% endif %}
+
+			
+
+			</center>
+<center>			
+		</div>
+
+
+		
+	{#<a href='{{path('app_service_index1')}}'>fdghjklmù</a> #}
+
+	</center>
+ 	{# ---------------------------------------------------------------------------------------#}
+
+ <ul id="search-results"></ul>
+
+
+	<!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<!-- Popper.js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
+
+	<!-- Bootstrap JS -->
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<!-- Modal -->
+{% endblock %}
+
+
+
+
+
+
+
+

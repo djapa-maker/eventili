@@ -105,6 +105,7 @@
 								<li><a href="app-chat-box.html"><i class="bx bx-right-arrow-alt"></i>Evènements</a></li>
 								<li><a href="{{path('app_service_index')}}"><i class="bx bx-right-arrow-alt"></i>Services</a></li>
 								<li><a href="{{path('app_sousservice_index')}}"><i class="bx bx-right-arrow-alt"></i>Sous services</a></li>
+								<li><a href="{{path('app_ticket_index')}}"><i class="bx bx-right-arrow-alt"></i>Ticket</a></li>
 								<li><a href="{{path('app_avis_index')}}"><i class="bx bx-right-arrow-alt"></i>Avis</a></li>
 								<li><a href="{{ path('app_reclamation_admin_index') }}"><i class="bx bx-right-arrow-alt"></i>Réclamations</a></li>
 								<li><a href="{{path('app_transaction_index')}}"><i class="bx bx-right-arrow-alt"></i>Transactions</a></li>
@@ -285,7 +286,7 @@
 							</div>
 							<div class="user-box dropdown">
 								<a class="d-flex align-items-center nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-									<img src="{{ asset('images/' ~ last) }}" class="user-img" alt="user avatar">
+									{# <img src="{{ asset('images/' ~ last) }}" class="user-img" alt="user avatar">
 									<div class="user-info ps-3">
 										<p class="user-name mb-0">{{personne.prenomPers}} {{personne.nomPers}}</p>
 										{# <p class="designattion mb-0">Web Designer</p> #}

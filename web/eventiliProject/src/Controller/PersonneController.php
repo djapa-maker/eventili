@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Evenement;
+use App\Entity\Imgev;
+
 use App\Entity\Personne;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Form\PersonneType;
@@ -30,6 +33,26 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class PersonneController extends AbstractController
 {
 
+      
+  
+ 
+    #[Route('/', name: 'app_personne_accueil', methods: ['GET'])]
+    public function acceuil(EntityManagerInterface $entityManager , Request $request): Response
+    {     
+            $event = $entityManager
+            ->getRepository(Evenement::class)
+            ->findAll();    
+
+            $imgev = $entityManager
+            ->getRepository(Imgev::class)
+            ->findAll();   
+
+        return $this->render('templates_front/personne/accueil.html.twig', [
+            'event' => $event,
+            'Img' => $imgev,
+         
+        ]);
+    }
 
     #[Route('/index', name: 'app_personne_index', methods: ['GET', 'POST'])]
     public function index(EntityManagerInterface $entityManager,PaginatorInterface $paginator,Request $request, ImagePersRepository $imagePersRepository, PersonneRepository $personneRepository, SessionInterface $session): Response
@@ -146,12 +169,7 @@ $pagination = $paginator->paginate(
         ]);
 
     }
-   
-    #[Route('/', name: 'app_personne_accueil', methods: ['GET'])]
-    public function acceuil(): Response
-    {
-        return $this->render('templates_front/personne/accueil.html.twig');
-    }
+ 
     #[Route('/activation', name: 'app_personne_activation', methods: ['GET', 'POST'])]
     public function activation(FlashyNotifier $flashy, Request $request, SessionInterface $session, PersonneRepository $personneRepository): Response
     {
