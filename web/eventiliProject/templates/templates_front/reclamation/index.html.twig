@@ -1,0 +1,42 @@
+{% extends 'baseFront.html.twig'%}
+{% block content %}
+    <a class="button h-button is-success is-bold is-outlined m-2" href="{{ path('app_reclamation_ajouter') }}">Nouvelle Réclamation</a>
+    <div class="page-content-inner" style="margin-top: 2%;">
+            <div class="columns is-multiline is-grouped-multiline">
+                {% for reclamation in reclamations %}
+                {% if reclamation.userid.idPers == uid %}
+            <div class="s-card-advanced column is-3">
+                <div class="card-head">
+                    <div class="left">
+                        <div class="media-flex-center no-margin">
+                            <div class="flex-meta">
+                                <span>{{ reclamation.titre }}</span>
+                                <span>#{{ reclamation.idRec }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right">
+
+                        {% if reclamation.status == "ouvert" %}
+                            <p class="text-success is-bold">Ouvert</p>
+                        {% elseif reclamation.status == "cloturer" %}
+                            <p class="text-muted-grey is-bold">Cloturé</p>
+                        {% elseif reclamation.status == "EnAttenteRepUser" %}
+                            <p class="text-success is-bold">l'admin a Répondu</p>
+                        {% elseif reclamation.status == "EnAttenteRepAdmin" %}
+                            <p class="text-warning is-bold">En Attente</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p>{{ reclamation.description }}</p>
+                </div>
+                <div class="card-foot">
+                        <a href="{{ path('app_reclamation_user_consulter', {'idRec': reclamation.idRec}) }}" class="button is-info is-raised">Consulter</a>
+                </div>
+            </div>
+                {% endif %}
+                {% endfor %}
+    </div>
+    </div>
+{% endblock %}

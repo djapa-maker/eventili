@@ -1,0 +1,155 @@
+{% extends 'baseAdmin.html.twig'%}
+{% block content %}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% endfor %}
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+    <div class="card">
+    <div class="row gap-1 justify-content-center card-body">
+
+        <div class="row gap-1 justify-content-center">
+                <div class="card-body d-flex justify-content-center">
+
+                    <input id="search-query" type="text" class="form-control form-text w-75" style="height: 4em" placeholder="Recherche">
+
+                </div>
+        </div>
+        <div class="d-flex flex-row justify-content-center gap-1 mb-2">
+            <a class="btn btn-outline-success" href="{{ path('app_reclamation_admin_index',{'filter' : 'ouvert'}) }}">Ouvert</a>
+            <a class="btn btn-outline-secondary" href="{{ path('app_reclamation_admin_index',{'filter' : 'cloturer'}) }}">Cloturé</a>
+            <a class="btn btn-outline-warning" href="{{ path('app_reclamation_admin_index',{'filter' : 'EnAttenteAdmin'}) }}">En Attente</a>
+            <a class="btn btn-outline-danger" href="{{ path('app_reclamation_admin_index') }}">Aucun Filtre</a>
+        </div>
+        <div class="card col-md-2 alert-info">
+            <div class="card-header">
+                Nombre de Réclamations
+            </div>
+            <div class="card-body align-items-center">
+                <h4>{{reclamations|length}}</h4>
+            </div>
+        </div>
+        <div class="card col-md-2 alert-success">
+            <div class="card-header">
+                Nombre de Réclamations Ouverte
+            </div>
+
+            <div class="card-body">
+                <h4>{{ nbReclamOuverte}}</h4>
+            </div>
+        </div>
+        <div class="card col-md-2 alert-secondary">
+            <div class="card-header">
+                Nombre de Réclamations Cloturé
+            </div>
+            <div class="card-body">
+                <h4>{{ nbReclamCloturer }}</h4>
+            </div>
+        </div>
+        <div class="card col-md-2 alert-warning">
+            <div class="card-header">
+                Nombre de Réclamations En Attente de réponse du client
+            </div>
+            <div class="card-body">
+                <h4>{{ nbReclamEnAttente }}</h4>
+            </div>
+        </div>
+
+
+    </div>
+    </div>
+    {% set idRecs = [] %}
+    {% set cardsList = [] %}
+    <div class="d-flex align-items-center flex-wrap gap-2" id="AffichageByDefault" style="display: block;">
+        {% if reclamations is empty %}
+            {% if activeFilter is not empty %}
+                <h1 class="text-danger">Aucun Resultat ne corespond au filtre</h1>
+            {% else %}
+                <h1 class="text-danger">Il existe aucune reclamation</h1>
+            {% endif %}
+        {% endif %}
+        {% for reclamation in reclamations %}
+            {% set object = { 'idRec' : reclamation.idRec,
+                'status' : reclamation.status,
+                'Nom' : reclamation.userid.nomPers,
+                'Prenom' : reclamation.userid.prenomPers,
+                'titre' : reclamation.titre,
+                'userId' : reclamation.userid.idPers,
+                'fullName' : reclamation.userid.nomPers ~ ' ' ~ reclamation.userid.prenomPers,
+            }
+            %}
+            {% set idRecs = idRecs|merge([object]) %}
+            {% set cardsList = cardsList|merge([reclamation.idRec]) %}
+            <div class="card col-md-3" id="idRec{{ reclamation.idRec }}">
+            <div class="card-body">
+                <div class="row">
+                <h5 class="card-title has-margin col">#{{ reclamation.idRec }} - {{ reclamation.titre }}</h5>
+                    {% if reclamation.status == "ouvert" or reclamation.status == "EnAttenteRepAdmin" %}
+                        <p class="card-title has-margin col text-success d-flex justify-content-end">Ouvert</p>
+                    {% elseif reclamation.status == "cloturer" %}
+                        <p class="card-title has-margin col text-secondary d-flex justify-content-end">Cloturé</p>
+                    {% elseif reclamation.status == "EnAttenteRepUser" %}
+                        <p class="card-title has-margin col text-warning d-flex justify-content-end">En Attente</p>
+                    {% endif %}
+                </div>
+                <h6 class="card-subtitle mb-2 text-muted has-margin">{{ reclamation.userid.nomPers }} {{ reclamation.userid.prenomPers }}</h6>
+                <p class="card-text text-center">{{ reclamation.description }}</p>
+                <div class="d-flex flex-row justify-content-center gap-1">
+                    <a href="{{ path('app_reclamation_admin_consulter', {'idRec': reclamation.idRec}) }}" class="btn btn-outline-secondary p-2">Consulter</a>
+                    <form method="post" action="{{ path('app_reclamation_delete', {'idRec': reclamation.idRec}) }}" onsubmit="return confirm('Confirmer vous la supression de l\'element');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ reclamation.idRec) }}">
+                        <button class ="btn btn-outline-danger p-2">Supprimer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <script>
+        var cardsList = {{ cardsList|json_encode|raw }};
+        var reclamations = {{ idRecs|json_encode|raw }};
+        var sendingInfo = JSON.stringify(reclamations);
+
+        $(document).ready(function() {
+            $('#search-query').on('input', function() {
+                var query = $(this).val();
+                $.ajax({
+                    url: '{{ path('app_reclamation_search') }}',
+                    type: 'POST',
+                    data: { q: query,list: sendingInfo},
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#search-results').empty();
+                        if(data.length === 0){
+                            cardsList.forEach(afficherTout)
+                        } else {
+                            cardsList.forEach(cacherTout);
+                            for(var i = 0; i < cardsList.length; i++)
+                            {
+                                if(data.includes(cardsList[i])){
+                                    let card = document.getElementById('idRec'+cardsList[i]);
+                                    card.style.display = "block"
+                                }
+                            }
+                        }
+
+                    },
+                    error: function(xhr, status, error) {
+                        console.log("Error:", error);
+                    }
+                });
+            });
+            function afficherTout(item){
+                let card = document.getElementById('idRec'+item);
+                card.style.display = "block"
+            }
+            function cacherTout(item){
+                let card = document.getElementById('idRec'+item);
+                card.style.display = "none"
+            }
+
+        });
+    </script>
+{% endblock %}

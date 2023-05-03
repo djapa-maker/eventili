@@ -1,0 +1,68 @@
+{% extends 'baseFront.html.twig'%}
+{% block content %}
+<script src="https://www.google.com/recaptcha/api.js?render=6LeJNsAlAAAAAAYz1Jzw_VEnzp5Hm76SCs1EEU8R>"></script>
+<script>
+    const siteKey = '6LeJNsAlAAAAAAYz1Jzw_VEnzp5Hm76SCs1EEU8R';
+
+    //either on page load
+    grecaptcha.ready(function() {
+        grecaptcha.execute(siteKey, {
+            action: 'homepage'
+        }).then(function(token) {
+            //the token will be sent on form submit
+            $('[name="captcha"]').val(token);
+            //keep in mind that token expires in 120 seconds so it's better to add setTimeout.
+        });
+    });
+</script>
+<script>
+    function scrollToBottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+    history.scrollRestoration = "manual";
+    window.onload = scrollToBottom;
+</script>
+    <div class="columns is-multiline">
+        <div class="s-card-advanced column is-12">
+            <div class="card-head has-text-centered is-align-content-center text-center">
+                <p class="title is-center text-center">{{ reclamation.titre }}</p>
+            </div>
+            <div class="card-body">
+                <div class="s-card-advanced">
+                    <div class="card-body">
+                        <div class="columns is-multiline">
+                            <div class="column is-3">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-foot">
+                {% if reclamation.status == "cloturer" %}
+                    <form method="post" class="row gap-1">
+                        <div class="col-9">
+                            <input type="text" class="control input is-12 is-rounded is-disabled" style="width: 75%" disabled/>
+                        </div>
+                        <div class="col-2">
+                            <button class="button h-button is-success is-outlined is-disabled">Envoyé</button>
+                        </div>
+                    </form>
+                {% else %}
+                    <div class="is-flex i">
+                    {{ form_start(form) }}
+                    {{ form_widget(form._token) }}
+                    <div class="column is-9">
+                        {{ form_row(form.message,{ 'attr' : { 'class' : 'control input is-12 is-rounded' }}) }}
+                    </div>
+                    <div class="column is-2">
+                        <button class="button h-button is-success is-outlined is-pulled-left">Envoyé</button>
+                    </div>
+                    {{ form_widget(form.captcha) }}
+                    {{ form_end(form) }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

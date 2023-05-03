@@ -2,55 +2,38 @@
 
 namespace App\Entity;
 
+use App\Repository\PersonneRepository;
+use Doctrine\DBAL\Types\DateTimeType;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ReclamationRepository;
+use phpDocumentor\Reflection\Types\Integer;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
+use Symfony\Component\Validator\Constraints\DateTime;
 
-/**
- * Reclamation
- *
- * @ORM\Table(name="reclamation", indexes={@ORM\Index(name="fk_personne", columns={"userId"})})
- * @ORM\Entity
- */
+#[ORM\Entity(repositoryClass: ReclamationRepository::class)]
+
 class Reclamation
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_rec", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(name: "id_rec", type: "integer", nullable: false)]
     private $idRec;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="description", type="text", length=65535, nullable=false)
-     */
+    #[ORM\Column(length: 255)]
     private $description;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="titre", type="string", length=30, nullable=false)
-     */
+    #[ORM\Column(length: 255)]
     private $titre;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="dateheure", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
-     */
-    private $dateheure = 'CURRENT_TIMESTAMP';
+    #[ORM\Column(length: 255)]
+    private $status;
 
-    /**
-     * @var \Personne
-     *
-     * @ORM\ManyToOne(targetEntity="Personne")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="userId", referencedColumnName="id_pers")
-     * })
-     */
+    #[ORM\Column(type: 'datetime', options: ["default" => "CURRENT_TIMESTAMP"])]
+    private $dateheure;
+
+    #[ORM\ManyToOne(targetEntity: Personne::class)]
+    #[ORM\JoinColumn(name: "userId",referencedColumnName: "id_pers")]
     private $userid;
 
     public function getIdRec(): ?int
@@ -69,7 +52,13 @@ class Reclamation
 
         return $this;
     }
-
+    public function setStatus(string $status): self{
+        $this->status = $status;
+        return $this;
+    }
+    public function getStatus(){
+        return $this->status;
+    }
     public function getTitre(): ?string
     {
         return $this->titre;
@@ -82,7 +71,7 @@ class Reclamation
         return $this;
     }
 
-    public function getDateheure(): ?\DateTimeInterface
+    public function getDateheure(): \DateTime
     {
         return $this->dateheure;
     }
@@ -93,7 +82,6 @@ class Reclamation
 
         return $this;
     }
-
     public function getUserid(): ?Personne
     {
         return $this->userid;
@@ -105,6 +93,5 @@ class Reclamation
 
         return $this;
     }
-
 
 }

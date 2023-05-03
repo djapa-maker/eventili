@@ -1,0 +1,6 @@
+# config/packages/karser_recaptcha3.yaml
+
+karser_recaptcha3:
+  site_key: '%env(RECAPTCHA3_KEY)%'
+  secret_key: '%env(RECAPTCHA3_SECRET)%'
+  score_threshold: 0.5

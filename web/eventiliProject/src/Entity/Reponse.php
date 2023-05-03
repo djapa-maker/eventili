@@ -2,67 +2,40 @@
 
 namespace App\Entity;
 
-use Doctrine\DBAL\Types\Types;
+use App\Repository\PersonneRepository;
+use App\Repository\ReponseRepository;
+use Doctrine\DBAL\Types\DateTimeType;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ReclamationRepository;
+use phpDocumentor\Reflection\Types\Integer;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
+use Symfony\Component\Validator\Constraints\DateTime;
 
-/**
- * Reponse
- *
- * @ORM\Table(name="reponse", indexes={@ORM\Index(name="fk_sender", columns={"senderId"}), @ORM\Index(name="fk_rec", columns={"rec_id"})})
- * @ORM\Entity
- */
+#[ORM\Entity(repositoryClass: ReponseRepository::class)]
 class Reponse
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_rep", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: "IDENTITY")]
+    #[ORM\Column(name: "id_rep", type: "integer", nullable: false)]
     private $idRep;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="message", type="text", length=65535, nullable=false)
-     */
+    #[ORM\Column(name: "message", type: "text", length: 65535, nullable: false)]
     private $message;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="timestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
-     */
-    private $timestamp = 'CURRENT_TIMESTAMP';
+    #[ORM\Column(name: "timestamp", type: "datetime", nullable: false, options: ["default" => "CURRENT_TIMESTAMP"])]
+    private $timestamp;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="isEdited", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: "isEdited", type: "boolean", nullable: false)]
     private $isedited = '0';
 
-    /**
-     * @var \Reclamation
-     *
-     * @ORM\ManyToOne(targetEntity="Reclamation")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="rec_id", referencedColumnName="id_rec")
-     * })
-     */
+    #[ORM\ManyToOne(targetEntity: Reclamation::class)]
+    #[ORM\JoinColumn(name: "rec_id", referencedColumnName: "id_rec")]
     private $rec;
 
-    /**
-     * @var \Personne
-     *
-     * @ORM\ManyToOne(targetEntity="Personne")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="senderId", referencedColumnName="id_pers")
-     * })
-     */
+    #[ORM\ManyToOne(targetEntity: Personne::class)]
+    #[ORM\JoinColumn(name: "senderId", referencedColumnName: "id_pers")]
     private $senderid;
-
+    private $reponses;
     public function getIdRep(): ?int
     {
         return $this->idRep;
@@ -127,6 +100,5 @@ class Reponse
 
         return $this;
     }
-
 
 }

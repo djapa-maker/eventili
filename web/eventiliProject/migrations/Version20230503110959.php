@@ -1,0 +1,253 @@
+<?php
+
+declare(strict_types=1);
+
+namespace DoctrineMigrations;
+
+use Doctrine\DBAL\Schema\Schema;
+use Doctrine\Migrations\AbstractMigration;
+
+/**
+ * Auto-generated Migration: Please modify to your needs!
+ */
+final class Version20230503110959 extends AbstractMigration
+{
+    public function getDescription(): string
+    {
+        return '';
+    }
+
+    public function up(Schema $schema): void
+    {
+        // this up() migration is auto-generated, please modify it to your needs
+        $this->addSql('CREATE TABLE reset_password_request (id_pers INT DEFAULT NULL, idP INT AUTO_INCREMENT NOT NULL, selector VARCHAR(20) NOT NULL, hashed_token VARCHAR(100) NOT NULL, requested_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', expires_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', INDEX IDX_7CE748A5B4251BB (id_pers), PRIMARY KEY(idP)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('ALTER TABLE reset_password_request ADD CONSTRAINT FK_7CE748A5B4251BB FOREIGN KEY (id_pers) REFERENCES personne (id_pers)');
+        $this->addSql('ALTER TABLE chat DROP FOREIGN KEY fk_eventchat');
+        $this->addSql('ALTER TABLE chat DROP FOREIGN KEY fk_chat');
+        $this->addSql('ALTER TABLE ticket DROP FOREIGN KEY fk_ev');
+        $this->addSql('ALTER TABLE ticket DROP FOREIGN KEY fk_tick');
+        $this->addSql('DROP TABLE chat');
+        $this->addSql('DROP TABLE messenger_messages');
+        $this->addSql('DROP TABLE ticket');
+        $this->addSql('ALTER TABLE avis DROP FOREIGN KEY fk_serv');
+        $this->addSql('ALTER TABLE avis DROP FOREIGN KEY gggggggg');
+        $this->addSql('ALTER TABLE avis DROP FOREIGN KEY fk_serv');
+        $this->addSql('ALTER TABLE avis DROP FOREIGN KEY gggggggg');
+        $this->addSql('ALTER TABLE avis CHANGE id_service id_service INT DEFAULT NULL, CHANGE pers pers INT DEFAULT NULL, CHANGE comment comment VARCHAR(255) NOT NULL');
+        $this->addSql('ALTER TABLE avis ADD CONSTRAINT FK_8F91ABF0D0624DB9 FOREIGN KEY (pers) REFERENCES personne (id_pers)');
+        $this->addSql('ALTER TABLE avis ADD CONSTRAINT FK_8F91ABF03F0033A2 FOREIGN KEY (id_service) REFERENCES sousservice (id)');
+        $this->addSql('DROP INDEX gggggggg ON avis');
+        $this->addSql('CREATE INDEX IDX_8F91ABF0D0624DB9 ON avis (pers)');
+        $this->addSql('DROP INDEX fk_serv ON avis');
+        $this->addSql('CREATE INDEX IDX_8F91ABF03F0033A2 ON avis (id_service)');
+        $this->addSql('ALTER TABLE avis ADD CONSTRAINT fk_serv FOREIGN KEY (id_service) REFERENCES sousservice (id) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE avis ADD CONSTRAINT gggggggg FOREIGN KEY (pers) REFERENCES personne (id_pers) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE categ_event CHANGE type type VARCHAR(255) NOT NULL');
+        $this->addSql('ALTER TABLE evenement DROP FOREIGN KEY fk_categ');
+        $this->addSql('ALTER TABLE evenement DROP FOREIGN KEY fk_categ');
+        $this->addSql('ALTER TABLE evenement DROP FOREIGN KEY fk_p');
+        $this->addSql('ALTER TABLE evenement CHANGE id_categ id_categ INT DEFAULT NULL, CHANGE id_pers id_pers INT DEFAULT NULL, CHANGE titre titre VARCHAR(255) NOT NULL, CHANGE description_ev description_ev VARCHAR(255) NOT NULL');
+        $this->addSql('ALTER TABLE evenement ADD CONSTRAINT FK_B26681EED0B8043 FOREIGN KEY (id_categ) REFERENCES categ_event (id_categ)');
+        $this->addSql('DROP INDEX fk_categ ON evenement');
+        $this->addSql('CREATE INDEX IDX_B26681EED0B8043 ON evenement (id_categ)');
+        $this->addSql('DROP INDEX fk_p ON evenement');
+        $this->addSql('CREATE INDEX IDX_B26681E5B4251BB ON evenement (id_pers)');
+        $this->addSql('ALTER TABLE evenement ADD CONSTRAINT fk_categ FOREIGN KEY (id_categ) REFERENCES categ_event (id_categ) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE evenement ADD CONSTRAINT fk_p FOREIGN KEY (id_pers) REFERENCES personne (id_pers)');
+        $this->addSql('ALTER TABLE imagepers DROP FOREIGN KEY fk_perI');
+        $this->addSql('ALTER TABLE imagepers DROP FOREIGN KEY fk_perI');
+        $this->addSql('ALTER TABLE imagepers CHANGE id_pers id_pers INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE imagepers ADD CONSTRAINT FK_C5E384105B4251BB FOREIGN KEY (id_pers) REFERENCES personne (id_pers)');
+        $this->addSql('DROP INDEX fk_peri ON imagepers');
+        $this->addSql('CREATE INDEX IDX_C5E384105B4251BB ON imagepers (id_pers)');
+        $this->addSql('ALTER TABLE imagepers ADD CONSTRAINT fk_perI FOREIGN KEY (id_pers) REFERENCES personne (id_pers) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE imagess DROP FOREIGN KEY fk_image_ss');
+        $this->addSql('ALTER TABLE imagess DROP FOREIGN KEY fk_image_ss');
+        $this->addSql('ALTER TABLE imagess CHANGE sous_service sous_service INT DEFAULT NULL, CHANGE img img VARCHAR(255) DEFAULT NULL');
+        $this->addSql('ALTER TABLE imagess ADD CONSTRAINT FK_B68958F3C294E29F FOREIGN KEY (sous_service) REFERENCES sousservice (id)');
+        $this->addSql('DROP INDEX fk_image_ss ON imagess');
+        $this->addSql('CREATE INDEX IDX_B68958F3C294E29F ON imagess (sous_service)');
+        $this->addSql('ALTER TABLE imagess ADD CONSTRAINT fk_image_ss FOREIGN KEY (sous_service) REFERENCES sousservice (id) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE imgev DROP FOREIGN KEY fk_even');
+        $this->addSql('ALTER TABLE imgev DROP FOREIGN KEY fk_even');
+        $this->addSql('ALTER TABLE imgev CHANGE id_even id_even INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE imgev ADD CONSTRAINT FK_77385BB144600370 FOREIGN KEY (id_even) REFERENCES evenement (id_ev)');
+        $this->addSql('DROP INDEX fk_even ON imgev');
+        $this->addSql('CREATE INDEX IDX_77385BB144600370 ON imgev (id_even)');
+        $this->addSql('ALTER TABLE imgev ADD CONSTRAINT fk_even FOREIGN KEY (id_even) REFERENCES evenement (id_ev) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE personne ADD is_verified INT NOT NULL, ADD date DATETIME NOT NULL, CHANGE nom_pers nom_pers VARCHAR(255) NOT NULL, CHANGE prenom_pers prenom_pers VARCHAR(255) NOT NULL, CHANGE num_tel num_tel VARCHAR(255) NOT NULL, CHANGE email email VARCHAR(255) NOT NULL, CHANGE adresse adresse VARCHAR(255) NOT NULL, CHANGE rib rib VARCHAR(255) NOT NULL, CHANGE token token VARCHAR(255) NOT NULL');
+        $this->addSql('ALTER TABLE reclamation DROP FOREIGN KEY fk_personne');
+        $this->addSql('ALTER TABLE reclamation DROP FOREIGN KEY fk_personne');
+        $this->addSql('ALTER TABLE reclamation CHANGE description description VARCHAR(255) NOT NULL, CHANGE titre titre VARCHAR(255) NOT NULL, CHANGE userId userId INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE reclamation ADD CONSTRAINT FK_CE60640464B64DCC FOREIGN KEY (userId) REFERENCES personne (id_pers)');
+        $this->addSql('DROP INDEX fk_personne ON reclamation');
+        $this->addSql('CREATE INDEX IDX_CE60640464B64DCC ON reclamation (userId)');
+        $this->addSql('ALTER TABLE reclamation ADD CONSTRAINT fk_personne FOREIGN KEY (userId) REFERENCES personne (id_pers) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE reponse DROP FOREIGN KEY fk_rec');
+        $this->addSql('ALTER TABLE reponse DROP FOREIGN KEY fk_sender');
+        $this->addSql('ALTER TABLE reponse DROP FOREIGN KEY fk_rec');
+        $this->addSql('ALTER TABLE reponse DROP FOREIGN KEY fk_sender');
+        $this->addSql('ALTER TABLE reponse CHANGE rec_id rec_id INT DEFAULT NULL, CHANGE senderId senderId INT DEFAULT NULL, CHANGE isEdited isEdited TINYINT(1) NOT NULL');
+        $this->addSql('ALTER TABLE reponse ADD CONSTRAINT FK_5FB6DEC71669B19B FOREIGN KEY (rec_id) REFERENCES reclamation (id_rec)');
+        $this->addSql('ALTER TABLE reponse ADD CONSTRAINT FK_5FB6DEC7F0D67FFD FOREIGN KEY (senderId) REFERENCES personne (id_pers)');
+        $this->addSql('DROP INDEX fk_rec ON reponse');
+        $this->addSql('CREATE INDEX IDX_5FB6DEC71669B19B ON reponse (rec_id)');
+        $this->addSql('DROP INDEX fk_sender ON reponse');
+        $this->addSql('CREATE INDEX IDX_5FB6DEC7F0D67FFD ON reponse (senderId)');
+        $this->addSql('ALTER TABLE reponse ADD CONSTRAINT fk_rec FOREIGN KEY (rec_id) REFERENCES reclamation (id_rec) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE reponse ADD CONSTRAINT fk_sender FOREIGN KEY (senderId) REFERENCES personne (id_pers) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE reservation DROP FOREIGN KEY fk_event');
+        $this->addSql('ALTER TABLE reservation DROP FOREIGN KEY fk_event');
+        $this->addSql('ALTER TABLE reservation CHANGE id_ss id_ss LONGTEXT DEFAULT NULL');
+        $this->addSql('ALTER TABLE reservation ADD CONSTRAINT FK_42C849552048A013 FOREIGN KEY (id_ev) REFERENCES evenement (id_ev)');
+        $this->addSql('DROP INDEX fk_event ON reservation');
+        $this->addSql('CREATE INDEX IDX_42C849552048A013 ON reservation (id_ev)');
+        $this->addSql('ALTER TABLE reservation ADD CONSTRAINT fk_event FOREIGN KEY (id_ev) REFERENCES evenement (id_ev) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE service CHANGE nom nom VARCHAR(255) NOT NULL');
+        $this->addSql('ALTER TABLE sousservice DROP FOREIGN KEY fk_pers');
+        $this->addSql('ALTER TABLE sousservice DROP FOREIGN KEY fk_service');
+        $this->addSql('ALTER TABLE sousservice DROP FOREIGN KEY fk_pers');
+        $this->addSql('ALTER TABLE sousservice DROP FOREIGN KEY fk_service');
+        $this->addSql('ALTER TABLE sousservice DROP image, CHANGE id_service id_service INT DEFAULT NULL, CHANGE nom nom VARCHAR(255) NOT NULL, CHANGE description description VARCHAR(255) NOT NULL, CHANGE id_eventCateg id_eventcateg VARCHAR(255) NOT NULL, CHANGE id_Pers id_pers INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE sousservice ADD CONSTRAINT FK_C8B18FA65B4251BB FOREIGN KEY (id_pers) REFERENCES personne (id_pers)');
+        $this->addSql('ALTER TABLE sousservice ADD CONSTRAINT FK_C8B18FA63F0033A2 FOREIGN KEY (id_service) REFERENCES service (id_service)');
+        $this->addSql('DROP INDEX fk_pers ON sousservice');
+        $this->addSql('CREATE INDEX IDX_C8B18FA65B4251BB ON sousservice (id_pers)');
+        $this->addSql('DROP INDEX fk_service ON sousservice');
+        $this->addSql('CREATE INDEX IDX_C8B18FA63F0033A2 ON sousservice (id_service)');
+        $this->addSql('ALTER TABLE sousservice ADD CONSTRAINT fk_pers FOREIGN KEY (id_Pers) REFERENCES personne (id_pers) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE sousservice ADD CONSTRAINT fk_service FOREIGN KEY (id_service) REFERENCES service (id_service) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE sponsoring DROP FOREIGN KEY fk_eve');
+        $this->addSql('ALTER TABLE sponsoring DROP FOREIGN KEY fk_eve');
+        $this->addSql('ALTER TABLE sponsoring ADD CONSTRAINT FK_E459A50E9EA45F8D FOREIGN KEY (id_trans) REFERENCES transaction (id_trans)');
+        $this->addSql('ALTER TABLE sponsoring ADD CONSTRAINT FK_E459A50ED52B4B97 FOREIGN KEY (id_event) REFERENCES evenement (id_ev)');
+        $this->addSql('DROP INDEX fk_sponso ON sponsoring');
+        $this->addSql('CREATE INDEX IDX_E459A50E9EA45F8D ON sponsoring (id_trans)');
+        $this->addSql('DROP INDEX fk_eve ON sponsoring');
+        $this->addSql('CREATE INDEX IDX_E459A50ED52B4B97 ON sponsoring (id_event)');
+        $this->addSql('ALTER TABLE sponsoring ADD CONSTRAINT fk_eve FOREIGN KEY (id_event) REFERENCES evenement (id_ev) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE transaction DROP FOREIGN KEY fk_trans');
+        $this->addSql('DROP INDEX fk_trans ON transaction');
+        $this->addSql('ALTER TABLE transaction CHANGE devis devis ENUM(\'USD\', \'EUR\', \'JPY\', \'GBP\', \'CHF\', \'CAD\', \'AUD\', \'NZD\'), CHANGE mode_trans mode_trans ENUM(\'Square\', \'Stripe\', \'Amazon Pay\', \'Google Pay\'), CHANGE userID user_id INT NOT NULL');
+        $this->addSql('ALTER TABLE transaction ADD CONSTRAINT FK_723705D1A76ED395 FOREIGN KEY (user_id) REFERENCES personne (id_pers)');
+        $this->addSql('CREATE INDEX IDX_723705D1A76ED395 ON transaction (user_id)');
+    }
+
+    public function down(Schema $schema): void
+    {
+        // this down() migration is auto-generated, please modify it to your needs
+        $this->addSql('CREATE TABLE chat (id_chat INT AUTO_INCREMENT NOT NULL, event_id INT NOT NULL, message_chat TEXT CHARACTER SET utf8 NOT NULL COLLATE `utf8_general_ci`, userId INT NOT NULL, dataheure_chat DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL, INDEX fk_chat (userId), INDEX fk_eventchat (event_id), PRIMARY KEY(id_chat)) DEFAULT CHARACTER SET utf8 COLLATE `utf8_general_ci` ENGINE = InnoDB COMMENT = \'\' ');
+        $this->addSql('CREATE TABLE messenger_messages (id BIGINT AUTO_INCREMENT NOT NULL, body LONGTEXT CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_unicode_ci`, headers LONGTEXT CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_unicode_ci`, queue_name VARCHAR(190) CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_unicode_ci`, created_at DATETIME NOT NULL, available_at DATETIME NOT NULL, delivered_at DATETIME DEFAULT NULL, INDEX IDX_75EA56E0FB7336F0 (queue_name), INDEX IDX_75EA56E0E3BD61CE (available_at), INDEX IDX_75EA56E016BA31DB (delivered_at), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB COMMENT = \'\' ');
+        $this->addSql('CREATE TABLE ticket (id_tick INT AUTO_INCREMENT NOT NULL, id_tran INT NOT NULL, nb_tick INT NOT NULL, prix_tick DOUBLE PRECISION NOT NULL, status VARCHAR(30) CHARACTER SET utf8 NOT NULL COLLATE `utf8_general_ci`, idEvent INT NOT NULL, INDEX fk_ev (idEvent), INDEX fk_tick (id_tran), PRIMARY KEY(id_tick)) DEFAULT CHARACTER SET utf8 COLLATE `utf8_general_ci` ENGINE = InnoDB COMMENT = \'\' ');
+        $this->addSql('ALTER TABLE chat ADD CONSTRAINT fk_eventchat FOREIGN KEY (event_id) REFERENCES evenement (id_ev) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE chat ADD CONSTRAINT fk_chat FOREIGN KEY (userId) REFERENCES personne (id_pers) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE ticket ADD CONSTRAINT fk_ev FOREIGN KEY (idEvent) REFERENCES evenement (id_ev) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE ticket ADD CONSTRAINT fk_tick FOREIGN KEY (id_tran) REFERENCES transaction (id_trans) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE reset_password_request DROP FOREIGN KEY FK_7CE748A5B4251BB');
+        $this->addSql('DROP TABLE reset_password_request');
+        $this->addSql('ALTER TABLE avis DROP FOREIGN KEY FK_8F91ABF0D0624DB9');
+        $this->addSql('ALTER TABLE avis DROP FOREIGN KEY FK_8F91ABF03F0033A2');
+        $this->addSql('ALTER TABLE avis DROP FOREIGN KEY FK_8F91ABF0D0624DB9');
+        $this->addSql('ALTER TABLE avis DROP FOREIGN KEY FK_8F91ABF03F0033A2');
+        $this->addSql('ALTER TABLE avis CHANGE pers pers INT NOT NULL, CHANGE id_service id_service INT NOT NULL, CHANGE comment comment TEXT NOT NULL');
+        $this->addSql('ALTER TABLE avis ADD CONSTRAINT fk_serv FOREIGN KEY (id_service) REFERENCES sousservice (id) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE avis ADD CONSTRAINT gggggggg FOREIGN KEY (pers) REFERENCES personne (id_pers) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('DROP INDEX idx_8f91abf03f0033a2 ON avis');
+        $this->addSql('CREATE INDEX fk_serv ON avis (id_service)');
+        $this->addSql('DROP INDEX idx_8f91abf0d0624db9 ON avis');
+        $this->addSql('CREATE INDEX gggggggg ON avis (pers)');
+        $this->addSql('ALTER TABLE avis ADD CONSTRAINT FK_8F91ABF0D0624DB9 FOREIGN KEY (pers) REFERENCES personne (id_pers)');
+        $this->addSql('ALTER TABLE avis ADD CONSTRAINT FK_8F91ABF03F0033A2 FOREIGN KEY (id_service) REFERENCES sousservice (id)');
+        $this->addSql('ALTER TABLE categ_event CHANGE type type VARCHAR(20) NOT NULL');
+        $this->addSql('ALTER TABLE evenement DROP FOREIGN KEY FK_B26681EED0B8043');
+        $this->addSql('ALTER TABLE evenement DROP FOREIGN KEY FK_B26681EED0B8043');
+        $this->addSql('ALTER TABLE evenement DROP FOREIGN KEY FK_B26681E5B4251BB');
+        $this->addSql('ALTER TABLE evenement CHANGE id_categ id_categ INT NOT NULL, CHANGE id_pers id_pers INT NOT NULL, CHANGE titre titre VARCHAR(30) NOT NULL, CHANGE description_ev description_ev TEXT NOT NULL');
+        $this->addSql('ALTER TABLE evenement ADD CONSTRAINT fk_categ FOREIGN KEY (id_categ) REFERENCES categ_event (id_categ) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('DROP INDEX idx_b26681eed0b8043 ON evenement');
+        $this->addSql('CREATE INDEX fk_categ ON evenement (id_categ)');
+        $this->addSql('DROP INDEX idx_b26681e5b4251bb ON evenement');
+        $this->addSql('CREATE INDEX fk_p ON evenement (id_pers)');
+        $this->addSql('ALTER TABLE evenement ADD CONSTRAINT FK_B26681EED0B8043 FOREIGN KEY (id_categ) REFERENCES categ_event (id_categ)');
+        $this->addSql('ALTER TABLE evenement ADD CONSTRAINT FK_B26681E5B4251BB FOREIGN KEY (id_pers) REFERENCES personne (id_pers)');
+        $this->addSql('ALTER TABLE imagepers DROP FOREIGN KEY FK_C5E384105B4251BB');
+        $this->addSql('ALTER TABLE imagepers DROP FOREIGN KEY FK_C5E384105B4251BB');
+        $this->addSql('ALTER TABLE imagepers CHANGE id_pers id_pers INT NOT NULL');
+        $this->addSql('ALTER TABLE imagepers ADD CONSTRAINT fk_perI FOREIGN KEY (id_pers) REFERENCES personne (id_pers) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('DROP INDEX idx_c5e384105b4251bb ON imagepers');
+        $this->addSql('CREATE INDEX fk_perI ON imagepers (id_pers)');
+        $this->addSql('ALTER TABLE imagepers ADD CONSTRAINT FK_C5E384105B4251BB FOREIGN KEY (id_pers) REFERENCES personne (id_pers)');
+        $this->addSql('ALTER TABLE imagess DROP FOREIGN KEY FK_B68958F3C294E29F');
+        $this->addSql('ALTER TABLE imagess DROP FOREIGN KEY FK_B68958F3C294E29F');
+        $this->addSql('ALTER TABLE imagess CHANGE sous_service sous_service INT NOT NULL, CHANGE img img TEXT NOT NULL');
+        $this->addSql('ALTER TABLE imagess ADD CONSTRAINT fk_image_ss FOREIGN KEY (sous_service) REFERENCES sousservice (id) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('DROP INDEX idx_b68958f3c294e29f ON imagess');
+        $this->addSql('CREATE INDEX fk_image_ss ON imagess (sous_service)');
+        $this->addSql('ALTER TABLE imagess ADD CONSTRAINT FK_B68958F3C294E29F FOREIGN KEY (sous_service) REFERENCES sousservice (id)');
+        $this->addSql('ALTER TABLE imgev DROP FOREIGN KEY FK_77385BB144600370');
+        $this->addSql('ALTER TABLE imgev DROP FOREIGN KEY FK_77385BB144600370');
+        $this->addSql('ALTER TABLE imgev CHANGE id_even id_even INT NOT NULL');
+        $this->addSql('ALTER TABLE imgev ADD CONSTRAINT fk_even FOREIGN KEY (id_even) REFERENCES evenement (id_ev) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('DROP INDEX idx_77385bb144600370 ON imgev');
+        $this->addSql('CREATE INDEX fk_even ON imgev (id_even)');
+        $this->addSql('ALTER TABLE imgev ADD CONSTRAINT FK_77385BB144600370 FOREIGN KEY (id_even) REFERENCES evenement (id_ev)');
+        $this->addSql('ALTER TABLE personne DROP is_verified, DROP date, CHANGE nom_pers nom_pers VARCHAR(30) NOT NULL, CHANGE prenom_pers prenom_pers VARCHAR(30) NOT NULL, CHANGE num_tel num_tel VARCHAR(30) NOT NULL, CHANGE email email VARCHAR(30) NOT NULL, CHANGE adresse adresse VARCHAR(30) NOT NULL, CHANGE rib rib TEXT NOT NULL, CHANGE token token VARCHAR(30) NOT NULL');
+        $this->addSql('ALTER TABLE reclamation DROP FOREIGN KEY FK_CE60640464B64DCC');
+        $this->addSql('ALTER TABLE reclamation DROP FOREIGN KEY FK_CE60640464B64DCC');
+        $this->addSql('ALTER TABLE reclamation CHANGE description description TEXT NOT NULL, CHANGE titre titre VARCHAR(30) NOT NULL, CHANGE userId userId INT NOT NULL');
+        $this->addSql('ALTER TABLE reclamation ADD CONSTRAINT fk_personne FOREIGN KEY (userId) REFERENCES personne (id_pers) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('DROP INDEX idx_ce60640464b64dcc ON reclamation');
+        $this->addSql('CREATE INDEX fk_personne ON reclamation (userId)');
+        $this->addSql('ALTER TABLE reclamation ADD CONSTRAINT FK_CE60640464B64DCC FOREIGN KEY (userId) REFERENCES personne (id_pers)');
+        $this->addSql('ALTER TABLE reponse DROP FOREIGN KEY FK_5FB6DEC71669B19B');
+        $this->addSql('ALTER TABLE reponse DROP FOREIGN KEY FK_5FB6DEC7F0D67FFD');
+        $this->addSql('ALTER TABLE reponse DROP FOREIGN KEY FK_5FB6DEC71669B19B');
+        $this->addSql('ALTER TABLE reponse DROP FOREIGN KEY FK_5FB6DEC7F0D67FFD');
+        $this->addSql('ALTER TABLE reponse CHANGE rec_id rec_id INT NOT NULL, CHANGE isEdited isEdited TINYINT(1) DEFAULT 0 NOT NULL, CHANGE senderId senderId INT NOT NULL');
+        $this->addSql('ALTER TABLE reponse ADD CONSTRAINT fk_rec FOREIGN KEY (rec_id) REFERENCES reclamation (id_rec) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE reponse ADD CONSTRAINT fk_sender FOREIGN KEY (senderId) REFERENCES personne (id_pers) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('DROP INDEX idx_5fb6dec71669b19b ON reponse');
+        $this->addSql('CREATE INDEX fk_rec ON reponse (rec_id)');
+        $this->addSql('DROP INDEX idx_5fb6dec7f0d67ffd ON reponse');
+        $this->addSql('CREATE INDEX fk_sender ON reponse (senderId)');
+        $this->addSql('ALTER TABLE reponse ADD CONSTRAINT FK_5FB6DEC71669B19B FOREIGN KEY (rec_id) REFERENCES reclamation (id_rec)');
+        $this->addSql('ALTER TABLE reponse ADD CONSTRAINT FK_5FB6DEC7F0D67FFD FOREIGN KEY (senderId) REFERENCES personne (id_pers)');
+        $this->addSql('ALTER TABLE reservation DROP FOREIGN KEY FK_42C849552048A013');
+        $this->addSql('ALTER TABLE reservation DROP FOREIGN KEY FK_42C849552048A013');
+        $this->addSql('ALTER TABLE reservation CHANGE id_ss id_ss TEXT DEFAULT NULL');
+        $this->addSql('ALTER TABLE reservation ADD CONSTRAINT fk_event FOREIGN KEY (id_ev) REFERENCES evenement (id_ev) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('DROP INDEX idx_42c849552048a013 ON reservation');
+        $this->addSql('CREATE INDEX fk_event ON reservation (id_ev)');
+        $this->addSql('ALTER TABLE reservation ADD CONSTRAINT FK_42C849552048A013 FOREIGN KEY (id_ev) REFERENCES evenement (id_ev)');
+        $this->addSql('ALTER TABLE service CHANGE nom nom VARCHAR(20) NOT NULL');
+        $this->addSql('ALTER TABLE sousservice DROP FOREIGN KEY FK_C8B18FA65B4251BB');
+        $this->addSql('ALTER TABLE sousservice DROP FOREIGN KEY FK_C8B18FA63F0033A2');
+        $this->addSql('ALTER TABLE sousservice DROP FOREIGN KEY FK_C8B18FA65B4251BB');
+        $this->addSql('ALTER TABLE sousservice DROP FOREIGN KEY FK_C8B18FA63F0033A2');
+        $this->addSql('ALTER TABLE sousservice ADD image TEXT NOT NULL, CHANGE id_pers id_Pers INT NOT NULL, CHANGE id_service id_service INT NOT NULL, CHANGE nom nom VARCHAR(30) NOT NULL, CHANGE description description TEXT NOT NULL, CHANGE id_eventcateg id_eventCateg TEXT NOT NULL');
+        $this->addSql('ALTER TABLE sousservice ADD CONSTRAINT fk_pers FOREIGN KEY (id_Pers) REFERENCES personne (id_pers) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE sousservice ADD CONSTRAINT fk_service FOREIGN KEY (id_service) REFERENCES service (id_service) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('DROP INDEX idx_c8b18fa63f0033a2 ON sousservice');
+        $this->addSql('CREATE INDEX fk_service ON sousservice (id_service)');
+        $this->addSql('DROP INDEX idx_c8b18fa65b4251bb ON sousservice');
+        $this->addSql('CREATE INDEX fk_pers ON sousservice (id_Pers)');
+        $this->addSql('ALTER TABLE sousservice ADD CONSTRAINT FK_C8B18FA65B4251BB FOREIGN KEY (id_pers) REFERENCES personne (id_pers)');
+        $this->addSql('ALTER TABLE sousservice ADD CONSTRAINT FK_C8B18FA63F0033A2 FOREIGN KEY (id_service) REFERENCES service (id_service)');
+        $this->addSql('ALTER TABLE sponsoring DROP FOREIGN KEY FK_E459A50E9EA45F8D');
+        $this->addSql('ALTER TABLE sponsoring DROP FOREIGN KEY FK_E459A50ED52B4B97');
+        $this->addSql('ALTER TABLE sponsoring DROP FOREIGN KEY FK_E459A50E9EA45F8D');
+        $this->addSql('ALTER TABLE sponsoring DROP FOREIGN KEY FK_E459A50ED52B4B97');
+        $this->addSql('ALTER TABLE sponsoring ADD CONSTRAINT fk_eve FOREIGN KEY (id_event) REFERENCES evenement (id_ev) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('DROP INDEX idx_e459a50ed52b4b97 ON sponsoring');
+        $this->addSql('CREATE INDEX fk_eve ON sponsoring (id_event)');
+        $this->addSql('DROP INDEX idx_e459a50e9ea45f8d ON sponsoring');
+        $this->addSql('CREATE INDEX fk_sponso ON sponsoring (id_trans)');
+        $this->addSql('ALTER TABLE sponsoring ADD CONSTRAINT FK_E459A50E9EA45F8D FOREIGN KEY (id_trans) REFERENCES transaction (id_trans)');
+        $this->addSql('ALTER TABLE sponsoring ADD CONSTRAINT FK_E459A50ED52B4B97 FOREIGN KEY (id_event) REFERENCES evenement (id_ev)');
+        $this->addSql('ALTER TABLE transaction DROP FOREIGN KEY FK_723705D1A76ED395');
+        $this->addSql('DROP INDEX IDX_723705D1A76ED395 ON transaction');
+        $this->addSql('ALTER TABLE transaction CHANGE devis devis VARCHAR(255) NOT NULL, CHANGE mode_trans mode_trans VARCHAR(255) NOT NULL, CHANGE user_id userID INT NOT NULL');
+        $this->addSql('ALTER TABLE transaction ADD CONSTRAINT fk_trans FOREIGN KEY (userID) REFERENCES personne (id_pers) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('CREATE INDEX fk_trans ON transaction (userID)');
+    }
+}

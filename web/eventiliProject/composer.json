@@ -4,7 +4,7 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=7.2.5",
+        "php": "8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/annotations": "^2.0",
@@ -51,7 +51,12 @@
         "symfonycasts/reset-password-bundle": "^1.17",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0",
-        "twilio/sdk": "^7.3"
+        "twilio/sdk": "^7.3",
+        "karser/karser-recaptcha3-bundle": "^0.1.23",
+        "symfony/notifier": "5.4.*",
+        "symfony/telegram-notifier": "5.4.*"
+
+
     },
     "config": {
         "allow-plugins": {
