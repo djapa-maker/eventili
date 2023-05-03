@@ -49,7 +49,7 @@ class EvenementController extends AbstractController
 
        
     }
-//affichage------------------------------------------------------------------------------------------------
+//affichage-------------------------------------------------------------------------------------------------------------------------------------------
     #[Route('/', name: 'app_evenement_index', methods: ['GET'])]
     public function index(
         EntityManagerInterface $entityManager
