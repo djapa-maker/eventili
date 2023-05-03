@@ -87,6 +87,13 @@
 													{{ event.prix ~" DT" }}
 												{% endif %}
 											</div>
+																						
+												{% if eventsponso[event.idEv] is not null %}
+												<div style="margin-left:61px;"class="figLabel">
+													 Sponsorisé 
+												 	</div>
+												{% endif %}
+										
 											<figcaption>
 												<div style=" width: 50px; height: 50px; background-color: rgba(255, 255, 255, 0.5); border: 1px solid black;
 																																																						display: flex; flex-direction: column; justify-content: center; align-items: center;">

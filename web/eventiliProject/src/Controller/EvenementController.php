@@ -10,6 +10,7 @@ use App\Repository\EvenementRepository;
 use App\Repository\ImgevRepository;
 use App\Repository\PersonneRepository;
 use App\Repository\SousserviceRepository;
+use App\Repository\SponsoringRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -54,7 +55,8 @@ class EvenementController extends AbstractController
         EntityManagerInterface $entityManager
         ,ImagessRepository $ImagessRepository
         ,SousserviceRepository $SousserviceRepository
-        , reservationRepository $reservationRepository, ImagePersRepository $imagePersRepository, EvenementRepository $evenementRepository, SessionInterface $session, CategEventRepository $categEventRepository, ImgevRepository $imgevRepository): Response
+        , reservationRepository $reservationRepository,
+        SponsoringRepository $sponsoringRepository, ImagePersRepository $imagePersRepository, EvenementRepository $evenementRepository, SessionInterface $session, CategEventRepository $categEventRepository, ImgevRepository $imgevRepository): Response
     {
         $personne = $session->get('id');
         $idPerss = $session->get('personne');
@@ -76,8 +78,15 @@ class EvenementController extends AbstractController
         $list= [];
         $listSS =[];
         $listimg = [];
+        $listsponso = [];
         $session->remove('eventId');
         $session->remove('services');
+        //--------
+        foreach ($evenements as $event) {
+  $sponsoevent[$event->getIdEv()] = $sponsoringRepository->findOneBy(['id_event' => $event->getIdEv()]);
+
+        }  
+        //--------
         foreach ($evenements as $event) {
             $reservation = $reservationRepository->findOneBy(['idEv' => $event->getIdEv()]);
             if(!$reservation){
@@ -94,7 +103,8 @@ class EvenementController extends AbstractController
             foreach ($list[$event->getIdEv()] as $ss) {
                 $listSS[$event->getIdEv()][]=$SousserviceRepository->findOneById($ss);
             }
-        }
+          
+        }  
         //first image mta3 el sousservice 
        
         foreach ($list as $serv) {
@@ -104,6 +114,7 @@ class EvenementController extends AbstractController
             }
             
         }
+        //-------------------------------
         $listimg[]= $fimg;
         return $this->render('templates_front/evenement/index.html.twig', [
             'evenements' => $events,
@@ -113,6 +124,7 @@ class EvenementController extends AbstractController
             'sous' => $listSS,
             'firstimg' =>  $listimg,
             'last' => $last,
+            'eventsponso'=>  $sponsoevent,
         ]);
     }
 //ajout-----------------------------------------------------------------------------------------------
