@@ -84,7 +84,7 @@ class Personne implements UserInterface
     private ?String $token="";
 
     #[ORM\Column]
-    private ?int $is_verified=0;
+    private ?bool $verified=false;
 
     #[ORM\Column]
     private ?DateTime $date;
@@ -93,9 +93,9 @@ class Personne implements UserInterface
     {
         $this->date = new DateTime();
     }
-    public function getIs_verified(): ?int
+    public function getVerified(): ?int
     {
-        return $this->is_verified;
+        return $this->verified;
     }
     public function getDate(): ?DateTime
     {
@@ -107,9 +107,9 @@ class Personne implements UserInterface
 
         return $this;
     }
-    public function setIs_verified(int $is_verified): self
+    public function setVerified(int $verified): self
     {
-        $this->is_verified = $is_verified;
+        $this->verified = $verified;
 
         return $this;
     }

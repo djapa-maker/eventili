@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : jeu. 04 mai 2023 à 10:31
+-- Généré le : jeu. 04 mai 2023 à 17:15
 -- Version du serveur : 10.4.27-MariaDB
 -- Version de PHP : 8.2.0
 
@@ -191,7 +191,7 @@ CREATE TABLE `personne` (
   `rib` text NOT NULL,
   `role` enum('organisateur','partenaire','admin') NOT NULL,
   `token` varchar(30) NOT NULL,
-  `is_verified` tinyint(1) NOT NULL,
+  `verified` tinyint(1) NOT NULL,
   `date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -199,8 +199,8 @@ CREATE TABLE `personne` (
 -- Déchargement des données de la table `personne`
 --
 
-INSERT INTO `personne` (`id_pers`, `nom_pers`, `prenom_pers`, `num_tel`, `email`, `mdp`, `adresse`, `rib`, `role`, `token`, `is_verified`, `date`) VALUES
-(39, 'Tlili', 'Chaima', '99339684', 'chaima.tli10@gmail.com', '$2y$13$sAtQ3XpQBuacRMJHpgf10e9MsUa8T1ZZB46j5ood4pVGyVZigDs1u', 'hjkl', '11111111111111111111', 'organisateur', 'Na9Id4skeLnkvOAla8yJATaaAWBz9d', 1, '2023-05-03 20:22:17'),
+INSERT INTO `personne` (`id_pers`, `nom_pers`, `prenom_pers`, `num_tel`, `email`, `mdp`, `adresse`, `rib`, `role`, `token`, `verified`, `date`) VALUES
+(39, 'Tlili', 'Chaima', '99339684', 'chaima.tli10@gmail.com', '$2y$13$sAtQ3XpQBuacRMJHpgf10e9MsUa8T1ZZB46j5ood4pVGyVZigDs1u', 'hjkl', '11111111111111111111', 'organisateur', 'Na9Id4skeLnkvOAla8yJATaaAWBz9d', 0, '2023-05-04 16:14:24'),
 (42, 'ghzel', 'dali', '99339684', 'tlili.chaima1@esprit.tn', '$2y$13$niNxYFJgFZNug6MdKxqzo.VthihhZ3nnt19FZEZ4BsfJX94DpD12m', 'ariana', '11111111111111111111', 'organisateur', 'qsdgYNLSa9nD4tui0x1BiaQduQyy4B', 1, '2023-05-04 00:08:02'),
 (43, 'yessmin', 'yessmin', '51468579', 'tlili.chaima@esprit.tn1', '$2y$13$5yd5n8l/5d1Zcb5/KSqKfeP/IccGOWDOyGG1djX1xqUxhx68xZTmy', 'ariana', '11111111111111111111', 'organisateur', 'XqDxuX1Yfio9jUO-Ly6oWpv2H8HEpT', 1, '2023-05-04 01:00:04'),
 (44, 'yessmin', 'yessmin', '51468579', 'tlili.chaima@esprit.tn', '$2y$13$5yd5n8l/5d1Zcb5/KSqKfeP/IccGOWDOyGG1djX1xqUxhx68xZTmy', 'ariana', '11111111111111111111', 'organisateur', 'XqDxuX1Yfio9jUO-Ly6oWpv2H8HEpT', 1, '2023-05-04 01:00:04'),
@@ -209,7 +209,13 @@ INSERT INTO `personne` (`id_pers`, `nom_pers`, `prenom_pers`, `num_tel`, `email`
 (47, 'yessmin', 'yessmin', '51468579', 'tlili.chaima@esprit.tn', '$2y$13$5yd5n8l/5d1Zcb5/KSqKfeP/IccGOWDOyGG1djX1xqUxhx68xZTmy', 'ariana', '11111111111111111111', 'organisateur', 'XqDxuX1Yfio9jUO-Ly6oWpv2H8HEpT', 1, '2023-05-04 01:00:04'),
 (48, 'yessmin', 'yessmin', '51468579', 'tlili.chaima@esprit.tn', '$2y$13$5yd5n8l/5d1Zcb5/KSqKfeP/IccGOWDOyGG1djX1xqUxhx68xZTmy', 'ariana', '11111111111111111111', 'organisateur', 'XqDxuX1Yfio9jUO-Ly6oWpv2H8HEpT', 1, '2023-05-04 01:00:04'),
 (49, 'yessmin', 'yessmin', '51468579', 'tlili.chaima@esprit.tn', '$2y$13$5yd5n8l/5d1Zcb5/KSqKfeP/IccGOWDOyGG1djX1xqUxhx68xZTmy', 'ariana', '11111111111111111111', 'organisateur', 'XqDxuX1Yfio9jUO-Ly6oWpv2H8HEpT', 1, '2023-05-04 01:00:04'),
-(50, 'mansouri', 'ahmed', '53698741', 'rabeb.benhajyhaia@esprit.tn', '$2y$13$JAVBIuJYFTxGiyckg/BAWOvsBcHiQXeNDQ2knp/60zR9UtVzqdYPS', 'bizerte', '11111111111111111111', 'organisateur', 'impmzMG2OoixC3HwdgsvgfIL-sxJkg', 1, '2023-05-04 07:17:15');
+(50, 'mansouri', 'ahmed', '53698741', 'rabeb.benhajyhaia@esprit.tn', '$2y$13$JAVBIuJYFTxGiyckg/BAWOvsBcHiQXeNDQ2knp/60zR9UtVzqdYPS', 'bizerte', '11111111111111111111', 'organisateur', 'impmzMG2OoixC3HwdgsvgfIL-sxJkg', 1, '2023-05-04 07:17:15'),
+(51, 'yesmine', 'guesmi', '56108211', 'yesmineguesmi@gmail.com', '$2y$13$PpMfKd8QKT9mIjF2xrDqWuasTPQJv/59Er4BuSVPlWF/KYdibvr5e', 'Cosmariumstraat 11', '11111111111111111111', 'organisateur', 'xcyBSqO67ZU2b2SG-NZvy-UwpfrrjM', 1, '2023-05-04 16:16:38'),
+(52, 'dsf', 'fsd', '16', 'test@gmail.com', '$2y$13$2/0125yhEdrfwXNqtA2P7.3Ux0ULGB9/VXW93fL5.aGEcELUR/ewa', 'fsd', '1', '', '', 0, '2023-05-04 16:27:24'),
+(53, '', '', '', 'test@gmail.com', '$2y$13$1LgExjZ1dHq7/YIkHMyBh.aVj.YR/dojxjs0b5l1PHDABJ..kRKF6', '', '', '', '', 0, '2023-05-04 16:31:54'),
+(54, '', '', '', 'test@gmail.com', '$2y$13$17lDYxHXlyDJr7CbQB6tV.Y9/s3bUI9ss8pMxszKGdCT8gU0m2rZS', '', '', '', '', 0, '2023-05-04 16:33:40'),
+(55, '', '', '', 'test@gmail.com', '$2y$13$huoz/Pfu7jdXIwZQKe8kJOoEvSnTZ4Z99kCAgi0R8t52mdOzxiLba', '', '', '', '', 0, '2023-05-04 16:34:53'),
+(56, 'ghj', 'hkj', '15', 'yesminegu@df.fd', '$2y$13$opkcOuyspklEgFeMsPFMTuJeoFzByL6LmbWetIUdXtbhCxtaRFMAy', 'jkh', '11', '', '', 0, '2023-05-04 16:43:34');
 
 -- --------------------------------------------------------
 
@@ -592,7 +598,7 @@ ALTER TABLE `imgev`
 -- AUTO_INCREMENT pour la table `personne`
 --
 ALTER TABLE `personne`
-  MODIFY `id_pers` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id_pers` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT pour la table `reclamation`

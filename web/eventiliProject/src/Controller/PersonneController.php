@@ -156,7 +156,7 @@ $pagination = $paginator->paginate(
     public function activation(FlashyNotifier $flashy, Request $request, SessionInterface $session, PersonneRepository $personneRepository): Response
     {
         $personne = $session->get('id');
-        $personne->setIs_verified(1);
+        $personne->setVerified(1);
         $personneRepository->update($personne, true);
         $flashy->success('email vérifié avec succès');
         return $this->renderForm('templates_front/personne/activation.html.twig');
@@ -337,7 +337,7 @@ $message->setBody($body, 'text/html');
                     $flashy->error('email ou  mot de passe incorrect');
                     return $this->renderForm('templates_front/personne/login.html.twig');
                 }
-                if ($personne->getIs_verified() == 0) {
+                if ($personne->getVerified() == 0) {
                     $flashy->warning('email non vérifié');
                     return $this->renderForm('templates_front/personne/login.html.twig');
                 }
