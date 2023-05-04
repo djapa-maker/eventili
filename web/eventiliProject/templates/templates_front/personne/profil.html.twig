@@ -42,7 +42,7 @@
 				{% for imageper in images %}
 					<div class="column is-3">
 						<a href="#" class="card-grid-item">
-							<img style="margin-top:20px;" src="{{ asset('images/' ~ imageper.imagep) }}" alt="">
+							<img style="margin-top:20px;" src="http://localhost/img/{{ asset(imageper.imagep) }}" alt="">
 							<form method="post" action="{{ path('app_imagepers_delete1', {'idImp': imageper.idImp}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
 								<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ imageper.idImp) }}">
 								<button style="margin-top:40px;background-color: #ff2727;" class="button h-button is-primary is-raised">

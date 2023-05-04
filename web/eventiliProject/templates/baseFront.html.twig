@@ -1,103 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-{% block head %}
-<head>
-    <!-- Required meta tags  -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <!--Core CSS -->
-    <link rel="stylesheet" href="{{asset('assets/css/app.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/css/main.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/css/card.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/css/cart.css')}}" />
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700" rel="stylesheet" />
-    
-    <link rel="icon" type="image/png" href="{{asset('assets/img/App-logo-dark.png')}}"/>
-    
-    <!-- JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    {% block title %}{% endblock %}
-</head>
-{% endblock %}
-<body>
-    <div id="huro-app" class="app-wrapper">
-        <div class="app-overlay"></div>
-        <!--Pageloader-->
-        <div class="pageloader"></div>
-        <div class="infraloader is-active"></div>
-        <!--BackToTop-->
-        <div id="circular-menu" class="circular-menu">
-                <a class="floating-btn" href="#">
-                    <i aria-hidden="true" class="fas fa-angle-up"></i>
-                </a>
-        </div>
-        <!--Sidebar-->
-        <div class="main-sidebar">
-            <div class="sidebar-brand">
-                    <img class="light-image" src="{{asset('assets/img/App-logo-dark.png')}}" alt="" style="width:70px;height:70px;">
-                    <img class="dark-image" src="{{asset('assets/img/App-logo-light.png')}}" alt="" style="width:70px;height:70px;">
-            </div>
-            <div class="sidebar-inner">
-               {% block naver %}
-               {# <div class="naver" style="top:-90px;"></div> #} 
-               {# call it in your page and change top #}
-               {% endblock %}
-                <ul class="icon-menu">
-                    <!-- Home -->
-                    <li></li>
-                    <li>
-                        <a href="{{ path('app_event_affich')}}" >
-                            <i class="sidebar-svg" data-feather="home"></i>
-                        </a>
-                    </li> 
-                    <!-- Events -->
-                    <li>
-                        <a href="{{ path('app_evenement_index')}}" >
-                            <i class="sidebar-svg" data-feather="calendar"></i>
-                        </a>
-                    </li>
-                     <!-- Services -->
-                    <li>
-                        <a href="{{ path('app_sousservice_front')}}" >
-                            <i class="sidebar-svg" data-feather="package"></i>
-                        </a>
-                    </li>
-                    {# <li>
-                        <a href="#" >
-                            <i class="sidebar-svg" data-feather="cpu"></i>
-                        </a>
-                    </li> 
-                    <!-- Messaging --> #}
-                    <li id="messages-menu">
-                        <a href="{{ path('app_reclamation_user_index') }}" id="open-messages" data-content="reclamation">
-                            <i class="sidebar-svg" data-feather="message-circle"></i>
-                        </a>
-                    </li>
-                </ul>
-                <!-- User account -->
-                <ul class="bottom-menu">
-                    <!-- Notifications -->
-                    <!-- Profile -->
-                    <li id="user-menu">
-                        <div id="profile-menu" class="dropdown profile-dropdown dropdown-trigger is-spaced is-up">
-                            <img  src="{{ asset('images/' ~ last) }}" data-demo-src="../assets/img/avatars/photos/8.jpg" alt="">
-                            <span class="status-indicator"></span>
+	{% block head %}
+		<head>
+			<!-- Required meta tags  -->
+			<meta charset="utf-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+			<meta
+			http-equiv="x-ua-compatible" content="ie=edge"/>
+			<!--Core CSS -->
+			<link rel="stylesheet" href="{{asset('assets/css/app.css')}}"/>
+			<link rel="stylesheet" href="{{asset('assets/css/main.css')}}"/>
+			<link rel="stylesheet" href="{{asset('assets/css/card.css')}}"/>
+			<link
+			rel="stylesheet" href="{{asset('assets/css/cart.css')}}"/>
+			<!-- Fonts -->
+			<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=swap" rel="stylesheet"/>
+			<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700" rel="stylesheet"/>
 
-                            <div class="dropdown-menu" role="menu">
-                                <div class="dropdown-content">
-                                    <div class="dropdown-head">
-                                        <div class="h-avatar is-large">
-                                            <img class="avatar" src="{{ asset('images/' ~ last) }}" alt="">
-											 </div>
-                                        <div class="meta">
-                                            <span>{{personne.nomPers}}</span>
+			<link
+			rel="icon" type="image/png" href="{{asset('assets/img/App-logo-dark.png')}}"/>
+
+			<!-- JS -->
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+			{% block title %}{% endblock %}
+		</head>
+	{% endblock %}
+	<body>
+		<div id="huro-app" class="app-wrapper">
+			<div class="app-overlay"></div>
+			<!--Pageloader-->
+			<div class="pageloader"></div>
+			<div class="infraloader is-active"></div>
+			<!--BackToTop-->
+			<div id="circular-menu" class="circular-menu">
+				<a class="floating-btn" href="#">
+					<i aria-hidden="true" class="fas fa-angle-up"></i>
+				</a>
+			</div>
+			<!--Sidebar-->
+			<div class="main-sidebar">
+				<div class="sidebar-brand">
+					<img class="light-image" src="{{asset('assets/img/App-logo-dark.png')}}" alt="" style="width:70px;height:70px;">
+					<img class="dark-image" src="{{asset('assets/img/App-logo-light.png')}}" alt="" style="width:70px;height:70px;">
+				</div>
+				<div class="sidebar-inner">
+					{% block naver %}{# <div class="naver" style="top:-90px;"></div> #}
+						{# call it in your page and change top #}
+					{% endblock %}
+					<ul
+						class="icon-menu">
+						<!-- Home -->
+						<li></li>
+						<li>
+							<a href="{{ path('app_event_affich')}}">
+								<i class="sidebar-svg" data-feather="home"></i>
+							</a>
+						</li>
+						<!-- Events -->
+						<li>
+							<a href="{{ path('app_evenement_index')}}">
+								<i class="sidebar-svg" data-feather="calendar"></i>
+							</a>
+						</li>
+						<!-- Services -->
+						<li>
+							<a href="{{ path('app_sousservice_front')}}">
+								<i class="sidebar-svg" data-feather="package"></i>
+							</a>
+						</li>
+						{# <li>
+						                        <a href="#" >
+						                            <i class="sidebar-svg" data-feather="cpu"></i>
+						                        </a>
+						                    </li> 
+						                    <!-- Messaging --> #}
+						<li id="messages-menu">
+							<a href="{{ path('app_reclamation_user_index') }}" id="open-messages" data-content="reclamation">
+								<i class="sidebar-svg" data-feather="message-circle"></i>
+							</a>
+						</li>
+					</ul>
+					<!-- User account -->
+					<ul class="bottom-menu">
+						<!-- Notifications -->
+						<!-- Profile -->
+							<li id="user-menu"> <div id="profile-menu" class="dropdown profile-dropdown dropdown-trigger is-spaced is-up">
+								<img src="http://localhost/img/{{ asset(last) }}" data-demo-src="../assets/img/avatars/photos/8.jpg" alt="">
+
+								<span class="status-indicator"></span>
+
+								<div class="dropdown-menu" role="menu">
+									<div class="dropdown-content">
+										<div class="dropdown-head">
+											<div class="h-avatar is-large">
+												<img class="avatar" src="http://localhost/img/{{ asset( last) }}" alt="">
+											</div>
+											<div class="meta">
+												<span>{{personne.nomPers}}</span>
 												<span>{{personne.role}}</span>
-                                        </div>
-                                    </div>
-                                    <a href="{{ path('app_imagepers_affich')}}" class="dropdown-item is-media">
+											</div>
+										</div>
+										<a href="{{ path('app_imagepers_affich')}}" class="dropdown-item is-media">
 											<div class="icon">
 												<i class="lnil lnil-user-alt"></i>
 											</div>
@@ -116,8 +119,8 @@
 												<span>Réglages du compte</span>
 											</div>
 										</a>
-                                   
-                                   <hr class="dropdown-divider">
+
+										<hr class="dropdown-divider">
 										<div class="dropdown-item is-button">
 											<button onclick="window.location.href = '{{ path('app_personne_deconnection') }}';" class="button h-button is-primary is-raised is-fullwidth logout-button">
 
@@ -126,143 +129,74 @@
 												</span>
 												<span>Se déconnecter</span>
 											</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        
-        <!-- Content Wrapper -->
-        <div class="view-wrapper" data-naver-offset="214" data-menu-item="#layouts-sidebar-menu" data-mobile-item="#home-sidebar-menu-mobile">
+										</div>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
 
-            <div class="page-content-wrapper">
-                <div class="page-content is-relative">
+			<!-- Content Wrapper -->
+			<div class="view-wrapper" data-naver-offset="214" data-menu-item="#layouts-sidebar-menu" data-mobile-item="#home-sidebar-menu-mobile">
 
-                    <div class="page-title has-text-centered">
-                        <!-- Sidebar Trigger -->
-                        <div class="huro-hamburger nav-trigger push-resize" data-sidebar="layouts-sidebar">
-                            <span class="menu-toggle has-chevron">
-                              <span class="icon-box-toggle">
-                                  <span class="rotate">
-                                      <i class="icon-line-top"></i>
-                                      <i class="icon-line-center"></i>
-                                      <i class="icon-line-bottom"></i>
-                                  </span>
-                            </span>
-                            </span>
-                        </div>
+				<div class="page-content-wrapper">
+					<div class="page-content is-relative">
 
-                        {% block PageTitle %}
-                        {% endblock %}
+						<div class="page-title has-text-centered">
+							<span class="menu-toggle has-chevron">
+							                              <span class="icon-box-toggle">
+							                                  <span class="rotate">
+							                                      <i class="icon-line-top"></i>
+							                                      <i class="icon-line-center"></i>
+							                                      <i class="icon-line-bottom"></i>
+							                                  </span>
+							                            </span>
+							                            </span>
+							
+
+							{% block PageTitle %}{% endblock %}
 
 
-                        <div class="toolbar ml-auto">
+							<div class="toolbar ml-auto">
 
-                            <div class="toolbar-link">
-                                <label class="dark-mode ml-auto">
-                                    <input type="checkbox" checked>
-                                    <span></span>
-                                </label>
-                            </div>
-                            <div class="toolbar-notifications is-hidden-mobile">
-                                <div class="dropdown is-spaced is-dots is-right dropdown-trigger">
-                                    <div class="is-trigger" aria-haspopup="true">
-                                        <i data-feather="bell"></i>
-                                        <span class="new-indicator pulsate"></span>
-                                    </div>
-                                    <div class="dropdown-menu" role="menu">
-                                        <div class="dropdown-content">
-                                            <div class="heading">
-                                                <div class="heading-left">
-                                                    <h6 class="heading-title">Notifications</h6>
-                                                </div>
-                                                <div class="heading-right">
-                                                    <a class="notification-link" href="/admin-profile-notifications.html">See all</a>
-                                                </div>
-                                            </div>
-                                            <ul class="notification-list">
-                                                <li>
-                                                    <a class="notification-item">
-                                                        <div class="img-left">
-                                                            <img class="user-photo" alt="" src="https://via.placeholder.com/150x150" data-demo-src="../assets/img/avatars/photos/7.jpg" />
-                                                        </div>
-                                                        <div class="user-content">
-                                                            <p class="user-info"><span class="name">Alice C.</span> left a comment.</p>
-                                                            <p class="time">1 hour ago</p>
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="notification-item">
-                                                        <div class="img-left">
-                                                            <img class="user-photo" alt="" src="https://via.placeholder.com/150x150" data-demo-src="../assets/img/avatars/photos/12.jpg" />
-                                                        </div>
-                                                        <div class="user-content">
-                                                            <p class="user-info"><span class="name">Joshua S.</span> uploaded a file.</p>
-                                                            <p class="time">2 hours ago</p>
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="notification-item">
-                                                        <div class="img-left">
-                                                            <img class="user-photo" alt="" src="https://via.placeholder.com/150x150" data-demo-src="../assets/img/avatars/photos/13.jpg" />
-                                                        </div>
-                                                        <div class="user-content">
-                                                            <p class="user-info"><span class="name">Tara S.</span> sent you a message.</p>
-                                                            <p class="time">2 hours ago</p>
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="notification-item">
-                                                        <div class="img-left">
-                                                            <img class="user-photo" alt="" src="https://via.placeholder.com/150x150" data-demo-src="../assets/img/avatars/photos/25.jpg" />
-                                                        </div>
-                                                        <div class="user-content">
-                                                            <p class="user-info"><span class="name">Melany W.</span> left a comment.</p>
-                                                            <p class="time">3 hours ago</p>
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="page-content-inner">
-                        <!--Page content goes here-->
-                {% block content %}
+								<div class="toolbar-link">
+									<label class="dark-mode ml-auto">
+										<input type="checkbox" checked>
+										<span></span>
+									</label>
+								</div>
+								
+							</div>
+						</div>
+						<div
+							class="page-content-inner">
+							<!--Page content goes here-->
+							{% block content %}{% endblock %}
+						</div>
+					</div>
+				</div>
+			</div>
 
-				{% endblock %}
-                    </div>
-                </div>
-            </div>
-        </div>
+			<!-- Concatenated plugins -->
+			<script src="{{asset('assets/js/app.js')}}"></script>
 
-        <!-- Concatenated plugins -->
-        <script src="{{asset('assets/js/app.js')}}"></script>
-
-        <!-- js -->
-        <script src="{{asset('assets/js/functions.js')}}"></script>
-        <script src="{{asset('assets/js/main.js')}}" async></script>
-        <script src="{{asset('assets/js/components.js')}}" async></script>
-        <script src="{{asset('assets/js/popover.js')}}" async></script>
-        <script src="{{asset('assets/js/widgets.js')}}" async></script>
+			<!-- js -->
+			<script src="{{asset('assets/js/functions.js')}}"></script>
+			<script src="{{asset('assets/js/main.js')}}" async></script>
+			<script src="{{asset('assets/js/components.js')}}" async></script>
+			<script src="{{asset('assets/js/popover.js')}}" async></script>
+			<script src="{{asset('assets/js/widgets.js')}}" async></script>
 
 
-        <!-- Additional Features -->
-        <script src="{{asset('assets/js/touch.js')}}" async></script>
-        <script src="{{asset('assets/js/syntax.js')}}" async></script>
-        <!-- Dashboards js -->
+			<!-- Additional Features -->
+			<script src="{{asset('assets/js/touch.js')}}" async></script>
+			<script src="{{asset('assets/js/syntax.js')}}" async></script>
+			<!-- Dashboards js -->
 
-        <script src="{{asset('assets/js/apps-1.js')}}" async></script>
+			<script src="{{asset('assets/js/apps-1.js')}}" async></script>
 
-    </div>
-</body>
+		</div>
+	</body>
 </html>

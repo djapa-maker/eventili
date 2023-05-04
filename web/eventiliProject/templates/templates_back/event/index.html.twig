@@ -1,0 +1,125 @@
+{% extends 'baseAdmin.html.twig'%}
+{# ------------------------------------------------------------------------------------------- #}
+{% block content %}
+	{# ------------------------------------------------------------------------------------------- #}
+	<div
+		class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+		{# -------------------------------------------------------------------------- #}
+		<div style="color:#758afd;font-size:25px;font-style:bold">Evenements</div>
+		{# <div class="search-bar flex-grow-1" style="margin-left:20%;">
+					<div class="position-relative search-bar-box">
+						<form id="annuite_form" class="form" action="{{ path('app_sousservice_index') }}" enctype="multipart/form-data" method="GET">
+							<input type="text" name="search1" style="border-radius:20px;border: 2px solid #aeb8ff  " class="form-control search-control" id="placeholder1" placeholder="Rechercher...">
+						</form>
+						<span class="position-absolute top-50 search-show translate-middle-y">
+							<i class='bx bx-search' style="color:#aeb8ff"></i>
+						</span>
+						<span class="position-absolute top-50 search-close translate-middle-y">
+							<i class='bx bx-x' style="color:white"></i>
+						</span>
+					</div>
+				</div> #}
+		{# -------------------------------------------------------------------------- #}
+		<div class="ms-auto">
+			<div class="btn-group">
+				{# -------------------------------------------------------------------------- #}
+				{# "{{ path('app_sousservice_new') }}" #}<a type="button" href="#" style="border-radius:10px;color:white;background-color:#aeb8ff;border-color:#aeb8ff;width:200px;height:35px;text-align:center;font-size:19px"> Créer un événement</a>
+				{# -------------------------------------------------------------------------- #}
+			</div>
+		</div>
+		{# -------------------------------------------------------------------------- #}
+	</div>
+	{# -------------------------------------------------------------------------- #}
+	{# "{{ path('app_sousservice_index')}}" #}
+	<form class="form" action="#" method="GET">
+		<select name="inputfilter" id="filterService" style="height:31px;border-radius:25px;color:white;background-color:#ff8601;margin-bottom:10px;border-color:#ff8601;font-size:15px">
+			<option value="" name="choose">choisissez</option>
+			{% for categ in eventCat %}
+				<option value="{{categ.type}}" name="inputfilter">{{ categ.type }}</option>
+			{% endfor %}
+		</select>
+	</form>
+	{# ------------------------------------------------------------------------------------------- #}
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function () {
+$('#filterService').on('change', function () {
+$(this).closest('form').submit();
+});
+});
+	</script>
+	{# -------------------------------------------------------------------------- #}
+	<div class="card" style="width:100%;border-radius: 25px;height:550px;background-color:#d2d9fc">
+		<center>
+			<div class="card" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);margin-top:20px;width:95%;border-radius:12px;height:35px;background-color:white">
+				<div style="display: flex;">
+					<label style="color:#241b7c;font-weight: bold;position: absolute;top: 7px; left: 10px;">Images</label>
+					<label style="color:#241b7c;font-weight: bold;position: absolute;top: 7px; left: 110px">Evenenements</label>
+					<label style="color:#241b7c;font-weight: bold;position: absolute;top: 7px; left: 270px">Catégories</label>
+					<label style="color:#241b7c;font-weight: bold;position: absolute;top: 7px; left: 410px">Type</label>
+					<label style="color:#241b7c;font-weight: bold;position: absolute;top: 7px; left: 520px;">Prix (Dt)</label>
+					<label style="color:#241b7c;font-weight: bold;position: absolute;top: 7px; left: 620px">Nb participants</label>
+					<label style="color:#241b7c;font-weight: bold;position: absolute;top: 7px; left: 770px">Visibilité</label>
+					<label style="color:#241b7c;font-weight: bold;position: absolute;top: 7px; left: 880px">Organisateur</label>
+					<label style="color:#241b7c;position: absolute;top: 7px; left: 92%; font-weight: bold;">Actions</label>
+				</div>
+			</div>
+			{# ------------------------------------------------------------------------------------------- #}
+			{% if events is not empty %}
+				{% for event in events %}
+					<div class="card" style="margin-top:-10px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);width:95%;border-radius:20px;height:50px;background-color:white">
+						<div style="display: flex;">
+							{% if firstimg[event.idEv]|length > 0 %}
+								<div style="color:#241b7c;font-weight: bold;position: absolute;top: 5px; left: 5px;">
+									<img src="http://localhost/img/{{ asset(firstimg[event.IdEv][0].imagee)}}" style="max-width:40px; max-height:40px;padding :2px; border-radius:15px; ">
+								</div>
+
+							{% else %}
+								<div style="color:#241b7c;font-weight: bold;position: absolute;top: 9px; left: 10px;">
+									<img src="https://estuario.org/wp-content/uploads/2019/09/image.png" style="max-width:40px; max-height:40px;padding :5px ">
+								</div>
+
+							{% endif %}
+
+							<label style="color:#241b7c;position: absolute;top: 15px; left: 110px ;max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{event.titre}}</label>
+							<label style="color:#241b7c;position: absolute;top: 15px; left: 270px;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{event.idCateg.type}}</label>
+							<label style="color:#241b7c;position: absolute;top: 15px; left: 410px; max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{event.type}}</label>
+							<label style="color:#241b7c;position: absolute;top:15px; left: 520px;">{{event.prix}}</label>
+							<label style="color:#241b7c;position: absolute;top: 15px; left: 620px">{{event.limiteparticipant}}</label>
+							<label style="color:#241b7c;position: absolute;top: 15px; left: 770px">{{event.visibilite}}</label>
+							<label style="color:#241b7c;position: absolute;top: 15px; left: 880px;max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{event.idPers.prenomPers}}</label>
+							<div
+								style="display: flex; align-items:center;text-align:center;color:#241b7c;position: absolute;top: 10px; left: 90%; font-weight: bold;">
+                                {# {{ include('templates_back/sousservice/_delete_form.html.twig') }}
+																<a href="{{ path('app_sousservice_edit',{'id':sousservices.id}) }}" style=" border-radius:40px; background-color:#758afd; border-color:#758afd; height:30px; width:30px;  justify-content: center; align-items: center;color:white">
+																	<i class='bx bx-edit' style="font-size:20px"></i>
+																</a> #}
+						 {{ include('templates_back/event/show.html.twig') }}
+
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			{% else %}
+				<div class="section-placeholder">
+					<div class="placeholder-content">
+						<img
+						style="height:250px;width:250px" class="light-image" src="{{asset('assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/>
+						{# <img class="dark-image" src="{{asset('assets/img/illustrations/placeholders/search-4.svg')}}" alt=""/> #}
+						<h3 class="dark-inverted">Pas d'événements !</h3>
+						<p>Veuillez ajouter des événements pour pouvoir les visualiser ici
+						</p>
+					</div>
+				</div>
+			{% endif %}
+			{# ------------------------------------------------------------------------------------------- #}
+		</center>
+		{# ------------------------------------------------------------------------------------------- #}
+	</div>
+	{# {% if sousservices.totalItemCount > 0 %}
+			<div class="pagination justify-content-center" style="position: absolute;top: 85%; left: 50%;margin-top:10px;">
+				{{ knp_pagination_render(sousservices,'bootstrap_v4_pagination.html.twig') }}
+			</div>
+		{% endif %} #}
+	<br>
+{% endblock %}

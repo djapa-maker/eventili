@@ -167,7 +167,7 @@ class SousserviceController extends AbstractController
                 $catev = $request->request->get('my-checkbox');
                 $selectedCheckboxes = implode(',', $catev);
                 $ss->setIdEventcateg($selectedCheckboxes);
-                $ss->setIdPers($PersonneRepository->findOneByIdPers(18));
+                $ss->setIdPers($personne);
                 $ss->setNote(0);
                 // $SousserviceRepository->save($ss, true);
                 $entityManager = $this->getDoctrine()->getManager();

@@ -21,88 +21,9 @@ use App\Repository\ImagePersRepository;
 use App\Repository\reservationRepository;
 use MercurySeries\FlashyBundle\FlashyNotifier;
 use App\Repository\ImagessRepository;
-use Knp\Component\Pager\PaginatorInterface;
-
 #[Route('/evenement')]
 class EvenementController extends AbstractController
 {
-
-    /*-------------------------------------------------HOME PAGE--------------------------------------------------------*/
-    #[Route('/home', name: 'app_home_ticket_front', methods: ['GET'])]
-    public function homee(EntityManagerInterface $entityManager , Request $request , PaginatorInterface $paginator): Response
-    {
-      
-            $event = $entityManager
-            ->getRepository(Evenement::class)
-            ->findAll();    
-
-            $imgev = $entityManager
-            ->getRepository(Imgev::class)
-            ->findAll();   
-
-            $event = $paginator->paginate(
-                $event, /* query NOT result */
-                $request->query->getInt('page', 1),
-                5
-            );
-            
-
-            
-
-        return $this->render('templates_front/evenement/home.html.twig', [
-            'event' => $event,
-            'Img' => $imgev,
-         
-        ]);
-    }
-
-    #[Route('/homeachat', name: 'app_home_ticket_acheter', methods: ['GET'])]
-    public function achatTick(ImagessRepository $ImagessRepository,SousserviceRepository $SousserviceRepository, reservationRepository $reservationRepository, ImagePersRepository $imagePersRepository, EvenementRepository $evenementRepository, SessionInterface $session, CategEventRepository $categEventRepository, ImgevRepository $imgevRepository): Response
-    {
-        $personne = $session->get('id');
-        $idPerss = $session->get('personne');
-        $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
-        $images = array_reverse($images);
-        if (!empty($images)) {
-            $i = $images[0];
-            $last = $i->getLast();
-        } else {
-            $last = "account (1).png";
-        }
-        $session->set('last', $last);
-        $last = $session->get('last');
-        $Categ = $categEventRepository->findAll();
-        $evenements = $evenementRepository->findBy(['idPers' => $idPerss]);
-        $imgev = [];
-
-        foreach ($evenements as $event) {
-            $imgev[$event->getIdEv()] = $imgevRepository->findBy(['idEven' => $event->getIdEV()]);
-        }
-        // partie avis dans le detail de la reservation 
-        $res = $reservationRepository->findOneByIdEv($evenements);
-      
-        $list = [];
-      
-        $listimg = [];
-        foreach ($list as $serv) {
-            $firstimg = $ImagessRepository->findBySousService($serv);
-            if (!empty($firstimg)) {
-                $fimg = $firstimg[0];
-                $listimg[] = $fimg;
-            }
-        }
-        return $this->render('templates_front/ticket_front/acheterticket.html.twig', [
-            'evenements' => $evenements,
-            'Categ' => $Categ,
-            'Img' => $imgev,
-            'personne' => $personne,
-            'sous' => $list,
-            'firstimg' =>  $listimg,
-            
-        ]);
-    }
-
-
 
     #[Route('/event', name: 'app_event_affich', methods: ['GET'])]
     public function affich(ImagePersRepository $imagePersRepository, SessionInterface $session): Response
@@ -157,12 +78,12 @@ class EvenementController extends AbstractController
         $list= [];
         $listSS =[];
         $listimg = [];
-        $listsponso = [];
+        $sponsoevent= [];
         $session->remove('eventId');
         $session->remove('services');
         //--------
         foreach ($evenements as $event) {
-  $sponsoevent[$event->getIdEv()] = $sponsoringRepository->findOneBy(['id_event' => $event->getIdEv()]);
+        $sponsoevent[$event->getIdEv()] = $sponsoringRepository->findOneBy(['id_event' => $event->getIdEv()]);
 
         }  
         //--------
@@ -190,11 +111,12 @@ class EvenementController extends AbstractController
             $firstimg = $ImagessRepository->findBySousService($serv);
             if (!empty($firstimg)) {
                 $fimg = $firstimg[0]; 
+                $listimg[]= $fimg;
             }
             
         }
         //-------------------------------
-        $listimg[]= $fimg;
+        
         return $this->render('templates_front/evenement/index.html.twig', [
             'evenements' => $events,
             'Categ' => $Categ,

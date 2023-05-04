@@ -4,67 +4,63 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-
-use Symfony\Component\Validator\Constraints as Assert;
-
-
 /**
  * Ticket
  *
- * @ORM\Table(name="ticket", indexes={@ORM\Index(name="fk_ev", columns={"idEvent"}), 
- * @ORM\Index(name="fk_tick", columns={"id_tran"})})
+ * @ORM\Table(name="ticket", indexes={@ORM\Index(name="fk_ev", columns={"idEvent"}), @ORM\Index(name="fk_tick", columns={"id_tran"})})
  * @ORM\Entity
  */
-
- 
-
- #[ORM\Entity]
 class Ticket
 {
-  
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(name:'id_tick')]
-    private ?int $idTick=null;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id_tick", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idTick;
 
-   
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="nb_tick", type="integer", nullable=false)
+     */
+    private $nbTick;
 
-    #[ORM\Column]
-    //#[Assert\NotBlank]
-    private ?int $nbTick=null;
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="prix_tick", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $prixTick;
 
-    #[ORM\Column]
-   // #[Assert\NotBlank]
-   // #[ORM\Range(min: 20, max: 100)]
-    private ?Float $prixTick=null;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", length=30, nullable=false)
+     */
+    private $status;
 
-    #[ORM\Column]
-    //#[Assert\NotBlank]
-    private ?string $status=null;
+    /**
+     * @var \Evenement
+     *
+     * @ORM\ManyToOne(targetEntity="Evenement")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idEvent", referencedColumnName="id_ev")
+     * })
+     */
+    private $idevent;
 
-
-   
-
-  
-
-  
-
-    // #[ORM\ManyToOne(inversedBy:'Evenement')]
-    #[ORM\ManyToOne(targetEntity: Evenement::class)]
-    #[ORM\JoinColumn(name: "idEvent", referencedColumnName: "id_ev")]
- 
-    
-    private ?Evenement $idevent=null;
-
-   
-
-
-    // #[ORM\ManyToOne(inversedBy:'Transaction')]
-    #[ORM\ManyToOne(targetEntity: Transaction::class)]
-    #[ORM\JoinColumn(name: "id_tran", referencedColumnName: "id_trans")]
-
-    
-    private ?Transaction $idTran=null;
+    /**
+     * @var \Transaction
+     *
+     * @ORM\ManyToOne(targetEntity="Transaction")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_tran", referencedColumnName="id_trans")
+     * })
+     */
+    private $idTran;
 
     public function getIdTick(): ?int
     {
@@ -130,5 +126,6 @@ class Ticket
 
         return $this;
     }
+
 
 }
