@@ -12,6 +12,8 @@
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.14",
         "dompdf/dompdf": "^2.0",
+        "endroid/qr-code": "^4.8",
+        "karser/karser-recaptcha3-bundle": "^0.1.23",
         "knplabs/knp-paginator-bundle": "^5.9",
         "mercuryseries/flashy-bundle": "^5.1",
         "phpdocumentor/reflection-docblock": "^5.3",
@@ -42,6 +44,7 @@
         "symfony/serializer": "5.4.*",
         "symfony/string": "5.4.*",
         "symfony/swiftmailer-bundle": "^3.5",
+        "symfony/telegram-notifier": "5.4.*",
         "symfony/translation": "5.4.*",
         "symfony/twig-bundle": "5.4.*",
         "symfony/ux-chartjs": "^2.7",
@@ -51,12 +54,7 @@
         "symfonycasts/reset-password-bundle": "^1.17",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0",
-        "twilio/sdk": "^7.3",
-        "karser/karser-recaptcha3-bundle": "^0.1.23",
-        "symfony/notifier": "5.4.*",
-        "symfony/telegram-notifier": "5.4.*"
-
-
+        "twilio/sdk": "^7.3"
     },
     "config": {
         "allow-plugins": {

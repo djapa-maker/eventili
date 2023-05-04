@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Evenement;
 use App\Entity\Imgev;
+use Knp\Component\Pager\PaginatorInterface;
 use App\Form\EvenementType;
 use App\Repository\CategEventRepository;
 use App\Repository\EvenementRepository;
@@ -288,6 +289,97 @@ public function editVisibility(Request $request, EvenementRepository $evenementR
         return $this->renderForm('evenement/edit.html.twig', [
             'evenement' => $evenement,
             'form' => $form,
+        ]);
+    }
+
+
+
+    #[Route('/home', name: 'app_home_ticket_front', methods: ['GET'])]
+    public function homee( ImagePersRepository $imagePersRepository,SessionInterface $session,EntityManagerInterface $entityManager , Request $request , PaginatorInterface $paginator): Response
+    {
+       $user = $session->get('id');
+       $idPerss = $session->get('personne');
+       $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
+       $images = array_reverse($images);
+   
+       if (!empty($images)) {
+           $i = $images[0];
+           $last = $i->getLast();
+       } else {
+           $last = "account (1).png";
+       }
+       $session->set('last', $last);
+       $last = $session->get('last');
+      
+            $event = $entityManager
+            ->getRepository(Evenement::class)
+            ->findAll();    
+   
+            $imgev = $entityManager
+            ->getRepository(Imgev::class)
+            ->findAll();   
+   
+            $event = $paginator->paginate(
+                $event, /* query NOT result */
+                $request->query->getInt('page', 1),
+                5
+            );
+            
+   
+            
+   
+        return $this->render('templates_front\personne\eventsprofil.html.twig', [
+            'event' => $event,
+            'Img' => $imgev,
+            'personne' => $user,
+                       'last' => $last,
+         
+        ]);
+    }
+   
+    #[Route('/homeachat', name: 'app_home_ticket_acheter', methods: ['GET'])]
+    public function achatTick(ImagessRepository $ImagessRepository,SousserviceRepository $SousserviceRepository, reservationRepository $reservationRepository, ImagePersRepository $imagePersRepository, EvenementRepository $evenementRepository, SessionInterface $session, CategEventRepository $categEventRepository, ImgevRepository $imgevRepository): Response
+    {
+        $personne = $session->get('id');
+        $idPerss = $session->get('personne');
+        $images = $imagePersRepository->findBy(['idPers' => $idPerss]);
+        $images = array_reverse($images);
+        if (!empty($images)) {
+            $i = $images[0];
+            $last = $i->getLast();
+        } else {
+            $last = "account (1).png";
+        }
+        $session->set('last', $last);
+        $last = $session->get('last');
+        $Categ = $categEventRepository->findAll();
+        $evenements = $evenementRepository->findBy(['idPers' => $idPerss]);
+        $imgev = [];
+   
+        foreach ($evenements as $event) {
+            $imgev[$event->getIdEv()] = $imgevRepository->findBy(['idEven' => $event->getIdEV()]);
+        }
+        // partie avis dans le detail de la reservation 
+        $res = $reservationRepository->findOneByIdEv($evenements);
+      
+        $list = [];
+      
+        $listimg = [];
+        foreach ($list as $serv) {
+            $firstimg = $ImagessRepository->findBySousService($serv);
+            if (!empty($firstimg)) {
+                $fimg = $firstimg[0];
+                $listimg[] = $fimg;
+            }
+        }
+        return $this->render('templates_front/ticket_front/acheterticket.html.twig', [
+            'evenements' => $evenements,
+            'Categ' => $Categ,
+            'Img' => $imgev,
+            'personne' => $personne,
+            'sous' => $list,
+            'firstimg' =>  $listimg,
+            
         ]);
     }
 }

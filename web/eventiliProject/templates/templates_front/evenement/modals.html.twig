@@ -115,14 +115,14 @@
 									style="width:370px;height:60px;margin-bottom:20px;margin-left:10px;box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);border-radius:15px">
 									<!-- Your card code goes here -->
 									<div class="media-flex-center">
-										{% for n in firstimg %}
+										{# {% for n in firstimg %}
 											{% if n.sousService.id == s.id %}
 												<div class="h-avatar" style="margin-top:10px;margin-left:10px;">
 													<img class="avatar is-squared" src="http://localhost/img/{{n.img}}" data-demo-src="assets/img/photo/demo/dashboards/lifestyle/1.jpg" alt="">
 												</div>
 											{% endif %}
 
-										{% endfor %}
+										{% endfor %} #}
 										<div class="flex-meta">
 											<span>{{s.nom}}</span>
 											<span>{{s.idPers.prenomPers}}

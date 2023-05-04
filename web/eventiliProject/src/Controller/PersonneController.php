@@ -351,7 +351,7 @@ $message->setBody($body, 'text/html');
                 $session->set('id', $personne);
                 $session->set('personne', $personne->getIdPers());
                 if ($personne->getRole() != "admin")
-                    return $this->redirectToRoute('app_event_affich', [], Response::HTTP_SEE_OTHER);
+                    return $this->redirectToRoute('app_home_ticket_front', [], Response::HTTP_SEE_OTHER);
                 else
                     return $this->redirectToRoute('app_personne_index', [], Response::HTTP_SEE_OTHER);
             }

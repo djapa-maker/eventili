@@ -3,16 +3,16 @@
 	<title>Mes événements</title>
 {% endblock %}
 {% block naver %}
-	<div class="naver" style="top:-90px;"></div>
+	<div class="naver" style="top:-150px;"></div>
 {% endblock %}
 {% block PageTitle %}
 	<div class="title-wrap">
-		<h1 class="title is-4">Mes événements</h1>
+		<h1 class="title is-4" style="color:#aeb8ff">Bienvenue </h1>
 	</div>
 {% endblock %}
 {% block content %}
 	<link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}"/>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -27,15 +27,98 @@
 			</div>
 		</div>
 
-		
+	
 	</div>
 	<div class="page-content-inner">
-		
+		<div class="columns is-multiline">
+			<section class="articles">
+				{% for event in event %}
+                 {% if event.type == "Payant" and event.visibilite == "Public" %}
 
+					<div class="column is-16">
+						<article>
+
+							<a class="h-modal-trigger" data-modal="details-modal-{{ event.idEv }}">
+							
+							{{ include('templates_front/evenement/modalss.html.twig') }}
+								<div>
+									<figure>
+										
+                                         {% for img in Img %}
+								        {% for j in event %}
+								         {% if img.idEven.idEv == j.idEv %}
+											<img src="http://localhost/img/{{ img.Img }}" alt=""/>
+										{% else %}
+											<img src="https://estuario.org/wp-content/uploads/2019/09/image.png" alt=""/>
+										{% endif %}
+                                        {% endfor %}	
+								{% endfor %}
+										<div class="figLabel">
+											{% if event.prix == 0 %}
+												{{ event.prix ~" DT" }}
+											{% else %}
+												{{ event.prix ~" DT" }}
+											{% endif %}
+										</div>
+										<figcaption>
+											<div class="card">
+												<div class="month-container">
+													<div class="month">{{event.dateDebut | date('F')}}</div>
+												</div>
+												<div class="day">{{event.dateDebut | date('D')}}</div>
+												<div class="date">{{event.dateDebut | date('d')}}</div>
+												<div class="year">{{event.dateDebut | date('Y')}}</div>
+											</div>
+										</figcaption>
+									</figure>
+									<div class="article-body">
+										<h2>{{event.titre}}</h2>
+										<p style="font-size: small;">{{ event.descriptionEv|slice(0, 180) ~ (event.descriptionEv|length > 180 ? '...' : '') }}</p>
+									</div>
+								</div>
+							</a>
+					
+							<div class="button-container"  style="margin-right: 50px;">
+							 {#<a href="{{ path('app_qr_codes', {'idEv': event.idEv}) }}">qrcode</a>#}
+								<a href="{{ path('app_qr_codes' , {'idEv': event.idEv}) }}" class="button h-button is-primary is-rounded">Acheter Votre Ticket</a>
+							</div>
+						</article>
+					</div>
+
+                    {% endif %}
+				{% endfor %}
+                	
+			</section>
+		</div>
 
 	</div>
 
 
-	
+	<script>
+	$('.owl-carousel').owlCarousel({
+    loop:true,
+    margin:0,
+    nav:true,
+	autoplay:true,
+	autoplayTimeout: 2000,
+	stagePadding: 80,
+    responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:1
+        },
+        1000:{
+            items:1
+        }
+    }
+})
+	</script>
+
+
+{% do event.setPageRange(5) %}	  
+{{ knp_pagination_render(event, 'Custom_pagination.html.twig')}}
 
 {% endblock %}
+

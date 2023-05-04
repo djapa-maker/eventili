@@ -1,0 +1,168 @@
+{% extends 'baseFront.html.twig'%}
+   {% block title %}
+	<title>Qr Code</title>
+{% endblock %}
+    
+   
+ 
+ {% block content %}
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+
+    <div style=" box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);margin-left:27%;background-color:white;border-radius:25px;padding:30px;width:510px">
+    <center>
+    <h1 style="color:#671cc9;font-size:30px;font-weight:bold">Valider l'achat de votre Ticket</h1>
+    </center>
+	<form id="form" method="POST" class="was-validated" action="{{ path('app_ticket_add') }}"enctype="multipart/form-data">
+
+
+
+<div style="margin-top:2%" class="form-group col-sm">
+	<div style="color:#671cc9;font-size:20px;margin-top:10px;margin-bottom:10px">
+		<label for="sousservice_type_edit_description" class="required">Evénemènt :</label>
+	</div>
+	<div style="width:450px;height:120%">
+		<input type="text" id="sousservice_type_edit_description" disabled name="titre" required="required" class="input" placeholder="Description ..." maxlength="200" value="{{evenement.titre}}">
+	</div>
+	<div style="color:red;border-color:red">
+		
+	</div>
+</div> 
+<div class="row g-3" style="display:inline-flex">
+	<div class="form-group col-sm">
+		<div style="color:#671cc9;font-size:20px;margin-top:10px;margin-bottom:10px">
+			<label for="app_qr_codes" class="required">Votre Nom et Votre Prénom</label>
+		</div>
+		<div style="width:450px;height:120%">
+		<input type="text" id="sousservice_type_edit_description" disabled name="nomevent" required="required" class="input" placeholder="Description ..." maxlength="200" value="{{personne.nomPers}} {{personne.prenomPers}}">
+	</div>
+		<div style="color:red;border-color:red">
+			
+		</div>
+	</div>
+	<div class="form-group col-sm" style="margin-left:50px">
+		<div style="color:#671cc9;font-size:20px;margin-top:10px;margin-bottom:10px">
+			<label for="sousservice_type_edit_prix"  class="required">Prix en dt</label>
+		</div>
+		<div style="width:200px;">
+			<input type="text" id="sousservice_type_edit_prix"  disabled name="prix" required="required" class="input" placeholder="Prix ..." oninput="filterInput(this)" value="{{evenement.prix}}" DT>
+		</div>
+		<div style="color:red;border-color:red">
+			
+		</div>
+	</div>
+</div>
+<br>
+
+
+<p style="color:#671cc9;font-size:20px;margin-top:10px;margin-bottom:10px"> Selectionner le nombre de Ticket</p>
+	<div style="display: inline-flex;">
+
+  <select  name= "nbtick" style="position: relative; padding-left: 5px; margin-right: 15px; font-size: 16px; line-height: 1.2; color: black; cursor: pointe"r;>
+    <option value="">Selectionner le nombre de ticket</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    
+</select>
+	
+	</div>
+	
+
+
+
+<div class="form-group col-sm">
+	
+        <div class="container text-center">
+        <label style="color:#671cc9;font-size:20px"> Your Qr Code </label>
+        <div class="row">
+            <div class="col">
+                <img src="{{ simple }}" />
+            </div>
+            
+        </duv>
+    </div>
+
+	
+				
+
+
+		
+
+					</div>
+	</div>
+<center>
+	<button id="submit-button" onclick="window.location.href = '{{ path('app_ticket_add') }}';" style="margin-top:27px;width:35%;height:70px;border-radius:10px;color:white;background-color:#ff8601;border-color:#ff8601;font-size:19px" type="submit" class="btn btn-primary ">
+  Acheter 
+  </button>
+</center>
+
+
+
+<script>
+	const inputs = document.querySelectorAll('input[required]');
+	const submitBtn = document.querySelector('#submit-button');
+	const imageInput = document.querySelector('#sousservice_type_edit_imagess');
+
+		inputs.forEach(input => {
+		input.addEventListener('input', () => {
+		let allFilled = true;
+		inputs.forEach(input => {
+		if (input.value.trim() === '' || (input === imageInput && !input.files[0])) {
+		allFilled = false;
+		}
+		});
+		if (allFilled) {
+		submitBtn.classList.remove('is-disabled');
+		} else {
+		submitBtn.classList.add('is-disabled');
+		}
+		});
+		});
+
+		imageInput.addEventListener('change', () => {
+		let allFilled = true;
+		inputs.forEach(input => {
+		if (input.value.trim() === '' || (input === imageInput && !input.files[0])) {
+		allFilled = false;
+		}
+		});
+		if (allFilled) {
+		submitBtn.classList.remove('is-disabled');
+		} else {
+		submitBtn.classList.add('is-disabled');
+		}
+		});
+</script>
+
+<script>
+	function filterInput(input) {
+var regex = /^\d{1,5}(?:\.\d{1,4})?$/;
+// var regex = /^[0-9]+(?:\.[0-9]+)?$/
+var filteredValue1 = '';
+var filteredValue = '';
+
+for (var i = 0; i < input.value.length; i++) {
+var char = input.value.charAt(i);
+filteredValue1 += char + "1";
+console.log("char  " + char);
+console.log("filteredbeforecheck  " + filteredValue1);
+if (regex.test(filteredValue1)) {
+filteredValue += char;
+filteredValue1 = filteredValue1.substring(0, filteredValue1.length - 1);
+console.log("filteredaftercheck  " + filteredValue);
+}
+}
+input.value = filteredValue;
+}
+</script>
+
+    </div></form>
+                    </div>
+
+   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+ 	{% endblock %}
