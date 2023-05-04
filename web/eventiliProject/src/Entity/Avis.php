@@ -16,6 +16,7 @@ class Avis
     private ?int $idAv=null;
 //---------------------------------------------------------------------------------------
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Merci de donner une note')]
     #[Assert\Range(
         min: 0,
         max: 5,
@@ -24,6 +25,13 @@ class Avis
     private ?float $rating=null;
 //---------------------------------------------------------------------------------------
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Merci de remplir le champ commentaire')]
+    #[Assert\Length(
+     // min: 1,
+     max: 100,
+     // minMessage: 'Your first name must be at least {{ limit }} characters long',
+     maxMessage: 'notre commentaire ne doit pas dépasser {{ limit }} charactères',
+ )]
     private ?string $comment= null;
 //---------------------------------------------------------------------------------------
     #[ORM\Column(name: "Date", type: "datetime", nullable: false, options: ["default" => "CURRENT_TIMESTAMP"])]

@@ -17,8 +17,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Repository\ImagessRepository;
 use App\Repository\AvisRepository;
+use App\Repository\reservationRepository;
 use App\Repository\ImagePersRepository;
 use Knp\Component\Pager\PaginatorInterface;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 #[Route('/sousserviceFront')]
@@ -288,13 +290,37 @@ class SousserviceFrontController extends AbstractController
     }
 //suppression sous service-------------------------------------------------------------------------------------------------
     #[Route('/{id}', name: 'app_sousservice_delete_front', methods: ['POST'])]
-    public function delete(Request $request, Sousservice $sousservice, SousserviceRepository $SousserviceRepository): Response
+    public function delete(FlashyNotifier $flashy, reservationRepository $reservationRepository,Request $request, Sousservice $sousservice, SousserviceRepository $SousserviceRepository): Response
     {
-
         if ($this->isCsrfTokenValid('delete' . $sousservice->getId(), $request->request->get('_token'))) {
-            $SousserviceRepository->remove($sousservice, true);
+            $reservations = $reservationRepository->findAll();
+            $is_reserved = false;
+    
+            foreach ($reservations as $reservation) {
+                $souservices = $reservation->getIdSs();
+                $ss[$reservation->getIdRes()] = explode(',', $souservices);
+    
+                foreach ($ss[$reservation->getIdRes()] as $s) {
+                    $list[$reservation->getIdRes()] = $SousserviceRepository->findById($s);
+                }
+    
+                foreach ($list[$reservation->getIdRes()] as $l) {
+                    if ($l->getId() == $sousservice->getId()) {
+                        $is_reserved = true;
+                        break 2;
+                    }
+                }
+            }
+    
+            if ($is_reserved) {
+                // $flashy->error("Impossible de supprimer ce sous-service, car il est réservé.");
+            } else {
+                $SousserviceRepository->remove($sousservice, true);
+                // $flashy->success("Le sous-service a été supprimé avec succès.");
+            }
         }
-        return $this->redirectToRoute('app_sousservice_front', [], Response::HTTP_SEE_OTHER);
+    
+        return $this->redirectToRoute('app_sousservice_front',[], Response::HTTP_SEE_OTHER);
     }
 //search ---------------------------------------------------------------------------------------    
     #[Route('/searchSS', name: 'app_sousservice_search_front', methods: ['GET'])]

@@ -1,0 +1,33 @@
+{% extends 'baseAdmin.html.twig'%}
+{% block title %}Statistiques{% endblock %}
+
+
+{% block stylesheets %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous">
+{% endblock %}
+
+{% block content %}
+ <canvas id="monGraph" width="400" height="100" style="max-width: 1000px;max-height:600px;margin-left: 10%;"  ></canvas>
+                        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.1.1/dist/chart.min.js" integrity="sha256-lISRn4x2bHaafBiAb0H5C7mqJli7N0SH+vrapxjIz3k=" crossorigin="anonymous"></script>
+                        <script>
+                            let ctx = document.querySelector("#monGraph")
+                            let graph = new Chart(ctx, {
+                                type: 'doughnut',
+                                data: {
+                                    labels: ['Active','Désactive'],
+                                    datasets: [{
+                                        label: 'Nombre de Ticket selon status',
+                                        data: {{ nboffre|raw }},
+                                        backgroundColor: ['#ff8601', '#aeb8ff','#ff8601']
+                                    }]
+                                },
+
+                            })
+
+                        </script>
+
+
+
+
+                    </div>
+{% endblock %}

@@ -150,7 +150,7 @@ $pagination = $paginator->paginate(
     #[Route('/', name: 'app_personne_accueil', methods: ['GET'])]
     public function acceuil(): Response
     {
-        return $this->render('templates_front/personne/accueil.html.twig');
+        return $this->render('templates_front/personne/login.html.twig');
     }
     #[Route('/activation', name: 'app_personne_activation', methods: ['GET', 'POST'])]
     public function activation(FlashyNotifier $flashy, Request $request, SessionInterface $session, PersonneRepository $personneRepository): Response
