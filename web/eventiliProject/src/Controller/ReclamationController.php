@@ -514,3 +514,4 @@ class ReclamationController extends AbstractController
         ]);
     }
 }
+//////// Partie Mobile

@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ReclamationRepository;
 use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints\DateTime;
 
 #[ORM\Entity(repositoryClass: ReclamationRepository::class)]
@@ -18,22 +19,28 @@ class Reclamation
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(name: "id_rec", type: "integer", nullable: false)]
+    #[Groups("Reclamations")]
     private $idRec;
 
     #[ORM\Column(length: 255)]
+    #[Groups("Reclamations")]
     private $description;
 
     #[ORM\Column(length: 255)]
+    #[Groups("Reclamations")]
     private $titre;
 
     #[ORM\Column(length: 255)]
+    #[Groups("Reclamations")]
     private $status;
 
     #[ORM\Column(type: 'datetime', options: ["default" => "CURRENT_TIMESTAMP"])]
+    #[Groups("Reclamations")]
     private $dateheure;
 
     #[ORM\ManyToOne(targetEntity: Personne::class)]
     #[ORM\JoinColumn(name: "userId",referencedColumnName: "id_pers")]
+    #[Groups("Reclamations")]
     private $userid;
 
     public function getIdRec(): ?int
