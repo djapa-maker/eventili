@@ -1,12 +1,8 @@
 <?php
 
 namespace App\Controller;
-use App\Entity\CategEvent;
 use App\Entity\Sousservice;
-use App\Entity\Service;
 use App\Entity\Imagess;
-use App\Entity\Personne;
-use App\Repository\AvisRepository;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Repository\ImagePersRepository;
 use App\Form\SousserviceType;
@@ -20,9 +16,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
 
 #[Route('/sousservice')]
 class SousserviceController extends AbstractController
@@ -333,4 +332,31 @@ class SousserviceController extends AbstractController
             'last' => $last,
         ]);
     }
+
+    //========================================================================================================================================================================
+    //========================================================================================================================================================================
+    //=========================================MOBILE===============================================================================================================================
+    //========================================================================================================================================================================
+    //========================================================================================================================================================================
+
+    #[Route('/MobileSS', name: 'app_sousserviceMobile_index', methods: ['GET'])]
+    // #[ParamConverter("SousService", class:"App\Entity\Sousservice", options:["id" => "id"])]
+    public function indexMobile(
+        SousserviceRepository $SousserviceRepository,
+    
+        Request $request,
+        
+        SerializerInterface $serializer
+        // ImagessController $c
+    ): Response {
+        dump($request);
+        $SousService = $SousserviceRepository->findAll();
+        
+
+        $json = $serializer->serialize($SousService, 'json', ['groups' => "sousservices"]);
+
+        //* Nous renvoyons une réponse Http qui prend en paramètre un tableau en format JSON
+        return new Response($json);
+    }
+
 }

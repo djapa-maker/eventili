@@ -15,6 +15,10 @@ use App\Repository\PersonneRepository;
 use App\Repository\SousserviceRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Entity\Sousservice;
+use App\Entity\Personne;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerInterface;
 use DateTime;
 //---------------------------------------------------------------------------------------
 #[Route('/avis')]
@@ -149,5 +153,68 @@ class AvisController extends AbstractController
         }
 
         return $this->redirectToRoute('app_avis_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    //========================================================================================================================================================================
+    //========================================================================================================================================================================
+    //=========================================MOBILE===============================================================================================================================
+    //========================================================================================================================================================================
+    //========================================================================================================================================================================
+
+    #[Route('/avismobile', name: 'app_avis_indexMobile', methods: ['GET', 'POST'])]
+    public function indexMobile(PaginatorInterface $paginator, ImagePersRepository $imagePersRepository, AvisRepository $avisRepository, request $request, SessionInterface $session, SerializerInterface $serializer): Response
+    {
+
+        $avis = $avisRepository->findAll();
+        $json = $serializer->serialize($avis, 'json', ['groups' => "avis"]);
+        return new Response($json);
+    }
+    //ajout-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    #[Route('/AvisMobile/{idService}', name: 'app_avis_newMobile', methods: ['GET', 'POST'])]
+    public function newAvisMobile(NormalizerInterface $Normalizer,SousserviceRepository $SousserviceRepository,PersonneRepository $PersonneRepository,Request $request,$idService, AvisRepository $avisRepository,SessionInterface $session,ImagePersRepository $imagePersRepository): Response
+    {
+        $personne= new Personne();
+        $personne=$PersonneRepository->findOneByIdPers("47");
+        $em = $this->getDoctrine()->getManager();
+        $avis=new Avis();
+        $avis->setRating($request->get('rating'));
+        $avis->setComment($request->get('comment'));
+        $avis->setIdService($SousserviceRepository->findOneById($idService));
+        $avis->setPers($personne);
+        $avis->setDate(new DateTime());
+        $em->persist($avis);
+        $em->flush();
+        $jsonContent = $Normalizer->normalize($avis, 'json', ['groups' => 'avis']);
+        return new Response(json_encode($jsonContent));
+    }
+
+    //modification------------------------------------------------------------------------------------------------------------------
+    #[Route('/{idAv}/editAvisMobile', name: 'app_avis_editMobile', methods: ['GET', 'POST'])]
+    public function editMobile(NormalizerInterface $Normalizer,Request $request,$idAv, AvisRepository $avisRepository,SessionInterface $session,ImagePersRepository $imagePersRepository): Response
+    {
+       
+        $em = $this->getDoctrine()->getManager();
+        $av = $em->getRepository(Avis::class)->find($idAv);
+        $av->setRating($request->get('rating'));
+        $av->setComment($request->get('comment'));
+        $av->setDate(new DateTime());
+        $em->flush();
+
+        $jsonContent = $Normalizer->normalize($av, 'json', ['groups' => 'avis']);
+        return new Response("Student updated successfully " . json_encode($jsonContent));
+    
+
+    }
+    // suppression ------------------------------------------------------------------------------------------------
+    #[Route('/{idAv}/deleteAvis', name: 'app_avisMobile_delete')]
+    public function deleteMobile(NormalizerInterface $Normalizer,Request $request,$idAv, AvisRepository $avisRepository): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $avis = $em->getRepository(Avis::class)->find($idAv);
+        $em->remove($avis);
+        $em->flush();
+        $jsonContent = $Normalizer->normalize($avis, 'json', ['groups' => 'avis']);
+        return new Response("Student deleted successfully " . json_encode($jsonContent));
     }
 }

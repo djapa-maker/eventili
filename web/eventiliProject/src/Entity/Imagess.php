@@ -6,6 +6,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ImagessRepository;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 //---------------------------------------------------------------------------------------
 #[ORM\Entity(repositoryClass: ImagessRepository::class)]
 class Imagess 
@@ -13,12 +14,15 @@ class Imagess
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("imagess")]
     private ?int $idimgss = null;
 //---------------------------------------------------------------------------------------
     #[ORM\Column(nullable:'true')]
+    #[Groups("imagess")]
      private ?String $img = null;
 //---------------------------------------------------------------------------------------
     #[ORM\ManyToOne(targetEntity: Sousservice::class)]
+    #[Groups("imagess")]
     #[ORM\JoinColumn(name: "sous_service", referencedColumnName: "id")]
     private ?Sousservice $sousService = null;
 //---------------------------------------------------------------------------------------

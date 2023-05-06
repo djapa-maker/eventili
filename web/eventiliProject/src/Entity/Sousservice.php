@@ -7,6 +7,7 @@ use App\Repository\SousserviceRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 //---------------------------------------------------------------------------------------
 #[ORM\Entity(repositoryClass: SousserviceRepository::class)]
 class Sousservice
@@ -14,9 +15,11 @@ class Sousservice
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("souservices")]
     private ?int $id=null;
 //---------------------------------------------------------------------------------------
    #[ORM\Column]
+   #[Groups("souservices")]
    #[Assert\NotBlank(message: 'Merci de remplir le nom')]
    #[Assert\Length(
     // min: 1,
@@ -28,6 +31,7 @@ class Sousservice
 //---------------------------------------------------------------------------------------
 
     #[ORM\Column]
+    #[Groups("souservices")]
     #[Assert\NotBlank(message: 'Merci de remplir la descritpion')]
     #[Assert\Length(
         // min: 1,
@@ -38,29 +42,35 @@ class Sousservice
     private ?String $description=null;
 //---------------------------------------------------------------------------------------
     #[ORM\Column]
+    #[Groups("souservices")]
     #[Assert\NotBlank(message: 'Merci de remplir le prix')]
     // #[Assert\Regex(pattern: '/^[0-9]+(?:\.[0-9]+)?$/', message:"Le prix doit contenir uniquement des chiffres.")]
     private ?float $prix=null;
 //---------------------------------------------------------------------------------------
     #[ORM\Column]
+    #[Groups("souservices")]
     // #[Assert\Regex(pattern: '/^[0-9]*$')]
     private ?float $note=null;
 //---------------------------------------------------------------------------------------
     #[ORM\Column]
+    #[Groups("souservices")]
     private ?String $idEventcateg=null;
 //---------------------------------------------------------------------------------------    
     // #[ORM\ManyToOne(inversedBy:'Sousservice')]
+    #[Groups("souservices")]
     #[ORM\ManyToOne(targetEntity: Personne::class,cascade: ['persist'])]
     #[ORM\JoinColumn(name: "id_pers", referencedColumnName: "id_pers")]
     private ?Personne $idPers=null;
 //---------------------------------------------------------------------------------------
     // #[ORM\ManyToOne(inversedBy:'Sousservice')]
+    #[Groups("souservices")]
     #[ORM\ManyToOne(targetEntity: Service::class)]
     #[ORM\JoinColumn(name: "id_service", referencedColumnName: "id_service")]
     #[Assert\NotBlank(message: 'Merci de choisir un service')]
     private ?Service $idService=null;
 //---------------------------------------------------------------------------------------
     #[ORM\OneToMany(targetEntity: Imagess::class,mappedBy:"sousService",orphanRemoval:true,cascade:["persist"])]
+    #[Groups("souservices")]
     #[Assert\NotBlank(message: 'Merci de choisir au moin une image')]
     private $imagess;
 //---------------------------------------------------------------------------------------

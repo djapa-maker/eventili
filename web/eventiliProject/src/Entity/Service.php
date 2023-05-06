@@ -6,6 +6,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ServiceRepository;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 //---------------------------------------------------------------------------------------
 #[ORM\Entity(repositoryClass: ServiceRepository::class)]
 #[UniqueEntity(fields: ['nom'], message: 'Ce service existe déjà')]
@@ -14,11 +15,13 @@ class Service
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("services")]
     private ?int $idService=null;
 //---------------------------------------------------------------------------------------
     #[ORM\Column]
     #[Assert\NotBlank(message: 'Merci de remplir le nom')]
     #[Assert\NotNull(message: 'Merci de remplir le nom')]
+    #[Groups("services")]
     #[Assert\Length(
         // min: 1,
         max: 30,
