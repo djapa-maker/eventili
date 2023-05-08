@@ -12,6 +12,7 @@ use App\Repository\ImgevRepository;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route('/evenementAdmin')]
 class EvenementBackController extends AbstractController
@@ -55,4 +56,20 @@ class EvenementBackController extends AbstractController
             'eventCat' => $categ,
         ]);
     }
+
+    //========================================================================================================================================================================
+    //=========================================MOBILE=========================================================================================================================
+    //========================================================================================================================================================================
+
+    //affichage des événements---------------------------------------------------------------------------------------  
+    #[Route('/MobileEv', name: 'app_eventBack_indexMobile')]
+    public function indexMobile(SerializerInterface $serializer, EvenementRepository $evenementRepository): Response
+    {
+       
+        $evenements = $evenementRepository->findAll();
+        
+        $json = $serializer->serialize($evenements, 'json', ['groups' => "Event"]);
+        return new Response($json);
+    }  
+    
 }

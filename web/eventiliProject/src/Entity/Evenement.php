@@ -9,11 +9,13 @@ use App\Repository\EvenementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 #[ORM\Entity(repositoryClass: EvenementRepository::class)]
 class Evenement
 {
+    #[Groups("Event")]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: "AUTO")]
     #[ORM\Column(name: "id_ev", type: "integer")]
@@ -21,6 +23,7 @@ class Evenement
  
 
 
+    #[Groups("Event")]
     #[ORM\Column]
     #[Assert\Length(
         max: 35,
@@ -31,15 +34,18 @@ class Evenement
 
     // #[Assert\DateTime]
     // #[Assert\GreaterThan('today')]
+    #[Groups("Event")]
     #[ORM\Column]
     private ?DateTime $dateDebut = null;
 
     // #[Assert\DateTime]
     // #[Assert\GreaterThan('today')]
+    #[Groups("Event")]
     #[ORM\Column]
     private ?DateTime $dateFin = null;
 
 
+    #[Groups("Event")]
     #[ORM\Column]
     #[Assert\NotBlank(message: 'Merci de remplir la description')]
     #[Assert\Length(
@@ -49,14 +55,17 @@ class Evenement
     private ?String $descriptionEv = null;
 
 
+    #[Groups("Event")]
     #[ORM\Column]
     private ?String $type = null;
 
 
+    #[Groups("Event")]
     #[ORM\Column]
     private ?String $visibilite = null;
 
 
+    #[Groups("Event")]
     #[ORM\Column]
     #[Assert\NotBlank(message: 'Merci de remplir le nombre de tickets')]
     #[Assert\Regex(
@@ -71,6 +80,7 @@ class Evenement
     private ?int $limiteparticipant = null;
 
 
+    #[Groups("Event")]
     #[ORM\Column]
     #[Assert\NotBlank(message: 'Merci de remplir le prix')]
     #[Assert\Regex(
@@ -81,6 +91,7 @@ class Evenement
     private ?float $prix = null;
 
 
+    #[Groups("Event")]
     #[ORM\ManyToOne(targetEntity: CategEvent::class)]
     #[ORM\JoinColumn(name: "id_categ", referencedColumnName: "id_categ")]
     // #[Assert\NotBlank(message: 'Merci de choisir une categorie devenement')]
@@ -88,11 +99,13 @@ class Evenement
 
 
 
+    // #[Groups("Event")]
     #[ORM\ManyToOne(targetEntity: Personne::class)]
     #[ORM\JoinColumn(name: "id_pers", referencedColumnName: "id_pers")]
     private ?Personne $idPers = null;
 
 
+    // #[Groups("Event")]
     #[ORM\OneToMany(mappedBy: 'idEven',targetEntity: Imgev::class, orphanRemoval: true, cascade: ['persist'])]
     private $imgev;
 

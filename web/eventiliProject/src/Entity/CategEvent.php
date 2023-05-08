@@ -6,18 +6,19 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CategEventRepository; 
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
+
 #[ORM\Entity(repositoryClass:CategEventRepository::class)]
 class CategEvent
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[Groups("CategEvent")]
+    #[Groups("CategEventC","CategEvent","Event")]
     #[ORM\Column(name:'id_categ')]
     private ?int $idCateg=null;
 
     #[ORM\Column]
     #[Assert\NotBlank(message: 'Merci de remplir le type')]
-    #[Groups("CategEvent")]
+    #[Groups("CategEventC","CategEvent","Event")]
     #[Assert\NotNull(message: 'Merci de remplir le type')]
     #[Assert\Length(
         // min: 1,
@@ -33,6 +34,7 @@ class CategEvent
         return $this->idCateg;
     }
 
+    // #[Groups("Event")]
     public function getType(): ?string
     {
         return $this->type;
