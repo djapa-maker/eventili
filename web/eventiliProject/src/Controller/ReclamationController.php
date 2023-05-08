@@ -14,7 +14,6 @@ use App\Repository\ImagePersRepository;
 use App\Repository\PersonneRepository;
 use App\Repository\ReclamationRepository;
 use App\Repository\ReponseRepository;
-use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3;
 use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3Validator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
@@ -26,17 +25,15 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Notifier\ChatterInterface;
 use Symfony\Component\Notifier\Message\ChatMessage;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Component\VarDumper\VarDumper;
-use Twig\Cache\CacheInterface;
 
 #[Route('/reclamation')]
 class ReclamationController extends AbstractController
 {
     // Index génerale de la reclamation
     #[Route('/', name: 'app_reclamation_index', methods: ['GET'])]
-    public function index(request $request,SessionInterface $session,PersonneRepository $personneRepository): Response
+    public function index(SessionInterface $session): Response
     {
         $personne=$session->get('id');
         if( $personne->getRole() == "admin") {
@@ -45,7 +42,7 @@ class ReclamationController extends AbstractController
         return $this->redirectToRoute('app_reclamation_user_index');
     }
     #[Route('/search', name: 'app_reclamation_search', methods: ['GET','POST'])]
-    public function search(Request $request, ReclamationRepository $reclamationRepository){
+    public function search(Request $request) : JsonResponse{
         $query = $request->get('q');
         $tabIds = $request->get('list');
         $arr = json_decode($tabIds);
@@ -77,7 +74,7 @@ class ReclamationController extends AbstractController
         return new JsonResponse($data);
     }
     #[Route('/admin/{filter}', name: 'app_reclamation_admin_index', defaults: ['filter' => ''], methods: ['GET'])]
-    public function admin_index(ReclamationRepository $reclamationRepository,request $request,SessionInterface $session,ImagePersRepository $imagePersRepository,PersonneRepository $persRepo,?string $filter = null): Response{
+    public function admin_index(ReclamationRepository $reclamationRepository,SessionInterface $session,ImagePersRepository $imagePersRepository,?string $filter = null): Response{
 
         $personne=$session->get('id');
         $idPerss = $session->get('personne');
@@ -513,5 +510,111 @@ class ReclamationController extends AbstractController
             'rep' => $idRep
         ]);
     }
+
+
+    /// Mobile
+    /// Reclamations
+    /// Index
+    #[Route('/m', name: 'app_reclamations_index_mobile', methods: ['GET', 'POST'])]
+    public function indexMobileReclamations(ReclamationRepository $reclamRepo, request $request, SessionInterface $session, SerializerInterface $serializer): Response
+    {
+        $reclams = $reclamRepo->findAll();
+        $json = $serializer->serialize($reclams, 'json', ['groups' => "Reclamations"]);
+        return new Response($json);
+    }
+    #[Route('/m/{uid}', name: 'app_reclamations_index_mobile', methods: ['GET', 'POST'])]
+    public function indexMobileReclamationUser(Personne $uid,ReclamationRepository $reclamRepo, request $request, SessionInterface $session, SerializerInterface $serializer): Response
+    {
+        $reclams = $reclamRepo->findby(['userid'=>$uid]);
+        $json = $serializer->serialize($reclams, 'json', ['groups' => "Reclamations"]);
+        return new Response($json);
+    }
+    ///Crud
+    #[Route('/m/ajouterRec', name: 'app_reclamations_index_mobile', methods: ['GET', 'POST'])]
+    public function AjouterRecMobile(ChatterInterface $chatter,NormalizerInterface $normalizer,PersonneRepository $persRepo,ReclamationRepository $reclamRepo, request $request, SessionInterface $session, SerializerInterface $serializer): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $reclam = new Reclamation();
+        $p = $persRepo->findOneBy(['idPers'=>$request->get('userId')]);
+        $reclam->setUserid($p);
+        $reclam->setDescription($request->get('description'));
+        $reclam->setTitre($request->get('titre'));
+        $reclam->setStatus("ouvert");
+        $em->persist($reclam);
+        $em->flush();
+        $message = (new ChatMessage("La Reclamation #".$reclam->getIdRec()." - ".$reclam->getTitre()."\n a été crée par ".$reclam->getUserid()->getPrenomPers()." ".$reclam->getUserid()->getNomPers()))->transport('telegram');
+        $chatter->send($message);
+        $json = $normalizer->normalize($reclam,'json',['groups' => 'Reclamations']);
+        return new Response(json_encode($json));
+
+    }
+    #[Route('/m/{idRec}/consulter', name: 'app_reclamations_index_mobile', methods: ['GET', 'POST'])]
+    public function consulterRecMobile(Reclamation $idRec,ReclamationRepository $reclamRepo, request $request, SessionInterface $session, SerializerInterface $serializer): Response
+    {
+        $reponses = $reclamRepo->findby(['rec'=>$idRec]);
+        $json = $serializer->serialize($reponses, 'json', ['groups' => "Reponses"]);
+        return new Response($json);
+    }
+    #[Route('/m/update/{idRec}', name: 'app_reclamations_modifier_mobile', methods: ['GET','POST'])]
+    public function modifierRecMobile(PersonneRepository $personneRepository,Reclamation $idRec,ReclamationRepository $reclamRepo, request $request, SessionInterface $session, SerializerInterface $serializer) : Response{
+        $em = $this->getDoctrine()->getManager();
+        $idRec->setTitre($request->get('titre'));
+        $idRec->setStatus($request->get('status'));
+        $idRec->setDescription($request->get('description'));
+        $idRec->setUserid($personneRepository->findOneBy(['userid' => $request->get('uid')]));
+        $em->flush();
+        $json = $serializer->serialize($idRec, 'json', ['groups' => "Reclamations"]);
+        return new Response($json);
+    }
+    #[Route('/m/supprimerRec/{idRec}', name: 'app_reclamations_supprimer_mobile', methods: ['GET','POST'])]
+    public function supprimerRecMobile(Reclamation $idRec,ReclamationRepository $reclamRepo, request $request, SessionInterface $session, SerializerInterface $serializer) : Response{
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($idRec);
+        $em->flush();
+        $json = $serializer->serialize($idRec, 'json', ['groups' => "Reclamations"]);
+        return new Response($json);
+    }
+    #[Route('/m/cloturerRec/{idRec}', name: 'app_reclamations_cloturer_mobile', methods: ['GET','POST'])]
+    public function cloturerRecMobile(ChatterInterface$chatter,Reclamation $idRec,ReclamationRepository $reclamRepo, request $request, SessionInterface $session, SerializerInterface $serializer) : Response{
+        $em = $this->getDoctrine()->getManager();
+        $idRec->setStatus("cloturer");
+        $em->flush();
+        $json = $serializer->serialize($idRec, 'json', ['groups' => "Reclamations"]);
+
+        $message = (new ChatMessage("La Reclamation #".$idRec->getIdRec()."\n de ".$idRec->getUserid()->getPrenomPers()." ".$idRec->getUserid()->getNomPers()."\n a été cloturé."))->transport('telegram');
+        $chatter->send($message);
+        return new Response($json);
+    }
+    ///// Reponses
+    #[Route('/m/ajouterRep/{uid}/{idRec}', name: 'app_reclamations_index_mobile', methods: ['GET', 'POST'])]
+    public function AjouterRepMobile(Personne $uid,Reclamation $idRec,NormalizerInterface $normalizer,request $request): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $reponse = new Reponse();
+        $reponse->setRec($idRec);
+        $reponse->setSenderid($uid);
+        $reponse->setMessage($request->get('message'));
+        $em->persist($reponse);
+        $em->flush();
+        $json = $normalizer->normalize($reponse, 'json', ['groups' => 'Reponses']);
+        return new Response(json_encode($json));
+    }
+    #[Route('/m/updateRep/{idRep}', name: 'app_reclamations_modifier_reponse_mobile', methods: ['GET','POST'])]
+    public function modifierRepMobile(Reponse $idRep,request $request,SerializerInterface $serializer) : Response{
+        $em = $this->getDoctrine()->getManager();
+        $idRep->setMessage($request->get('message'));
+        $em->flush();
+        $json = $serializer->serialize($idRep, 'json', ['groups' => "Reponses"]);
+        return new Response($json);
+    }
+    #[Route('/m/removeRep/{idRep}', name: 'app_reclamations_supprimer_reponse_mobile', methods: ['GET','POST'])]
+    public function supprimerRepMobile(Reponse $idRep,SerializerInterface $serializer) : Response{
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($idRep);
+        $em->flush();
+        $json = $serializer->serialize($idRep, 'json', ['groups' => "Reponses"]);
+        return new Response($json);
+    }
 }
-//////// Partie Mobile
+
+
