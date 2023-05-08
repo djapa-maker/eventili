@@ -14,6 +14,8 @@ import tools.MyConnection;
 import interfaces.InterfaceService;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -31,7 +33,7 @@ public class PersonneService implements InterfaceService<Personne>{
     public PersonneService() {
          cnx = MyConnection.getInstance().getCnx();
     }
-    /*saye*/
+    /*saye*/ 
    public Personne findById(int id) {
         Personne p = new Personne();
         imagepers i=new imagepers();
@@ -51,7 +53,9 @@ String sql = "SELECT * FROM personne WHERE id_pers ="+ id + "";
                 String adresse = resultSet.getString("adresse");
                 String rib = resultSet.getString("rib"); 
                 String role = resultSet.getString("role");
-                p = new Personne(id, nom, prenom, num, email,mdp, adresse, rib,role);
+                String token = resultSet.getString("token");
+                boolean verified = resultSet.getBoolean("verified");
+                p = new Personne(id, nom, prenom, num, email,mdp, adresse, rib,role,token,verified,resultSet.getTimestamp("date").toLocalDateTime());
                
             } else {
                 p=null;
@@ -132,7 +136,11 @@ String sql = "SELECT * FROM personne WHERE email = '" + email + "' AND mdp = '" 
                 String adresse = res.getString("adresse");
                 String rib = res.getString("rib"); 
                 String role = res.getString("role");
-                Personne s1 = new Personne(id, pnom, prenom, num, email,mdp, adresse, rib,role);
+                 String token = res.getString("token");
+                boolean verified = res.getBoolean("verified");
+                
+                
+                Personne s1 = new Personne(id, pnom, prenom, num, email,mdp, adresse, rib,role,token,verified,res.getTimestamp("date").toLocalDateTime());
                 
                 s.add(s1);
             }
@@ -160,14 +168,15 @@ String sql = "SELECT * FROM personne WHERE email = '" + email + "' AND mdp = '" 
  }
     @Override
     public void ajouter(Personne t) {
-       
-        
-        
-         String sql = "insert into personne(nom_pers,prenom_pers,num_tel,email,mdp,adresse,rib,role,token)"
-                    + "values (?,?,?,?,?,?,?,?,?)";
+ DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    
+ String sqlDateTimeD = t.getDate().format(formatter);
+         
+         String sql = "insert into personne(nom_pers,prenom_pers,num_tel,email,mdp,adresse,rib,role,token,verified,date)"
+                    + "values (?,?,?,?,?,?,?,?,?,?,?)";
         
          try 
-        {
+        { 
             PreparedStatement ste = cnx.prepareStatement(sql);           
             ste.setString(1, t.getNom_pers());
              ste.setString(2, t.getPrenom_pers());
@@ -177,8 +186,10 @@ String sql = "SELECT * FROM personne WHERE email = '" + email + "' AND mdp = '" 
                 ste.setString(6, t.getAdresse());
                   ste.setString(7, t.getRib());
                    ste.setString(8, t.getRole());
-                   ste.setString(9, "");
-            ste.executeUpdate();
+                   ste.setString(9, t.getToken());
+                   ste.setBoolean(10, t.getVerified());
+                   ste.setObject(11, sqlDateTimeD);
+            ste.executeUpdate();//jareb
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -192,7 +203,7 @@ String sql = "SELECT * FROM personne WHERE email = '" + email + "' AND mdp = '" 
             Statement ste = cnx.createStatement();
             ResultSet s = ste.executeQuery(sql);
             while (s.next()) {
-                Personne p = new Personne(s.getInt(1), s.getString(2),s.getString(3),s.getString(4), s.getString(5), s.getString(6), s.getString(7), s.getString(8), s.getString(9));
+                Personne p = new Personne(s.getInt(1), s.getString(2),s.getString(3),s.getString(4), s.getString(5), s.getString(6), s.getString(7), s.getString(8), s.getString(9),s.getString(10), s.getBoolean(11),s.getTimestamp("date").toLocalDateTime());
                 personnes.add(p);
             }
         } catch (SQLException ex) {
@@ -228,7 +239,11 @@ String sql = "SELECT * FROM personne WHERE email = '" + email + "' AND mdp = '" 
         }
     }
     public void modifier(int id_perso, Personne p) {
-        String sql = "update personne set nom_pers=?, prenom_pers=?, num_tel=?, email=?,mdp=?, adresse=?, rib=?, role=? where id_pers=?";
+        String sql = "update personne set nom_pers=?, prenom_pers=?, num_tel=?, email=?,mdp=?, adresse=?, rib=?, role=?,  token=?, verified=?,  date=? where id_pers=?";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    
+ String sqlDateTimeD = p.getDate().format(formatter);
+         
         try 
         {
             PreparedStatement ste = cnx.prepareStatement(sql);
@@ -240,7 +255,10 @@ String sql = "SELECT * FROM personne WHERE email = '" + email + "' AND mdp = '" 
                 ste.setString(6, p.getAdresse());
                   ste.setString(7, p.getRib());
                    ste.setString(8, p.getRole());
-            ste.setInt(9, p.getId_pers());
+                     ste.setString(9, p.getToken());
+                   ste.setBoolean(10, p.getVerified());
+                   ste.setObject(11, sqlDateTimeD);
+            ste.setInt(12, p.getId_pers());
             ste.executeUpdate();
             System.out.println("personne modifié");
         } catch (SQLException ex) {
@@ -255,7 +273,7 @@ String sql = "SELECT * FROM personne WHERE email = '" + email + "' AND mdp = '" 
             Statement ste = cnx.createStatement();
             ResultSet s = ste.executeQuery(sql);
             while (s.next()) {
-                Personne p = new Personne(s.getInt(1), s.getString(2),s.getString(3),s.getString(4), s.getString(5), s.getString(6), s.getString(7), s.getString(8), s.getString(9));
+                Personne p = new Personne(s.getInt(1), s.getString(2),s.getString(3),s.getString(4), s.getString(5), s.getString(6), s.getString(7), s.getString(8), s.getString(9),s.getString(10), s.getBoolean(11),s.getTimestamp("date").toLocalDateTime());
                 personnes.add(p);
             }
         } catch (SQLException ex) {
@@ -348,7 +366,7 @@ String sql = "SELECT * FROM personne WHERE email = '" + email + "' AND mdp = '" 
             pstmt.setString(1, email);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-               A1 = new Personne(rs.getInt(1), rs.getString(2),rs.getString(3),rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));
+               A1 = new Personne(rs.getInt(1), rs.getString(2),rs.getString(3),rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9),rs.getString(10), rs.getBoolean(11),rs.getTimestamp("date").toLocalDateTime());
                 }
         } catch (SQLException ex) {
               System.out.println(ex.getMessage());

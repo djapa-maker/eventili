@@ -13,6 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
@@ -261,6 +262,9 @@ public void getController(UserController u){
     String image=txtImage.getText();
     String rib=txtRib.getText();
     String role=txtRole.getValue();
+    boolean verified=false;
+    LocalDateTime date= LocalDateTime.now();
+    String token=" ";
    PersonneService ps=new PersonneService();
        // System.out.println(ps.findbyemail(email)); 
   if(ps.findbyemail(email) == null){
@@ -268,9 +272,9 @@ public void getController(UserController u){
    {
      
                 String hashed = BCrypt.hashpw(txtMdp.getText(), BCrypt.gensalt());
-       Personne p=new Personne(nom, prenom, num,email,hashed, adresse, rib,  role);
+       Personne p=new Personne(nom, prenom, num,email,hashed, adresse, rib,  role,token, verified,date);
        //System.out.println(p);
-    ps.ajouter(p);
+    ps.ajouter(p);//ween
      Personne p1= ps.findbyemail(email);
      imagepers i=new imagepers(image,image, p1.getId_pers());
       System.out.println(i);

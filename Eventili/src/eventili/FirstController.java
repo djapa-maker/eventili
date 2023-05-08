@@ -13,6 +13,7 @@ import gui.sigleton.singleton;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -263,6 +264,9 @@ boolean test(String nom,String prenom,String num,String adresse,String image,Str
     String image=txtImage.getText();
     String rib=txtRib.getText();
     String role=txtRole.getValue();
+    boolean verified=false;
+    String token=" ";
+   LocalDateTime date= LocalDateTime.now(); 
    PersonneService ps=new PersonneService();
    String md;
          if (!txtMdp.isVisible()){
@@ -273,13 +277,12 @@ boolean test(String nom,String prenom,String num,String adresse,String image,Str
   }
    if(ps.findbyemail(email) == null){
   if(test( nom, prenom, num, adresse, image, rib, email,md))
-   {
-     
+   { 
                 String hashed = BCrypt.hashpw(md, BCrypt.gensalt());
-              
+          
                 
     
-       Personne p=new Personne(nom, prenom, num,email,hashed, adresse, rib,  role);
+       Personne p=new Personne(nom, prenom, num,email,hashed, adresse, rib,  role,token,verified,date);
       
        System.out.println(p);
        

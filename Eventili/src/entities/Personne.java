@@ -5,6 +5,8 @@
  */
 package entities;
 
+import java.time.LocalDateTime;
+
 /**
  *
  * @author msi
@@ -12,15 +14,15 @@ package entities;
 public class Personne {
 
     private int id_pers;
-    private String nom_pers, prenom_pers, email, adresse, rib, num_tel,mdp;
-    
+    private String nom_pers, prenom_pers, token,email, adresse, rib, num_tel,mdp;
+    private boolean verified;
     private String role;
-
+private LocalDateTime date;
     public Personne() {
         id_pers=0;
     }
-
-    public Personne(int id_pers, String nom_pers, String prenom_pers, String num_tel, String email,String mdp, String adresse, String rib,String role) {
+//jareb
+    public Personne(int id_pers, String nom_pers, String prenom_pers, String num_tel, String email,String mdp, String adresse, String rib,String role, String token,boolean verfied, LocalDateTime date) {
         this.id_pers = id_pers;
         this.nom_pers = nom_pers;
         this.prenom_pers = prenom_pers;
@@ -30,9 +32,12 @@ public class Personne {
         this.adresse = adresse;
         this.rib = rib;
         this.role=role;
+        this.verified=verfied;
+        this.token=token;
+        this.date=date;
     }
 
-    public Personne(String nom_pers, String prenom_pers, String num_tel,String email,String mdp, String adresse, String rib, String role) {
+    public Personne(String nom_pers, String prenom_pers, String num_tel,String email,String mdp, String adresse, String rib,String role, String token,boolean verfied, LocalDateTime date) {
         this.nom_pers = nom_pers;
         this.prenom_pers = prenom_pers;
         this.email = email;
@@ -41,11 +46,37 @@ public class Personne {
         this.rib = rib;
         this.num_tel = num_tel;
         this.role = role;
-        
+        this.verified=verfied;
+          this.token=token;
+        this.date=date;
     }
 
     public int getId_pers() {
         return id_pers;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    public boolean getVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
 
     public String getNum_tel() {

@@ -13,6 +13,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
@@ -130,6 +132,9 @@ UserController us=new UserController();
        image=i.getLast();
        rib=s.getRib();
        role=s.getRole();
+           boolean verified=s.getVerified();
+LocalDateTime date= s.getDate();
+    String token=s.getToken();
        this.txtNom.setText(nom);
          this.txtPrenom.setText(prenom);
           this.txtNum.setText(num);
@@ -143,7 +148,9 @@ UserController us=new UserController();
         profileRectangle.setFill(new ImagePattern(image)); 
                this.txtRib.setText(rib);
                 this.txtRole.setValue(role);
-                p=new Personne(nom, prenom, num, email, mdp, adresse, rib, role);
+                    
+
+                p=new Personne(nom, prenom, num, email, mdp, adresse, rib, role,token,verified,date);
                 //i=new imagepers(image, nom, id);
  
     }
@@ -161,9 +168,14 @@ public  void getController(UserController u){
     String pimage=txtImage.getText();
    String prib=txtRib.getText();
     String prole=txtRole.getValue();
+    boolean pverified=false;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    
+ 
+ String ptoken=" ";
     // String hashed = BCrypt.hashpw(txtMdp.getText(), BCrypt.gensalt());
         int id=ss.geIdbyemail(email);
-        p=new Personne(id,pnom, pprenom, pnum, pemail,pmdp,padresse,prib,prole);
+        p=new Personne(id,pnom, pprenom, pnum, pemail,pmdp,padresse,prib,prole,ptoken,pverified, LocalDateTime.now());
         
         if(test(pnom, pprenom, pnum, pemail,padresse,prib))
         

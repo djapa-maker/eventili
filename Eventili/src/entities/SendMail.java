@@ -17,8 +17,6 @@ import javax.mail.internet.MimeMessage;
  * @author win10
  */
 public class SendMail {
-   /* private String MonEmail = "yesmineguesmi@gmail.com";
-      private  String password = "BACMATH2K20";*/
     
     
     public static void sendMail(String receveursList,String object,String corps) {
@@ -36,7 +34,7 @@ public class SendMail {
         properties.put("spring.mail.password", "yywnthyglqlpxjcy");
        // properties.put("spring.mail.password", "roabojnccpuqbiko");
         String MonEmail = "yesmineguesmi@gmail.com";
-        String password = "syohmrnqkeksoptl";
+        String password = "oyjdjatabndjaaxg";
         
 
 

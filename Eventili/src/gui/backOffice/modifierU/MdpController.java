@@ -63,7 +63,7 @@ singleton data= singleton.getInstance();
                p.setMdp(nv1);
               String hashed = BCrypt.hashpw(nv1, BCrypt.gensalt());
              p.setMdp(hashed);
-             Personne p1=new Personne(p.getId_pers(),p.getNom_pers(), p.getPrenom_pers(), p.getNum_tel(), p.getEmail(),p.getMdp(),p.getAdresse(),p.getRib(),p.getRole());
+             Personne p1=new Personne(p.getId_pers(),p.getNom_pers(), p.getPrenom_pers(), p.getNum_tel(), p.getEmail(),p.getMdp(),p.getAdresse(),p.getRib(),p.getRole(),p.getToken(),p.getVerified(),p.getDate());
         ps.modifier(p.getId_pers(), p1);
         /*FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../sidebar/Administration.fxml"));
             Parent root = (Parent) fxmlLoader.load();

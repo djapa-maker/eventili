@@ -14,6 +14,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -178,8 +179,11 @@ public class ModifierController implements Initializable {
     String image=txtImage.getText();
     String rib=txtRib.getText();
    String role=txtRole.getText();
+   boolean verified=false;
+   LocalDateTime date= LocalDateTime.now();
+   String token=" ";
          int intValue= data.getUser().getId_pers();
-        Personne p=new Personne(intValue,nom, prenom, num, email,mdp,adresse,rib,role);
+        Personne p=new Personne(intValue,nom, prenom, num, email,mdp,adresse,rib,role,token,verified,date);
         if(test(nom, prenom, num, email,adresse,rib)){
         ps.modifier(intValue, p);
         imagepers im=new imagepers(image,image, intValue);
