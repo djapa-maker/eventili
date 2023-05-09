@@ -206,21 +206,18 @@ class ServiceController extends AbstractController
 
     //-----------------------------------------------------------------------------------------------------------------------
 
-    #[Route('/{idService}/editMobile', name: 'app_service_editMobile', methods: ['GET', 'POST'])]
+    #[Route('/editMobile/{idService}', name: 'app_service_editMobile', methods: ['GET', 'POST'])]
     public function editMobile(NormalizerInterface $Normalizer, Request $request, Service $service, ServiceRepository $serviceRepository, SessionInterface $session, ImagePersRepository $imagePersRepository): Response
     {
         $em = $this->getDoctrine()->getManager();
         $serv = $em->getRepository(Service::class)->find($service);
         $serv->setNom($request->get('nom'));
         $em->flush();
-
         $jsonContent = $Normalizer->normalize($serv, 'json', ['groups' => 'services']);
         return new Response("Student updated successfully " . json_encode($jsonContent));
-
     }
-
     //------------------------------------------------------------------------------------------------------------------------------
-    #[Route('/{idService}/deleteMobile', name: 'app_service_deleteMobile')]
+    #[Route('/deleteMobile/{idService}', name: 'app_service_deleteMobile')]
     public function deleteMobile(NormalizerInterface $Normalizer,Request $request, Service $service, ServiceRepository $serviceRepository): Response
     {
         $em = $this->getDoctrine()->getManager();
