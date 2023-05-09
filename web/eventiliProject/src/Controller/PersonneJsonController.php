@@ -99,7 +99,7 @@ class PersonneJsonController extends AbstractController
         $personne = $em->getRepository(Personne::class)->findOneBy(['email' => $email]);
 
         if ($personne == null) {
-            return new Response("Erreur : aucun utilisateur trouvé !");
+              return new JsonResponse(['error' => 'L\'adresse e-mail n\'a pas été trouvée.']);
         } else {
             $code = rand(100000, 999999); // génère un nombre aléatoire entre 100000 et 999999
             $code = str_pad($code, 6, '0', STR_PAD_LEFT);
@@ -152,10 +152,10 @@ class PersonneJsonController extends AbstractController
             if ($user->getToken() == $token) {
                 return new Response("cbon : code w mail correcte !");
             }else{
-                return new Response("Erreur : code incorrecte !");
+                 return new JsonResponse(['error' => 'code incorrecte.']);
             }
         } else {
-            return new Response("Erreur : email incorrecte !");
+            return new JsonResponse(['error' => 'L\'adresse e-mail n\'a pas été trouvée.']);
         }
 
         //* Nous renvoyons une réponse Http qui prend en paramètre un tableau en format JSON
@@ -182,10 +182,11 @@ class PersonneJsonController extends AbstractController
                return new Response("cbon : tbadel !");
             }
             else{
-                return new Response("Erreur : veuillez mettre un mot de passe plus long !");
+                return new JsonResponse(['error' => 'veuillez mettre un mot de passe plus long.']);
+                //return new Response("Erreur : veuillez mettre un mot de passe plus long !");
             }
         } else {
-            return new Response("Erreur : email incorrecte !");
+            return new JsonResponse(['error' => 'email incorrecte.']);
         }
 
 
