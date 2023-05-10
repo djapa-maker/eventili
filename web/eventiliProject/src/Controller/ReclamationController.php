@@ -522,7 +522,7 @@ class ReclamationController extends AbstractController
         $json = $serializer->serialize($reclams, 'json', ['groups' => "Reclamations"]);
         return new Response($json);
     }
-    
+
     #[Route('/m/{uid}', name: 'app_reclamations_index_mobile_user', methods: ['GET', 'POST'])]
     public function indexMobileReclamationUser(Personne $uid,ReclamationRepository $reclamRepo, request $request, SessionInterface $session, SerializerInterface $serializer): Response
     {
@@ -553,6 +553,7 @@ class ReclamationController extends AbstractController
     public function consulterRecMobile(Reclamation $idRec,ReponseRepository $reponseRepo, request $request, SessionInterface $session, SerializerInterface $serializer): Response
     {
         $reponses = $reponseRepo->findby(['rec'=>$idRec]);
+        
         $json = $serializer->serialize($reponses, 'json', ['groups' => ["Reponses","linkedReclam","Personne"]]);
         return new Response($json);
     }
