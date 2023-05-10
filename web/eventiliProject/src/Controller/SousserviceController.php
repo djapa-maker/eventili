@@ -22,7 +22,6 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
-
 #[Route('/sousservice')]
 class SousserviceController extends AbstractController
 {
@@ -339,24 +338,74 @@ class SousserviceController extends AbstractController
     //========================================================================================================================================================================
     //========================================================================================================================================================================
 
-    #[Route('/MobileSS', name: 'app_sousserviceMobile_index', methods: ['GET'])]
-    // #[ParamConverter("SousService", class:"App\Entity\Sousservice", options:["id" => "id"])]
+    #[Route('/AllSSMobile/list', name: 'app_sousservice_index', methods: ['GET'])]
     public function indexMobile(
+        SerializerInterface $serializer,
         SousserviceRepository $SousserviceRepository,
-    
+        ServiceRepository $ServRepository,
+        CategEventRepository $CategEventRepository,
         Request $request,
-        
-        SerializerInterface $serializer
+        SessionInterface $session,
+        ImagePersRepository $imagePersRepository,
+        ImagessRepository $ImagessRepository,
+        PaginatorInterface $paginator,
         // ImagessController $c
     ): Response {
-        dump($request);
+        // $c->test(); 
         $SousService = $SousserviceRepository->findAll();
-        
-
-        $json = $serializer->serialize($SousService, 'json', ['groups' => "sousservices"]);
-
-        //* Nous renvoyons une réponse Http qui prend en paramètre un tableau en format JSON
-        return new Response($json);
+        $json = $serializer->serialize($SousService, 'json', ['groups' => "souservices"]);
+        return new Response($json); 
     }
 
+    #[Route('/newMobile', name: 'app_sousservice_newMobile', methods: ['GET', 'POST'])]
+    public function newMobile(NormalizerInterface $Normalizer,Request $request, SessionInterface $session, ImagePersRepository $imagePersRepository, CategEventRepository $CategEventRepository, PersonneRepository $PersonneRepository, SousserviceRepository $SousserviceRepository, ImagessRepository $imagessRepository, ServiceRepository $ServiceRepository): Response
+    {
+       
+       
+        $em = $this->getDoctrine()->getManager();
+        $ss = new Sousservice();
+        $ss->setNom($request->get('nom'));
+        $ss->setDescription($request->get('description'));
+        $ss->setPrix($request->get('prix'));
+        $ss->setNote($request->get('note'));
+        $ss->setIdEventcateg($request->get('id_eventCateg'));
+        $ss->setIdService($SousserviceRepository->findByIdService($request->get('id_service')));
+        $ss->setIdPers($PersonneRepository->findByIdPers($request->get('id_pers')));
+        $em->persist($ss);
+        $em->flush();
+       
+        $jsonContent = $Normalizer->normalize($ss, 'json', ['groups' => 'souservices']);
+        return new Response(json_encode($jsonContent));
+    }
+    //-----------------------------------------------------------------------------------------------------------------------
+    #[Route('/editMobile/{id}', name: 'app_sousservice_editMobile', methods: ['GET', 'POST'])]
+    public function editMobile(NormalizerInterface $Normalizer,Request $request,SessionInterface $session,Sousservice $s,ImagePersRepository $imagePersRepository, CategEventRepository $CategEventRepository, PersonneRepository $PersonneRepository, SousserviceRepository $SousserviceRepository, ImagessRepository $imagessRepository, ServiceRepository $ServiceRepository): Response
+    {
+       
+        $em = $this->getDoctrine()->getManager();
+        $ss = $em->getRepository(Service::class)->find($s);
+        $ss->setNom($request->get('nom'));
+        $ss->setDescription($request->get('description'));
+        $ss->setPrix($request->get('prix'));
+        $ss->setNote($request->get('note'));
+        $ss->setIdEventcateg($request->get('id_eventCateg'));
+        $ss->setIdService($SousserviceRepository->findByIdService($request->get('id_service')));
+        $ss->setIdPers($PersonneRepository->findByIdPers($request->get('id_pers')));
+        $em->flush();
+       
+        $jsonContent = $Normalizer->normalize($ss, 'json', ['groups' => 'souservices']);
+        return new Response("sousservice updated successfully " . json_encode($jsonContent));
+    }
+     //------------------------------------------------------------------------------------------------------------------------------
+     #[Route('/deleteMobile/{id}', name: 'app_sousservice_deleteMobile')]
+     public function deleteMobile(NormalizerInterface $Normalizer,Request $request, Sousservice $s, ServiceRepository $serviceRepository): Response
+     {
+         $em = $this->getDoctrine()->getManager();
+         $serv = $em->getRepository(Sousservice::class)->find($s);
+         $em->remove($serv);
+         $em->flush();
+         $jsonContent = $Normalizer->normalize($serv, 'json',['groups' => 'souservices']);
+         return new Response("deleted successfully " . json_encode($jsonContent));
+      
+     }
 }
