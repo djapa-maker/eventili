@@ -92,7 +92,7 @@ Request $request, ImagePersRepository $imagePersRepository, PersonneRepository $
     $qrCode->setSize(200)->setForegroundColor(new Color(0, 0, 0))->setBackgroundColor(new Color(255, 255, 255));
     $qrCodes['withImage'] = $writer->write($qrCode, $logo, $label->setText('With Image')->setFont(new NotoSans(20)))->getDataUri();
     //$reservationUrl = $urlGenerator->generate('app_location_new', []);
-    return $this->render('qr_code/index.html.twig', array_merge($qrCodes,['reservationUrl' => null] , [
+    return $this->render('templates_front/qr_code/index.html.twig', array_merge($qrCodes,['reservationUrl' => null] , [
         'evenement' => $evenement,
         'personne' => $personne,
        

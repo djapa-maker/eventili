@@ -328,7 +328,7 @@ public function editVisibility(Request $request, EvenementRepository $evenementR
    
             
    
-        return $this->render('templates_front\personne\eventsprofil.html.twig', [
+        return $this->render('templates_front/personne/eventsprofil.html.twig', [
             'event' => $event,
             'Img' => $imgev,
             'personne' => $user,
