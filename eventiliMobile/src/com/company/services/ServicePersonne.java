@@ -107,6 +107,7 @@ for (String key : keys) {
                SessionManager.setId((int)idPers);//jibt id ta3 user ly3ml login w sajltha fi session ta3i
               SessionManager.setEmail(user.get("email").toString());
                  SessionManager.setMdp(user.get("password").toString());
+                 SessionManager.setRole(user.get("role").toString());
                 
                
                

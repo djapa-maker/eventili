@@ -527,7 +527,7 @@ class ReclamationController extends AbstractController
     public function indexMobileReclamationUser(Personne $uid,ReclamationRepository $reclamRepo, request $request, SessionInterface $session, SerializerInterface $serializer): Response
     {
         $reclams = $reclamRepo->findby(['userid'=>$uid]);
-        $json = $serializer->serialize($reclams, 'json', ['groups' => "Reclamations"]);
+        $json = $serializer->serialize($reclams, 'json', ['groups' => ["Reclamations","Personne"]]);
         return new Response($json);
     }
     ///Crud
@@ -553,7 +553,7 @@ class ReclamationController extends AbstractController
     public function consulterRecMobile(Reclamation $idRec,ReponseRepository $reponseRepo, request $request, SessionInterface $session, SerializerInterface $serializer): Response
     {
         $reponses = $reponseRepo->findby(['rec'=>$idRec]);
-        
+
         $json = $serializer->serialize($reponses, 'json', ['groups' => ["Reponses","linkedReclam","Personne"]]);
         return new Response($json);
     }
@@ -614,6 +614,17 @@ class ReclamationController extends AbstractController
         $em->remove($idRep);
         $em->flush();
         $json = $serializer->serialize($idRep, 'json', ['groups' => "Reponses"]);
+        return new Response($json);
+    }
+    #[Route('/m/reclamation/search', name: 'app_reclamation_search_mobile', methods: ['GET','POST'])]
+    public function searchMobile(SerializerInterface $serializer,Request $request,ReclamationRepository $reclamRepo) : Response{
+        $query = $request->get('value');
+        $data = $reclamRepo->findBy(['titre' => $query]);
+        $final = [];
+        foreach ($data as $item) {
+            $final[] = ['id' => $item->getIdRec() ];
+        }
+        $json = json_encode($final,JSON_UNESCAPED_UNICODE);
         return new Response($json);
     }
 }

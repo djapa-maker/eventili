@@ -90,7 +90,8 @@ public class ReponseService {
                 Reponse r = new Reponse();
                 r.setId((int) Float.parseFloat(obj.get("idRep").toString()));
                 r.setMessage(obj.get("message").toString());
-                
+                String p = ((Map<String, Object>) obj.get("senderid")).get("idPers").toString();
+                r.setPers((int) Float.parseFloat(p));
                 rep.add(r);
             }
         } catch (IOException ex) {

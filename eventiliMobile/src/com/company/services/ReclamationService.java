@@ -11,6 +11,7 @@ import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
 import com.codename1.ui.events.ActionListener;
 import com.company.entities.Reclamation;
+import com.company.gui.SessionManager;
 import com.company.utils.Statics;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import java.util.Map;
 public class ReclamationService {
     
     public ArrayList<Reclamation> reclamations;
+    ArrayList<Integer> SearchList;
     private ConnectionRequest req;
     public boolean resultOK;
     public static ReclamationService instance = null;
@@ -106,6 +108,8 @@ public class ReclamationService {
                 r.setDescription(obj.get("description").toString());
                 r.setTitre(obj.get("titre").toString());
                 r.setStatus(obj.get("status").toString());
+                String p = ((Map<String, Object>) obj.get("userid")).get("idPers").toString();
+                r.setPers((int) Float.parseFloat(p));
                 reclamations.add(r);
             }
         } catch (IOException ex) {
@@ -113,7 +117,22 @@ public class ReclamationService {
         }
         return reclamations;
     }
+    public ArrayList<Integer> parseSearch(String jsonText) {
+        ArrayList<Integer> I = new ArrayList<>();
+        try {
+            JSONParser j = new JSONParser();
+            Map<String, Object> ReclamationsListJson
+                    = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
 
+            List<Map<String, Object>> list = (List<Map<String, Object>>) ReclamationsListJson.get("root");
+            for (Map<String, Object> obj : list) {
+                I.add((int) Float.parseFloat(obj.get("id").toString()));
+            }
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return I;
+    }
     public ArrayList<Reclamation> getAllReclamations() {
         String url = Statics.BASE_URL + "/reclamation/m";
         req.setUrl(url);
@@ -141,5 +160,19 @@ public class ReclamationService {
         });
         NetworkManager.getInstance().addToQueueAndWait(req);
         return reclamations;
+    }
+    public ArrayList<Integer> getReclamationsBySearch(String Search) {
+        String url = Statics.BASE_URL + "/reclamation/m/reclamation/search?value="+Search;
+        req.setUrl(url);
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                SearchList = parseSearch(new String(req.getResponseData()));
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return SearchList;
     }
 }  

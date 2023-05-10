@@ -10,12 +10,12 @@ import com.codename1.ui.Button;
 import com.codename1.ui.Container;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
-import com.codename1.ui.Label;
-import com.codename1.ui.TextField;
+import com.codename1.ui.TextArea;
 import com.codename1.ui.Toolbar;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.util.Resources;
+import com.company.entities.Personne;
 import com.company.entities.Reclamation;
 import com.company.entities.Reponse;
 import com.company.gui.LoginForm;
@@ -23,6 +23,7 @@ import com.company.gui.ProfilForm;
 import com.company.gui.SessionManager;
 import com.company.services.ReclamationService;
 import com.company.services.ReponseService;
+import com.company.services.ServicePersonne;
 
 /**
  *
@@ -58,18 +59,20 @@ public class ConsulterReclamation extends Form {
         Button ReclamationsButton = new Button("Reclamations");
         ReclamationsButton.addActionListener(l->{ new HomeReclamation(res).show();});
         tb.addComponentToSideMenu(ReclamationsButton);
-        TextField Message = new TextField();
+        TextArea Message = new TextArea();
         Message.setHint("Message..");
         Message.setColumns(20);
         if(R.getStatus().equals("cloturer"))
-            Message.setEnabled(false);
+        {   Message.setEnabled(false);
+            Message.setVisible(false);
+        }
         Button SendRep = new Button("Répondre");
         if(R.getStatus().equals("cloturer"))
             SendRep.setEnabled(false);
         Button CloturerButton = new Button("Cloturé");
         CloturerButton.addActionListener(l->{
             ReclamationService.getInstance().cloturerRec(R);
-            new ConsulterReclamation(res,R).show();
+            this.refreshTheme();
         });
         SendRep.addActionListener(l->{
             Reponse rep = new Reponse();
@@ -77,18 +80,31 @@ public class ConsulterReclamation extends Form {
             rep.setMessage(Message.getText().toString());
             rep.setRec(R.getId());
             ReponseService.getInstance().ajouterRep(rep);
-            new ConsulterReclamation(res,R).show();
+            this.refreshTheme();
         });
         Container Repss = BoxLayout.encloseY();
+        Personne pers = ServicePersonne.getInstance().find(R.getPers());
+        
+        SpanLabel UserF = new SpanLabel(pers.getNom_pers() + " " + pers.getPrenom_pers() + ":");
+        SpanLabel desc = new SpanLabel(R.getDescription());
+        Container FirstMsg = BoxLayout.encloseY(
+                UserF,
+                desc
+                
+        );
+        Repss.add(FirstMsg);
         for(Reponse reps : ReponseService.getInstance().getAllReponses(R.getId())){
             SpanLabel User = new SpanLabel("");
-            User.setText(reps.getMessage());
+            Personne P = ServicePersonne.getInstance().find(reps.getPers());
+            User.setText(P.getNom_pers() + " " + P.getPrenom_pers() + ":");
+            SpanLabel Messagse = new SpanLabel(reps.getMessage());
             Button Modifier = new Button("Modifier/Supprimer");
             Modifier.addActionListener(l->{
                 new ModifierReponse(res,reps,R).show();
             });
             Container Rep = BoxLayout.encloseY(
                     User,
+                    Messagse,
                     Modifier
             );
             Repss.add(Rep);

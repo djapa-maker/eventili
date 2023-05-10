@@ -8,9 +8,10 @@ import com.codename1.components.SpanLabel;
 import com.codename1.io.Storage;
 import com.codename1.ui.Button;
 import com.codename1.ui.Container;
+import com.codename1.ui.Display;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
-import com.codename1.ui.TextField;
+import com.codename1.ui.TextArea;
 import com.codename1.ui.Toolbar;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
@@ -27,9 +28,7 @@ import java.util.ArrayList;
  * @author bitri
  */
 public class HomeReclamation extends Form {
-    Form current;
     public HomeReclamation(Resources res){
-        
         super(new BorderLayout(BorderLayout.CENTER_BEHAVIOR_CENTER_ABSOLUTE));
         Toolbar tb = new Toolbar(true);
         setToolbar(tb);
@@ -61,12 +60,17 @@ public class HomeReclamation extends Form {
         tb.addComponentToSideMenu(ReclamationsButton);
         
         Button Ajouter = new Button("Ajouter");
-        TextField DynamicSearchBar = new TextField("");
+        TextArea DynamicSearchBar = new TextArea("");
         DynamicSearchBar.setHint("Recherche Dynamique");
         DynamicSearchBar.setColumns(20);
-        ArrayList<Integer> ReclamList = new ArrayList();
-        DynamicSearchBar.addActionListener(l->{
-            //Find Reclam
+        final ArrayList<Integer> ReclamList = new ArrayList<>();
+        DynamicSearchBar.addActionListener(l -> {
+            Display.getInstance().callSerially(() -> {
+                ArrayList<Integer> result = ReclamationService.getInstance().getReclamationsBySearch(DynamicSearchBar.getText());
+                ReclamList.clear();
+                ReclamList.addAll(result);
+                System.out.println(ReclamList);
+            });
         });
         
         Ajouter.addActionListener(l->{
@@ -88,6 +92,8 @@ public class HomeReclamation extends Form {
         if(SessionManager.getRole().equals("admin")){
         for(Reclamation R : ReclamationService.getInstance().getAllReclamations())
         {
+         
+        
         Container Card = BoxLayout.encloseY();
         Card.setName(Integer.toString(R.getId()));
         SpanLabel Titre = new SpanLabel("# " + Integer.toString(R.getId()) + " " + R.getTitre());
