@@ -17,6 +17,7 @@ import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.util.Resources;
 import com.company.entities.Reclamation;
+import com.company.gui.ListService;
 import com.company.gui.LoginForm;
 import com.company.gui.ProfilForm;
 import com.company.gui.SessionManager;
@@ -39,7 +40,7 @@ public class HomeReclamation extends Form {
         tb.addComponentToSideMenu(menuButton);
         Button b = new Button("Accueil");
         b.addActionListener(e -> {
-          //  new HomeForm(res).show();
+          new ListService(res).show();
         });
         tb.addComponentToSideMenu(b);
         Button a = new Button("Mon profil");
@@ -58,7 +59,7 @@ public class HomeReclamation extends Form {
         Button ReclamationsButton = new Button("Reclamations");
         ReclamationsButton.addActionListener(l->{ new HomeReclamation(res).show();});
         tb.addComponentToSideMenu(ReclamationsButton);
-        
+         getAllStyles().setBgColor(0xd7dcff);
         Button Ajouter = new Button("Ajouter");
         TextArea DynamicSearchBar = new TextArea("");
         DynamicSearchBar.setHint("Recherche Dynamique");

@@ -16,6 +16,7 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.util.Resources;
 import com.company.entities.Reclamation;
 import com.company.entities.Reponse;
+import com.company.gui.ListService;
 import com.company.gui.LoginForm;
 import com.company.gui.ProfilForm;
 import com.company.gui.SessionManager;
@@ -36,8 +37,10 @@ public class ModifierReponse extends Form {
         tb.addComponentToSideMenu(menuButton);
         Button b = new Button("Accueil");
         b.addActionListener(e -> {
-            //new HomeForm(res).show();
+            new ListService(res).show();
         });
+                 getAllStyles().setBgColor(0xd7dcff);
+
         tb.addComponentToSideMenu(b);
         Button a = new Button("Mon profil");
         a.addActionListener(e -> {

@@ -18,8 +18,8 @@ public class Sousservices {
     private int note;
     private Personne pers;
     private Services c;
-
-    public Sousservices(float id, float prix, String nom, String description, int note, Personne pers, Services c) {
+    private EventCateg cev;
+    public Sousservices(float id, float prix, String nom, String description, int note, Personne pers, Services c,EventCateg ev) {
         this.id = id;
         this.prix = prix;
         this.nom = nom;
@@ -27,6 +27,15 @@ public class Sousservices {
         this.note = note;
         this.pers = pers;
         this.c = c;
+        this.cev = ev;
+    }
+     public Sousservices( float prix, String nom, String description, int note) {
+  
+        this.prix = prix;
+        this.nom = nom;
+        this.description = description;
+        this.note = note;
+   
     }
 
     public float getId() {
@@ -85,4 +94,18 @@ public class Sousservices {
         this.c = c;
     }
 
+    public EventCateg getCev() {
+        return cev;
+    }
+
+    public void setCev(EventCateg cev) {
+        this.cev = cev;
+    }
+
+    public Sousservices() {
+    }
+
+   
+
+    
 }

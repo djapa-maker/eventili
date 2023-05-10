@@ -18,6 +18,7 @@ import com.codename1.ui.util.Resources;
 import com.company.entities.Personne;
 import com.company.entities.Reclamation;
 import com.company.entities.Reponse;
+import com.company.gui.ListService;
 import com.company.gui.LoginForm;
 import com.company.gui.ProfilForm;
 import com.company.gui.SessionManager;
@@ -40,7 +41,7 @@ public class ConsulterReclamation extends Form {
         tb.addComponentToSideMenu(menuButton);
         Button b = new Button("Accueil");
         b.addActionListener(e -> {
-          //  new HomeForm(res).show();
+          new ListService(res).show();
         });
         tb.addComponentToSideMenu(b);
         Button a = new Button("Mon profil");
@@ -72,15 +73,17 @@ public class ConsulterReclamation extends Form {
         Button CloturerButton = new Button("Cloturé");
         CloturerButton.addActionListener(l->{
             ReclamationService.getInstance().cloturerRec(R);
-            this.refreshTheme();
+            new ConsulterReclamation(res,R).show();
         });
+                 getAllStyles().setBgColor(0xd7dcff);
+
         SendRep.addActionListener(l->{
             Reponse rep = new Reponse();
             rep.setPers(SessionManager.getId());
             rep.setMessage(Message.getText().toString());
             rep.setRec(R.getId());
             ReponseService.getInstance().ajouterRep(rep);
-            this.refreshTheme();
+            new ConsulterReclamation(res,R).show();
         });
         Container Repss = BoxLayout.encloseY();
         Personne pers = ServicePersonne.getInstance().find(R.getPers());

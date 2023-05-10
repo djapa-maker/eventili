@@ -1,3 +1,4 @@
+
 package com.company.gui;
 
 /**
@@ -34,31 +35,36 @@ import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
+
 import com.company.entities.Services;
+import com.company.entities.Sousservices;
+import com.company.services.ServiceSS;
 import com.company.services.ServiceService;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class AjoutServForm extends BaseForm {
+public class AjoutSousservice extends BaseForm {
 
     Form current;
-//------------------------------------------------------------------------------    
-
-    public AjoutServForm(Resources res) {
+//------------------------------------------------------------------------------
+    public AjoutSousservice(Resources res) {
         super(BoxLayout.y()); //herigate men Newsfeed w l formulaire vertical
+
         Toolbar tb = new Toolbar(true);
         current = this;
         setToolbar(tb);
-        Command backCommand = new Command("Back") {
+//------------------------------------------------------------------------------
+             Command backCommand = new Command("Back") {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 // Code to execute when the back button is pressed
-                new ListService(res).show();
+                new ListSousservice(res).show();
                 refreshTheme();//Actualisation
             }
         };
-//------------------------------------------------------------------------------             
+//------------------------------------------------------------------------------   
         Toolbar toolbar = getToolbar();
         toolbar.setBackCommand(backCommand);
         getTitleArea().setUIID("Container");
@@ -75,41 +81,31 @@ public class AjoutServForm extends BaseForm {
         Label emptyLabel = new Label("");
         emptyLabel.getAllStyles().setMarginBottom(250);
         add(emptyLabel);
-//------------------------------------------------------------------------------ 
-        TextField nom = new TextField("", "nom");
+//------------------------------------------------------------------------------
+        TextField nom = new TextField("", "nom ");
         nom.setUIID("TextFieldBlack");
         Label label = new Label("Nom du service : ");
-        label.getAllStyles().setFgColor(0x330033);
+        label.getAllStyles().setFgColor(0x330033); // Set the foreground color to purple
         add(label);
         add(nom);
+//------------------------------------------------------------------------------        
+        TextField description = new TextField("", "description ");
+        description.setUIID("TextFieldBlack");
+        Label labeldesc = new Label("description du sous service : ");
+        label.getAllStyles().setFgColor(0x330033); // Set the foreground color to purple
+        add(labeldesc);
+        add(description);
+//------------------------------------------------------------------------------        
+        TextField prix = new TextField("", "prix ");
+        prix .setUIID("TextFieldBlack");
+        Label labelprix  = new Label("prix  du sous service : ");
+        label.getAllStyles().setFgColor(0x330033); // Set the foreground color to purple
+        add(labelprix );
+        add(prix );
 //------------------------------------------------------------------------------
         ServiceService.getInstance().AllServices();
-//------------------------------------------------------------------------------
-        Button btnAjouter = new Button("Ajouter");
-        addStringValue("", btnAjouter);
-        //onclick button event 
-        btnAjouter.addActionListener((e) -> {
-            try {
-                if (nom.getText().equals("")) {
-                    Dialog.show("Veuillez vérifier les données", "", "Annuler", "OK");
-                } else {
-                    InfiniteProgress ip = new InfiniteProgress();; //Loading  after insert data
-                    final Dialog iDialog = ip.showInfiniteBlocking();
-                    Services s = new Services(String.valueOf(nom.getText()).toString());
-                    //appelle methode ajouter mt3 service  bch nzido données ta3na fi base 
-                    ServiceService.getInstance().addService(s);
-                    iDialog.dispose(); //na7io loading ba3d ma3mlna ajout
-                    //ba3d ajout net3adaw lel List
-                    new ListService(res).show();
-                    refreshTheme();//Actualisation
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        });
     }
 //------------------------------------------------------------------------------
-
     private void addStringValue(String s, Component v) {
 
         add(BorderLayout.west(new Label(s, "PaddedLabel"))
@@ -117,7 +113,6 @@ public class AjoutServForm extends BaseForm {
         add(createLineSeparator(0x283252));
     }
 //------------------------------------------------------------------------------
-
     private void addTab(Tabs swipe, Label spacer, Image image, String string, String text, Resources res) {
         int size = Math.min(Display.getInstance().getDisplayWidth(), Display.getInstance().getDisplayHeight());
         Container page1
@@ -144,7 +139,9 @@ public class AjoutServForm extends BaseForm {
     private void updateArrowPosition(Button btn, Label l) {
 
         l.getUnselectedStyle().setMargin(LEFT, btn.getX() + btn.getWidth() / 2 - l.getWidth() / 2);
-
+        
     }
+      
+    
 
 }

@@ -16,6 +16,7 @@ import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.util.Resources;
 import com.company.entities.Reclamation;
+import com.company.gui.ListService;
 import com.company.gui.LoginForm;
 import com.company.gui.ProfilForm;
 import com.company.gui.SessionManager;
@@ -36,8 +37,11 @@ public class AjouterReclamation extends Form {
         tb.addComponentToSideMenu(menuButton);
         Button b = new Button("Accueil");
         b.addActionListener(e -> {
+            new ListService(res).show();
            // new HomeForm(res).show();
         });
+                 getAllStyles().setBgColor(0xd7dcff);
+
         tb.addComponentToSideMenu(b);
         Button a = new Button("Mon profil");
         a.addActionListener(e -> {
@@ -66,6 +70,7 @@ public class AjouterReclamation extends Form {
         
         Ajouter.addActionListener(l->{
             ReclamationService.getInstance().addReclamation(new Reclamation(Description.getText().toString(),Titre.getText().toString(),SessionManager.getId()));
+            new HomeReclamation(res).show();
         });
         Container titleCmp = BoxLayout.encloseY(
                 BorderLayout.center(Titre),

@@ -55,7 +55,7 @@ public class ProfilForm extends Form{
     //loginButton.setUIID("LoginButton");
 
    b.addActionListener(e -> {
-//        new HomeForm(res).show();
+       new ListService(res).show();
     });
     tb.addComponentToSideMenu(b);
     Button a = new Button("Mon profil");

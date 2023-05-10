@@ -12,20 +12,16 @@ package com.company.entities;
 public class Services {
     private float idService ;
     private String nom;
-    //private String icon_service;
-
     public Services() {
     }
 
     public Services(float idService, String nom) {
         this.idService = idService;
         this.nom = nom;
-       // this.icon_service = icon_service;
     }
 
     public Services(String nom) {
         this.nom = nom;
-        //this.icon_service = icon_service;
     }
     
     public void setIdService(float idService) {
