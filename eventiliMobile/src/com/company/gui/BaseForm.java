@@ -34,6 +34,7 @@ import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.layouts.Layout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
+import com.company.gui.Reclamations.Front.HomeReclamation;
 
 /**
  * Base class for the forms with common functionality
@@ -88,6 +89,7 @@ public class BaseForm extends Form {
         tb.addMaterialCommandToSideMenu("Service", FontImage.MATERIAL_TASK, e -> new ListService(res).show());
         tb.addMaterialCommandToSideMenu("Sousservice", FontImage.MATERIAL_RESTAURANT_MENU, e -> new ListVideoForm(res).show());
         tb.addMaterialCommandToSideMenu("Profile", FontImage.MATERIAL_ADMIN_PANEL_SETTINGS, e -> new ProfilForm(res).show());
+        tb.addMaterialCommandToSideMenu("Reclamation", FontImage.MATERIAL_MESSAGE, e -> new HomeReclamation(res).show());
           Button deconnection = new Button("Déconnexion");
     //loginButton.setUIID("LoginButton");
     deconnection.addActionListener(e -> {

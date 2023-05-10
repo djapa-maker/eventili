@@ -20,6 +20,7 @@ public class SessionManager {
     private static String email; 
     private static String mdp ;
  private static String photo;
+ private static String role;
     public static Preferences getPref() {
         return pref;
     }
@@ -35,7 +36,12 @@ public class SessionManager {
     public static void setId(int idUser) {
         pref.set("idUser",idUser);//nsajl id user connecté  w na3tiha identifiant "id";
     }
-
+    public static void setRole(String role){
+        pref.set("role",role);
+    }
+    public static String getRole(){
+        return pref.get("role",role);
+    }
 
     public static String getEmail() {
         return pref.get("email",email);

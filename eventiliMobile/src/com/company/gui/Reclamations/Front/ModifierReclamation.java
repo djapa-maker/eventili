@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.gui.Reclamations.Front;
+package com.company.gui.Reclamations.Front;
 
 import com.codename1.io.Storage;
 import com.codename1.ui.Button;
@@ -16,12 +16,11 @@ import com.codename1.ui.Toolbar;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.util.Resources;
-import com.mycompany.entities.Reclamation;
-import com.mycompany.gui.HomeForm;
-import com.mycompany.gui.LoginForm;
-import com.mycompany.gui.ProfilForm;
-import com.mycompany.gui.SessionManager;
-import com.mycompany.services.ReclamationService;
+import com.company.entities.Reclamation;
+import com.company.gui.LoginForm;
+import com.company.gui.ProfilForm;
+import com.company.gui.SessionManager;
+import com.company.services.ReclamationService;
 
 /**
  *
@@ -38,7 +37,7 @@ public class ModifierReclamation extends Form {
         tb.addComponentToSideMenu(menuButton);
         Button b = new Button("Accueil");
         b.addActionListener(e -> {
-            new HomeForm(res).show();
+          //  new HomeForm(res).show();
         });
         tb.addComponentToSideMenu(b);
         Button a = new Button("Mon profil");
