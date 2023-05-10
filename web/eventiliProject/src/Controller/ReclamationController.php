@@ -522,7 +522,8 @@ class ReclamationController extends AbstractController
         $json = $serializer->serialize($reclams, 'json', ['groups' => "Reclamations"]);
         return new Response($json);
     }
-    #[Route('/m/{uid}', name: 'app_reclamations_index_mobile', methods: ['GET', 'POST'])]
+    
+    #[Route('/m/{uid}', name: 'app_reclamations_index_mobile_user', methods: ['GET', 'POST'])]
     public function indexMobileReclamationUser(Personne $uid,ReclamationRepository $reclamRepo, request $request, SessionInterface $session, SerializerInterface $serializer): Response
     {
         $reclams = $reclamRepo->findby(['userid'=>$uid]);
@@ -530,7 +531,7 @@ class ReclamationController extends AbstractController
         return new Response($json);
     }
     ///Crud
-    #[Route('/m/ajouterRec', name: 'app_reclamations_index_mobile', methods: ['GET', 'POST'])]
+    #[Route('/m/ajouter/Rec', name: 'app_reclamations_ajouter_mobile', methods: ['GET'])]
     public function AjouterRecMobile(ChatterInterface $chatter,NormalizerInterface $normalizer,PersonneRepository $persRepo,ReclamationRepository $reclamRepo, request $request, SessionInterface $session, SerializerInterface $serializer): Response
     {
         $em = $this->getDoctrine()->getManager();
@@ -548,11 +549,11 @@ class ReclamationController extends AbstractController
         return new Response(json_encode($json));
 
     }
-    #[Route('/m/{idRec}/consulter', name: 'app_reclamations_index_mobile', methods: ['GET', 'POST'])]
-    public function consulterRecMobile(Reclamation $idRec,ReclamationRepository $reclamRepo, request $request, SessionInterface $session, SerializerInterface $serializer): Response
+    #[Route('/m/{idRec}/consulter', name: 'app_reclamations_consulter_mobile', methods: ['GET', 'POST'])]
+    public function consulterRecMobile(Reclamation $idRec,ReponseRepository $reponseRepo, request $request, SessionInterface $session, SerializerInterface $serializer): Response
     {
-        $reponses = $reclamRepo->findby(['rec'=>$idRec]);
-        $json = $serializer->serialize($reponses, 'json', ['groups' => "Reponses"]);
+        $reponses = $reponseRepo->findby(['rec'=>$idRec]);
+        $json = $serializer->serialize($reponses, 'json', ['groups' => ["Reponses","linkedReclam","Personne"]]);
         return new Response($json);
     }
     #[Route('/m/update/{idRec}', name: 'app_reclamations_modifier_mobile', methods: ['GET','POST'])]
@@ -561,7 +562,6 @@ class ReclamationController extends AbstractController
         $idRec->setTitre($request->get('titre'));
         $idRec->setStatus($request->get('status'));
         $idRec->setDescription($request->get('description'));
-        $idRec->setUserid($personneRepository->findOneBy(['userid' => $request->get('uid')]));
         $em->flush();
         $json = $serializer->serialize($idRec, 'json', ['groups' => "Reclamations"]);
         return new Response($json);
@@ -586,7 +586,7 @@ class ReclamationController extends AbstractController
         return new Response($json);
     }
     ///// Reponses
-    #[Route('/m/ajouterRep/{uid}/{idRec}', name: 'app_reclamations_index_mobile', methods: ['GET', 'POST'])]
+    #[Route('/m/ajouterRep/{uid}/{idRec}', name: 'app_reclamations_ajouterRep_mobile', methods: ['GET', 'POST'])]
     public function AjouterRepMobile(Personne $uid,Reclamation $idRec,NormalizerInterface $normalizer,request $request): Response
     {
         $em = $this->getDoctrine()->getManager();

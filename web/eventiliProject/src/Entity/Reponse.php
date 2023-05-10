@@ -8,6 +8,7 @@ use Doctrine\DBAL\Types\DateTimeType;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ReclamationRepository;
 use phpDocumentor\Reflection\Types\Integer;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints\DateTime;
@@ -42,6 +43,7 @@ class Reponse
     #[ORM\JoinColumn(name: "senderId", referencedColumnName: "id_pers")]
     #[Groups("Reponses")]
     private $senderid;
+
     public function getIdRep(): ?int
     {
         return $this->idRep;

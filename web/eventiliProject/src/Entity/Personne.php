@@ -11,6 +11,7 @@ use PhpParser\Node\Name;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Mime\Message;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[UniqueEntity(fields: ['email'], message: 'Un compte déjà existe avec cet email')]
@@ -20,6 +21,7 @@ class Personne implements UserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(name:'id_pers')]
+    #[Groups("Personne")]
     private ?int $idPers=null;
 
     #[ORM\Column]
@@ -28,7 +30,7 @@ class Personne implements UserInterface
     #[Assert\Regex(
         pattern: "/^[^0-9]*$/",
        message: "Le nom ne doit pas contenir de chiffre"
-    )]  
+    )]
     private ?String $nomPers=null;
 
     #[ORM\Column]
@@ -36,7 +38,7 @@ class Personne implements UserInterface
     #[Assert\Regex(
         pattern: "/^[^0-9]*$/",
        message: "Le prénom ne doit pas contenir de chiffre"
-    )]  
+    )]
     private ?String $prenomPers=null;
    
     #[ORM\Column]
@@ -46,7 +48,7 @@ class Personne implements UserInterface
     #[Assert\Regex(
         pattern: "/^[^a-zA-Z]+$/",
        message: "Le numéro ne doit pas contenir de lettres"
-    )]  
+    )]
     private ?String $numTel=null;
 
     #[ORM\Column]

@@ -19,7 +19,7 @@ class Reclamation
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(name: "id_rec", type: "integer", nullable: false)]
-    #[Groups("Reclamations")]
+    #[Groups(["Reclamations","linkedReclam"])]
     private $idRec;
 
     #[ORM\Column(length: 255)]
