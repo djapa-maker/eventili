@@ -34,18 +34,16 @@ class Evenement
 
     // #[Assert\DateTime]
     // #[Assert\GreaterThan('today')]
-    #[Groups("Event")]
+
     #[ORM\Column]
     private ?DateTime $dateDebut = null;
 
     // #[Assert\DateTime]
     // #[Assert\GreaterThan('today')]
-    #[Groups("Event")]
     #[ORM\Column]
     private ?DateTime $dateFin = null;
 
 
-    #[Groups("Event")]
     #[ORM\Column]
     #[Assert\NotBlank(message: 'Merci de remplir la description')]
     #[Assert\Length(
@@ -55,17 +53,15 @@ class Evenement
     private ?String $descriptionEv = null;
 
 
-    #[Groups("Event")]
     #[ORM\Column]
     private ?String $type = null;
 
 
-    #[Groups("Event")]
+
     #[ORM\Column]
     private ?String $visibilite = null;
 
 
-    #[Groups("Event")]
     #[ORM\Column]
     #[Assert\NotBlank(message: 'Merci de remplir le nombre de tickets')]
     #[Assert\Regex(
@@ -80,7 +76,6 @@ class Evenement
     private ?int $limiteparticipant = null;
 
 
-    #[Groups("Event")]
     #[ORM\Column]
     #[Assert\NotBlank(message: 'Merci de remplir le prix')]
     #[Assert\Regex(

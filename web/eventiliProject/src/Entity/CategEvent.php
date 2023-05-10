@@ -12,13 +12,13 @@ class CategEvent
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[Groups("CategEventC","CategEvent","Event")]
+    #[Groups(['Event', 'CategEventC','CategEvent'])]
     #[ORM\Column(name:'id_categ')]
     private ?int $idCateg=null;
 
     #[ORM\Column]
     #[Assert\NotBlank(message: 'Merci de remplir le type')]
-    #[Groups("CategEventC","CategEvent","Event")]
+    #[Groups(['Event', 'CategEventC','CategEvent'])]
     #[Assert\NotNull(message: 'Merci de remplir le type')]
     #[Assert\Length(
         // min: 1,

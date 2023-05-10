@@ -162,8 +162,7 @@ class CategoryController extends AbstractController
         $json = $serializer->serialize($categ, 'json', ['groups' => "CategEventC"]);
         return new Response($json);
     }
-    //http://127.0.0.1:8000/category/mobile/new?type=m7amsa
-
+    //http://127.0.0.1:8000/category/mobile/new?type=coucou
     //suppression d'une catégorie-------------------------------------------------------------------------------------------------
     #[Route('/mobile/{idCateg}', name: 'app_categorie_deleteMobile')]
     public function deleteMobile(SerializerInterface $serializer, CategEvent $categorie, CategEventRepository $categEventRepository): Response
@@ -179,7 +178,7 @@ class CategoryController extends AbstractController
     //http://127.0.0.1:8000/category/mobile/34
 
     //modification d'une catégorie-------------------------------------------------------------------------------------------------
-    #[Route('/mobile/{idCateg}/edit', name: 'app_categorie_editMobile', methods: ['GET', 'POST'])]
+    #[Route('/mobile/edit/{idCateg}', name: 'app_categorie_editMobile', methods: ['GET', 'POST'])]
     public function editMobile(SerializerInterface $serializer,Request $request, CategEvent $categorie, CategEventRepository $categEventRepository): Response
     {
         
@@ -190,6 +189,6 @@ class CategoryController extends AbstractController
             $json = $serializer->serialize($categ, 'json', ['groups' => "CategEventC"]);
             return new Response($json);
     }
-    //http://127.0.0.1:8000/category/mobile/32/edit?type=camp
+    //http://127.0.0.1:8000/category/mobile/edit/32?type=camp
 
 }
