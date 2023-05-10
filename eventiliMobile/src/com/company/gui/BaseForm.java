@@ -83,11 +83,12 @@ public class BaseForm extends Form {
                 FlowLayout.encloseCenterBottom(
                         new Label(res.getImage("profile-pic.jpg"), "PictureWhiteBackgrond"))
         ));
+        //---------------------------------------
         tb.addMaterialCommandToSideMenu("Tableau de bord", FontImage.MATERIAL_TABLE_CHART, e -> new StatistiquePieForm(res).show());
-        tb.addMaterialCommandToSideMenu("Catégorie événement ", FontImage.MATERIAL_CALENDAR_TODAY, e -> new ListVideoForm(res).show());
-        tb.addMaterialCommandToSideMenu("Evenement", FontImage.MATERIAL_BOOKMARK_ADDED, e -> new StatistiquePieForm(res).show());
+        tb.addMaterialCommandToSideMenu("Catégorie événement ", FontImage.MATERIAL_CALENDAR_TODAY, e -> new ListCateg(res).show());
+        //tb.addMaterialCommandToSideMenu("Evenement", FontImage.MATERIAL_BOOKMARK_ADDED, e -> new StatistiquePieForm(res).show());
         tb.addMaterialCommandToSideMenu("Service", FontImage.MATERIAL_TASK, e -> new ListService(res).show());
-        tb.addMaterialCommandToSideMenu("Sousservice", FontImage.MATERIAL_RESTAURANT_MENU, e -> new ListVideoForm(res).show());
+        //tb.addMaterialCommandToSideMenu("Sousservice", FontImage.MATERIAL_RESTAURANT_MENU, e -> new ListVideoForm(res).show());
         tb.addMaterialCommandToSideMenu("Profile", FontImage.MATERIAL_ADMIN_PANEL_SETTINGS, e -> new ProfilForm(res).show());
         tb.addMaterialCommandToSideMenu("Reclamation", FontImage.MATERIAL_MESSAGE, e -> new HomeReclamation(res).show());
           Button deconnection = new Button("Déconnexion");

@@ -48,6 +48,8 @@ import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
+import static com.company.services.ServiceEvent.nb_events;
+import static com.company.services.ServiceEventCateg.nb_categories;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,8 +62,8 @@ public class StatistiquePieForm extends BaseForm {
 
     private boolean drawOnMutableImage;
 
-    private double nbr_feedback = 45;
-    private double nbr_reclamation = 29;
+    private double nbr_categories = nb_categories;
+    private double nbr_evenements= 7;
 
     Form current;
     BaseForm form;
@@ -124,50 +126,50 @@ public class StatistiquePieForm extends BaseForm {
         Component.setSameSize(radioContainer, spacer1, spacer2);
         add(LayeredLayout.encloseIn(swipe, radioContainer));
 
-        ButtonGroup barGroup = new ButtonGroup();
+//        ButtonGroup barGroup = new ButtonGroup();
+//
+//        RadioButton all = RadioButton.createToggle("Feedback", barGroup);
 
-        RadioButton all = RadioButton.createToggle("Feedback", barGroup);
-
-        all.setUIID("SelectBar");
-        RadioButton popular = RadioButton.createToggle("Categorie Reclamation", barGroup);
-        popular.setUIID("SelectBar");
-        RadioButton feedback = RadioButton.createToggle("Feedback", barGroup);
-        feedback.setUIID("SelectBar");
-        RadioButton profile = RadioButton.createToggle("Statistique", barGroup);
-        profile.setUIID("SelectBar");
-        Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
-
-        add(LayeredLayout.encloseIn(
-                GridLayout.encloseIn(3, all, popular, profile),
-                FlowLayout.encloseBottom(arrow)
-        ));
-        all.setSelected(true);
-        arrow.setVisible(false);
-        addShowListener(e -> {
-            arrow.setVisible(true);
-            updateArrowPosition(all, arrow);
-
-        });
-        bindButtonSelection(all, arrow);
-        bindButtonSelection(popular, arrow);
-        all.addActionListener((e) -> {
-        });
-
-        popular.setSelected(true);
-        arrow.setVisible(false);
-        addShowListener(e -> {
-            arrow.setVisible(true);
-            updateArrowPosition(profile, arrow);
-        });
-        bindButtonSelection(profile, arrow);
-        profile.addActionListener((e) -> {
-            new StatistiquePieForm(res).show();
-
-        });
+//        all.setUIID("SelectBar");
+//        RadioButton popular = RadioButton.createToggle("Categorie Reclamation", barGroup);
+//        popular.setUIID("SelectBar");
+//        RadioButton feedback = RadioButton.createToggle("Feedback", barGroup);
+//        feedback.setUIID("SelectBar");
+//        RadioButton profile = RadioButton.createToggle("Statistique", barGroup);
+//        profile.setUIID("SelectBar");
+//        Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
+//
+//        add(LayeredLayout.encloseIn(
+//                GridLayout.encloseIn(3, all, popular, profile),
+//                FlowLayout.encloseBottom(arrow)
+//        ));
+//        all.setSelected(true);
+//        arrow.setVisible(false);
+//        addShowListener(e -> {
+//            arrow.setVisible(true);
+//            updateArrowPosition(all, arrow);
+//
+//        });
+//        bindButtonSelection(all, arrow);
+//        bindButtonSelection(popular, arrow);
+//        all.addActionListener((e) -> {
+//        });
+//
+//        popular.setSelected(true);
+//        arrow.setVisible(false);
+//        addShowListener(e -> {
+//            arrow.setVisible(true);
+//            updateArrowPosition(profile, arrow);
+//        });
+//        bindButtonSelection(profile, arrow);
+//        profile.addActionListener((e) -> {
+//            new StatistiquePieForm(res).show();
+//
+//        });
         // special case for rotation
-        addOrientationListener(e -> {
-            updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
-        });
+//        addOrientationListener(e -> {
+//            updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
+//        });
 
         //app 
         createPieChartForm();
@@ -266,15 +268,15 @@ public class StatistiquePieForm extends BaseForm {
     public void createPieChartForm() {
 
         //chna3ml stat feedback par rapport l reclamation 
-        double total = nbr_feedback + nbr_reclamation;
+        double total = nbr_categories + nbr_evenements;
 
         //values
-        double prcntFeed = (nbr_feedback * 100) / total;
+        double prcntCat = (nbr_categories * 100) / total;
 
-        double prcntRec = (nbr_reclamation * 100) / total;
+        double prcntEv = (nbr_evenements * 100) / total;
 
         //colors set:
-        int[] colors = new int[]{0xf4b342, 0x52b29a};
+        int[] colors = new int[]{0xaeb8ff, 0xff8601};
 
         DefaultRenderer renderer = buildCatRendrer(colors);
         renderer.setLabelsColor(0x000000); // black color for labels.
@@ -289,13 +291,13 @@ public class StatistiquePieForm extends BaseForm {
         r.setHighlighted(true);
 
         //CREATe the chart ...
-        PieChart chart = new PieChart(buildDataset("title", Math.round(prcntFeed), Math.round(prcntRec)), renderer);
+        PieChart chart = new PieChart(buildDataset("title", Math.round(prcntCat), Math.round(prcntEv)), renderer);
 
         // n7oto chart fi component
         ChartComponent c = new ChartComponent(chart);
 
         String[] messages = {
-            "Statistique feedback % reclamations"
+            "Statistique % des événements et des catégorie"
         };
 
         SpanLabel message = new SpanLabel(messages[0], "WelcomeMessage");
@@ -307,12 +309,12 @@ public class StatistiquePieForm extends BaseForm {
 
     }
 
-    private CategorySeries buildDataset(String title, double prcntFeed, double prcntRec) {
+    private CategorySeries buildDataset(String title, double prcntCat, double prcntEv) {
 
         CategorySeries series = new CategorySeries(title);
 
-        series.add("Reclamation", prcntRec);
-        series.add("Feedback", prcntFeed);
+        series.add("Evénements", prcntEv);
+        series.add("Catégories", prcntCat);
 
         return series;
     }
