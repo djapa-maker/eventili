@@ -84,7 +84,7 @@ public class ConsulterReclamation extends Form {
         Container Repss = BoxLayout.encloseY();
         for(Reponse reps : ReponseService.getInstance().getAllReponses(R.getId())){
             SpanLabel User = new SpanLabel("");
-            User.setText(ServicePersonne.getInstance().find(reps.getId()).getNom_pers() + " " + ServicePersonne.getInstance().find(reps.getId()).getPrenom_pers()+":" + reps.getMessage());
+            User.setText(reps.getMessage());
             Button Modifier = new Button("Modifier/Supprimer");
             Modifier.addActionListener(l->{
                 new ModifierReponse(res,reps,R).show();

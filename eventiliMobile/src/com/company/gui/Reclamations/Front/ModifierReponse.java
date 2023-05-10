@@ -69,6 +69,7 @@ public class ModifierReponse extends Form {
             R.setMessage(Message.getText().toString());
             R.setRec(rec.getId());
             ReponseService.getInstance().updateRep(R);
+            new ConsulterReclamation(res,rec).show();
         });
         Container titleCmp = BoxLayout.encloseY(
                 BorderLayout.center(Message),

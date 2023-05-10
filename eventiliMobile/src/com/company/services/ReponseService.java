@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 /**
  *
  * @author bitri
@@ -91,7 +90,7 @@ public class ReponseService {
                 Reponse r = new Reponse();
                 r.setId((int) Float.parseFloat(obj.get("idRep").toString()));
                 r.setMessage(obj.get("message").toString());
-                System.out.println(r.getRec());
+                
                 rep.add(r);
             }
         } catch (IOException ex) {
