@@ -519,7 +519,7 @@ class ReclamationController extends AbstractController
     public function indexMobileReclamations(ReclamationRepository $reclamRepo, request $request, SessionInterface $session, SerializerInterface $serializer): Response
     {
         $reclams = $reclamRepo->findAll();
-        $json = $serializer->serialize($reclams, 'json', ['groups' => "Reclamations"]);
+        $json = $serializer->serialize($reclams, 'json', ['groups' => ["Reclamations","Personne"]]);
         return new Response($json);
     }
 
