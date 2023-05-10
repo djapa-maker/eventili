@@ -1,24 +1,23 @@
 <?php
-
+ 
 namespace App\Controller;
+use Twilio\Rest\Client;
+
 use App\Entity\Reservation;
  use App\Entity\Sponsoring;
  use App\Entity\Transaction;
 use App\Entity\Personne;
+ 
 
 use App\Form\TransactionType;
 use App\Repository\EvenementRepository;
  use App\Repository\ImagePersRepository;
- use App\Repository\PersonneRepository;
- use App\Repository\SponsoringRepository;
+ use App\Repository\PersonneRepository; 
  use App\Repository\TransactionRepository;
 use DateTimeZone;
  use Doctrine\ORM\EntityManagerInterface;
 use Dompdf\Dompdf;
- use Knp\Component\Pager\PaginatorInterface;
-use Stripe\Charge;
- use Stripe\Customer;
- use Stripe\Exception\ApiErrorException;
+ use Knp\Component\Pager\PaginatorInterface; 
 use Stripe\Exception\CardException;
 use Stripe\Price;
  use Stripe\Product;
@@ -32,7 +31,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  use MercurySeries\FlashyBundle\FlashyNotifier;
  use Doctrine\ORM\Query;
 
- use Twilio\Rest\Client;
+ 
  #[Route('/transaction')]
 class TransactionController extends AbstractController
 {  

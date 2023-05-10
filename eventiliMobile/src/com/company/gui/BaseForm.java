@@ -28,6 +28,7 @@ import com.codename1.ui.Form;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
 import com.codename1.ui.Toolbar;
+import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.layouts.Layout;
@@ -43,7 +44,7 @@ import com.company.gui.Reclamations.Front.HomeReclamation;
 public class BaseForm extends Form {
 
     public BaseForm() {
-    }
+     }
 
     public BaseForm(Layout contentPaneLayout) {
         super(contentPaneLayout);
@@ -68,6 +69,7 @@ public class BaseForm extends Form {
     }
 
     protected void addSideMenu(Resources res) {
+        
         Toolbar tb = getToolbar();
         Image img = res.getImage("profile-background.jpg");
         if (img.getHeight() > Display.getInstance().getDisplayHeight() / 3) {
@@ -89,6 +91,8 @@ public class BaseForm extends Form {
         tb.addMaterialCommandToSideMenu("Sousservice", FontImage.MATERIAL_RESTAURANT_MENU, e -> new ListSousservice(res).show());
         tb.addMaterialCommandToSideMenu("Profile", FontImage.MATERIAL_ADMIN_PANEL_SETTINGS, e -> new ProfilForm(res).show());
         tb.addMaterialCommandToSideMenu("Reclamation", FontImage.MATERIAL_MESSAGE, e -> new HomeReclamation(res).show());
+       tb.addMaterialCommandToSideMenu("Transaction Details", FontImage.MATERIAL_INFO,  e -> new transactionForm(res).show());
+
         Button deconnection = new Button("Déconnexion");
         //loginButton.setUIID("LoginButton");
         deconnection.addActionListener(e -> {
