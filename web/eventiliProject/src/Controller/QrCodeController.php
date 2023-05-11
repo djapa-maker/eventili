@@ -126,21 +126,29 @@ ImagePersRepository $imagePersRepository, EvenementRepository $EventRepository,T
     $ticket->setNbTick($nb);
     $ticket->setPrixTick($request->request->get('prix')*$nb);
     $ticket->setStatus("active");
-$idtr=10;
+$idtr=21;
     $transaction=$TransactionRepository->findOneBy(['id_trans' => $idtr]);
     $ticket->setIdTran($transaction);
     $nom = $request->request->get('titre');
     $event=$EventRepository->findOneBy(['titre' => $nom]);
-$ticket->setIdevent($event);
-   $entityManager->persist($ticket);
-        $entityManager->flush();
+    //$ticket->setIdevent($event);
+if ($event !== null) {
+    $ticket->setIdevent($event);
+    $entityManager->persist($ticket);
+    $entityManager->flush();
+}
+   
 
         return $this->redirectToRoute('app_home_ticket_front', 
         [
+            'ticket' => $ticket,
         'personne' => $personne,
             'last' => $last,], Response::HTTP_SEE_OTHER);
     
 
 }
+
+
+
 
 }

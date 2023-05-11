@@ -223,7 +223,6 @@ class ReservationController extends AbstractController
     #[Route('/reservice/add', name: 'app_reservice_add', methods: ['POST'])]
     public function addService(SousserviceRepository $SousserviceRepository, Request $request, SessionInterface $session)
     {
-
         $data = json_decode($request->getContent(), true);
         $serviceId = $data['serviceId'];
         $service = $SousserviceRepository->find($serviceId);
@@ -405,7 +404,7 @@ class ReservationController extends AbstractController
             'imagess' => $ImagessRepository->findAll(),
             'souservices' => $sousservice,
             'firstimg' => $listimg,
-            'imgfirst' => $imgfirst,
+            // 'imgfirst' => $imgfirst,
             'avis' => $av,
             'personne' => $personne,
             'last' => $last

@@ -1,23 +1,24 @@
 <?php
- 
-namespace App\Controller;
-use Twilio\Rest\Client;
 
+namespace App\Controller;
 use App\Entity\Reservation;
  use App\Entity\Sponsoring;
  use App\Entity\Transaction;
 use App\Entity\Personne;
- 
 
 use App\Form\TransactionType;
 use App\Repository\EvenementRepository;
  use App\Repository\ImagePersRepository;
- use App\Repository\PersonneRepository; 
+ use App\Repository\PersonneRepository;
+ use App\Repository\SponsoringRepository;
  use App\Repository\TransactionRepository;
 use DateTimeZone;
  use Doctrine\ORM\EntityManagerInterface;
 use Dompdf\Dompdf;
- use Knp\Component\Pager\PaginatorInterface; 
+ use Knp\Component\Pager\PaginatorInterface;
+use Stripe\Charge;
+ use Stripe\Customer;
+ use Stripe\Exception\ApiErrorException;
 use Stripe\Exception\CardException;
 use Stripe\Price;
  use Stripe\Product;
@@ -31,7 +32,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  use MercurySeries\FlashyBundle\FlashyNotifier;
  use Doctrine\ORM\Query;
 
- 
+ use Twilio\Rest\Client;
  #[Route('/transaction')]
 class TransactionController extends AbstractController
 {  
@@ -40,7 +41,7 @@ class TransactionController extends AbstractController
     public function exportTransactionPdf($transaction, $request, FlashyNotifier $flashy): Response
     {
         $html = '<div style="text-align: center;">
-            <h1 style="font-size: 24px; margin-bottom: 20px;">ARTMART</h1>
+            <h1 style="font-size: 24px; margin-bottom: 20px;">Eventili</h1>
             <p><strong>Transaction ID:</strong> '.$transaction->getIdTrans().'</p>
             <p><strong>valeur transaction:</strong> '.$transaction->getValeurTrans().'</p>
             <p><strong>Currency:</strong> '.$transaction->getDevis().'</p>

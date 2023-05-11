@@ -197,8 +197,8 @@ $message = (new Swift_Message('Reset Password'))
 ->setTo([$user->getEmail()])
 ->setBody("<p>Salut! </p>cliquez ici pour reset le password: " . $url, 'text/html');
 // Joindre une image à l'e-mail
-$image = Swift_Image::fromPath('C:\xampp\htdocs\img\wedding.png');
-$image1 = Swift_Image::fromPath('C:\xampp\htdocs\img\logo.png');
+$image = Swift_Image::fromPath('C:\xamp2\htdocs\img\wedding.png');
+$image1 = Swift_Image::fromPath('C:\xamp2\htdocs\img\logo.png');
 $body = '<img src="' . $message->embed($image1) . '" style="max-width:29%;height:auto;">';
 $body .= '<img src="' . $message->embed($image) . '" style="max-width:100%;height:auto;">';
 $body .= '<br><br><br>';

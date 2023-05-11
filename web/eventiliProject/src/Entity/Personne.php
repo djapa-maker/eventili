@@ -14,7 +14,7 @@ use Symfony\Component\Mime\Message;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[UniqueEntity(fields: ['email'], message: 'Un compte déjà existe avec cet email')]
+
 #[ORM\Entity(repositoryClass: PersonneRepository::class)]
 class Personne implements UserInterface
 {

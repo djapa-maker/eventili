@@ -338,7 +338,7 @@ class SousserviceController extends AbstractController
     //========================================================================================================================================================================
     //========================================================================================================================================================================
 
-    #[Route('/AllSSMobile/list', name: 'app_sousservice_index', methods: ['GET'])]
+    #[Route('/AllSSMobile/list', name: 'app_sousservice_indexM', methods: ['GET'])]
     public function indexMobile(
         SerializerInterface $serializer,
         SousserviceRepository $SousserviceRepository,
