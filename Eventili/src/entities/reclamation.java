@@ -5,34 +5,49 @@ import java.sql.Timestamp;
 public class reclamation {
     private int id;
     private String description,titre;
-    private Timestamp timeStamp;
+    private Timestamp dateheure;
     private Personne p;
-
+    String status;
     public reclamation() {
     }
     
     
    
-    public reclamation(int id, Timestamp timeStamp,String description, String titre,Personne p){
+    public reclamation(int id, Timestamp dateheure,String description, String titre,Personne p,String status){
         this.id = id;
         this.p=p;
         this.description = description;
         this.titre = titre;
-        this.timeStamp = timeStamp;
+        this.dateheure = dateheure;
+        this.status = status;
     }
-    public reclamation(int id,String description, String titre,Personne p){
+    public reclamation(int id,String description, String titre,Personne p,String status){
         this.id = id;
         this.p=p;
         this.description = description;
         this.titre = titre;
-        this.timeStamp = new Timestamp(System.currentTimeMillis());
+        this.dateheure = new Timestamp(System.currentTimeMillis());
+        this.status = status;
+    }
+    public reclamation(String description, String titre,Personne p){
+        this.p=p;
+        this.description = description;
+        this.titre = titre;
+        this.dateheure = new Timestamp(System.currentTimeMillis());
+        this.status = "En Attente";
+    }
+    public String getStatus(){
+        return this.status;
+    }
+    public void setStatus(String Status){
+        this.status = Status;
     }
     public int getId(){
         return this.id;
     }
   
     public Timestamp getTimeStamp(){
-        return this.timeStamp;
+        return this.dateheure;
     }
     public String getDescription(){
         return this.description;
@@ -41,7 +56,7 @@ public class reclamation {
         return this.titre;
     }
     public void setTimeStamp(Timestamp timeStamp){
-        this.timeStamp = timeStamp;
+        this.dateheure = timeStamp;
     }
     public void setDescriptipn(String description){
         this.description = description;
@@ -49,15 +64,10 @@ public class reclamation {
     public void setTitre(String titre){
         this.titre = titre;
     }
-
+    public void setId(int id){
+        this.id = id;
+    }
     public Personne getP() {
         return p;
     }
-
-    @Override
-    public String toString() {
-        return "reclamation{" + "id=" + id + ", description=" + description + ", titre=" + titre + ", timeStamp=" + timeStamp + ", p=" + p + '}';
-    }
-    
-    
 }

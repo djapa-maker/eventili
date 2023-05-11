@@ -3,21 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui.backOffice.reclamations;
+package gui.frontOffice.reclamations;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import entities.Personne;
 import entities.reclamation;
 import gui.sigleton.singleton;
-import gui.singleton.SingletonReclam;
 import java.io.IOException;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.time.format.ResolverStyle;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -30,8 +26,9 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.Control;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -40,14 +37,23 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import services.ReclamationService;
+import gui.singleton.SingletonReclam;
+//import gui.frontOffice.reclamations.sidebarConsulter.sidebarConsulterController;
 
 /**
  * FXML Controller class
  *
- * @author chaim
+ * @author othma
  */
 public class ReclamationsController implements Initializable {
 
+    /**
+     * Initializes the controller class.
+     */
+    @FXML
+    private Pane pane;
+    @FXML
+    private GridPane grid;
     @FXML
     private Button OuverButtonFiltre;
     @FXML
@@ -57,50 +63,42 @@ public class ReclamationsController implements Initializable {
     @FXML
     private Button AucunFiltreButton;
     @FXML
-    private GridPane grid;
-    @FXML
-    private Pane pane;
-    private ReclamationService rs = new ReclamationService();
-    private String ActiveFilter = "";
-    private boolean filterIsActive = false;
-    private int autoupdate = 0;
-    //singleton data = singleton.getInstance();
-    //Personne P = data.getUser();
+    private Button LiveChat;
 
-    /**
-     * Initializes the controller class.
-     */
+    private int autoupdate = 0;
+    private ReclamationService reclamationService = new ReclamationService();
+    private String ActiveFilter;
+    private boolean filterIsActive = false;
+    singleton data = singleton.getInstance();
+    Personne P = data.getUser();
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                autoupdate = rs.getAll().size();
-                if (rs.getAll().isEmpty()) {
+                autoupdate = reclamationService.getAll().size();
+                autoUpdate();
+                if (reclamationService.getAll().isEmpty()) {
                     EmptyDatabase();
                 } else {
                     populateView();
                 }
-                autoUpdate();
-                
-               populateView();
             }
         });
-
     }
 
     private void autoUpdate() {
         pane.hoverProperty().addListener(l -> {
-            if (autoupdate != rs.getAll().size()) {
-                if (rs.getAll().isEmpty()) {
+            if (autoupdate != reclamationService.getAll().size()) {
+                if (reclamationService.getAll().isEmpty()) {
                     EmptyDatabase();
                 } else if (filterIsActive) {
                     populateViewFilter(ActiveFilter);
                 } else {
                     populateView();
                 }
-                autoupdate = rs.getAll().size();
-
+                autoupdate = reclamationService.getAll().size();
             }
         });
     }
@@ -220,9 +218,9 @@ public class ReclamationsController implements Initializable {
             AucunFiltreButton.getStyleClass().remove("AucunFiltreButtonActive");
             AucunFiltreButton.getStyleClass().add("AucunFiltreButtonUnactive");
         }
-        ActiveFilter = "EnAttenteUser";
+        ActiveFilter = "EnAttenteAdmin";
         filterIsActive = true;
-        populateViewFilter("EnAttenteUser");
+        populateViewFilter("EnAttenteAdmin");
     }
 
     @FXML
@@ -261,8 +259,7 @@ public class ReclamationsController implements Initializable {
         }
         ActiveFilter = "";
         filterIsActive = false;
-        ReclamationService rs = new ReclamationService();
-        if (rs.getAll().isEmpty()) {
+        if (reclamationService.getAll().isEmpty()) {
             EmptyDatabase();
         } else {
             populateView();
@@ -292,33 +289,9 @@ public class ReclamationsController implements Initializable {
         grid.getRowConstraints().clear();
     }
 
-    private void Supprimer(reclamation reclam) {
-        Alert delete = new Alert(AlertType.WARNING);
-        delete.setTitle("Confirmer Supression");
-        delete.setContentText("Voulez vous confirmer la suppression de la Reclamation ?\n"
-                + "Titre : " + reclam.getTitre()
-                + "\nNom Prenom : " + reclam.getP().getNom_pers() + " " + reclam.getP().getPrenom_pers()
-                + "\nDescription : " + reclam.getDescription()
-                + "\nDate Envoie : " + reclam.getTimeStamp().toLocalDateTime().format(DateTimeFormatter.ofPattern("d MMM uuuu"))
-                + "\n Status : " + reclam.getStatus()
-        );
-        ButtonType oui = new ButtonType("Confirmer");
-        ButtonType non = new ButtonType("Annuler");
-        delete.getButtonTypes().clear();
-        delete.getButtonTypes().addAll(oui, non);
-        Optional<ButtonType> result = delete.showAndWait();
-
-        if (result.get() == oui) {
-            rs.supprimer(reclam);
-        } else {
-            delete.close();
-        }
-    }
-
     private void populateView() {
         clearGrid();
-        ReclamationService S = new ReclamationService();
-        List<reclamation> reclamations = S.getAll();
+        List<reclamation> reclamations = reclamationService.getAll();
         int rows = 0;
         RowConstraints row = new RowConstraints();
         row.setValignment(VPos.CENTER);
@@ -334,41 +307,32 @@ public class ReclamationsController implements Initializable {
         grid.setVgap(10);
         grid.applyCss();
         for (reclamation reclam : reclamations) {
-            grid.getRowConstraints().add(row);
-            Label titre = new Label(reclam.getTitre());
-            grid.add(titre, 0, rows);
-            Label personne = new Label(reclam.getP().getNom_pers() + " " + reclam.getP().getPrenom_pers());
-            grid.add(personne, 1, rows);
-            Label time = new Label(reclam.getTimeStamp().toLocalDateTime().format(DateTimeFormatter.ofPattern("d MMM uuuu")));
-            grid.add(time, 2, rows);
-            Button ConsulterB = new Button();
-            ConsulterB.setStyle("-fx-background-color: transparent;");
-            ConsulterB.applyCss();
-            FontAwesomeIconView ConsulterF = new FontAwesomeIconView(FontAwesomeIcon.EYE);
-            ConsulterF.getStyleClass().add("ConsulterIcon");
-            ConsulterB.setGraphic(ConsulterF);
-            ConsulterB.setOnAction(value -> {
-                loadPage(reclam);
-            });
-            grid.add(ConsulterB, 3, rows);
-            Button RemoveReclam = new Button();
-            RemoveReclam.setStyle("-fx-background-color: transparent;");
-            FontAwesomeIconView fa = new FontAwesomeIconView(FontAwesomeIcon.TRASH);
-            fa.getStyleClass().add("RemoveReclam");
-            fa.autosize();
-            RemoveReclam.setGraphic(fa);
-            RemoveReclam.setOnAction(value -> {
-                Supprimer(reclam);
-            });
-            grid.add(RemoveReclam, 4, rows);
-            rows++;
+            if (reclam.getP().getId_pers() == P.getId_pers()) {
+                grid.getRowConstraints().add(row);
+                Label titre = new Label(reclam.getTitre());
+                grid.add(titre, 0, rows);
+                Label personne = new Label(reclam.getP().getNom_pers() + " " + reclam.getP().getPrenom_pers());
+                grid.add(personne, 1, rows);
+                Label time = new Label(reclam.getTimeStamp().toLocalDateTime().format(DateTimeFormatter.ofPattern("d MMM uuuu")));
+                grid.add(time, 2, rows);
+                Button ConsulterB = new Button();
+                ConsulterB.setStyle("-fx-background-color: transparent;");
+                ConsulterB.applyCss();
+                FontAwesomeIconView ConsulterF = new FontAwesomeIconView(FontAwesomeIcon.EYE);
+                ConsulterF.getStyleClass().add("ConsulterIcon");
+                ConsulterB.setGraphic(ConsulterF);
+                ConsulterB.setOnAction(value -> {
+                    loadPage(reclam);
+                });
+                grid.add(ConsulterB, 3, rows);
+                rows++;
+            }
         }
     }
 
     private void populateViewFilter(String type) {
         clearGrid();
-        ReclamationService S = new ReclamationService();
-        List<reclamation> reclamations = S.getAll();
+        List<reclamation> reclamations = reclamationService.getAll();
         RowConstraints row = new RowConstraints();
         row.setValignment(VPos.CENTER);
         ColumnConstraints column = new ColumnConstraints();
@@ -383,8 +347,8 @@ public class ReclamationsController implements Initializable {
         grid.setVgap(10);
         grid.applyCss();
         int filterCounter = 0;
-        for (reclamation rec : S.getAll()) {
-            if (rec.getStatus().equals(type)) {
+        for (reclamation r : reclamationService.getAll()) {
+            if (r.getStatus().equals(type)) {
                 filterCounter++;
             }
         }
@@ -393,7 +357,7 @@ public class ReclamationsController implements Initializable {
         } else {
             int rows = 0;
             for (reclamation reclam : reclamations) {
-                if (type.equals("ouvert") && reclam.getStatus().equals("ouvert")) {
+                if (type.equals("ouvert") && reclam.getStatus().equals("ouvert") && reclam.getP().getId_pers() == P.getId_pers()) {
                     grid.getRowConstraints().add(row);
                     Label titre = new Label(reclam.getTitre());
                     grid.add(titre, 0, rows);
@@ -411,18 +375,8 @@ public class ReclamationsController implements Initializable {
                         loadPage(reclam);
                     });
                     grid.add(ConsulterB, 3, rows);
-                    Button RemoveReclam = new Button();
-                    RemoveReclam.setStyle("-fx-background-color: transparent;");
-                    FontAwesomeIconView fa = new FontAwesomeIconView(FontAwesomeIcon.TRASH);
-                    fa.getStyleClass().add("RemoveReclam");
-                    fa.autosize();
-                    RemoveReclam.setGraphic(fa);
-                    RemoveReclam.setOnAction(value -> {
-                        Supprimer(reclam);
-                    });
-                    grid.add(RemoveReclam, 4, rows);
                     rows++;
-                } else if (type.equals("cloturer") && reclam.getStatus().equals("cloturer")) {
+                } else if (type.equals("cloturer") && reclam.getStatus().equals("cloturer") && reclam.getP().getId_pers() == P.getId_pers()) {
                     grid.getRowConstraints().add(row);
                     Label titre = new Label(reclam.getTitre());
                     grid.add(titre, 0, rows);
@@ -440,18 +394,8 @@ public class ReclamationsController implements Initializable {
                         loadPage(reclam);
                     });
                     grid.add(ConsulterB, 3, rows);
-                    Button RemoveReclam = new Button();
-                    RemoveReclam.setStyle("-fx-background-color: transparent;");
-                    FontAwesomeIconView fa = new FontAwesomeIconView(FontAwesomeIcon.TRASH);
-                    fa.getStyleClass().add("RemoveReclam");
-                    fa.autosize();
-                    RemoveReclam.setGraphic(fa);
-                    RemoveReclam.setOnAction(value -> {
-                        Supprimer(reclam);
-                    });
-                    grid.add(RemoveReclam, 4, rows);
                     rows++;
-                } else if (type.equals("EnAttenteUser") && reclam.getStatus().equals("EnAttenteUser")) {
+                } else if (type.equals("EnAttenteAdmin") && reclam.getStatus().equals("EnAttenteAdmin") && reclam.getP().getId_pers() == P.getId_pers()) {
                     grid.getRowConstraints().add(row);
                     Label titre = new Label(reclam.getTitre());
                     grid.add(titre, 0, rows);
@@ -469,46 +413,17 @@ public class ReclamationsController implements Initializable {
                         loadPage(reclam);
                     });
                     grid.add(ConsulterB, 3, rows);
-                    Button RemoveReclam = new Button();
-                    RemoveReclam.setStyle("-fx-background-color: transparent;");
-                    FontAwesomeIconView fa = new FontAwesomeIconView(FontAwesomeIcon.TRASH);
-                    fa.getStyleClass().add("RemoveReclam");
-                    fa.autosize();
-                    RemoveReclam.setGraphic(fa);
-                    RemoveReclam.setOnAction(value -> {
-                        Supprimer(reclam);
-                    });
-                    grid.add(RemoveReclam, 4, rows);
                     rows++;
                 }
             }
         }
     }
 
-    private boolean dateValidator(String Text) {
+    @FXML
+    private void AjouterButtonFunction(ActionEvent event) {
         try {
-            if (Text.contains("-")) {
-                DateTimeFormatter validateur = DateTimeFormatter.ofPattern("dd-MM-uuuu").withResolverStyle(ResolverStyle.STRICT);
-                validateur.parse(Text);
-                return true;
-            } else {
-                DateTimeFormatter validateur = DateTimeFormatter.ofPattern("dd/MM/uuuu").withResolverStyle(ResolverStyle.STRICT);
-                validateur.parse(Text);
-                return true;
-            }
-        } catch (DateTimeParseException e) {
-            return false;
-        }
-    }
-
-
-    /* Consulter */
-    private void loadPage(reclamation reclam) {
-        try {
-            
-            SingletonReclam.getInstance().setReclam(reclam);
             Stage thisStage = new Stage();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("./Consulter/Consulter.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("./ajouterReclamation/ajouterReclamation.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             thisStage.setTitle("Administration");
@@ -518,4 +433,34 @@ public class ReclamationsController implements Initializable {
             System.out.println(ex.getMessage());
         }
     }
+
+    /* Consulter */
+    @FXML
+    private void OpenLiveChatWindow(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../liveChat/liveChat.fxml"));
+            Parent l = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(l));
+            stage.show();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void loadPage(reclamation reclam) {
+        try {
+            SingletonReclam.getInstance().setReclam(reclam);
+            Stage thisStage = new Stage();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("./ConsulterReclamation/ConsulterReclamation.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            thisStage.setTitle("Administration");
+            thisStage.setScene(scene);
+            thisStage.show();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
 }

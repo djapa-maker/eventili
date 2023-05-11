@@ -62,6 +62,10 @@ public class SideBarController implements Initializable {
     private FontAwesomeIconView iconComment;
     @FXML
     private Button buttonServ;
+    @FXML
+    private Button buttonReclam;
+    @FXML
+    private FontAwesomeIconView iconReclam;
 
     /**
      * Initializes the controller class.
@@ -100,6 +104,7 @@ public class SideBarController implements Initializable {
             iconEvent.setFill(Color.rgb(58, 50, 137));
             iconhome.setFill(Color.rgb(58, 50, 137));
             iconComment.setFill(Color.rgb(58, 50, 137));
+            iconReclam.setFill(Color.rgb(58, 50, 137));
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
@@ -114,12 +119,26 @@ public class SideBarController implements Initializable {
             iconEvent.setFill(Color.rgb(58, 50, 137));
             iconhome.setFill(Color.rgb(255, 134, 0));
             iconComment.setFill(Color.rgb(58, 50, 137));
+            iconReclam.setFill(Color.rgb(58, 50, 137));
 
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
     }
-
+    @FXML
+    private void btnReclamF(ActionEvent event){
+        try {
+            AnchorPane view = FXMLLoader.load(getClass().getResource("../reclamations/reclamations.fxml"));
+            BorderPane.setCenter(view);
+            iconhome.setFill(Color.rgb(58, 50, 137));
+            iconhome.setFill(Color.rgb(58, 50, 137));
+            iconEvent.setFill(Color.rgb(58, 50, 137));
+            iconComment.setFill(Color.rgb(58, 50, 137));
+            iconReclam.setFill(Color.rgb(255, 134, 0));
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
     @FXML
     private void btnEventF(ActionEvent event) {
         try {
@@ -129,6 +148,7 @@ public class SideBarController implements Initializable {
             iconhome.setFill(Color.rgb(58, 50, 137));
             iconEvent.setFill(Color.rgb(255, 134, 0));
             iconComment.setFill(Color.rgb(58, 50, 137));
+            iconReclam.setFill(Color.rgb(58, 50, 137));
 
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
@@ -144,6 +164,7 @@ public class SideBarController implements Initializable {
             iconEvent.setFill(Color.rgb(58, 50, 137));
             iconSquare.setFill(Color.rgb(255, 134, 0));
             iconComment.setFill(Color.rgb(58, 50, 137));
+            iconReclam.setFill(Color.rgb(58, 50, 137));
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
@@ -158,6 +179,7 @@ public class SideBarController implements Initializable {
             iconEvent.setFill(Color.rgb(58, 50, 137));
             iconSquare.setFill(Color.rgb(58, 50, 137));
             iconComment.setFill(Color.rgb(255, 134, 0));
+            iconReclam.setFill(Color.rgb(58, 50, 137));
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
