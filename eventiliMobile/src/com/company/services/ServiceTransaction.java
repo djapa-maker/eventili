@@ -106,9 +106,9 @@ public List<Transactions> findTransactionsByUserId(int userId) {
                         if (transactionObj instanceof Map) {
                             Map<?, ?> transactionMap = (Map<?, ?>) transactionObj;
                             Transactions t = new Transactions();
-                            t.setId_trans((int) transactionMap.get("idTrans"));
-                            t.setValeur_trans((float) transactionMap.get("valeurTrans"));
-                            t.setMontant_tot((float) transactionMap.get("montantTot"));
+                            t.setId_trans(Integer.parseInt(transactionMap.get("idTrans").toString()));
+                            t.setValeur_trans(Float.parseFloat(transactionMap.get("valeurTrans").toString()));
+                            t.setMontant_tot(Float.parseFloat(transactionMap.get("montantTot").toString()));
                             t.setDevis(transactionMap.get("devis").toString());
                             t.setDate_trans(transactionMap.get("dateTrans").toString());
                             t.setMode_trans(transactionMap.get("modeTrans").toString());
