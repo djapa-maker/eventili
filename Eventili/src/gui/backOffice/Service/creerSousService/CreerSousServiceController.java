@@ -142,7 +142,7 @@ public class CreerSousServiceController implements Initializable {
         String n = nomSousService.getText();
         String priText = price.getText();
         Float prix = null;
-        String path = selectedFile.get(0).getName();
+//        String path = selectedFile.get(0).getName();
         Personne p = new Personne();
         p.setId_pers(p1.getId_pers());//l'id de la parsonne connecter
         Service s1 = null;
@@ -174,18 +174,18 @@ public class CreerSousServiceController implements Initializable {
                 && (s1 != null)
                 && (!desc.isEmpty())
                 && (!n.isEmpty())
-                && (!path.isEmpty())
+                //&& (!path.isEmpty())
                 && (!L.isEmpty())) {
             if (priText.matches("[+-]?([0-9]*[.])?[0-9]+")) {
                 prix = Float.parseFloat(priText);
-                SousServices sous = new SousServices(prix, n, desc, path, 0, p, s1);
+                SousServices sous = new SousServices(prix, n, desc,  0, p, s1);
                 ss.ajouterTry(sous, L);
                 System.out.println("hjjjjjjjjjjjjjjjjjjjjjjjjjjj");
                 lp = (ArrayList<SousServices>) ss.getAllByPrestataire(p1.getId_pers());
                 for (SousServices p2 : lp) {
                     System.out.println("hmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
                     if (p2.getDescription_serv().equals(sous.getDescription_serv())
-                            && p2.getIcon().equals(sous.getIcon())
+                            
                             && p2.getNom_serv().equals(sous.getNom_serv())
                             && p2.getNote() == sous.getNote()
                             //                            && p2.getPers().equals(sous.getPers())
@@ -193,13 +193,13 @@ public class CreerSousServiceController implements Initializable {
                             //                            && p2.getS().equals(sous.getS())) {
                             ) {
                         System.out.println("hlllllllllllllllllllllllllll");
-                        imageSS im = new imageSS();
-                        for (int i1 = 0; i1 < selectedFile.size(); i1++) {
-                            String i = selectedFile.get(i1).getName();
-                            im.setImg(i);
-                            im.setS(p2);
-                            is.ajouter(im);
-                        }
+//                        imageSS im = new imageSS();
+//                        for (int i1 = 0; i1 < selectedFile.size(); i1++) {
+//                            String i = selectedFile.get(i1).getName();
+//                            im.setImg(i);
+//                            im.setS(p2);
+//                            is.ajouter(im);
+//                        }
 
                     } else {
                         System.out.println("noooooooooooooooooo");

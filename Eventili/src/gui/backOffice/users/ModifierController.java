@@ -142,7 +142,7 @@ LocalDateTime date= s.getDate();
             this.txtMdp.setText(mdp);
              this.txtAdresse.setText(adresse);
              this.txtImage.setText(i.getLast());
-        FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/"+i.getLast()); 
+        FileInputStream inputstream = new FileInputStream("C:/xamp2/htdocs/img/"+i.getLast()); 
         Image image = new Image(inputstream); 
         profileRectangle.setStroke(javafx.scene.paint.Color.ORANGE);
         profileRectangle.setFill(new ImagePattern(image)); 

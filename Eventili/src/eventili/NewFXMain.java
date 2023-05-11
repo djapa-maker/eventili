@@ -32,6 +32,8 @@ public class NewFXMain extends Application {
         if(p==null){
         try {
          FXMLLoader addLoader = new FXMLLoader(getClass().getResource("login.fxml"));
+            //FXMLLoader addLoader = new FXMLLoader(getClass().getResource("../gui/frontOffice/sidebar/SideBar.fxml"));
+      
         Parent Root = addLoader.load();
         primaryStage.setTitle("Authentification");
         primaryStage.setScene(new Scene(Root));

@@ -60,7 +60,7 @@ public void SetData(Transactions s) throws SQLException, FileNotFoundException {
        TransactionsService ts=new TransactionsService();
  
        System.out.println(ts.findimgId(s.getP().getId_pers()));
-       FileInputStream inputstream = new FileInputStream("C:\\Users\\sel3a\\Desktop\\eventi\\eventili\\Eventili\\src\\images\\"+ts.findimgId(s.getP().getId_pers())); 
+       FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/"+ts.findimgId(s.getP().getId_pers())); 
         Image image = new Image(inputstream); 
          icon.setImage(image);
         nom.setText(s.getP().getNom_pers());

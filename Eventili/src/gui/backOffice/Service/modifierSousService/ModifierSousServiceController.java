@@ -93,7 +93,7 @@ public class ModifierSousServiceController implements Initializable {
     private EventCategService ec = new EventCategService();
     private ArrayList<EventCateg> le = new ArrayList<EventCateg>();
     private ArrayList<SousServices> lp = new ArrayList<SousServices>();
-    private ArrayList<imageSS> imgl = new ArrayList<>();
+//    private ArrayList<imageSS> imgl = new ArrayList<>();
     private ArrayList<Integer> L = new ArrayList<>();
     private String path;
     private Stage stage;
@@ -109,8 +109,8 @@ public class ModifierSousServiceController implements Initializable {
     private String desc;
     private String priText;
     private Float prix;
-    private imageSS im;
-    private imageSService is = new imageSService();
+//    private imageSS im;
+//    private imageSService is = new imageSService();
     private List<File> selectedFile = null;
 
 //------------------------------------------------------------------------------
@@ -134,7 +134,6 @@ public class ModifierSousServiceController implements Initializable {
         }
     }
 //------------------------------------------------------------------------------
-
     public void listerEventCateg() {
         le = (ArrayList<EventCateg>) ec.getAll();
         grid.setVgap(20);
@@ -147,8 +146,9 @@ public class ModifierSousServiceController implements Initializable {
             CheckBox checkBox = new CheckBox();
             checkBox.setSelected(false);
             GridPane.setMargin(checkBox, new Insets(10));
+            System.out.println("prinnnnnnnnnnnnnnnnnnnnnnnt"+id_ss);
             ArrayList<EventCateg> field = ss.findServiceById(id_ss).getEc();
-            System.out.println(field);
+            System.out.println("aaaaaaaaa"+field);
             System.out.println(id_ss);
             for (EventCateg i : field) {
                 if (i.getType().equals(item.getType())) {
@@ -164,7 +164,6 @@ public class ModifierSousServiceController implements Initializable {
         }
     }
 //------------------------------------------------------------------------------        
-
     @FXML
     private void modifierSousService(ActionEvent event) throws SQLException, IOException {
         desc = description.getText();
@@ -187,29 +186,28 @@ public class ModifierSousServiceController implements Initializable {
         if ((!priText.isEmpty())
                 && (!desc.isEmpty())
                 && (!nom.isEmpty())
-                && (!path.isEmpty())
+//                && (!path.isEmpty())
                 && (!L.isEmpty())) {
             if (priText.matches("[+-]?([0-9]*[.])?[0-9]+")) {
                 prix = Float.parseFloat(price.getText());
                 note = ss.findServiceById(id_ss).getNote();
-                SousServices sous = new SousServices(prix, nom, desc, path, note);
+                SousServices sous = new SousServices(prix, nom, desc,  note);
                 lp = (ArrayList<SousServices>) ss.getAllByPrestataire(p1.getId_pers());
                 for (SousServices p2 : lp) {
                     if (p2.getDescription_serv().equals(sous.getDescription_serv())
-                            && p2.getIcon().equals(sous.getIcon())
                             && p2.getNom_serv().equals(sous.getNom_serv())
                             && p2.getNote() == sous.getNote()
                             && p2.getPrix_serv() == sous.getPrix_serv()) {
-                        im = new imageSS();
-                        for (imageSS s : imgl) {
-                            is.supprimer(s);
-                        }
+//                                im = new imageSS();
+//                                for (imageSS s : imgl) {
+//                                    is.supprimer(s);
+//                                }
                         for (int i1 = 0; i1 < selectedFile.size(); i1++) {
                             String i = selectedFile.get(i1).getName();
                             System.out.println("check modif"+i);
-                            im.setImg(i);
+                          /* im.setImg(i);
                             im.setS(p2);
-                            is.ajouter(im);
+                            is.ajouter(im);*/
                         }
 
                     } else {
@@ -245,44 +243,41 @@ public class ModifierSousServiceController implements Initializable {
 
     @FXML
     private void importIcone(ActionEvent event) throws FileNotFoundException {
-        FileChooser fc = new FileChooser();
-        //fc.setInitialDirectory(new File("C:/xampp/htdocs/img"));
-        fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image files", "*.jpg", "*.png"));
-        selectedFile = fc.showOpenMultipleDialog(null);
-       
-        if (selectedFile != null) {
-            list.getItems().clear();
-            for (int i = 0; i < selectedFile.size(); i++) {
-
-                list.getItems().add(selectedFile.get(i).getName());
-                try {
-                    Path sourcePath = Paths.get(selectedFile.get(i).getAbsolutePath());
-                    //Path targetPath = Paths.get("C:/xampp/htdocs/img/" + selectedFile.get(i).getName());
-                    Path targetPath = Paths.get("C:/xampp/htdocs/img/" + selectedFile.get(i).getName());
-                    Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
-                } catch (IOException ex) {
-                    System.out.println(ex);
-                }
-            }
-        } else {
-            System.out.println("Not valid file");
-        }
+//        FileChooser fc = new FileChooser();
+//        fc.setInitialDirectory(new File("C:/xamp2/htdocs/img"));
+//        fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image files", "*.jpg", "*.png"));
+//        selectedFile = fc.showOpenMultipleDialog(null);
+//       
+//        if (selectedFile != null) {
+//            list.getItems().clear();
+//            for (int i = 0; i < selectedFile.size(); i++) {
+//
+//                list.getItems().add(selectedFile.get(i).getName());
+//                try {
+//                    Path sourcePath = Paths.get(selectedFile.get(i).getAbsolutePath());
+//                    Path targetPath = Paths.get("C:/xamp2/htdocs/img/" + selectedFile.get(i).getName());
+//                    Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
+//                } catch (IOException ex) {
+//                    System.out.println(ex);
+//                }
+//            }
+//        } else {
+//            System.out.println("Not valid file");
+//        }
     }
 //-------------------------------------------------------------------------
     //modifierdata == loaddata
     public void modifierData(SousServices s, int id) throws SQLException, FileNotFoundException {
         id_ss = id;
-        path = ss.findServiceById(id).getIcon();
         n = ss.findServiceById(id).getNom_serv();
         d = ss.findServiceById(id).getDescription_serv();
         p = Float.toString(ss.findServiceById(id).getPrix_serv());
-        imgl = (ArrayList<imageSS>) is.findImageByIdSS(id_ss);
-        for (imageSS youhu : imgl) {
-            list.getItems().add(youhu.getImg());
-        }
-//        FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/" + path);
-           Image img = new Image("http://localhost/img/"+path);
-      
+//        imgl = (ArrayList<imageSS>) is.findImageByIdSS(id_ss);
+//        for (imageSS youhu : imgl) {
+//            list.getItems().add(youhu.getImg());
+//        }
+//        FileInputStream inputstream = new FileInputStream("C:/xamp2/htdocs/img/" + path);
+//           Image img = new Image("http://localhost/img/"+path);
         nomSousService.setText(n);
         price.setText(p);
         description.setText(d);

@@ -22,7 +22,7 @@
                <graphic>
                   <HBox fx:id="hboxicon" prefHeight="21.0" prefWidth="32.0" styleClass="glyph-icon" stylesheets="@../../../../../../../main/pidev/Eventili/src/gui/backOffice/services/Style.css">
                      <children>
-                        <HBox fx:id="hboxicon" prefHeight="21.0" prefWidth="32.0" styleClass="glyph-icon" stylesheets="@../../../../../../../main/pidev/Eventili/src/gui/backOffice/services/Style.css" />
+                        <!--<HBox fx:id="hboxicon" prefHeight="21.0" prefWidth="32.0" styleClass="glyph-icon" stylesheets="@../../../../../../../main/pidev/Eventili/src/gui/backOffice/services/Style.css" />-->
                      </children></HBox>
                </graphic>
             </Button>

@@ -85,8 +85,8 @@ public class CreerSSPrestataireController implements Initializable {
     private TextField nomSousService;
     @FXML
     private Text text31;
-    @FXML
-    private Button importer;
+//    @FXML
+//    private Button importer;
     @FXML
     private GridPane grid;
     @FXML
@@ -136,7 +136,7 @@ public class CreerSSPrestataireController implements Initializable {
         String n = nomSousService.getText();
         String priText = price.getText();
         Float prix = null;
-        String path = selectedFile.get(0).getName();
+       // String path = selectedFile.get(0).getName();
         Personne p = new Personne();
         p.setId_pers(p1.getId_pers());//l'id de la parsonne connecter
         Service s1 = null;
@@ -168,18 +168,18 @@ public class CreerSSPrestataireController implements Initializable {
                 && (s1 != null)
                 && (!desc.isEmpty())
                 && (!n.isEmpty())
-                && (!path.isEmpty())
+               // && (!path.isEmpty())
                 && (!L.isEmpty())) {
             if (priText.matches("[+-]?([0-9]*[.])?[0-9]+")) {
                 prix = Float.parseFloat(priText);
-                SousServices sous = new SousServices(prix, n, desc, path, 0, p, s1);
+                SousServices sous = new SousServices(prix, n, desc,  0, p, s1);
                 ss.ajouterTry(sous, L);
                 System.out.println("hjjjjjjjjjjjjjjjjjjjjjjjjjjj");
                 lp = (ArrayList<SousServices>) ss.getAllByPrestataire(p1.getId_pers());
                 for (SousServices p2 : lp) {
                     System.out.println("hmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
                     if (p2.getDescription_serv().equals(sous.getDescription_serv())
-                            && p2.getIcon().equals(sous.getIcon())
+                            
                             && p2.getNom_serv().equals(sous.getNom_serv())
                             && p2.getNote() == sous.getNote()
                             //                            && p2.getPers().equals(sous.getPers())
@@ -257,7 +257,6 @@ public class CreerSSPrestataireController implements Initializable {
   @FXML
     private void importIcone(ActionEvent event) throws FileNotFoundException {
         FileChooser fc = new FileChooser();
-       
         fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image files", "*.jpg", "*.png"));
         selectedFile = fc.showOpenMultipleDialog(null);
         if (selectedFile != null) {

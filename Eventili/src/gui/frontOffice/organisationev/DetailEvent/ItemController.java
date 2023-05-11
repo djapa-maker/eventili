@@ -59,9 +59,9 @@ public class ItemController implements Initializable {
         id_serv = s.getId_sousServ();
         //System.out.println("ouuuuuuuh"+s.getIcon());
 //        Image image1 = new Image(getClass().getResourceAsStream(s.getIcon()));
-        FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/"+s.getIcon()); 
-        Image img1 = new Image(inputstream); 
-        img.setImage(img1);
+//        FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/"+s.getIcon()); 
+//        Image img1 = new Image(inputstream); 
+//        img.setImage(img1);
         NomSousService.setText(s.getNom_serv());
         serv = ss.findServiceById(id_serv);
 

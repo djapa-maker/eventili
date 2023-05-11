@@ -11,7 +11,6 @@ public class SousServices {
     private float prix_serv;
     private String nom_serv;
     private String description_serv;
-    private String icon;
     private float note;
     private Personne pers;
     private Service s;
@@ -19,40 +18,39 @@ public class SousServices {
 
     public SousServices() {}
     
-    public SousServices(int id_sousServ, float prix_serv, String nom_serv, String description_serv, String icon, float note, Personne pers, Service c, ArrayList<EventCateg> ec) {
+    public SousServices(int id_sousServ, float prix_serv, String nom_serv, String description_serv,  float note, Personne pers, Service c, ArrayList<EventCateg> ec) {
         this.id_sousServ = id_sousServ;
         this.prix_serv = prix_serv;
         this.nom_serv = nom_serv;
         this.description_serv = description_serv;
-        this.icon = icon;
         this.note = note;
         this.pers = pers;
         this.s = c;
         this.list = ec;
     }
 
-    public SousServices(float prix_serv, String nom_serv, String description_serv, String icon, float note, Personne pers, Service s) {
+    public SousServices(float prix_serv, String nom_serv, String description_serv,  float note, Personne pers, Service s) {
         this.prix_serv = prix_serv;
         this.nom_serv = nom_serv;
         this.description_serv = description_serv;
-        this.icon = icon;
+       
         this.note = note;
         this.pers = pers;
         this.s = s;
     }
 
-    public SousServices(float prix_serv, String nom_serv, String description_serv, String icon, float note) {
+    public SousServices(float prix_serv, String nom_serv, String description_serv, float note) {
         this.prix_serv = prix_serv;
         this.nom_serv = nom_serv;
         this.description_serv = description_serv;
-        this.icon = icon;
+        
         this.note = note;
     }
 
-    public SousServices(int id_sousServ,String nom_serv, String icon) {
+    public SousServices(int id_sousServ,String nom_serv) {
          this.id_sousServ = id_sousServ;
         this.nom_serv = nom_serv;
-        this.icon = icon;
+   
     }
     
     public int getId_sousServ() {
@@ -81,14 +79,6 @@ public class SousServices {
 
     public void setDescription_serv(String description_serv) {
         this.description_serv = description_serv;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
     }
 
     public float getNote() {
@@ -148,7 +138,7 @@ public class SousServices {
     @Override
     public String toString() {
         
-        String S= "SousServices{" + "id_sousServ=" + id_sousServ + ", prix_serv=" + prix_serv + ", nom_serv=" + nom_serv + ", description_serv=" + description_serv + ", icon=" + icon + ", note=" + note + ", pers=" + pers + ", service=" + s + ", ec=";
+        String S= "SousServices{" + "id_sousServ=" + id_sousServ + ", prix_serv=" + prix_serv + ", nom_serv=" + nom_serv + ", description_serv=" + description_serv + ", note=" + note + ", pers=" + pers + ", service=" + s + ", ec=";
         for(int i=0;i<list.size();i++){
            String l=list.get(i).getType();
            S+=" "+l+" ";

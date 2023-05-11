@@ -36,16 +36,15 @@ public class SousServiceService implements InterfaceService<SousServices> {
     public void ajouterTry(SousServices t,ArrayList<Integer> categEventIds) {
         String ids= categEventIds.stream().map(Object::toString).collect(Collectors.joining(","));
         try {
-            String sql = "insert into sousservice(prix,nom,description,image,note,id_Pers,id_eventCateg,id_service)values(?,?,?,?,?,?,?,?)";
+            String sql = "insert into sousservice(prix,nom,description,note,id_Pers,id_eventCateg,id_service)values(?,?,?,?,?,?,?)";
             ste = cnx.prepareStatement(sql);
             ste.setFloat(1, t.getPrix_serv());
             ste.setString(2, t.getNom_serv());
             ste.setString(3, t.getDescription_serv());
-            ste.setString(4, t.getIcon());
-            ste.setFloat(5, t.getNote());
-            ste.setInt(6, t.getPers().getId_pers());
-            ste.setString(7,ids);
-            ste.setInt(8, t.getS().getId_service());
+            ste.setFloat(4, t.getNote());
+            ste.setInt(5, t.getPers().getId_pers());
+            ste.setString(6,ids);
+            ste.setInt(7, t.getS().getId_service());
             ste.executeUpdate();
             System.out.println("service crée");
         } catch (SQLException e) {
@@ -65,14 +64,14 @@ public class SousServiceService implements InterfaceService<SousServices> {
             Statement ste = cnx.createStatement();
             ResultSet res = ste.executeQuery(sql);
             while (res.next()) {
-                Service serv = ss.findById(res.getInt(8));
-                Personne pers = ps.findById(res.getInt(9));
+                Service serv = ss.findById(res.getInt(7));
+                Personne pers = ps.findById(res.getInt(8));
                 List<Integer> Ids = Arrays.stream(res.getString("id_eventCateg").split(",")).map(Integer::parseInt).collect(Collectors.toList());
                 for(int i=0;i<Ids.size();i++){
                     //e list de event categ contient les categ d'evenement qui figure dans Ids 
                     cat.add(ec.findById(Ids.get(i)));
                 }
-               SousServices s = new SousServices(res.getInt(1), res.getFloat(5), res.getString("nom"), res.getString("description"), res.getString("image"), res.getFloat("note"), pers, serv, cat);
+               SousServices s = new SousServices(res.getInt(1), res.getFloat(4), res.getString("nom"), res.getString("description"), res.getFloat("note"), pers, serv, cat);
                list.add(s);
             }
         } catch (SQLException e) {
@@ -93,14 +92,14 @@ public class SousServiceService implements InterfaceService<SousServices> {
             Statement ste = cnx.createStatement();
             ResultSet res = ste.executeQuery(sql);
             while (res.next()) {
-                Service serv = ss.findById(res.getInt(8));
-                Personne pers = ps.findById(res.getInt(9));
+                Service serv = ss.findById(res.getInt(7));
+                Personne pers = ps.findById(res.getInt(8));
                 List<Integer> Ids = Arrays.stream(res.getString("id_eventCateg").split(",")).map(Integer::parseInt).collect(Collectors.toList());
                 for(int i=0;i<Ids.size();i++){
                     //e list de event categ contient les categ d'evenement qui figure dans Ids 
                     cat.add(ec.findById(Ids.get(i)));
                 }
-               SousServices s = new SousServices(res.getInt(1), res.getFloat(5), res.getString("nom"), res.getString("description"), res.getString("image"), res.getFloat("note"), pers, serv, cat);
+               SousServices s = new SousServices(res.getInt(1), res.getFloat(4), res.getString("nom"), res.getString("description"),res.getFloat("note"), pers, serv, cat);
                list.add(s);
             }
         } catch (SQLException e) {
@@ -137,17 +136,17 @@ public class SousServiceService implements InterfaceService<SousServices> {
 //------------------------------------------------------------------------------
     public void modifierService(int id, SousServices t,ArrayList<Integer> categEventIds) {
         String ids= categEventIds.stream().map(Object::toString).collect(Collectors.joining(","));
-        String sql = "update sousservice set prix=?,nom=?,description=?,image=?,note=?,id_eventCateg=? where id=?";    
+        String sql = "update sousservice set prix=?,nom=?,description=?,note=?,id_eventCateg=? where id=?";    
         try {
             PreparedStatement ste;
             ste = cnx.prepareStatement(sql);
             ste.setFloat(1, t.getPrix_serv());
             ste.setString(2, t.getNom_serv());
             ste.setString(3, t.getDescription_serv());
-            ste.setString(4, t.getIcon());
-            ste.setFloat(5, t.getNote());
-            ste.setString(6,ids);
-            ste.setInt(7,id);
+            
+            ste.setFloat(4, t.getNote());
+            ste.setString(5,ids);
+            ste.setInt(6,id);
             ste.executeUpdate();
             System.out.println("sous service modifié");
         } catch (SQLException e) {
@@ -167,14 +166,13 @@ public class SousServiceService implements InterfaceService<SousServices> {
             Statement ste = cnx.createStatement();
             ResultSet res = ste.executeQuery(sql);
             while (res.next()) {
-                Service serv = ss.findById(res.getInt(8));
-                Personne pers = ps.findById(res.getInt(9));
+                Service serv = ss.findById(res.getInt(7));
+                Personne pers = ps.findById(res.getInt(8));
                 List<Integer> Ids = Arrays.stream(res.getString("id_eventCateg").split(",")).map(Integer::parseInt).collect(Collectors.toList());
                 for(int i=0;i<Ids.size();i++){
-                    //e list de event categ contient les categ d'evenement qui figure dans Ids 
                     cat.add(ec.findById(Ids.get(i)));
                 }
-                s = new SousServices(res.getInt(1), res.getFloat(5), res.getString("nom"), res.getString("description"), res.getString("image"), res.getFloat("note"), pers, serv, cat);
+                s = new SousServices(res.getInt(1), res.getFloat(4), res.getString("nom"), res.getString("description"),  res.getFloat("note"), pers, serv, cat);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -194,14 +192,14 @@ public class SousServiceService implements InterfaceService<SousServices> {
             Statement ste = cnx.createStatement();
             ResultSet res = ste.executeQuery(sql);
             while (res.next()) {
-                Service serv = ss.findById(res.getInt(8));
-                Personne pers = ps.findById(res.getInt(9));
+                Service serv = ss.findById(res.getInt(7));
+                Personne pers = ps.findById(res.getInt(8));
                 List<Integer> Ids = Arrays.stream(res.getString("id_eventCateg").split(",")).map(Integer::parseInt).collect(Collectors.toList());
                 for(int i=0;i<Ids.size();i++){
                     //e list de event categ contient les categ d'evenement qui figure dans Ids 
                     cat.add(ec.findById(Ids.get(i)));
                 }
-                s = new SousServices(res.getInt(1), res.getFloat(5), res.getString("nom"), res.getString("description"), res.getString("image"), res.getFloat("note"), pers, serv, cat);  
+                s = new SousServices(res.getInt(1), res.getFloat(4), res.getString("nom"), res.getString("description"),  res.getFloat("note"), pers, serv, cat);  
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -221,14 +219,14 @@ public class SousServiceService implements InterfaceService<SousServices> {
             Statement ste = cnx.createStatement();
             ResultSet res = ste.executeQuery(sql);
             while (res.next()) {
-                Service serv = ss.findById(res.getInt(8));
-                Personne pers = ps.findById(res.getInt(9));
+                Service serv = ss.findById(res.getInt(7));
+                Personne pers = ps.findById(res.getInt(8));
                 List<Integer> Ids = Arrays.stream(res.getString("id_eventCateg").split(",")).map(Integer::parseInt).collect(Collectors.toList());
                 for(int i=0;i<Ids.size();i++){
                     //e list de event categ contient les categ d'evenement qui figure dans Ids 
                     cat.add(ec.findById(Ids.get(i)));
                 }
-                s = new SousServices(res.getInt(1), res.getFloat(5), res.getString("nom"), res.getString("description"), res.getString("image"), res.getFloat("note"), pers, serv, cat);
+                s = new SousServices(res.getInt(1), res.getFloat(4), res.getString("nom"), res.getString("description"),  res.getFloat("note"), pers, serv, cat);
                list.add(s);}
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -246,7 +244,7 @@ public class SousServiceService implements InterfaceService<SousServices> {
             ResultSet res = ste.executeQuery(sql);
             while (res.next()) {
                 Service serv = s.findById(res.getInt(1));
-                ss = new SousServices(res.getInt(1),res.getString("nom"), res.getString("image"));
+                ss = new SousServices(res.getInt(1),res.getString("nom"));
                 list.add(ss);
             }
         } catch (SQLException e) {
@@ -265,7 +263,7 @@ public class SousServiceService implements InterfaceService<SousServices> {
             ResultSet res = ste.executeQuery(sql);
             while (res.next()) {
                 Service serv = s.findById(res.getInt(1));
-                ss = new SousServices(res.getInt(1),res.getString("nom"), res.getString("image"));
+                ss = new SousServices(res.getInt(1),res.getString("nom"));
                 list.add(ss);
             }
         } catch (SQLException e) {
@@ -292,9 +290,9 @@ public class SousServiceService implements InterfaceService<SousServices> {
                     //e list de event categ contient les categ d'evenement qui figure dans Ids 
                     cat.add(ec.findById(Ids.get(i)));
                 }
-                Service serv = ss.findById(res.getInt(8));
-                Personne pers = ps.findById(res.getInt(9));
-               SousServices s = new SousServices(res.getInt(1), res.getFloat(5), res.getString("nom"), res.getString("description"), res.getString("image"), res.getFloat("note"), pers, serv, cat);
+                Service serv = ss.findById(res.getInt(7));
+                Personne pers = ps.findById(res.getInt(8));
+               SousServices s = new SousServices(res.getInt(1), res.getFloat(4), res.getString("nom"), res.getString("description"),  res.getFloat("note"), pers, serv, cat);
                list.add(s);
             }
         } catch (SQLException e) {
@@ -319,14 +317,14 @@ public class SousServiceService implements InterfaceService<SousServices> {
             Statement ste = cnx.createStatement();
             ResultSet res = ste.executeQuery(sql);
             while (res.next()) {
-                Service serv = ss.findById(res.getInt(8));
-                Personne pers = ps.findById(res.getInt(9));
+                Service serv = ss.findById(res.getInt(7));
+                Personne pers = ps.findById(res.getInt(8));
                 List<Integer> Ids = Arrays.stream(res.getString("id_eventCateg").split(",")).map(Integer::parseInt).collect(Collectors.toList());
                 for(int i=0;i<Ids.size();i++){
                     //e list de event categ contient les categ d'evenement qui figure dans Ids 
                     cat.add(ec.findById(Ids.get(i)));
                 }
-                s = new SousServices(res.getInt(1), res.getFloat(5), res.getString("nom"), res.getString("description"), res.getString("image"), res.getFloat("note"), pers, serv, cat);
+                s = new SousServices(res.getInt(1), res.getFloat(4), res.getString("nom"), res.getString("description"), res.getFloat("note"), pers, serv, cat);
                 arss.add(s);
             }
         } catch (SQLException e) {

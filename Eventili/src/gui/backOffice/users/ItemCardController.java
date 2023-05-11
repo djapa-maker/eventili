@@ -102,17 +102,9 @@ public void SetData(Personne s,imagepers i) throws SQLException, FileNotFoundExc
         pnum=s.getNum_tel();
         pemail=s.getEmail();
         padresse=s.getAdresse();
-          pimage=i.getLast();
-       
-         
-         
-         
-         
-      
+        pimage=i.getLast();
         prib=s.getRib();
         prole=s.getRole();
-        
-        
         FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/"+pimage); 
         Image image = new Image(inputstream); 
         icon.setImage(image);

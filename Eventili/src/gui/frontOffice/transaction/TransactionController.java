@@ -77,10 +77,11 @@ public class TransactionController implements Initializable {
     private EventService es;
     private PersonneService ps;
     // Twilio API credentials
-    private static final String ACCOUNT_SID = "ACd1bfdea7342078edf93113625738d7b7";
-    private static final String AUTH_TOKEN = "a6d52d023d784964104b0165e7df47ac";
+
+    private static final String ACCOUNT_SID = "AC23ac3c900ad7d1daac0be7b4fd4848e8";
+    private static final String AUTH_TOKEN = "90c789305ea78e014db15435039c55c0";
     // Twilio phone number
-    private static final String TWILIO_PHONE_NUMBER = "+14066307511";
+    private static final String TWILIO_PHONE_NUMBER = "+12707336802";
     @FXML
     private ChoiceBox<String> devise;
     @FXML
@@ -93,7 +94,7 @@ public class TransactionController implements Initializable {
     private Button payer;
     singleton data = singleton.getInstance();
     Personne pa = data.getUser();
-    transeng info=transeng.getInstance();
+    transeng info = transeng.getInstance();
     @FXML
     private TextField cvv;
     @FXML
@@ -141,15 +142,14 @@ public class TransactionController implements Initializable {
     private int type = info.getType();
     private String mountinit = info.getAmmount();
     String ammount = info.getAmmount(); //integration caluclue ammount
- 
+
     ServiceReservationService srs = new ServiceReservationService();
     @FXML
     private Button closeButton;
 
- 
-public void setOnTransactionClose(EventHandler<ActionEvent> handler) {
-    closeButton.setOnAction(handler);
-}
+    public void setOnTransactionClose(EventHandler<ActionEvent> handler) {
+        closeButton.setOnAction(handler);
+    }
 
     public TransactionController(String mount, int type) {
 
@@ -167,7 +167,7 @@ public void setOnTransactionClose(EventHandler<ActionEvent> handler) {
     }
 
     public void settype(int t, String mount) {
-   
+
         ammount = mount;
         mountinit = mount;
         this.type = t;
@@ -194,8 +194,8 @@ public void setOnTransactionClose(EventHandler<ActionEvent> handler) {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println("type :"+info.getType());
-                System.out.println("idev :"+info.getIdev());
+        System.out.println("type :" + info.getType());
+        System.out.println("idev :" + info.getIdev());
 //      System.out.println("ammount :"+ts.calcule_montanttotale(info.getIdev()));
         //*******************setup notifaction sms
         numcard.textProperty().addListener((obs, oldVal, newVal) -> {
@@ -344,41 +344,39 @@ public void setOnTransactionClose(EventHandler<ActionEvent> handler) {
                     amount = mountinit;
 
                 }
-                if(newValue.compareTo("EUR")!=0){
-                String fromCurrency = "EUR";
-                String toCurrency = newValue;
-         
-                System.out.println(oldValue + amount + newValue);
-                String urll = String.format("%s?apikey=%s&amount=%s&from=%s&to=%s", baseUrl, apiKey, amount, fromCurrency, toCurrency);
-                Request request = new Request.Builder()
-                        .url(urll)
-                        .method("GET", null)
-                        .build();
+                if (newValue.compareTo("EUR") != 0) {
+                    String fromCurrency = "EUR";
+                    String toCurrency = newValue;
 
-                OkHttpClient client = new OkHttpClient().newBuilder().build();
-                Response response;
+                    System.out.println(oldValue + amount + newValue);
+                    String urll = String.format("%s?apikey=%s&amount=%s&from=%s&to=%s", baseUrl, apiKey, amount, fromCurrency, toCurrency);
+                    Request request = new Request.Builder()
+                            .url(urll)
+                            .method("GET", null)
+                            .build();
 
-                response = client.newCall(request).execute();
+                    OkHttpClient client = new OkHttpClient().newBuilder().build();
+                    Response response;
+
+                    response = client.newCall(request).execute();
 
 // Convertir la réponse en objet JSON
-                JSONParser parser = new JSONParser();
-                JSONObject jsonObject = (JSONObject) parser.parse(response.body().string());
+                    JSONParser parser = new JSONParser();
+                    JSONObject jsonObject = (JSONObject) parser.parse(response.body().string());
 
 // Extraire la valeur de la clé "result"
-                double result = (double) jsonObject.get("result");
-                System.out.println(result);
-                totale.setText(String.valueOf(result));
-                ammount = String.valueOf(result);
-                }
-                else {    
-                                     
-                   amount = String.valueOf(ts.calcule_montanttotale(info.getIdev()));//integration
+                    double result = (double) jsonObject.get("result");
+                    System.out.println(result);
+                    totale.setText(String.valueOf(result));
+                    ammount = String.valueOf(result);
+                } else {
+
+                    amount = String.valueOf(ts.calcule_montanttotale(info.getIdev()));//integration
 
                     totale.setText(amount);
 
                 }
-                
-                
+
             } catch (IOException ex) {
                 Logger.getLogger(TransactionController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ParseException ex) {
@@ -473,10 +471,10 @@ public void setOnTransactionClose(EventHandler<ActionEvent> handler) {
 
             try {
                 String tokenId = Token.create(tokenParams).getId();
-                System.out.println("ammount"+amount);
+                System.out.println("ammount" + amount);
                 // Create a charge with the test token
                 ChargeCreateParams chargeParams = ChargeCreateParams.builder()
-                        .setAmount(amount*100)
+                        .setAmount(amount * 100)
                         .setCurrency(devise.getValue())
                         .setDescription("charge")
                         .setSource(tokenId)
@@ -487,7 +485,7 @@ public void setOnTransactionClose(EventHandler<ActionEvent> handler) {
                 System.out.println("Charge succeeded! Status: " + charge.getStatus());
                 tr = new Transactions(0, 0, montant_tot, devis, LocalDateTime.now(), mode_trans, pa);
                 transactionId = ts.ajouterget(tr);
-                System.out.println("transactionId"+transactionId);
+                System.out.println("transactionId" + transactionId);
             } catch (CardException e) {
                 System.out.println("Charge failed: " + e.getMessage());
                 suceed = 0;
@@ -524,31 +522,29 @@ public void setOnTransactionClose(EventHandler<ActionEvent> handler) {
                     alert.setContentText("Merci pour votre achat.");
                     payment = "Paiement réussi :  Le paiement a été effectué avec succès";
                     alert.showAndWait();
-                    close=1;
+                    close = 1;
                     break;
                 }
             }
 
-             Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-             System.out.println(pa.getNum_tel());
- 
-            Message.creator(new PhoneNumber("+21628899807"), new PhoneNumber(TWILIO_PHONE_NUMBER), payment).create();
-        }
-if (close == 1) {
-// create a new scene object for the old scene
-//Parent root = FXMLLoader.load(getClass().getResource("../sidebar/SideBar.fxml"));
-//Scene oldScene = new Scene(root);
-//
-//// Get the current stage and close it
-//Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//currentStage.close();
-//
-//// Create a new stage for the old scene
+            Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+            System.out.println(pa.getNum_tel());
+           Message.creator(new PhoneNumber("+21652381380"), new PhoneNumber(TWILIO_PHONE_NUMBER), payment).create();
+             }
+        if (close == 1) {
+ //create a new scene object for the old scene
+            Parent root = FXMLLoader.load(getClass().getResource("../organisationev/MesEvenements.fxml"));
+            Scene oldScene = new Scene(root);
+
+// Get the current stage and close it
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+
+// Create a new stage for the old scene
 //Stage oldStage = new Stage();
 //oldStage.setScene(oldScene); // set the old scene
 //oldStage.show(); // show the old stage
-
-}
+        }
 
     }
 

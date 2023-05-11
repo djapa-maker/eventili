@@ -48,8 +48,8 @@ public class ItemSousServiceController implements Initializable {
         //System.out.println(s);
         id_serv = s.getId_sousServ();
 //        Image image1 = new Image(getClass().getResourceAsStream(s.getIcon()));
-            Image img1 = new Image("http://localhost/img/"+s.getIcon());
-        img.setImage(img1);
+//            Image img1 = new Image("http://localhost/img/"+s.getIcon());
+//        img.setImage(img1);
         NomSousService.setText(s.getNom_serv());
         serv = ss.findServiceById(id_serv);
     }

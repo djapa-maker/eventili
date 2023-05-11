@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -15,7 +14,6 @@
 
 <Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#show" prefHeight="90.0" prefWidth="1450.0" stylesheets="@itemsousservice.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.backOffice.Service.ListerSousService.ItemSousServiceController">
     <children>
-        <ImageView fx:id="icon" fitHeight="69.0" fitWidth="82.0" layoutX="38.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" style="-fx-border-radius: 50;" />
       <Text fx:id="note" fill="#330086" layoutX="921.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Note">
          <font>
             <Font size="20.0" />

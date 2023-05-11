@@ -49,8 +49,6 @@ public class ItemSousServiceController implements Initializable {
     @FXML
     private Pane pane;
     @FXML
-    private ImageView icon;
-    @FXML
     private Text note;
     @FXML
     private Text prix;
@@ -80,9 +78,9 @@ public class ItemSousServiceController implements Initializable {
     private PersonneService se = new PersonneService();
     private ArrayList<EventCateg> eventCat = new ArrayList<>();
     private ArrayList<imageSS> imaage = new ArrayList<>();
-    private imageSService im= new imageSService();
+//    private imageSService im= new imageSService();
     private float not;
-    private String i;
+//    private String i;
     private String n;
     private String p;
     private String d;
@@ -108,14 +106,14 @@ public class ItemSousServiceController implements Initializable {
     public void SetData(SousServices s) throws SQLException, FileNotFoundException {
         String D = "";
         id_ss = s.getId_sousServ();
-        imaage=(ArrayList<imageSS>) im.findImageByIdSS(id_ss);
-        i=imaage.get(0).getImg();
+        //imaage=(ArrayList<imageSS>) im.findImageByIdSS(id_ss);
+       // i=imaage.get(0).getImg();
 //        FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/" + i);
 //        FileInputStream inputstream = new FileInputStream("C:/xamp2/htdocs/img/" + i);
-//        Image img = new Image(inputstream);
-           Image img = new Image("http://localhost/img/"+i);
-        icon.setImage(img);
-        System.out.println(i);
+////        Image img = new Image(inputstream);
+//           Image img = new Image("http://localhost/img/"+i);
+//        icon.setImage(img);
+        //System.out.println(i);
         ssName = s.getNom_serv();
         d = s.getDescription_serv();
         not = s.getNote();
@@ -167,7 +165,7 @@ public class ItemSousServiceController implements Initializable {
         note.setText(Float.toString(not));
         System.out.println(s.getPers());
         System.out.println(s.getS());
-        sev = new SousServices(id_ss, p1, ssName, d, i, not, s.getPers(), s.getS(), eventCat);
+        sev = new SousServices(id_ss, p1, ssName, d,  not, s.getPers(), s.getS(), eventCat);
     }
 //------------------------------------------------------------------------------
 

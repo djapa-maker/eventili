@@ -76,7 +76,7 @@ public class AdministrationController implements Initializable {
     private void GetProfileImg() throws FileNotFoundException {
         
         String Image=data.getImage().getLast();
-        FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/"+Image); 
+        FileInputStream inputstream = new FileInputStream("C:/xamp2/htdocs/img/"+Image); 
         Image image = new Image(inputstream); 
         ProfileCircle.setStroke(javafx.scene.paint.Color.ORANGE);
         ProfileCircle.setFill(new ImagePattern(image)); 

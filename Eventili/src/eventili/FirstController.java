@@ -278,9 +278,11 @@ boolean test(String nom,String prenom,String num,String adresse,String image,Str
    if(ps.findbyemail(email) == null){
   if(test( nom, prenom, num, adresse, image, rib, email,md))
    { 
-                String hashed = BCrypt.hashpw(md, BCrypt.gensalt());
+                //String hashed = BCrypt.hashpw(md, BCrypt.gensalt());
           
-                
+                 String salt = BCrypt.gensalt(12);
+String hashed = BCrypt.hashpw(md, salt);
+    
     
        Personne p=new Personne(nom, prenom, num,email,hashed, adresse, rib,  role,token,verified,date);
       

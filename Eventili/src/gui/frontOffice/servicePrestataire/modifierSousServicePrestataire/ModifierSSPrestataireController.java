@@ -178,16 +178,16 @@ public class ModifierSSPrestataireController implements Initializable {
         if ((!priText.isEmpty())
                 && (!desc.isEmpty())
                 && (!nom.isEmpty())
-                && (!path.isEmpty())
+//                && (!path.isEmpty())
                 && (!L.isEmpty())) {
             if (priText.matches("[+-]?([0-9]*[.])?[0-9]+")) {
                 prix = Float.parseFloat(price.getText());
                 note = ss.findServiceById(id_ss).getNote();
-                SousServices sous = new SousServices(prix, nom, desc, path, note);
+                SousServices sous = new SousServices(prix, nom, desc,  note);
                 lp = (ArrayList<SousServices>) ss.getAllByPrestataire(p1.getId_pers());
                 for (SousServices p2 : lp) {
                     if (p2.getDescription_serv().equals(sous.getDescription_serv())
-                            && p2.getIcon().equals(sous.getIcon())
+                          
                             && p2.getNom_serv().equals(sous.getNom_serv())
                             && p2.getNote() == sous.getNote()
                             && p2.getPrix_serv() == sous.getPrix_serv()) {
@@ -251,7 +251,7 @@ public class ModifierSSPrestataireController implements Initializable {
 //------------------------------------------------------------------------------    
      public void modifierData(SousServices s, int id) throws SQLException, FileNotFoundException {
         id_ss = id;
-        path = ss.findServiceById(id).getIcon();
+        
         n = ss.findServiceById(id).getNom_serv();
         d = ss.findServiceById(id).getDescription_serv();
         p = Float.toString(ss.findServiceById(id).getPrix_serv());

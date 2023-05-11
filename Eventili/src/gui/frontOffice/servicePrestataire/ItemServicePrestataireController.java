@@ -101,14 +101,14 @@ private imageSService im= new imageSService();
         id_ss = s.getId_sousServ();
 //        System.out.println(id_ss);
         imaage=(ArrayList<imageSS>) im.findImageByIdSS(id_ss);
-        i=imaage.get(0).getImg();
+        //i=imaage.get(0).getImg();
         //FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/" + i);
 //        FileInputStream inputstream = new FileInputStream("C:/xamp2/htdocs/img/" + i);
         //Image img1 = new Image(inputstream);
-        Image img1 = new Image("http://localhost/img/"+i);
-        img.setImage(img1);
-//        i = s.getIcon();
-        img.setImage(img1);
+       // Image img1 = new Image("http://localhost/img/"+i);
+//        img.setImage(img1);
+////        i = s.getIcon();
+//        img.setImage(img1);
         System.out.println(i);
         ssName = s.getNom_serv();
         d = s.getDescription_serv();
@@ -135,7 +135,7 @@ private imageSService im= new imageSService();
         note.setText(Float.toString(not));
         System.out.println(s.getPers());
         System.out.println(s.getS());
-        s3 = new SousServices(id_ss, p1, ssName, d, i, not, s.getPers(), s.getS(), eventCat);
+        s3 = new SousServices(id_ss, p1, ssName, d,  not, s.getPers(), s.getS(), eventCat);
         Resultat();
     }
 

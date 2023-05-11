@@ -78,7 +78,7 @@ singleton data= singleton.getInstance();
         c = a.getComment();
         r = (float) a.getRating();
         s = a.getS();
-        i = a.getS().getIcon();
+      
         n = a.getS().getNom_serv();
         FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/"+i); 
         Image img1 = new Image(inputstream); 
