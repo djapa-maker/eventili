@@ -82,6 +82,11 @@
                         <FontAwesomeIconView fx:id="iconComment" fill="#3a3289" glyphName="COMMENT" size="30" />
                      </graphic>
                   </Button>
+                  <Button fx:id="buttonReclam" layoutX="18.0" layoutY="503.0" mnemonicParsing="false" onAction="#btnReclamF" prefHeight="60.0" prefWidth="61.0" styleClass="button1" stylesheets="@sidebar.css">
+                     <graphic>
+                        <FontAwesomeIconView fx:id="iconReclam" fill="#3a3289" glyphName="SEND" size="30" />
+                     </graphic>
+                  </Button>
                </children>
             </Pane>
          </children>
