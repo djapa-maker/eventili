@@ -47,7 +47,7 @@ public class TransactionsService implements InterfaceService<Transactions> {
     @Override
     public void ajouter(Transactions t) {
         try {
-            String sql = "insert into transaction(id_trans,valeur_trans,devis,userID,date_trans,mode_trans,montant_tot)"
+            String sql = "insert into transaction(id_trans,valeur_trans,devis,user_id,date_trans,mode_trans,montant_tot)"
                     + "values (?,?,?,?,?,?,?)";
             PreparedStatement ste = cnx.prepareStatement(sql);
             String sqlDateTimeD = t.getDate_trans().format(formatter);
@@ -105,7 +105,7 @@ public class TransactionsService implements InterfaceService<Transactions> {
                 int id_trans = resultSet.getInt("id_trans");
                 float valeur_trans = resultSet.getFloat("valeur_trans");
                 String devis = resultSet.getString("devis");
-                int userID = resultSet.getInt("userID");
+                int userID = resultSet.getInt("user_id");
                 Timestamp date_trans = resultSet.getTimestamp("date_trans");
                 String mode_trans = resultSet.getString("mode_trans");
                 float montant_tot = resultSet.getFloat("montant_tot");
@@ -229,7 +229,7 @@ String sql = "SELECT REPLACE(REPLACE(REPLACE(SUBSTRING(COLUMN_TYPE, 6, LENGTH(CO
         try {
             String sql = "SELECT t.*\n" +
 "FROM transaction t\n" +
-"JOIN personne u ON t.userID = u.id_pers\n" +
+"JOIN personne u ON t.user_id = u.id_pers\n" +
 "WHERE u.nom_pers like '%" + nom + "%'";
             Statement ste = cnx.createStatement();
             ResultSet resultSet = ste.executeQuery(sql);
@@ -248,7 +248,7 @@ String sql = "SELECT REPLACE(REPLACE(REPLACE(SUBSTRING(COLUMN_TYPE, 6, LENGTH(CO
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
    int id=-1;
         try {
-            String sql = "insert into transaction(valeur_trans,devis,userID,date_trans,mode_trans,montant_tot)"
+            String sql = "insert into transaction(valeur_trans,devis,user_id,date_trans,mode_trans,montant_tot)"
                     + "values (?,?,?,?,?,?)";
             PreparedStatement ste = cnx.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
  //           ste.setInt(1, t.getId_trans());
