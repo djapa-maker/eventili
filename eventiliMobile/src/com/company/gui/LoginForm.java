@@ -13,6 +13,7 @@ import com.codename1.ui.TextField;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
+import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.util.Resources;
 import com.company.entities.Personne;
 import com.company.services.ReponseService;
@@ -30,10 +31,18 @@ import com.company.services.ServicePersonne;
 public class LoginForm extends Form{
     public LoginForm(Resources theme) {
         super(new BorderLayout(BorderLayout.CENTER_BEHAVIOR_CENTER_ABSOLUTE));
-       // setUIID("LoginForm");
+      
+         getAllStyles().setBgColor(0xBBC2F8);
+        
+        Label label = new Label(theme.getImage("logo(orange)2.png"));
+ 
+Container head = FlowLayout.encloseCenter(label);
+
+      
+       Label h = new Label(theme.getImage("user3.png"));
+        
         Container welcome = FlowLayout.encloseCenter(
-                new Label("Bienvenu, ", "WelcomeWhite"),
-                new Label("dans votre compte", "WelcomeBlue")
+               h
         );
         
         //getTitleArea().setUIID("Container");
@@ -43,14 +52,17 @@ public class LoginForm extends Form{
         login.getAllStyles().setMargin(LEFT, 0);
         password.getAllStyles().setMargin(LEFT, 0);
         Label loginIcon = new Label("", "TextField");
+        loginIcon.getAllStyles().setFgColor(0xffffff);
         Label passwordIcon = new Label("", "TextField");
+        passwordIcon.getAllStyles().setFgColor(0xffffff);
         loginIcon.getAllStyles().setMargin(RIGHT, 0);
         passwordIcon.getAllStyles().setMargin(RIGHT, 0);
         FontImage.setMaterialIcon(loginIcon, FontImage.MATERIAL_PERSON_OUTLINE, 3);
         FontImage.setMaterialIcon(passwordIcon, FontImage.MATERIAL_LOCK_OUTLINE, 3);
         
         Button loginButton = new Button("Se connecter");
-       // loginButton.setUIID("LoginButton");
+       
+        //loginButton.setUIID("test");
         loginButton.addActionListener(e -> {
           if( ServicePersonne.getInstance().login(login, password, theme)){
              Personne user= ServicePersonne.getInstance().find(SessionManager.getId());
@@ -65,7 +77,10 @@ public class LoginForm extends Form{
        
         Button createNewAccount = new Button("Créer un nouveau compte");
         //createNewAccount.setUIID("CreateNewAccountButton");
+        
+        
          Button md = new Button("Mot de passe oublié?");
+         md.setUIID("Link");
         //md.setUIID("CreateNewAccountButton");
          md.addActionListener(e -> {
          new ActivateForm(theme).show();
@@ -82,7 +97,7 @@ public class LoginForm extends Form{
         
         
         Container by = BoxLayout.encloseY(
-                welcome,
+                BorderLayout.center(welcome),
                 spaceLabel,
                 BorderLayout.center(login).
                         add(BorderLayout.WEST, loginIcon),
@@ -91,6 +106,7 @@ public class LoginForm extends Form{
                 loginButton,
                 createNewAccount
         );
+        add(BorderLayout.NORTH, head);
         add(BorderLayout.CENTER, by);
         add(BorderLayout.SOUTH, BoxLayout.encloseY(
           FlowLayout.encloseCenter(md)
@@ -99,5 +115,9 @@ public class LoginForm extends Form{
         // for low res and landscape devices
         by.setScrollableY(true);
         by.setScrollVisible(false);
+        
+        
+        
+        
     }
 }

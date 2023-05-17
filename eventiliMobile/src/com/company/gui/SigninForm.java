@@ -201,16 +201,18 @@ if( ServiceUser.getInstance().signin(nomPers,prenomPers, login, password, role, 
     public SigninForm(Resources theme) {
         super(new BorderLayout(BorderLayout.CENTER_BEHAVIOR_CENTER_ABSOLUTE));
        // setUIID("LoginForm");
+       getAllStyles().setBgColor(0xBBC2F8);
+        
+        Label label = new Label(theme.getImage("logo(orange)2.png"));
+        Container head = FlowLayout.encloseCenter(label);
+        
+        
         Toolbar tb = new Toolbar(true);
         setToolbar(tb);
         Form previous = Display.getInstance().getCurrent();
         tb.setBackCommand("", e -> previous.showBack());
        
-       Container welcome = FlowLayout.encloseCenter(
-                new Label("Bienvenu, ", "WelcomeWhite"),
-                new Label("dans votre compte", "WelcomeBlue")
-        );
-        
+       
         //getTitleArea().setUIID("Container");
         
          
@@ -238,12 +240,19 @@ if( ServiceUser.getInstance().signin(nomPers,prenomPers, login, password, role, 
     adresse.getAllStyles().setMargin(LEFT, 0);
     
           Label nomPersIcon = new Label("", "TextField");
+           nomPersIcon.getAllStyles().setFgColor(0xffffff);
         Label loginIcon = new Label("", "TextField");
+         loginIcon.getAllStyles().setFgColor(0xffffff);
         Label passwordIcon = new Label("", "TextField");
+         passwordIcon.getAllStyles().setFgColor(0xffffff);
         Label prenomPersIcon = new Label("", "TextField");
+         prenomPersIcon.getAllStyles().setFgColor(0xffffff);
         Label numTelIcon = new Label("", "TextField");
+         numTelIcon.getAllStyles().setFgColor(0xffffff);
     Label ribIcon = new Label("", "TextField");
+     ribIcon.getAllStyles().setFgColor(0xffffff);
     Label adresseIcon = new Label("", "TextField");
+     adresseIcon.getAllStyles().setFgColor(0xffffff);
         
         nomPersIcon.getAllStyles().setMargin(RIGHT, 0);
         loginIcon.getAllStyles().setMargin(RIGHT, 0);
@@ -370,11 +379,14 @@ if( ServicePersonne.getInstance().signin(nomPers,prenomPers, login, password, ro
         } else {
             spaceLabel = new Label(" ");
         }
-        
+        Label spaceLabel1;
+        if(!Display.getInstance().isTablet() && Display.getInstance().getDeviceDensity() < Display.DENSITY_VERY_HIGH) {
+            spaceLabel1 = new Label();
+        } else {
+            spaceLabel1 = new Label(" ");
+        }
         
         Container by = BoxLayout.encloseY(
-              welcome,
-                spaceLabel,
                 BorderLayout.center(nomPers).
                         add(BorderLayout.WEST, nomPersIcon),
                 BorderLayout.center(prenomPers).
@@ -390,9 +402,12 @@ if( ServicePersonne.getInstance().signin(nomPers,prenomPers, login, password, ro
                 BorderLayout.center(adresse).
                         add(BorderLayout.WEST, adresseIcon),
                 role,
+                spaceLabel,
+                spaceLabel1,
                 loginButton
                 //createNewAccount
         );
+        add(BorderLayout.NORTH, head);
         add(BorderLayout.CENTER, by);
         add(BorderLayout.SOUTH, BoxLayout.encloseY(
          
