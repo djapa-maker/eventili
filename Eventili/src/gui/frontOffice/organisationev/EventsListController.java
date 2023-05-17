@@ -84,7 +84,7 @@ public class EventsListController implements Initializable {
     public void setData(Event e) throws FileNotFoundException {
 //        Image image1 = new Image(getClass().getResourceAsStream(e.getImage()));
 //        img.setImage(image1);
-        FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/" + es.findFirstImageByEvent(e).getImg());
+        FileInputStream inputstream = new FileInputStream("C:/xamp2/htdocs/img/" + es.findFirstImageByEvent(e).getImg());
         Image img1 = new Image(inputstream);
         img.setImage(img1);
         e1 = e;

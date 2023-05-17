@@ -226,13 +226,13 @@ public class CreerEventController implements Initializable {
     @FXML
     private void importImage(ActionEvent event) throws FileNotFoundException {
         FileChooser fc = new FileChooser();
-        fc.setInitialDirectory(new File("C:/xampp/htdocs/img/"));
+        fc.setInitialDirectory(new File("C:/xamp2/htdocs/img/"));
         fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image files", "*.jpg", "*.png"));
         File selectedFile = fc.showOpenDialog(null);
         if (selectedFile != null) {
 
             //System.out.println(selectedFile.getName());
-            FileInputStream inputstream = new FileInputStream("C:/xampp/htdocs/img/" + selectedFile.getName());
+            FileInputStream inputstream = new FileInputStream("C:/xamp2/htdocs/img/" + selectedFile.getName());
             Image img = new Image(inputstream);
             image.setImage(img);
             url = selectedFile.getName();
@@ -338,7 +338,7 @@ public class CreerEventController implements Initializable {
             e1 = e2.get(e2.size() - 1);
             imgE = new imageEv(url, e1);
             es.ajouterI(imgE);
-            ec.Refresh();
+            //ec.Refresh();
             Stage stage = (Stage) btnenr.getScene().getWindow();
             stage.close();
             Alert alert = new Alert(AlertType.INFORMATION);

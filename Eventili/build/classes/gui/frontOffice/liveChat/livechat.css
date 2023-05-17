@@ -1,0 +1,11 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+}
+.output:disabled{
+          -fx-opacity : 0.9 ;
+
+}

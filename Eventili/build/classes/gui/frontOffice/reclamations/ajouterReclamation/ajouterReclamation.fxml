@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="801.0" prefWidth="1541.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.frontOffice.reclamations.ajouterReclamation.AjouterReclamationController">
+    <stylesheets>
+        <URL value="@ajouterreclamation.css" />
+    </stylesheets>
+   <children>
+      <Pane fx:id="view" layoutX="52.0" layoutY="35.0" style="-fx-background-color: transparent;">
+         <children>
+            <BorderPane prefHeight="681.0" prefWidth="1261.0" styleClass="ContainerListeReclamations" stylesheets="@../../../backOffice/reclamations/reclamations.css">
+               <center>
+                  <Pane prefHeight="663.0" prefWidth="1245.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
+                     <children>
+                        <TextArea fx:id="DescriptionReclam" layoutX="312.0" layoutY="195.0" prefHeight="306.0" prefWidth="632.0" promptText="Description du probleme" />
+                        <TextField fx:id="Titre" layoutX="312.0" layoutY="148.0" prefHeight="25.0" prefWidth="635.0" promptText="Titre" />
+                        <Button id="EnAttenteFiltreButton" fx:id="Envoyer" layoutX="573.0" layoutY="533.0" mnemonicParsing="false" onAction="#EnvoyerButtonFuction" prefHeight="62.0" prefWidth="150.0" styleClass="EnvoyerBoutton" stylesheets="@ajouterreclamation.css" text="Envoyer" textFill="WHITE" />
+                        <Text fill="#758bfd" fontSmoothingType="LCD" layoutX="403.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Envoyer une réclamation" textAlignment="CENTER" wrappingWidth="453.3360137939453">
+                           <font>
+                              <Font size="32.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </Pane>
+               </center>
+            </BorderPane>
+         </children>
+      </Pane>
+      <Button id="EnAttenteFiltreButton" fx:id="Retour" layoutX="1350.0" layoutY="37.0" mnemonicParsing="false" onAction="#RetourButtonFunction" prefHeight="62.0" prefWidth="150.0" styleClass="EnAttenteFiltreButton" stylesheets="@../../../backOffice/reclamations/reclamations.css" text="Retour" textFill="WHITE" />
+   </children>
+</AnchorPane>

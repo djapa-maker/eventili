@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="387.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.frontOffice.liveChat.LiveChatController">
+    <stylesheets>
+        <URL value="@livechat.css" />
+    </stylesheets>
+   <children>
+      <BorderPane prefHeight="400.0" prefWidth="387.0">
+         <bottom>
+            <SplitPane dividerPositions="0.7318464730290457" prefHeight="103.0" prefWidth="387.0" BorderPane.alignment="CENTER">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                     <children>
+                        <TextArea fx:id="Messages" layoutX="1.0" prefHeight="103.0" prefWidth="279.0" />
+                     </children>
+                  </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                     <children>
+                        <Button fx:id="Send" layoutX="21.0" layoutY="14.0" mnemonicParsing="false" onAction="#SendFunction" styleClass="AucunFiltreButton" stylesheets="@../../backOffice/reclamations/reclamations.css" text="Envoyer" textFill="WHITE" />
+                        <Button fx:id="exit" layoutX="24.0" layoutY="51.0" mnemonicParsing="false" styleClass="EnAttenteFiltreButton" stylesheets="@../../backOffice/reclamations/reclamations.css" text="Quitter" textFill="#fcfcfc" />
+                     </children>
+                  </AnchorPane>
+              </items>
+            </SplitPane>
+         </bottom>
+         <center>
+            <TextArea fx:id="MessageBox" editable="false" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font></TextArea>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

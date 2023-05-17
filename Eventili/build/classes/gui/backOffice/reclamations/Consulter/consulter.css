@@ -1,0 +1,67 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+    -fx-background-color: transparent;
+}
+.EnvoyerIcone{
+    -fx-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-family: "FontAwesome";
+}
+.EnvoyerIconeDisabled{
+    -fx-fill: grey;
+    -fx-font-size: 20px;
+    -fx-font-family: "FontAwesome";
+}
+.CloturerButon{
+    -fx-background-color: #758BFD;
+    -fx-opacity: 0.5;
+    -fx-border-radius: 150px;
+}
+.CloturerButon:hover{
+    -fx-background-color: #758BFD;
+    -fx-opacity: 1;
+    -fx-border-radius: 150px;
+}
+.editReponse{
+    -fx-fill: gray;
+    -fx-font-size: 12px;
+    -fx-font-family: "FontAwesome";
+}
+.RemoveReponse{
+    -fx-fill: lightgray;
+    -fx-font-size: 12px;
+    -fx-font-family: "FontAwesome";
+}
+.cancelButton{
+    -fx-fill: lightgray;
+    -fx-font-size: 12px;
+    -fx-font-family: "FontAwesome";
+}
+.saveButton{
+    -fx-fill: lightgray;
+    -fx-font-size: 12px;
+    -fx-font-family: "FontAwesome";
+}
+.editReponse:hover{
+    -fx-fill: white;
+    -fx-font-size: 12px;
+    -fx-font-family: "FontAwesome";
+}
+.RemoveReponse:hover{
+    -fx-fill: red;
+    -fx-font-size: 12px;
+    -fx-font-family: "FontAwesome";
+}
+.cancelButton:hover{
+    -fx-fill: red;
+    -fx-font-size: 12px;
+    -fx-font-family: "FontAwesome";
+}
+.saveButton:hover{
+    -fx-fill: green;
+    -fx-font-size: 12px;
+    -fx-font-family: "FontAwesome";
+}

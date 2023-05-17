@@ -5,3 +5,179 @@
 .mainFxmlClass {
 
 }
+.ContainerListeReclamations
+{
+    -fx-background-color:  #FFFFFF;
+    -fx-border-color: grey;
+    -fx-border-radius: 25px;
+    
+}
+.RemoveReclam{
+    -fx-fill: grey;
+    -fx-font-size: 20px;
+    -fx-font-family: "FontAwesome";
+}
+.cancelSearch{
+    -fx-fill: grey;
+    -fx-font-size: 15px;
+    -fx-font-family: "FontAwesome";
+}
+
+.cancelSearch:hover{
+    -fx-fill: red;
+    -fx-font-size: 16px;
+    -fx-font-family: "FontAwesome";
+}
+.Search{
+    -fx-fill: grey;
+    -fx-font-size: 15px;
+    -fx-font-family: "FontAwesome";
+}
+.Search:hover{
+    -fx-fill: blueviolet;
+    -fx-font-size: 15px;
+    -fx-font-family: "FontAwesome";
+}
+.ConsulterIcon{
+    -fx-fill: grey;
+    -fx-font-size: 20px;
+    -fx-font-family: "FontAwesome";
+}
+.ConsulterIcon:hover{
+    -fx-fill: black;
+    -fx-font-size: 22px;
+    -fx-font-family: "FontAwesome";
+}
+.RemoveReclam:hover{
+    -fx-fill: red;
+    -fx-font-size: 22px;
+    -fx-font-family: "FontAwesome"; 
+}
+.ListeReclamations{
+    -fx-background-color:  #FFFFFF;
+    -fx-box-border: transparent;
+}
+
+/* Normal State Buttons  */
+.OuvertFiltreButton{
+    -fx-background-color:  #241B7C;
+        -fx-opacity: 0.5;
+    -fx-border-radius: 150px;
+}
+.ClotureFiltreButton{
+    -fx-background-color: #D9D9D9;
+        -fx-opacity: 0.7;
+    -fx-border-radius: 150px;
+}
+.EnAttenteFiltreButton{
+    -fx-background-color:  #F09E22;
+        -fx-opacity: 0.5;
+    -fx-border-radius: 150px;
+}
+.AucunFiltreButton{
+    -fx-background-color: #758BFD;
+        -fx-opacity: 1;
+    -fx-border-radius: 150px;
+}
+/* Active State Button */
+.OuvertFiltreButtonActive{
+    -fx-background-color:  #241B7C;
+    -fx-border-radius: 150px;
+        -fx-opacity: 1;
+}
+.ClotureFiltreButtonActive{
+    -fx-background-color: #D9D9D9;
+    -fx-border-radius: 150px;
+        -fx-opacity: 1;
+}
+.EnAttenteFiltreButtonActive{
+    -fx-background-color:  #F09E22;
+    -fx-opacity: 1;
+    -fx-border-radius: 150px;
+}
+.AucunFiltreButtonActive{
+    -fx-background-color: #758BFD;
+    -fx-opacity: 2;
+    -fx-border-radius: 150px;
+}
+/* Unactive State Button */
+.OuvertFiltreButtonUnactive{
+    -fx-background-color:  #241B7C;
+    -fx-opacity: 0.5;
+    -fx-border-radius: 150px;
+}
+.ClotureFiltreButtonUnactive{
+    -fx-background-color: #D9D9D9;
+    -fx-opacity: 0.7;
+    -fx-border-radius: 150px;
+}
+.EnAttenteFiltreButtonUnactive{
+    -fx-background-color:  #F09E22;
+    -fx-opacity: 0.5;
+    -fx-border-radius: 150px;
+}
+.AucunFiltreButtonUnactive{
+    -fx-background-color: #758BFD;
+    -fx-opacity: 0.5;
+    -fx-border-radius: 150px;
+}
+/* HoverState Button */
+/* Standard State */
+.OuvertFiltreButton:hover{
+    -fx-background-color:  #241B7C;
+    -fx-opacity: 1;
+    -fx-border-radius: 150px;
+}
+.ClotureFiltreButton:hover{
+    -fx-background-color: #D9D9D9;
+    -fx-opacity: 1;
+    -fx-border-radius: 150px;
+}
+.EnAttenteFiltreButton:hover{
+    -fx-background-color:  #F09E22;
+    -fx-opacity: 1;
+    -fx-border-radius: 150px;
+}
+
+/* Active State */
+.AucunFiltreButtonActive:hover{
+    -fx-background-color: #758BFD;
+    -fx-opacity: 1;
+    -fx-border-radius: 150px;
+}
+.OuvertFiltreButtonActive:hover{
+    -fx-background-color:  #241B7C;
+    -fx-border-radius: 150px;
+        -fx-opacity: 2;
+}
+.ClotureFiltreButtonActive:hover{
+    -fx-background-color: #D9D9D9;
+    -fx-border-radius: 150px;
+        -fx-opacity: 2;
+}
+.EnAttenteFiltreButtonActive:hover{
+    -fx-background-color:  #F09E22;
+    -fx-opacity: 2;
+    -fx-border-radius: 150px;
+}
+/* Unactive State */
+.OuvertFiltreButtonUnactive:hover{
+    -fx-background-color:  #241B7C;
+    -fx-opacity: 1;
+    -fx-border-radius: 150px;
+}
+.ClotureFiltreButtonUnactive:hover{
+    -fx-background-color: #D9D9D9;
+    -fx-opacity: 1;
+    -fx-border-radius: 150px;
+}
+.EnAttenteFiltreButtonUnactive:hover{
+    -fx-background-color:  #F09E22;
+    -fx-opacity: 1;
+    -fx-border-radius: 150px;
+}
+.AucunFiltreButtonUnactive:hover{
+    -fx-background-color: #758BFD;
+    -fx-opacity: 1;
+    -fx-border-radius: 150px;
+}

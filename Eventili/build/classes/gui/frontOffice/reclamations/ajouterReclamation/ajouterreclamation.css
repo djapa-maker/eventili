@@ -1,0 +1,27 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+}
+.EnvoyerBoutton{
+    -fx-background-color:  #1ED760;
+    -fx-opacity: 0.8;
+    -fx-border-radius: 150px;
+}
+.AjouterImageButton{
+    -fx-background-color:  #241B7C;
+    -fx-opacity: 0.5;
+    -fx-border-radius: 150px;
+}
+.EnvoyerBoutton:hover{
+    -fx-background-color:  #1ED760;
+    -fx-opacity: 1;
+    -fx-border-radius: 150px;
+}
+.AjouterImageButton:hover{
+    -fx-background-color:  #241B7C;
+    -fx-opacity: 1;
+    -fx-border-radius: 150px;
+}

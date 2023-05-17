@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.frontOffice.reclamations.ReclamationsController">
+    <stylesheets>
+        <URL value="@reclamations.css" />
+    </stylesheets>
+   <children>
+      <Pane fx:id="pane" layoutX="10.0" layoutY="10.0" prefHeight="801.0" prefWidth="1541.0" style="-fx-background-color: #FFFFFF;">
+         <children>
+            <Text fill="#758bfd" fontSmoothingType="LCD" layoutX="453.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reclamations" textAlignment="CENTER" wrappingWidth="140.7359619140625">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Text>
+            <BorderPane layoutX="32.0" layoutY="56.0" maxHeight="640.0" maxWidth="964.0" prefHeight="640.0" prefWidth="964.0" style="-fx-border-width: 2px;" styleClass="ContainerListeReclamations" stylesheets="@../../backOffice/reclamations/reclamations.css">
+               <center>
+                  <ScrollPane fitToHeight="true" fitToWidth="true" minViewportHeight="640.0" minViewportWidth="964.0" prefHeight="635.0" prefViewportHeight="640.0" prefViewportWidth="964.0" prefWidth="964.0" style="-fx-border-width: 0px; -fx-background-color: transparent;" stylesheets="@../../backOffice/reclamations/reclamations.css" BorderPane.alignment="CENTER">
+                     <content>
+                        <AnchorPane maxHeight="640.0" maxWidth="964.0" minHeight="640.0" minWidth="964.0" prefHeight="640.0" prefWidth="964.0" style="-fx-border-width: 0px; -fx-background-color: transparent; -fx-border-radius: 25px;">
+                           <children>
+                              <GridPane fx:id="grid" maxWidth="964.0" minWidth="964.0" prefHeight="640.0" prefWidth="964.0" style="-fx-background-color: transparent; -fx-border-width: 0px; -fx-border-radius: 25px;">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                              </GridPane>
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </AnchorPane>
+                     </content>
+                  </ScrollPane>
+               </center>
+            </BorderPane>
+            <Button id="OuvertFiltreButton" fx:id="OuverButtonFiltre" layoutX="1178.0" layoutY="159.0" mnemonicParsing="false" onAction="#OuverButtonFiltreFunction" prefHeight="62.0" prefWidth="150.0" styleClass="OuvertFiltreButton" stylesheets="@../../backOffice/reclamations/reclamations.css" text="Ouvert" textFill="WHITE" />
+            <Button id="ClotureFiltreButton" fx:id="ClotureButtonFiltre" layoutX="1178.0" layoutY="247.0" mnemonicParsing="false" onAction="#ClotureButtonFiltreFunction" prefHeight="62.0" prefWidth="150.0" styleClass="ClotureFiltreButton" stylesheets="@../../backOffice/reclamations/reclamations.css" text="Cloture" textFill="WHITE" />
+            <Button id="EnAttenteFiltreButton" fx:id="EnAttenteButtonFiltre" layoutX="1178.0" layoutY="339.0" mnemonicParsing="false" onAction="#EnAttenteButtonFiltreFunction" prefHeight="62.0" prefWidth="150.0" styleClass="EnAttenteFiltreButton" stylesheets="@../../backOffice/reclamations/reclamations.css" text="En Attente" textFill="WHITE" />
+            <Button id="AucunFiltreButton" fx:id="AucunFiltreButton" layoutX="1178.0" layoutY="432.0" mnemonicParsing="false" onAction="#AucunFiltreButtonFunction" prefHeight="62.0" prefWidth="150.0" styleClass="AucunFiltreButton" stylesheets="@../../backOffice/reclamations/reclamations.css" text="Aucun Filtre" textFill="WHITE" />
+            <Button fx:id="AjouterReclam" contentDisplay="CENTER" layoutX="1328.0" layoutY="30.0" mnemonicParsing="false" onAction="#AjouterButtonFunction" prefHeight="45.0" prefWidth="112.0" styleClass="EnvoyerButton" stylesheets="@reclamations.css" text="Ajouter" textFill="WHITE" wrapText="true" />
+            <Button fx:id="LiveChat" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="1151.0" layoutY="30.0" mnemonicParsing="false" onAction="#OpenLiveChatWindow" prefHeight="45.0" prefWidth="141.0" styleClass="Help" stylesheets="@reclamations.css" text="Demander de l'aide a la Comunauté" textFill="WHITE" wrapText="true" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
